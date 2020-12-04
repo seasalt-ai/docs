@@ -1,0 +1,47 @@
+.. _quickstart:
+
+===============
+ngChat Quick Start
+===============
+
+.. Bootstrap specific class labels
+
+.. role:: text-success
+.. role:: text-primary
+.. role:: text-info
+.. role:: text-warning
+.. role:: text-danger
+
+.. role:: bg-success
+.. role:: bg-primary
+.. role:: bg-info
+.. role:: bg-warning
+.. role:: bg-danger
+
+.. _SEASALT.AI: https://seasalt.ai
+.. _ngChat: https://ngchat.kitt.ai/
+.. _ngChat-stt: https://ngchat.kitt.ai/stt
+.. _ngChat-tts: https://ngchat.kitt.ai/tts
+
+.. contents:: Table of Contents
+   :depth: 4
+
+Introduction
+============
+
+This ngChat tutorial provides a quick overview on how to access and navigate
+SEASALT.AI_'s ngChat_ platform.
+
+By the end of this tutorial, you will be able to:
+  * Access ngChat
+  * Create a Project
+  * Orient yourself in the VSCode Editor
+
+Accessing ngChat
+=============
+
+ngChat is hosted by SEASALT.AI and can be accessed using any web browser.
+
+**To Access:**
+
+1. Go to `<https://ngchat.seasalt.ai>`_
