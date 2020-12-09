@@ -1,0 +1,122 @@
+.. _ngchat_faq:
+
+===========================================
+ngChat-FAQ
+===========================================
+
+.. role:: text-success
+.. role:: text-primary
+.. role:: text-info
+.. role:: text-warning
+.. role:: text-danger
+
+.. role:: bg-success
+.. role:: bg-primary
+.. role:: bg-info
+.. role:: bg-warning
+.. role:: bg-danger
+
+.. _ngChat: https://ngchat.seasalt.ai/
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+
+
+Introduction
+============
+
+In this section we will walk you through ngChat-FAQ: our Fast & Accurate FAQ chatbot.
+Our FAQ chatbot has the following features:
+
+* support multiple FAQ sheets
+* support expiration dates, perfect for time-sensitive FAQs such as marketing promotions
+* Customizable thesaurus (synonyms)
+* Customizable stopword list
+* Transformers-based Pretraining
+* Supervised Fine-tuning
+* Active Learning
+* Probabilistic Reranking
+
+Configuration
+========================
+
+.. code-block:: yaml
+
+    language: zh
+    importers:
+      # Please place FAQImporter before other importers
+      - name: ngchat_plugins.importers.faq_importer.FAQImporter
+        faq_paths:
+          - data/faq_kcg.csv
+        synonym_paths:
+          - data/zh_tw_synonym_sample.csv
+        output_test_faq_file: tests/test_faq.md   # used for `test nlu`, default to tests/test_faq.md: please don't change the default path
+        augment_with_synonyms: true # recommended if you have synonyms
+        timezone: America/Los_Angeles # timezone used for dates in your faq file. Expressed as TZ database name. E.g. Seattle is "America/Los_Angeles".
+      # - name: RasaFileImporter # import other training data from data folder, such as nlu.json and responses.md
+    
+    pipeline:
+      # - name: ngchat_plugins.nlu.tokenizers.zhchar_tokenizer.ZhCharTokenizer
+      # - name: LexicalSyntacticFeaturizer
+      # - name: CountVectorsFeaturizer
+      #   analyzer: char_wb
+      #   min_ngram: 1
+      #   max_ngram: 4
+      # - name: DIETClassifier
+      #   epochs: 10
+      #   random_seed: 42
+      # - name: EntitySynonymMapper  # enable this if you have synonyms in your .csv files and other NLU intents (RasaFileImporter is enabled)
+      - name: ngchat_plugins.nlu.selectors.elastic_selector.ElasticSelector
+        retrieval_intent: faq  # default to "faq"
+        stopword_paths:
+          - data/stopwords_zh_tw.txt   # must be in utf-8 encoding
+        batch_size: 2048
+        method: text # options: text, bert
+        es_indexing:
+          host: localhost
+          port: 9200
+          index_name: kcg  # must all be lower case, must not contain the characters #, \, /, *, ?, ", <, >, |, ,
+          make_index_name_unique: false  # if true, append index_name with a time str, e.g. "linux_faq-2020-11-15T02-36-48"
+        bert_client:
+          enabled: false
+          host: bert-as-service
+          port: 5555 # port for pushing data from client to server
+          port_out: 5556 # port for publishing results from server to client
+          timeout: 600000 # in milliseconds, -1 for no limit, apply to both connecting to server and total encoding time,
+        eval:
+          enabled: false
+          metric: map # options: map, mrr
+          N: 1 # recommended options: 1, 3
+        reranker:
+          enabled: true # uses MaxEnt reranker if indexing method is text, otherwise MLP reranker
+          random_seed: 42
+          features:
+            es_bow_cos_sim:
+              enabled: true
+            es_bow_elem_prod:
+              type: count # options: count, hashing
+              n_features: 10000 # n_features for HashingVectorizer, multiplied by n for each n-gram
+              min_n: 1
+              max_n: 4
+            es_doc_score:
+              enabled: true
+    
+    # Configuration for Rasa Core.
+    # https://rasa.com/docs/rasa/core/policies/
+    policies:
+      # If exact conversation is present in train stories, predicts next action with confidence 1
+      # name: MemoizationPolicy
+      - name: ngchat_plugins.core.policy.ngchat.ngChatPolicy
+        dialogue_path: ./dialogue.yml
+        nlu_threshold: .40
+      - name: MappingPolicy
+
+
+FAQ Only
+---------
+
+
+FAQ with NLU
+-------------
+

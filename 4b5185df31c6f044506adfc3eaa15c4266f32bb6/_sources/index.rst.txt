@@ -7,16 +7,17 @@ Welcome to ngChat's Master Documentation!
 ===========================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :glob:
+   :titlesonly:
    :caption: Contents:
 
-   ngchat/index
-   ngchat/*
-   speech/index
+   ngChat <ngchat/index>
+   ngChat Quick Start <ngchat/quickstart>
+   ngChat-FAQ <ngchat/faq>
    speech/*
-   report/index
    report/*
+   cart/*
 
 
 
