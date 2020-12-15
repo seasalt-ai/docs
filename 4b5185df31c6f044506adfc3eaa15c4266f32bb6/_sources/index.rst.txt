@@ -7,7 +7,7 @@ Welcome to ngChat's Master Documentation!
 ===========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :glob:
    :titlesonly:
    :caption: Contents:
@@ -17,7 +17,8 @@ Welcome to ngChat's Master Documentation!
    ngChat-FAQ <ngchat/faq>
    speech/*
    report/*
-   cart/*
+   cart/index.rst
+   policy/index.rst
 
 
 

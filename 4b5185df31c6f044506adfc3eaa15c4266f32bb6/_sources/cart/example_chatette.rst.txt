@@ -1,0 +1,8 @@
+.. _example_chatette:
+
+=====================
+Chatette Example
+=====================
+
+.. literalinclude:: ./example_files/example.chatette
+    :language: MD

@@ -1,8 +1,8 @@
 .. _quickstart:
 
-===============
+===================
 ngChat Quick Start
-===============
+===================
 
 .. Bootstrap specific class labels
 
@@ -38,7 +38,7 @@ By the end of this tutorial, you will be able to:
   * Orient yourself in the VSCode Editor
 
 Accessing ngChat
-=============
+=================
 
 ngChat is hosted by SEASALT.AI and can be accessed using any web browser.
 

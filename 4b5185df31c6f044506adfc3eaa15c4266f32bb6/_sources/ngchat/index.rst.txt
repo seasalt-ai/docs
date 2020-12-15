@@ -10,6 +10,9 @@ Welcome to ngChat's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   quickstart.rst 
+   bot_tutorial.rst 
+   faq.rst 
 
 
 Indices and tables

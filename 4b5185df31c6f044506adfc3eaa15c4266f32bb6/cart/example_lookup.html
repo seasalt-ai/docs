@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to ngChat Cart’s documentation! &mdash; ngChat 0.0.1 documentation</title>
+  <title>Lookup Table Example &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="NgChat Cart Overview" href="readme.html" />
-    <link rel="prev" title="Welcome to ngChat-report’s documentation!" href="../report/index.html" /> 
+    <link rel="next" title="Welcome to ngChat Policy’s documentation!" href="../policy/index.html" />
+    <link rel="prev" title="Chatette Example" href="example_chatette.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,13 +90,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Welcome to ngChat Cart’s documentation!</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Welcome to ngChat Cart’s documentation!</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="readme.html">NgChat Cart Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html">ngChat Cart Technical Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html">ngChat Cart Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_menu.html">Menu Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="example_chatette.html">Chatette Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html">Lookup Table Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Lookup Table Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../policy/index.html">Welcome to ngChat Policy’s documentation!</a></li>
@@ -146,13 +146,15 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Welcome to ngChat Cart’s documentation!</li>
+          <li><a href="index.html">Welcome to ngChat Cart’s documentation!</a> &raquo;</li>
+        
+      <li>Lookup Table Example</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/cart/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/cart/example_lookup.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -165,48 +167,71 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-ngchat-cart-s-documentation">
-<h1>Welcome to ngChat Cart’s documentation!<a class="headerlink" href="#welcome-to-ngchat-cart-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">NgChat Cart Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#purpose">Purpose</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#implementation">Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#integration-with-rasa">Integration with Rasa</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#training-data-generation">Training Data Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#cart-menu-format">CART MENU FORMAT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#menu">Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#product">Product</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#modifier-groups">Modifier groups</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#modifiers">Modifiers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#variants">Variants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#json-menu-format-schema-overview">JSON Menu Format Schema Overview</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ngchat_cart.html">ngChat Cart Technical Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#module-ngchat_cart.cart">ngchat_cart.cart module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#module-ngchat_cart.generate_chatette">ngchat_cart.generate_chatette module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#module-ngchat_cart.generate_lookup_tables">ngchat_cart.generate_lookup_tables module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">ngChat Cart Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#quickstart-guide">Quickstart Guide</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-the-menu">Creating the Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#generating-lookup-tables-chatette-templates">Generating Lookup Tables &amp; Chatette Templates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#writing-the-cart-config-yml-file">Writing the cart_config.yml File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#integrating-with-rasa">Integrating with Rasa</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="example_menu.html">Menu Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_chatette.html">Chatette Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_lookup.html">Lookup Table Example</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html#item-lookup-table">Item Lookup Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html#modifier-lookup-table">Modifier Lookup Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html#query-topic-lookup-table">Query Topic Lookup Table</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="lookup-table-example">
+<span id="lookup-example"></span><h1>Lookup Table Example<a class="headerlink" href="#lookup-table-example" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="item-lookup-table">
+<h2>Item Lookup Table<a class="headerlink" href="#item-lookup-table" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span> <span class="ow">and</span> <span class="n">pastry</span> <span class="n">combo</span>
+<span class="n">pressed</span> <span class="n">turkey</span> <span class="n">sandwich</span>
+<span class="n">Breakfast</span> <span class="n">Pastry</span> <span class="n">Combo</span>
+<span class="n">breakfast</span> <span class="n">pastry</span> <span class="n">combo</span>
+<span class="n">pressed</span> <span class="n">ham</span> <span class="n">sandwich</span>
+<span class="n">turkey</span> <span class="n">bacon</span> <span class="n">panini</span>
+<span class="n">Turkey</span> <span class="n">Bacon</span> <span class="n">Panini</span>
+<span class="n">pressed</span> <span class="n">sandwich</span>
+<span class="n">panini</span> <span class="n">sandwich</span>
+<span class="n">turkey</span> <span class="n">sandwich</span>
+<span class="n">breakfast</span> <span class="n">combo</span>
+<span class="n">hot</span> <span class="n">americano</span>
+<span class="n">House</span> <span class="n">Coffee</span>
+<span class="n">pastry</span> <span class="n">combo</span>
+<span class="n">decaf</span> <span class="n">coffee</span>
+<span class="n">Decaf</span> <span class="n">Coffee</span>
+<span class="n">house</span> <span class="n">coffee</span>
+<span class="n">ham</span> <span class="n">sandwich</span>
+<span class="n">Ham</span> <span class="n">Panini</span>
+<span class="n">ham</span> <span class="n">panini</span>
+<span class="n">croissant</span>
+<span class="n">americano</span>
+<span class="n">Americano</span>
+<span class="n">panini</span>
+<span class="n">Panini</span>
+<span class="n">muffin</span>
+<span class="n">coffee</span>
+<span class="n">decaf</span>
+<span class="n">bagel</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modifier-lookup-table">
+<h2>Modifier Lookup Table<a class="headerlink" href="#modifier-lookup-table" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">non</span><span class="o">-</span><span class="n">dairy</span> <span class="n">cream</span>
+<span class="n">raw</span> <span class="n">sugar</span>
+<span class="n">splenda</span>
+<span class="n">no</span> <span class="n">room</span>
+<span class="n">sugar</span>
+<span class="n">cream</span>
+<span class="n">room</span>
+<span class="n">none</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="query-topic-lookup-table">
+<h2>Query Topic Lookup Table<a class="headerlink" href="#query-topic-lookup-table" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hot</span> <span class="n">coffee</span>
+<span class="n">sandwiches</span>
+<span class="n">breakfast</span>
+<span class="n">beverage</span>
+<span class="n">espresso</span>
+<span class="n">savory</span>
+<span class="n">combos</span>
+<span class="n">lunch</span>
+<span class="n">combo</span>
+<span class="n">decaf</span>
+<span class="n">food</span>
+<span class="n">hot</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -218,10 +243,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="readme.html" class="btn btn-neutral float-right" title="NgChat Cart Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../policy/index.html" class="btn btn-neutral float-right" title="Welcome to ngChat Policy’s documentation!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../report/index.html" class="btn btn-neutral float-left" title="Welcome to ngChat-report’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="example_chatette.html" class="btn btn-neutral float-left" title="Chatette Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
