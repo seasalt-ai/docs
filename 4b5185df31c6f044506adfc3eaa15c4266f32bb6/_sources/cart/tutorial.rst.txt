@@ -1,28 +1,23 @@
 .. _cart_tutorial:
 
-TODO: rework tutorial to use tutorial bot 
-
 =====================
 ngChat Cart Tutorial
 =====================
-This tutorial will walk through how to utilize ngChat Cart for an e-commerce chatbot. It will demonstrate how to:
- - :ref:`Create a menu with the proper schema<Creating the Menu>`
- - :ref:`Express complex items on the menu<Combo Item Example>`
- - :ref:`Automatically generate training data from the menu<Generating Lookup Tables & Chatette Templates>`
- - :ref:`Configure the cart<Writing the cart_config.yml File>` - :ref:`Integrate the cart into bot actions<Integrating with Rasa>`
+
+This tutorial will walk through how to utilize ngChat Cart for an e-commerce chatbot. 
+
+.. contents:: Table of Contents
+    :local:
+    :depth: 3
 
 For this tutorial we will imagine that we are building a new coffee shop bot from the ground up. Take it that the new bot can already handle basic intents, and can extract entities to slots. From there we will walk through adding menu and cart support.
 For more detailed information about why and how the cart is implemented, see the :ref:`readme <cart_readme>` or the
 :ref:`technical documentation <ngchat_cart>`.
 
-Quickstart Guide
-=================
-TODO: a shorter summary of the things talked in detail
-
 Creating the Menu
 ==================
 
-Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. 
+Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: ``/data/menu.json``.
 
 .. TIP:: Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encourage to automate as much of this process as possible to avoid tedious menu construction by hand. 
 
@@ -642,7 +637,7 @@ The ``cart.py`` file has two methods to assist with exporting NLU training data 
 
 .. code-block::
 
-    python generate_chatette.py {menu file path} {output file path}
+    python generate_chatette.py {bot_path}/data/menu.json {bot path}/data/menu.chatette
 
 This outputs a `chatette <https://github.com/SimGus/Chatette>`_ formatted file that contains entity examples for ``items``, ``modifiers``, ``query_topics``. The item and modifier examples will include a set of the names of all of ``products``, ``modifiers``, and ``aliases`` present in the menu. The query topic examples include a set of all menu ``categories`` and ``tags``, helpful for when the user queries the menu. You can see an the full extracted file from our example menu :ref:`here<example_chatette>`.
 
@@ -656,11 +651,11 @@ You can generate Rasa lookup tables with the following command:
 
 .. code-block:: 
 
-    python generate_lookup_tables.py {menu file path} {output directory}
+    python generate_lookup_tables.py {bot path}/data/menu.json {bot path}/data
 
 This script will output individual files for ``items``, ``modifiers``, and ``query_topics``. These files contain the same information at the chatette file, but just in a different format. You can see the result from our example menu :ref:`here<lookup_example>`.
 
-To use these lookup tables, include references in your bot's NLU data. While these can go in any NLU data file used by the bot, we suggest keeping them in an ``extra_nlu.md`` file, which includes bot-specific NLU data not generated from templates or real users. To include them, you would append the following:
+To use these lookup tables, include references in your bot's NLU data. To include them, you would append the following to one of your Rasa NLU files:
 
 .. code-block:: MD
 
@@ -673,9 +668,13 @@ To use these lookup tables, include references in your bot's NLU data. While the
     ## lookup:query_topics
     path/to/query_topics.txt
 
+.. TIP:: While lookup table specifications and chatette generated examples can go in any NLU data file used by the bot, we suggest keeping three separate files: ``anno_nlu.md`` for annotate user utterances, ``chatette_nlu.md`` for generated examples, and ``extra_nlu.md``, which includes bot-specific NLU data not generated from templates or real users (such as lookup table specifications, dummy intents used for buttons, etc).
+
 Writing the cart_config.yml File
 =================================
-Now that we have a working menu, we can prepare to integrate ngChat Cart with our bot. First, we'll need to set up a cart config file so that we can adjust the cart settings and set up our menu path. The following is a list of configurable parameters, with their default values listed:
+Now that we have a working menu, we can prepare to integrate ngChat Cart with our bot. First, we'll need to set up a cart config file so that we can adjust the cart settings and set up our menu path. Create a file called ``cart_config.yml`` in your bot directory. 
+
+The following is a list of configurable parameters, with their default values listed:
 
 +-----------------------+------------+--------------------------------------+-----------------------------+
 | NAME                  | TYPE       | DESCRIPTION                          | DEFAULT VALUE               |
@@ -730,6 +729,8 @@ Now that we have a working menu, we can prepare to integrate ngChat Cart with ou
 
 Most defaults will work fine for running locally, but before running on a cluster the ElasticSearch ``host`` and ``port`` must be configured. The various thresholds can be raised or lowered to adjust how the bot will user queries.
 
+You can find a full example of a ``cart_config.yml`` file :ref:`here <cart_config>`.
+
 Integrating with Rasa
 ======================
 Once a valid menu is created and the cart setting are configured, ngChat Cart can be integrated with Rasa. The only point of contact between the bot and the cart system is through ``actions.py``. The bot is in charge of extracting intents & entities from user utterances and deciding which actions to execute next. During action execution, custom actions can call ``cart.py`` methods in order to pass slot data to the cart, manipulate the user's cart, request information from the cart, etc. 
@@ -741,14 +742,14 @@ Before calling methods from ``cart.py``, however, there is a bit more configurat
 .. code-block:: Python
 
     from ngchat_cart import cart
-    cart.load_config({path to config file})
+    cart.load_config('./cart_config.yml')
     cart.load_menus()
 
 This will initialize an instance of ``cart.py`` that has the appropriate menus and configurations for the bot. 
 
 Session Start
 --------------
-Next, upon session start the bot will need to initialize a ``Cart`` object for the specific user. Here it is recommended to override Rasa's built in ``ActionSessionStart`` action, as is shown in the following example: 
+Next, upon session start the bot will need to initialize a ``Cart`` object for the specific user. Here it is recommended to override Rasa's built in ``ActionSessionStart`` action. Add the action to your ``actions.py`` file, as is shown in the following example: 
 
 .. code-block:: Python
     :linenos:
@@ -784,11 +785,15 @@ Next, upon session start the bot will need to initialize a ``Cart`` object for t
                     SlotSet('cart_dump', user_cart.cart_dump()),
                     ActionExecuted('action_listen')]
 
+.. IMPORTANT:: In order for this override to work, you will also need to add ``action_session_start`` to the actions list in your domain file.
+
 This action is accomplishing several things. First, it is grabbing the user's existing cart, or creating a new cart object via the lru cache in the ``get_user_cart`` method. It is essential that cart objects are accessed via the user's ``sender_id``, otherwise users would all share one cart object, or the objects would get mixed up between users. Whenever accessing or manipulating the user cart, it must first be retrieved with the ``get_user_cart`` method. 
 
 Second, if the bot only uses one menu, or there is a default menu, the bot should automatically load the menu at session start. If some information is needed prior to loading the menu, line 24 can be excluded.
 
-Finally, the action returns the ``SessionStarted`` event. This event *must* be returned first in the event list of this action. From there, you can also set any slots that the bot should have pre-filled at session start. In this case, the example uses the ``cart_dump`` method to fill the bot's ``cart_dump`` slot. The cart dump is essentially a dictionary representation of useful information extracted from the current cart status. This can be used by the dialogue manager to check the status of the cart and have the bot execute certain actions accordingly. Lastly, the bot must also return an ``ActionExecuted('action_listen')`` event. This will ensure that after the session start action has finished, the next action to be executed will always be ``action_listen``.
+Next, the action returns the ``SessionStarted`` event. This event *must* be returned first in the event list of this action. From there, you can also set any slots that the bot should have pre-filled at session start. In this case, the example uses the ``cart_dump`` method to fill the bot's ``cart_dump`` slot. The cart dump is essentially a dictionary representation of useful information extracted from the current cart status. This can be used by the dialogue manager to check the status of the cart and have the bot execute certain actions accordingly. This is optional for our simple tutorial bot, but becomes useful for more complex tasks.
+
+Lastly, the bot must also return an ``ActionExecuted('action_listen')`` event. This will ensure that after the session start action has finished, the next action to be executed will always be ``action_listen``.
 
 Calling Cart Methods from Actions
 ------------------------------------
@@ -798,15 +803,18 @@ Other tasks, like adding an item to the cart, require a more complex navigation 
 
 Action Examples
 ----------------
+
 **Displaying the Menu**
+
+In the dialogue tutorial, we set up a framework to execute two tasks: displaying the menu and adding an item to the cart. First, add ``action_display_menu`` to the actions list in your ``domain.yml`` file. Next, add the following action to your ``actions.py`` file.
 
 .. code-block:: Python
     :linenos:
 
-    class DescribeMenu(Action):
+    class DisplayMenu(Action):
 
         def name(self) -> Text:
-            return "action_describe_menu"
+            return "action_display_menu"
 
         def run(self, dispatcher: CollectingDispatcher,
                 tracker: Tracker, Domain: Dict[Text, Any]
@@ -820,58 +828,20 @@ Action Examples
                 dispatcher.utter_message(user_cart.menu.describe_menu())
             return []
 
-In this case, the cart method is returning a string that can be directly presented to the user via the Rasa dispatcher.
+In this case, the cart method is returning a string that can be directly presented to the user via the Rasa dispatcher. To have the bot execute this action, go back to the ``dialogue.yml`` file and replace ``utter_display_menu`` with ``action_display_menu``. This will result in the bot executing the custom action instead of just the utterance template when the user provides the ``display_menu`` intent.
 
-**Displaying Item Suggestions**
+.. code-block:: YAML
 
-.. code-block:: Python
-    :linenos:
-
-    class GiveRecommendations(Action):
-
-        def name(self) -> Text:
-            return "action_give_recommendations"
-
-        def run(self, dispatcher: CollectingDispatcher,
-                tracker: Tracker, domain: Dict[Text, Any]
-                ) -> List[Dict[Text, Any]]:
-            """Based on the category, dispatch recommended items."""
-            # Build keyword search query from slots
-            keywords = []
-            for slot_name in ['size', 'options', 'items']:
-                keyword_slot = tracker.slots.get(slot_name)
-                if type(keyword_slot) is list:
-                    for k in keyword_slot:
-                        keywords.append(k)
-                elif type(keyword_slot) is str:
-                    keywords.append(keyword_slot)
-
-            # Get the user cart
-            user_cart = cart.get_user_cart(tracker.sender_id)
-            if user_cart and user_cart.menu:
-                suggest_item = tracker.get_slot('items')[0] if tracker.get_slot('items') else ""
-                # submit a query with the item name and keywords
-                suggestions = user_cart.query_item_suggestions(
-                    name=suggest_item,
-                    keywords=keywords)
-
-                # dispatch a message based on the results
-                if suggestions:
-                    dispatcher.utter_message(f"Here are some suggested items:{'\n'.join(suggestions)})
-                else:
-                    dispatcher.utter_message((
-                        "I'm not able to find anything like that on the menu. Please try re-phrasing "
-                        "your request or ask me about the menu to see what's available."))
-            else:
-                dispatcher.utter_message("I'm having trouble accessing your menu. Try restarting.")
-
-            # The slots query_topics and items have served their purpose
-            # of getting recommendations, now we clear them
-            return [SlotSet('query_topics', []), SlotSet('items', [])]
-
-In this action, the bot likely extracted ``query_topic`` or ``item`` entities related to what the user wants from the menu. After the action is complete, the slots have served their purpose and should be cleared so that they do not affect the next dialogue turn. 
+    $[display menu]:
+    conditions:
+        - INTENT.name == 'display_menu'
+    actions:
+        - action_display_menu
+        - action_listen
 
 **Validating an Item**
+
+The bot should also be able to validate a user's requested item and add it to the cart. When the user gives the ``select_item`` intent, and the ``item`` slot is filled, the item should be validated by the cart. Add ``action_validate_item`` to you domain and the following action code to your actions file.
 
 .. code-block:: Python
     :linenos:
@@ -888,86 +858,37 @@ In this action, the bot likely extracted ``query_topic`` or ``item`` entities re
             # Get user cart
             user_cart = cart.get_user_cart(tracker.sender_id)
 
-            # get keywords to assist with item query
-            keywords = tracker.get_slot('options') if tracker.get_slot('options') else []
-            if tracker.get_slot('query_topics'):
-                keywords += tracker.get_slot('query_topics')
-            if tracker.get_slot('size'):
-                keywords.append(tracker.get_slot('size'))
-
             # query the menu for a matching item
             item = tracker.get_slot('item')
             if item:
-                match = user_cart.get_matching_menu_item(item, keywords)
+                match = user_cart.get_matching_menu_item(item, [])
 
                 if not match:
-                    dispatcher.utter_message(f"I couldn't find an exact match for: {item})
-                    # if no match, offer some suggestions
-                    similar_items = user_cart.get_similar_menu_items(item, keywords, 5)
-                    if similar_items:
-                        dispatcher.utter_message(f"I found something similar to {item}: {similar_items}")
-
-                    return [SlotSet('item', None),
-                            FollowupAction('action_listen')]
-
+                    return [SlotSet('item', None)]
                 elif match:
-                    dispatcher.utter_message(f"Let's customize the {match}. "
-            return [SlotSet('item', match.name)]
-
-This action queries the menu in a similar fashion to the recommendation action. If it finds an exact match, it will set the ``item`` slot to the normalized item name from the menu. This will allow the dialogue policy to see the updated item and move forward with dialogue flow. If there is no matching item, the action will offer suggestions of similar items, and then set the ``item`` slot to None. This tells the bot that the item was not successfully validated. The action will also force an ``action_listen``, giving the user a chance to clarify their request.
-
-Modifiers that users specify also go through a similar validation process before being added to an item.
-
-**Creating a New CartItem**
-
-.. code-block:: Python
-    :linenos:
-
-    class UpdateActiveItem(Action):
-        """Class to add item to cart."""
-
-        def name(self) -> Text:
-            """Set action name to action_prepare_add_to_cart."""
-            return "action_update_active_item"
-
-        def run(self, dispatcher: CollectingDispatcher,
-                tracker: Tracker, domain: Dict[Text, Any]
-                ) -> List[Dict[Text, Any]]:
-            """Create a new cart item from a verified item."""
-            # Get user cart
-            user_cart = cart.get_user_cart(tracker.sender_id)
-
-            # item slot should be validated at this point from validation step, but it's good to make sure the slot is filled
-            item = tracker.get_slot('item') if tracker.get_slot('item') else None
-            if item:
-                # Create a new CartItem object from the item name
-                # Store the new CartItem in the active_item field of the user's cart
-                user_cart.active_item = cart.CartItem.from_item_name(item, user_cart.menu)
+                    user_cart.active_item = CartItem(match)
+                    return [SlotSet('item', match.name)]
             else:
-                logger.error("Error in action_update_active_item: item is None")
-            return [SlotSet("item_to_add", user_cart.active_item.to_text()),
-                    SlotSet("image", user_cart.menu.menu_items[item].image if user_cart.menu else None),
-                    SlotSet("item", tracker.get_slot('item')),
-                    SlotSet('cart_dump', user_cart.cart_dump())]
+                return[SlotSet('item', None]
 
-In this action, we can assume that the validation step has already occurred, and the name in the ``item`` slot is ready to be turned into a ``CartItem``. By creating a new ``CartItem`` and storing it in the ``active_item`` attribute of the user's cart, the new object can be accessed from any of the other methods. If the user specified a modification to the item, it would be validated, turned into a ``CartModifier`` object, and added to the active item. 
+This action queries the menu for a matching item name. If it finds an exact match, it will set the ``item`` slot to the normalized item name from the menu. This will allow the dialogue policy to see the updated item and move forward with dialogue flow. It will also set the cart's ``active_item`` field with the validated item. This will allow other actions to directly access the object. If there is no matching item, the action will set the ``item`` slot to None. At this point, the action could also query the menu for similar items and offer the user some suggestions. Returning ``None``, in this case, tells the bot that the item was not successfully validated. 
 
-Note again that the action clears the ``item`` slot after its done using it. Additionally it fills some helper slots like ``item_to_add`` and ``image`` which can be used by the bot to display information about the item to the user. Finally, the action also updates the ``cart_dump`` slot, which will reflect the change in ``active_item``. Again, this slot can be used by the dialogue manager to decide which action to execute next, given the fact that there is an active item in the cart.
+Now we can go back to our dialogue state and replace ``utter_select_item`` with ``action_validate_item``. Now, ``action_validate_item`` will control which state is entered next, based how it sets the ``item`` slot.
 
 **Adding an Item to the Cart**
 
-Once an item is validated, converted to a ``CartItem``, & modified, it can finally be added to the user's cart.
-
+Once an item is validated and converted to a ``CartItem``, it can be added to the user's cart.
+Add ``action_add_item`` to you domain and the following action to your actions file.
 
 .. code-block:: Python
     :linenos:
 
-    class AddToCart(Action):
+    class AddItem(Action):
         """Class to add item to cart."""
 
         def name(self) -> Text:
             """Set action name to action_add_to_cart."""
-            return "action_add_to_cart"
+            return "action_add_item"
 
         def run(self, dispatcher: CollectingDispatcher,
                 tracker: Tracker, domain: Dict[Text, Any]
@@ -979,28 +900,79 @@ Once an item is validated, converted to a ``CartItem``, & modified, it can final
             # Add the active item to the cart
             user_cart.add_item(user_cart.active_item, tracker.sender_id)
             # affirm that the action is complete, and reset the active item
-            dispatcher.utter_message(template='utter_affirm_add')
+            dispatcher.utter_message(template='utter_added_item')
             user_cart.active_item = None
 
             # Reset all slots that may have been carrying information about the active item.
-            return [SlotSet("num_cart_items", len(user_cart.cart_items)),
-                    SlotSet("items", tracker.get_slot('items')),
-                    SlotSet('options', []),
-                    SlotSet('query_topics', []),
-                    SlotSet('size', None),
-                    SlotSet('item_description', None),
-                    SlotSet('image', None),
-                    SlotSet('quantity', None),
-                    SlotSet('target_cart_item', None),
-                    SlotSet('receipt', None),
-                    SlotSet("cart_total", cart.price_to_text(user_cart.sum_price())),
-                    SlotSet('cart_dump', user_cart.cart_dump()),
-                    SlotSet('item_to_add', None)]
+            return [SlotSet("item", None)]
 
-Once the active item is fully customized, the process of adding it to the cart is a matter of just calling one function. The most important part of this action is wiping the bot clean of any lingering information about the added item. Now that the item is in the cart, we don't want any of the information that we used when adding it to get mixed up with whatever the user asks next. If the user wants to access the added item, they will now need to request to modify or remove the item from the cart.
+Once the active item is fully customized (this could include adjusting size, quantity, or modifiers), the process of adding it to the cart is a matter of just calling one function. The most important part of this action is wiping the bot clean of any lingering information about the added item. Now that the item is in the cart, we don't want any of the information that we used when adding it to get mixed up with whatever the user asks next. If the user wants to access the added item, they will now need to request to modify or remove the item from the cart.
+
+**Display the Cart**
+
+The last thing we will implement is a method to display the current cart status to the user. Add ``action_display_cart`` to you domain and the following action to your actions file.
+
+.. code-block:: Python
+    :linenos:
+
+    class DisplayCart(Action):
+
+        def name(self) -> Text:
+            return "action_display_cart"
+
+        def run(self, dispatcher: CollectingDispatcher,
+                tracker: Tracker, domain: Dict[Text, Any]
+                ) -> List[Dict[Text, Any]]:
+            """Display the contents of the user's cart."""
+            # Get the user cart
+            user_cart = cart.get_user_cart(tracker.sender_id)
+
+            items = user_cart.get_item_names()
+            total = user_cart.sum_price()
+
+            dispatcher.utter_message(f"You have the following items in your cart: {items}.\nYour total is ${total}.")
+            return[]
+
+This action simply grabs the user cart, extracts the item names and total cost, and dispatches the information to the user. We will add this action to our dialogue state so that the cart information is displayed to the user after each item is added. Here is our full dialogue state for adding an item:
+
+.. code-block:: YAML
+
+    $[select item]:
+    conditions:
+        - INTENT.name == 'select_item'
+    actions:
+        - action_validate_item
+    connections:
+        - $[add item]:
+            direct_connection: true
+            conditions:
+                - SLOTS.item is not None
+            actions:
+                - action_add_item
+                - action_display_cart
+                - action_listen
+        - $[add item no item]:
+            direct_connection: true
+            conditions:
+                - SLOTS.item is None
+            actions:
+                - utter_no_item_selected
+                - action_display_menu
+                - action_listen
+
+See the full dialogue example :ref:`here <bot_dialogue>` and the full actions example :ref:`here <bot_actions>`.
+
+Test 
+=====
+
+We can now test our bot with full cart support. Now that we are using actions, we must start the Rasa actions server and the ElasticSearch instance before running.
+
+.. IMPORTANT:: Before running actions for the first time, the endpoint to the action server must be set up. Check the ``endpoints.yml`` file and un-comment the actions server url.
+
+.. image:: ../../../image/finished_bot.PNG
 
 Notes on Best Practices
-------------------------
+========================
 The following are some quick notes concerning best practices, to keep in mind while developing. 
 
 **Pass by Reference**

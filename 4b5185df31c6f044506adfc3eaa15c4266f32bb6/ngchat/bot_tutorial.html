@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ngChat Policy Tutorial" href="../policy/policy_tutorial.html" />
-    <link rel="prev" title="ngChat Quick Start" href="quickstart.html" /> 
+    <link rel="next" title="ngChat FAQ Tutorial" href="faq_tutorial.html" />
+    <link rel="prev" title="ngChat-FAQ" href="faq.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,20 +87,30 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">ngChat</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">ngChat Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cart/index.html">ngChat Cart Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">ngChat Bot Tutorial</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../policy/policy_tutorial.html">ngChat Policy Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cart/tutorial.html">ngChat Cart Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq_tutorial.html">ngChat FAQ Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_config.html">Config Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cart/example_cart_config.html">Cart Config Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_domain.html">Domain Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cart/example_actions.html">Actions Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cart/example_menu.html">Menu Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cart/example_chatette.html">Chatette Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cart/example_lookup.html">Lookup Table Example</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cart/index.html">Welcome to ngChat Cart’s documentation!</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../policy/index.html">Welcome to ngChat Policy’s documentation!</a></li>
 </ul>
 
             
@@ -170,16 +180,38 @@
             
   <div class="section" id="ngchat-bot-tutorial">
 <span id="bot-tutorial"></span><h1>ngChat Bot Tutorial<a class="headerlink" href="#ngchat-bot-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#before-starting" id="id1">Before Starting</a></p></li>
+<li><p><a class="reference internal" href="#ngchat-policy" id="id2">ngChat Policy</a></p></li>
+<li><p><a class="reference internal" href="#ngchat-cart" id="id3">ngChat Cart</a></p></li>
+<li><p><a class="reference internal" href="#ngchat-faq" id="id4">ngChat FAQ</a></p></li>
+</ul>
+</div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Tutorial Shortuts:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../policy/policy_tutorial.html">ngChat Policy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="policy_tutorial.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy_tutorial.html#creating-the-dialogue-file">Creating the Dialogue File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy_tutorial.html#visualizing-the-dialogue">Visualizing the Dialogue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy_tutorial.html#test">Test</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../cart/tutorial.html">ngChat Cart Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#quickstart-guide">Quickstart Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#creating-the-menu">Creating the Menu</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#generating-lookup-tables-chatette-templates">Generating Lookup Tables &amp; Chatette Templates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#writing-the-cart-config-yml-file">Writing the cart_config.yml File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#integrating-with-rasa">Integrating with Rasa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#test">Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html#notes-on-best-practices">Notes on Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq_tutorial.html">ngChat FAQ Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq_tutorial.html#creating-the-data">Creating the Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq_tutorial.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq_tutorial.html#test">Test</a></li>
 </ul>
 </li>
 </ul>
@@ -192,8 +224,9 @@
 </ul>
 </dd>
 </dl>
+<p>The end result will be a relatively simple cafe ordering bot that can answer FAQs, ask the user what they want, display the menu, and validate a user’s item request. The bot will lay the groundwork for using all three ngChat compenents and can be easily customized or built-upon to work towards a more complex e-commerce bot.</p>
 <div class="section" id="before-starting">
-<h2>Before Starting<a class="headerlink" href="#before-starting" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1">Before Starting</a><a class="headerlink" href="#before-starting" title="Permalink to this headline">¶</a></h2>
 <p>It is highly encouraged that before starting this tutorial, you are familiar with <a class="reference external" href="https://rasa.com/docs/rasa/">Rasa Open Source</a>. If you have not used
 Rasa before, we suggest completing the <a class="reference external" href="https://legacy-docs-v1.rasa.com/1.8.3/user-guide/rasa-tutorial/">Rasa tutorial</a> before
 starting the ngChat tutorial. Additionally, before starting <em>this</em> tutorial please initialize a new Rasa bot in a new
@@ -209,26 +242,40 @@ $ rasa init
 </div>
 <p>We will use this simple bot to walk through how to incorporate each ngChat component.</p>
 </div>
-<div class="section" id="ngchat-dialogue">
-<h2>ngChat Dialogue<a class="headerlink" href="#ngchat-dialogue" title="Permalink to this headline">¶</a></h2>
-<p>ngChat Dialogue is a custom Rasa policy component. It will allow you to define simple and consistent rules for your dialogue flow.
+<div class="section" id="ngchat-policy">
+<h2><a class="toc-backref" href="#id2">ngChat Policy</a><a class="headerlink" href="#ngchat-policy" title="Permalink to this headline">¶</a></h2>
+<p>ngChat Policy is a custom Rasa policy component. It will allow you to define simple and consistent rules for your dialogue flow.
 The policy can be used as a stand-alone dialogue manager or can be used in conjunction with other Rasa policies.
 The tutorial will walk through how to add the policy to your configuration, how to write the dialogue states,
 and how to view dialogue states via dynamic visualization.</p>
-<p><a class="reference internal" href="../policy/policy_tutorial.html#policy-tutorial"><span class="std std-ref">Dialogue Tutorial —&gt;</span></a></p>
+<p><a class="reference internal" href="policy_tutorial.html#policy-tutorial"><span class="std std-ref">Policy Tutorial —&gt;</span></a></p>
 </div>
 <div class="section" id="ngchat-cart">
-<h2>ngChat Cart<a class="headerlink" href="#ngchat-cart" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">ngChat Cart</a><a class="headerlink" href="#ngchat-cart" title="Permalink to this headline">¶</a></h2>
 <p>ngChat Cart is a cart management backend for e-commerce chatbots. It will allow your bot to query a menu, customize items, and
 modify the user’s cart. The tutorial will walk through how to format the menu, configure the cart to work with your bot, and
 use the cart methods in Rasa custom actions.</p>
 <p><a class="reference internal" href="../cart/tutorial.html#cart-tutorial"><span class="std std-ref">Cart Tutorial —&gt;</span></a></p>
 </div>
 <div class="section" id="ngchat-faq">
-<h2>ngChat FAQ<a class="headerlink" href="#ngchat-faq" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">ngChat FAQ</a><a class="headerlink" href="#ngchat-faq" title="Permalink to this headline">¶</a></h2>
 <p>ngChat FAQ is a fast and accurate response selector component for Rasa. The tutorial will explain why ngChat FAQ is a better
 alternative to Rasa’s ResponseSelector, how to set up the component, and how to format the data.</p>
-<p><span class="xref std std-ref">FAQ Tutorial —&gt;</span></p>
+<p><a class="reference internal" href="faq_tutorial.html#faq-tutorial"><span class="std std-ref">FAQ Tutorial —&gt;</span></a></p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Example Files:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_resources/bot_config.html">Config Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/example_cart_config.html">Cart Config Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_resources/bot_domain.html">Domain Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/example_actions.html">Actions Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/example_menu.html">Menu Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/example_chatette.html">Chatette Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/example_lookup.html">Lookup Table Example</a></li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -240,10 +287,10 @@ alternative to Rasa’s ResponseSelector, how to set up the component, and how t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../policy/policy_tutorial.html" class="btn btn-neutral float-right" title="ngChat Policy Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="faq_tutorial.html" class="btn btn-neutral float-right" title="ngChat FAQ Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="quickstart.html" class="btn btn-neutral float-left" title="ngChat Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="faq.html" class="btn btn-neutral float-left" title="ngChat-FAQ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

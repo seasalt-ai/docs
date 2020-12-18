@@ -5,6 +5,10 @@ NgChat Cart Overview
 =====================
 A set of python classes and methods that provide cart functionality for chat bots.
 
+.. contents:: Table of Contents
+    :local:
+    :depth: 3
+
 Purpose
 --------
 We believe that chat and voice based e-commerce through conversational AI has a lot potential. However, when using Rasa to build a bot for ordering food and drink, we found the custom actions too restrictive. Our solution is to provide a generalized cart implementation that be integrated into any chat bot. cart.py includes classes for the cart and menu, as well as classes for items and options. Callable methods cover a wide range of capabilities, including but not limited to:
@@ -444,3 +448,13 @@ menu file naming: '/{store_name}.json'
     }
 
 .. NOTE:: Base price should be based on the default version of the item, like the standard size. Base price is summed with the price of the item's modifiers to get the total cost.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Related Pages
+
+   ngchat_cart.rst
+   tutorial.rst
+   example_menu.rst
+   example_lookup.rst
+   example_chatette.rst

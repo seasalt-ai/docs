@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ngChat Cart Documentation &mdash; ngChat 0.0.1 documentation</title>
+  <title>Cart Config Example &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="NgChat Cart Overview" href="readme.html" />
-    <link rel="prev" title="Dialogue.yml Example" href="../ngchat/tutorial_resources/bot_dialogue.html" /> 
+    <link rel="next" title="Domain Example" href="../ngchat/tutorial_resources/bot_domain.html" />
+    <link rel="prev" title="Config Example" href="../ngchat/tutorial_resources/bot_config.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,17 +88,23 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../ngchat/index.html">ngChat</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">ngChat Cart Documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="readme.html">NgChat Cart Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ngchat_cart.html">ngChat Cart Technical Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html">ngChat Cart Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/policy_tutorial.html">ngChat Policy Tutorial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tutorial.html">ngChat Cart Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/faq_tutorial.html">ngChat FAQ Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_config.html">Config Example</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Cart Config Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_domain.html">Domain Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_actions.html">Actions Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_menu.html">Menu Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_chatette.html">Chatette Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_lookup.html">Lookup Table Example</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
@@ -153,13 +159,15 @@
         
           <li><a href="../ngchat/index.html">Welcome to ngChat’s documentation!</a> &raquo;</li>
         
-      <li>ngChat Cart Documentation</li>
+          <li><a href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a> &raquo;</li>
+        
+      <li>Cart Config Example</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/cart/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/cart/example_cart_config.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -172,49 +180,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ngchat-cart-documentation">
-<h1>ngChat Cart Documentation<a class="headerlink" href="#ngchat-cart-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">NgChat Cart Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#purpose">Purpose</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#implementation">Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#integration-with-rasa">Integration with Rasa</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#training-data-generation">Training Data Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#cart-menu-format">CART MENU FORMAT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#menu">Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#product">Product</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#modifier-groups">Modifier groups</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#modifiers">Modifiers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#variants">Variants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="readme.html#json-menu-format-schema-overview">JSON Menu Format Schema Overview</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ngchat_cart.html">ngChat Cart Technical Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#module-ngchat_cart.cart">ngchat_cart.cart module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#module-ngchat_cart.generate_chatette">ngchat_cart.generate_chatette module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ngchat_cart.html#module-ngchat_cart.generate_lookup_tables">ngchat_cart.generate_lookup_tables module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">ngChat Cart Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-the-menu">Creating the Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#generating-lookup-tables-chatette-templates">Generating Lookup Tables &amp; Chatette Templates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#writing-the-cart-config-yml-file">Writing the cart_config.yml File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#integrating-with-rasa">Integrating with Rasa</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#test">Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#notes-on-best-practices">Notes on Best Practices</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="example_menu.html">Menu Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_chatette.html">Chatette Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_lookup.html">Lookup Table Example</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html#item-lookup-table">Item Lookup Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html#modifier-lookup-table">Modifier Lookup Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_lookup.html#query-topic-lookup-table">Query Topic Lookup Table</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="cart-config-example">
+<span id="cart-config"></span><h1>Cart Config Example<a class="headerlink" href="#cart-config-example" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">MENU_PATHS</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="s">&#39;./data/menu.json&#39;</span>
+
+<span class="c1"># Thresholds for matching/suggesting with fuzzywuzzy and elasticsearch</span>
+<span class="nt">FUZZY_MATCH_THRESH</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">85</span>  <span class="c1"># constant for fuzzy matching threshold</span>
+<span class="nt">FUZZY_SUGGEST_THRESH</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">50</span>  <span class="c1"># constant for fuzzy matching similar items</span>
+<span class="nt">ES_MATCH_THRESH</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.5</span>  <span class="c1"># constant for ItemSearch matching threshold</span>
+<span class="nt">ES_SUGGEST_THRESH</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.8</span>  <span class="c1"># constant for ItemSearch matching similar items</span>
+<span class="nt">ES_UNIQUE_THRESH</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3</span> <span class="c1"># a constant for determining if a top result is unique enough to be an exact match</span>
+
+<span class="c1"># categories of attributive options that should precede the item name</span>
+<span class="nt">ATTRIBUTIVE_OPTIONS</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">size</span>
+
+<span class="c1"># host and port info for elasticsearch service</span>
+<span class="nt">ES_TRY_LOCAL_FIRST</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="c1"># On the k8s cluster, login/secret will be set automatically.</span>
+<span class="c1"># ES_PORT: 9200</span>
+<span class="c1"># ES_HOST: quickstart-es-http.default.svc.cluster.local</span>
+<span class="c1"># ES_LOGIN: elastic</span>
+<span class="c1"># ES_SECRET: J248bGk1rg7zOhl5Tq404ut6</span>
+<span class="nt">ES_MULTI_MATCH_TYPE</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cross_fields</span>  <span class="c1"># by default it&#39;s best_fields</span>
+<span class="nt">ES_MULTI_MATCH_FIELDS</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;aliases&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;modifier_names&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;tags&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;categories&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;name&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;ingredients&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;description&quot;</span><span class="p p-Indicator">]</span>
+</pre></div>
 </div>
 </div>
 
@@ -226,10 +217,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="readme.html" class="btn btn-neutral float-right" title="NgChat Cart Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../ngchat/tutorial_resources/bot_domain.html" class="btn btn-neutral float-right" title="Domain Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../ngchat/tutorial_resources/bot_dialogue.html" class="btn btn-neutral float-left" title="Dialogue.yml Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../ngchat/tutorial_resources/bot_config.html" class="btn btn-neutral float-left" title="Config Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

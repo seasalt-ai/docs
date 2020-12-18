@@ -11,8 +11,10 @@ Welcome to ngChat's documentation!
    :caption: Contents:
 
    quickstart.rst 
-   bot_tutorial.rst 
+   policy.rst
+   ../cart/index.rst
    faq.rst 
+   bot_tutorial.rst 
 
 
 Indices and tables
