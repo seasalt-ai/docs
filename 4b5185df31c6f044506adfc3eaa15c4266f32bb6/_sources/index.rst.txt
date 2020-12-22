@@ -10,12 +10,38 @@ Welcome to ngChat's Master Documentation!
    :maxdepth: 3
    :glob:
    :titlesonly:
-   :caption: Contents:
+   :caption: ngChat
 
-   ngChat <ngchat/index>
    ngChat Quick Start <ngchat/quickstart>
-   ngChat-FAQ <ngchat/faq>
+   ngChat Bot Tutorial <ngchat/bot_tutorial>
+   ngChat Policy <ngchat/policy>
+   ngChat FAQ <ngchat/faq>
+
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: ngChat-cart
+
+   Readme <cart/readme>
+   Technical Docs <cart/ngchat_cart>
+
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: ngChat-speech
+
    speech/*
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: ngChat-report
+
    report/*
 
 

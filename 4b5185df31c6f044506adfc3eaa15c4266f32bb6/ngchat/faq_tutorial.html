@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Config Example" href="tutorial_resources/bot_config.html" />
-    <link rel="prev" title="ngChat Bot Tutorial" href="bot_tutorial.html" /> 
+    <link rel="next" title="Bot Tutorial Example Files" href="example_files.html" />
+    <link rel="prev" title="ngChat Cart Tutorial" href="../cart/tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,33 +83,30 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">ngChat</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">ngChat</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="policy.html">ngChat Policy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../cart/index.html">ngChat Cart Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cart/tutorial.html">ngChat Cart Tutorial</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ngChat FAQ Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_config.html">Config Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cart/example_cart_config.html">Cart Config Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_domain.html">Domain Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cart/example_actions.html">Actions Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cart/example_menu.html">Menu Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cart/example_chatette.html">Chatette Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cart/example_lookup.html">Lookup Table Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html">ngChat Cart Tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ngChat FAQ Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_files.html">Bot Tutorial Example Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
 </ul>
 
@@ -157,8 +154,6 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">Welcome to ngChat’s documentation!</a> &raquo;</li>
-        
           <li><a href="bot_tutorial.html">ngChat Bot Tutorial</a> &raquo;</li>
         
       <li>ngChat FAQ Tutorial</li>
@@ -195,7 +190,7 @@ This tutorial will walk through how to format the data, import the data, and add
 <li><p><a class="reference internal" href="#adding-faq-to-the-bot" id="id5">Adding FAQ to the Bot</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#test" id="id6">Test</a></p></li>
+<li><p><a class="reference internal" href="#try-it" id="id6">Try It</a></p></li>
 </ul>
 </div>
 <div class="section" id="creating-the-data">
@@ -239,14 +234,14 @@ Here’s our first FAQ question and answer about store hours:</p>
 <td><p>Question</p></td>
 </tr>
 <tr class="row-even"><td><p>1</p></td>
-<td><p>“We are open Mon-Fri 7am-5pm”</p></td>
+<td><p>We are open Mon-Fri 7am-5pm</p></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
-<td><p>“when are you open?”</p></td>
-<td><p>“What are you hours?”</p></td>
-<td><p>“Are you open now?”</p></td>
+<td><p>when are you open?</p></td>
+<td><p>What are you hours?</p></td>
+<td><p>Are you open now?</p></td>
 </tr>
 </tbody>
 </table>
@@ -263,12 +258,7 @@ Open your <code class="docutils literal notranslate"><span class="pre">config.ym
 <div class="section" id="importing-the-data">
 <h3><a class="toc-backref" href="#id3">Importing the Data</a><a class="headerlink" href="#importing-the-data" title="Permalink to this headline">¶</a></h3>
 <p>In the config, we will need to add a new section called <code class="docutils literal notranslate"><span class="pre">importers</span></code>.
-First, we can specify the regular Rasa importer so that our Rasa formatted files are still imported properly.</p>
-<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">importers</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RasaFileImporter</span>
-</pre></div>
-</div>
-<p>To add the ngChat FAQ importer, add the name as the path to the <code class="docutils literal notranslate"><span class="pre">FAQImporter</span></code> class.
+To add the ngChat FAQ importer, add the name as the path to the <code class="docutils literal notranslate"><span class="pre">FAQImporter</span></code> class.
 Specify the paths to the csv files under <code class="docutils literal notranslate"><span class="pre">faq_paths</span></code>.
 You can also optionally specify the <code class="docutils literal notranslate"><span class="pre">augment_with_synonyms</span></code> and <code class="docutils literal notranslate"><span class="pre">timezone</span></code> fields.</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">importers</span><span class="p">:</span>
@@ -279,6 +269,15 @@ You can also optionally specify the <code class="docutils literal notranslate"><
   <span class="nt">timezone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">America/Los_Angeles</span>
 <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RasaFileImporter</span>
 </pre></div>
+</div>
+<p>Next, we can specify the regular Rasa importer so that our Rasa formatted files are still imported properly.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">importers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RasaFileImporter</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The custom FAQImporter must be included first on the <code class="docutils literal notranslate"><span class="pre">importers</span></code> list, before <code class="docutils literal notranslate"><span class="pre">RasaFileImporter</span></code>.</p>
 </div>
 <p>For a more detailed explanation of how the importer can be configured, see <a class="reference internal" href="faq.html#faq-importer"><span class="std std-ref">FAQImporter</span></a> in the FAQ overview.</p>
 </div>
@@ -345,8 +344,8 @@ This is the default action name for the ElasticSelectors action.</p>
 </div>
 </div>
 </div>
-<div class="section" id="test">
-<h2><a class="toc-backref" href="#id6">Test</a><a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="try-it">
+<h2><a class="toc-backref" href="#id6">Try It</a><a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
 <p>We can now test that the new FAQ selector is working as expected.
 Retrain your bot, Make sure an ElasticSearch instance is running, and start the bot in the terminal.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ rasa train
@@ -364,10 +363,10 @@ $ rasa shell -vv
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tutorial_resources/bot_config.html" class="btn btn-neutral float-right" title="Config Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="example_files.html" class="btn btn-neutral float-right" title="Bot Tutorial Example Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="bot_tutorial.html" class="btn btn-neutral float-left" title="ngChat Bot Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../cart/tutorial.html" class="btn btn-neutral float-left" title="ngChat Cart Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

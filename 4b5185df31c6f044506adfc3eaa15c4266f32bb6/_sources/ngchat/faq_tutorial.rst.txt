@@ -32,7 +32,7 @@ Here's our first FAQ question and answer about store hours:
 +----+-------------------------------+----------+----------+-----------+---------+----------------------+-----------------------+---------------------+
 | ID | Answer                        | Category | Keywords | From date | To date | Question             | Question              | Question            |
 +----+-------------------------------+----------+----------+-----------+---------+----------------------+-----------------------+---------------------+
-| 1  | "We are open Mon-Fri 7am-5pm" |          |          |           |         | "when are you open?" | "What are you hours?" | "Are you open now?" |
+| 1  | We are open Mon-Fri 7am-5pm   |          |          |           |         | when are you open?   | What are you hours?   | Are you open now?   |
 +----+-------------------------------+----------+----------+-----------+---------+----------------------+-----------------------+---------------------+
 
 .. IMPORTANT:: If a column is not used, it should be left blank, but the column itself should not be removed.
@@ -50,13 +50,6 @@ Importing the Data
 -------------------
 
 In the config, we will need to add a new section called ``importers``.
-First, we can specify the regular Rasa importer so that our Rasa formatted files are still imported properly.
-
-.. code-block:: YAML
-
-    importers:
-      - name: RasaFileImporter
-
 To add the ngChat FAQ importer, add the name as the path to the ``FAQImporter`` class.
 Specify the paths to the csv files under ``faq_paths``.
 You can also optionally specify the ``augment_with_synonyms`` and ``timezone`` fields.
@@ -70,6 +63,15 @@ You can also optionally specify the ``augment_with_synonyms`` and ``timezone`` f
       augment_with_synonyms: false
       timezone: America/Los_Angeles
     - name: RasaFileImporter
+
+Next, we can specify the regular Rasa importer so that our Rasa formatted files are still imported properly.
+
+.. code-block:: YAML
+
+    importers:
+      - name: RasaFileImporter
+
+.. IMPORTANT:: The custom FAQImporter must be included first on the ``importers`` list, before ``RasaFileImporter``.
 
 For a more detailed explanation of how the importer can be configured, see :ref:`FAQImporter <faq_importer>` in the FAQ overview.
 
@@ -141,8 +143,8 @@ Finally, we will need to add a new state to the ``dialogue.yml`` file that recog
         - respond_faq
         - action_listen
 
-Test 
-======
+Try It 
+========
 
 We can now test that the new FAQ selector is working as expected.
 Retrain your bot, Make sure an ElasticSearch instance is running, and start the bot in the terminal.

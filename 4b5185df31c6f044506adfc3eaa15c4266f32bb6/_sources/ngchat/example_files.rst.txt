@@ -1,0 +1,20 @@
+.. _example_files:
+
+===========================
+Bot Tutorial Example Files 
+===========================
+
+.. toctree::
+    :maxdepth: 2
+
+    ./tutorial_resources/bot_chatette.rst
+    ./tutorial_resources/bot_config.rst
+    ./tutorial_resources/bot_domain.rst
+    ./tutorial_resources/bot_dialogue.rst
+    ../cart/example_cart_config.rst
+    ../cart/example_menu.rst
+    ../cart/example_chatette.rst
+    ../cart/example_lookup.rst
+    ./tutorial_resources/bot_nlu.md
+    ../cart/example_actions.rst
+    ./tutorial_resources/bot_faq.rst

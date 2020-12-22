@@ -1,0 +1,29 @@
+.. _bot_nlu:
+
+===================
+NLU File Examples
+===================
+
+The NLU files can be condensed into one ``nlu.md`` file or can be organized into multiple files, as will be shown here.
+
+Chatette NLU
+==============
+NLU training examples produced by chatette.
+
+.. literalinclude:: chatette_nlu.md
+    :language: MD
+
+Annotated NLU
+===============
+Annotated training examples from real users.
+
+.. literalinclude:: anno_nlu.md
+    :language: MD
+
+Extra NLU
+==========
+Purely utility features such as lookup table sepecifications, synonym mapping, dummy intents for buttons, etc.
+
+.. literalinclude:: extra_nlu.md
+    :language: MD
+

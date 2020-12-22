@@ -16,25 +16,25 @@ Purpose
 The purpose of a dialogue management system is to decide at each moment in the conversation which action the bot should take next. 
 The foundation of Rasa'a dialogue management relies on the TEDPolicy, a transformer model that is trained on conversation 'stories', which contain user intents & entities paired with the desired bot responses and actions. 
 While the TEDPolicy is excellent at handling conversational context and responding to unique dialogues, we find it is too heavy weight and too unpredictable for some conversations that follow a simple and consistent path. 
-The purpose of ngChat Dialogue Policy is to provide an alternative which allows developers to have complete control over the bots response to specified situatations.   
+The purpose of ngChat Dialogue Policy is to provide an alternative which allows developers to have complete control over the bots response to specified situations.   
 
 Implementation
 ===============
 
 The ngChat Policy is written as a subclass of the Rasa policy class (rasa.core.policies.policy.policy). 
 The policy determines the next action based on a set of hand-written rules which are loaded in from a separate yaml file. 
-These rules are representated as states and the policy itself can be thought of as a finite state machine, where each state has a set of enterance conditions, connections to other states, and a set of actions to execute if the bot enters that state. 
+These rules are represented as states and the policy itself can be thought of as a finite state machine, where each state has a set of entrance conditions, connections to other states, and a set of actions to execute if the bot enters that state. 
 Most states are enter-states, meaning that they can be entered at any point in the conversation if their conditions are met; others are direct-connect states meaning that they can only be entered if the bot's previous state connects to it. 
-Every time the bot needs to make a decision (usually after a user utterance) the policy evaluates the enterance conditions of each state, calculates a score for each enterable state, and then executes the actions of the highest ranked state. 
+Every time the bot needs to make a decision (usually after a user utterance) the policy evaluates the entrance conditions of each state, calculates a score for each enterable state, and then executes the actions of the highest ranked state. 
 The bot will continue to do this until a listen action is triggered, at which point it will stop to listen to the user's input. 
 
-The score of each state is calcuated as the sum of 4 values: 
-  - The number of enterance conditions it has (+1 per)
+The score of each state is calculated as the sum of 4 values: 
+  - The number of entrance conditions it has (+1 per)
   - Rank score specified in dialogue.yml (+rank_score, default: 10)
   - If the bot's previous state connects to it (+5)
   - If that connection is a direct connection (+1000)
  
-Once a state is selected, the bot will execute all the actions from that state before re-evaluating. If no state's enterance conditions can be met, it will trigger Rasa's DEFAULT_ACTION_FALLBACK followed by a listen action. Similarly, if the confidence level of the user intent is below the NLU threshold, the policy will trigger the fallback.
+Once a state is selected, the bot will execute all the actions from that state before re-evaluating. If no state's entrance conditions can be met, it will trigger Rasa's DEFAULT_ACTION_FALLBACK followed by a listen action. Similarly, if the confidence level of the user intent is below the NLU threshold, the policy will trigger the fallback.
 
 Policy Pseudo-code
 ===================
@@ -69,7 +69,7 @@ Upon Prediction:
       get_predicted_action():
         for state in name2state:
           get_rank_score():
-              # Use Rasa tracker and domain to evaluate each state's enterance conditions
+              # Use Rasa tracker and domain to evaluate each state's entrance conditions
               if any condition evaluates false: 
                 return 0
               if direct_connection is True but current_state does not connect: 
@@ -385,11 +385,3 @@ Write the rules/states that will guide the policy to determine the next action a
   * A state should only be entered if its conditions are met, but restrict entrance to the state with its conditions so that it is only entered at the proper time
 
 .. TIP:: yaml format does not like to start a value with a quotation mark unless the whole value is quoted (``'action_greet'``: OK | ``'item' in ENTITIES``: ERROR). In this case you will have to quote the whole value and then use scare quotes for the substring: ex/ ``"'item' in ENTITIES"``
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Related Pages
-
-   policy_tutorial.rst
-   tutorial_resources/bot_dialogue.rst

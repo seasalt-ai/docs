@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NLU File Examples &mdash; ngChat 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> ngChat
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ngChat</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bot_tutorial.html">ngChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cart/readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cart/ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ngChat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>NLU File Examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/ngchat/tutorial_resources/bot_nlu.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlu-file-examples">
+<span id="bot-nlu"></span><h1>NLU File Examples<a class="headerlink" href="#nlu-file-examples" title="Permalink to this headline">¶</a></h1>
+<p>The NLU files can be condensed into one <code class="docutils literal notranslate"><span class="pre">nlu.md</span></code> file or can be organized into multiple files, as will be shown here.</p>
+<div class="section" id="chatette-nlu">
+<h2>Chatette NLU<a class="headerlink" href="#chatette-nlu" title="Permalink to this headline">¶</a></h2>
+<p>NLU training examples produced by chatette.</p>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span>&lt;!-- Generated using Chatette v1.6.2 --&gt;
+
+<span class="gu">## intent:greet</span>
+<span class="k">-</span> Good morning!
+<span class="k">-</span> Heya
+<span class="k">-</span> Hi folks!
+<span class="k">-</span> Hiya!
+<span class="k">-</span> Howdy
+<span class="k">-</span> hello
+<span class="k">-</span> hello!
+<span class="k">-</span> hi folks
+<span class="k">-</span> hi!
+<span class="k">-</span> howdy
+
+<span class="gu">## intent:display_menu</span>
+<span class="k">-</span> Describe the CoffeeShop menu please
+<span class="k">-</span> Select more information about Coffee Shop menu please
+<span class="k">-</span> Select more information about the Coffee Shop menu please
+<span class="k">-</span> Show me more information about menu please
+<span class="k">-</span> We want to hear info about the Coffee Shop menu
+<span class="k">-</span> What are the menu groups
+<span class="k">-</span> describe the menu
+<span class="k">-</span> explain more about the CoffeeShop menu please
+<span class="k">-</span> explain more about the menu
+<span class="k">-</span> give me more information about the Coffee Shop menu please
+<span class="k">-</span> i&#39;d like to hear more info about the menu
+<span class="k">-</span> i&#39;d like to hear more information about the menu
+<span class="k">-</span> list the menu sections
+<span class="k">-</span> open more information about the menu please
+<span class="k">-</span> select more information about Coffee Shop menu
+<span class="k">-</span> select the categories in the menu
+<span class="k">-</span> show me the sections on menu
+<span class="k">-</span> tell me more about the menu please
+<span class="k">-</span> what are the menu categories
+<span class="k">-</span> what are the menu sections
+
+<span class="gu">## intent:select_item</span>
+<span class="k">-</span> Can we also order [<span class="nt">House Coffee</span>](<span class="na">item</span>) please
+<span class="k">-</span> Could we please order [<span class="nt">hot americano</span>](<span class="na">item</span>)
+<span class="k">-</span> Give me [<span class="nt">panini sandwich</span>](<span class="na">item</span>)
+<span class="k">-</span> Give us [<span class="nt">Panini</span>](<span class="na">item</span>) please
+<span class="k">-</span> I would like to also have [<span class="nt">Breakfast Pastry Combo</span>](<span class="na">item</span>)
+<span class="k">-</span> I&#39;d like to also have [<span class="nt">Muffin</span>](<span class="na">item</span>) please
+<span class="k">-</span> Might we also have [<span class="nt">House Coffee</span>](<span class="na">item</span>)
+<span class="k">-</span> Put [<span class="nt">Americano</span>](<span class="na">item</span>) in my basket please
+<span class="k">-</span> Put [<span class="nt">Croissant</span>](<span class="na">item</span>) in my basket
+<span class="k">-</span> Put [<span class="nt">Decaf Coffee</span>](<span class="na">item</span>) in my cart
+<span class="k">-</span> Put [<span class="nt">House Coffee</span>](<span class="na">item</span>) in my order
+<span class="k">-</span> Put [<span class="nt">pressed ham sandwich</span>](<span class="na">item</span>) in my order please
+<span class="k">-</span> Put [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) in my basket
+<span class="k">-</span> Put [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) in my cart please
+<span class="k">-</span> Put [<span class="nt">turkey sandwich</span>](<span class="na">item</span>) in my purchase please
+<span class="k">-</span> Select [<span class="nt">pastry combo</span>](<span class="na">item</span>)
+<span class="k">-</span> [<span class="nt">Turkey Bacon Panini</span>](<span class="na">item</span>) seems good
+<span class="k">-</span> We desire to also add [<span class="nt">pressed turkey sandwich</span>](<span class="na">item</span>)
+<span class="k">-</span> add [<span class="nt">House Coffee</span>](<span class="na">item</span>)
+<span class="k">-</span> add [<span class="nt">decaf</span>](<span class="na">item</span>) please
+<span class="k">-</span> add [<span class="nt">decaf</span>](<span class="na">item</span>) to my cart please
+<span class="k">-</span> [<span class="nt">americano</span>](<span class="na">item</span>) seems good
+<span class="k">-</span> i require [<span class="nt">Decaf Coffee</span>](<span class="na">item</span>) please
+<span class="k">-</span> [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) seems good
+<span class="k">-</span> [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) sounds good to me
+<span class="k">-</span> put [<span class="nt">ham sandwich</span>](<span class="na">item</span>) in my basket please
+<span class="k">-</span> select [<span class="nt">Decaf Coffee</span>](<span class="na">item</span>)
+<span class="k">-</span> select [<span class="nt">panini sandwich</span>](<span class="na">item</span>) please
+<span class="k">-</span> we need [<span class="nt">decaf</span>](<span class="na">item</span>)
+<span class="k">-</span> we would like to also order [<span class="nt">Americano</span>](<span class="na">item</span>)
+</pre></div>
+</div>
+</div>
+<div class="section" id="annotated-nlu">
+<h2>Annotated NLU<a class="headerlink" href="#annotated-nlu" title="Permalink to this headline">¶</a></h2>
+<p>Annotated training examples from real users.</p>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">## intent:greet</span>
+<span class="k">-</span> hey
+<span class="k">-</span> hello
+<span class="k">-</span> hi
+<span class="k">-</span> good morning
+<span class="k">-</span> good evening
+<span class="k">-</span> hey there
+
+<span class="gu">## intent:display_menu</span>
+<span class="k">-</span> show me the menu
+<span class="k">-</span> what&#39;s on the menu?
+<span class="k">-</span> can I see the menu?
+<span class="k">-</span> Show me what&#39;s on the menu?
+<span class="k">-</span> display the menu please
+
+<span class="gu">## intent:select_item</span>
+<span class="k">-</span> I want an [<span class="nt">Americano</span>](<span class="na">item</span>)
+<span class="k">-</span> give me a [<span class="nt">breakfast pastry combo</span>](<span class="na">item</span>)
+<span class="k">-</span> I&#39;ll have a [<span class="nt">panini</span>](<span class="na">item</span>)
+<span class="k">-</span> i&#39;d like a [<span class="nt">house coffee</span>](<span class="na">item</span>)
+<span class="k">-</span> get me a [<span class="nt">decaf coffee</span>](<span class="na">item</span>)
+<span class="k">-</span> i also want a [<span class="nt">muffin</span>](<span class="na">item</span>)
+<span class="k">-</span> gimme a [<span class="nt">croissant</span>](<span class="na">item</span>)
+<span class="k">-</span> i&#39;d also like a [<span class="nt">bagel</span>](<span class="na">item</span>)
+<span class="k">-</span> i&#39;ll order a [<span class="nt">turkey bacon panini</span>](<span class="na">item</span>)
+<span class="k">-</span> i want to order a [<span class="nt">ham panini</span>](<span class="na">item</span>)
+</pre></div>
+</div>
+</div>
+<div class="section" id="extra-nlu">
+<h2>Extra NLU<a class="headerlink" href="#extra-nlu" title="Permalink to this headline">¶</a></h2>
+<p>Purely utility features such as lookup table sepecifications, synonym mapping, dummy intents for buttons, etc.</p>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">## lookup:item</span>
+./data/items.txt
+
+<span class="gu">## lookup:options</span>
+./data/options.txt
+
+<span class="gu">## lookup:query_topics</span>
+./data/query_topics.txt
+
+<span class="gu">## synonym: House Coffee</span>
+<span class="k">-</span> hot coffee
+<span class="k">-</span> coffee
+<span class="k">-</span> regular coffee
+<span class="k">-</span> drip coffee
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Seasalt.ai
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10405841-8', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

@@ -1,17 +1,13 @@
-.. Starbucks Bot documentation master file, created by
-   sphinx-quickstart on Thu Jun 25 17:48:01 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-ngChat Cart Documentation
-=========================================
+Welcome to ngChat Cart
+===========================================
 
 .. toctree::
    :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: ngChat-cart
 
-   readme.rst
-   ngchat_cart.rst
-   tutorial.rst
-   example_menu.rst
-   example_chatette.rst
-   example_lookup.rst
+   readme
+   ngchat_cart
+

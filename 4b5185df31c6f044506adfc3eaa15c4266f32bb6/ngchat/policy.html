@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ngChat Policy Tutorial" href="policy_tutorial.html" />
-    <link rel="prev" title="ngChat Quick Start" href="quickstart.html" /> 
+    <link rel="next" title="ngChat-FAQ" href="faq.html" />
+    <link rel="prev" title="FAQ Data Example" href="tutorial_resources/bot_faq.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,23 +83,24 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">ngChat</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">ngChat</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">ngChat Policy</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../cart/index.html">ngChat Cart Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bot_tutorial.html">ngChat Bot Tutorial</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat-FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bot_tutorial.html">ngChat Bot Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
 </ul>
 
@@ -146,8 +147,6 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="index.html">Welcome to ngChat’s documentation!</a> &raquo;</li>
         
       <li>ngChat Policy</li>
     
@@ -203,26 +202,26 @@
 <p>The purpose of a dialogue management system is to decide at each moment in the conversation which action the bot should take next.
 The foundation of Rasa’a dialogue management relies on the TEDPolicy, a transformer model that is trained on conversation ‘stories’, which contain user intents &amp; entities paired with the desired bot responses and actions.
 While the TEDPolicy is excellent at handling conversational context and responding to unique dialogues, we find it is too heavy weight and too unpredictable for some conversations that follow a simple and consistent path.
-The purpose of ngChat Dialogue Policy is to provide an alternative which allows developers to have complete control over the bots response to specified situatations.</p>
+The purpose of ngChat Dialogue Policy is to provide an alternative which allows developers to have complete control over the bots response to specified situations.</p>
 </div>
 <div class="section" id="implementation">
 <h2><a class="toc-backref" href="#id2">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
 <p>The ngChat Policy is written as a subclass of the Rasa policy class (rasa.core.policies.policy.policy).
 The policy determines the next action based on a set of hand-written rules which are loaded in from a separate yaml file.
-These rules are representated as states and the policy itself can be thought of as a finite state machine, where each state has a set of enterance conditions, connections to other states, and a set of actions to execute if the bot enters that state.
+These rules are represented as states and the policy itself can be thought of as a finite state machine, where each state has a set of entrance conditions, connections to other states, and a set of actions to execute if the bot enters that state.
 Most states are enter-states, meaning that they can be entered at any point in the conversation if their conditions are met; others are direct-connect states meaning that they can only be entered if the bot’s previous state connects to it.
-Every time the bot needs to make a decision (usually after a user utterance) the policy evaluates the enterance conditions of each state, calculates a score for each enterable state, and then executes the actions of the highest ranked state.
+Every time the bot needs to make a decision (usually after a user utterance) the policy evaluates the entrance conditions of each state, calculates a score for each enterable state, and then executes the actions of the highest ranked state.
 The bot will continue to do this until a listen action is triggered, at which point it will stop to listen to the user’s input.</p>
 <dl class="simple">
-<dt>The score of each state is calcuated as the sum of 4 values:</dt><dd><ul class="simple">
-<li><p>The number of enterance conditions it has (+1 per)</p></li>
+<dt>The score of each state is calculated as the sum of 4 values:</dt><dd><ul class="simple">
+<li><p>The number of entrance conditions it has (+1 per)</p></li>
 <li><p>Rank score specified in dialogue.yml (+rank_score, default: 10)</p></li>
 <li><p>If the bot’s previous state connects to it (+5)</p></li>
 <li><p>If that connection is a direct connection (+1000)</p></li>
 </ul>
 </dd>
 </dl>
-<p>Once a state is selected, the bot will execute all the actions from that state before re-evaluating. If no state’s enterance conditions can be met, it will trigger Rasa’s DEFAULT_ACTION_FALLBACK followed by a listen action. Similarly, if the confidence level of the user intent is below the NLU threshold, the policy will trigger the fallback.</p>
+<p>Once a state is selected, the bot will execute all the actions from that state before re-evaluating. If no state’s entrance conditions can be met, it will trigger Rasa’s DEFAULT_ACTION_FALLBACK followed by a listen action. Similarly, if the confidence level of the user intent is below the NLU threshold, the policy will trigger the fallback.</p>
 </div>
 <div class="section" id="policy-pseudo-code">
 <h2><a class="toc-backref" href="#id3">Policy Pseudo-code</a><a class="headerlink" href="#policy-pseudo-code" title="Permalink to this headline">¶</a></h2>
@@ -251,7 +250,7 @@ The bot will continue to do this until a listen action is triggered, at which po
     <span class="n">get_predicted_action</span><span class="p">():</span>
       <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">name2state</span><span class="p">:</span>
         <span class="n">get_rank_score</span><span class="p">():</span>
-            <span class="c1"># Use Rasa tracker and domain to evaluate each state&#39;s enterance conditions</span>
+            <span class="c1"># Use Rasa tracker and domain to evaluate each state&#39;s entrance conditions</span>
             <span class="k">if</span> <span class="nb">any</span> <span class="n">condition</span> <span class="n">evaluates</span> <span class="n">false</span><span class="p">:</span>
               <span class="k">return</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">direct_connection</span> <span class="ow">is</span> <span class="kc">True</span> <span class="n">but</span> <span class="n">current_state</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">connect</span><span class="p">:</span>
@@ -622,13 +621,6 @@ visualization files.</p></td>
 <p class="admonition-title">Tip</p>
 <p>yaml format does not like to start a value with a quotation mark unless the whole value is quoted (<code class="docutils literal notranslate"><span class="pre">'action_greet'</span></code>: OK | <code class="docutils literal notranslate"><span class="pre">'item'</span> <span class="pre">in</span> <span class="pre">ENTITIES</span></code>: ERROR). In this case you will have to quote the whole value and then use scare quotes for the substring: ex/ <code class="docutils literal notranslate"><span class="pre">&quot;'item'</span> <span class="pre">in</span> <span class="pre">ENTITIES&quot;</span></code></p>
 </div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Related Pages</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
-</ul>
-</div>
 </div>
 </div>
 </div>
@@ -641,10 +633,10 @@ visualization files.</p></td>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="policy_tutorial.html" class="btn btn-neutral float-right" title="ngChat Policy Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="faq.html" class="btn btn-neutral float-right" title="ngChat-FAQ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="quickstart.html" class="btn btn-neutral float-left" title="ngChat Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tutorial_resources/bot_faq.html" class="btn btn-neutral float-left" title="FAQ Data Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

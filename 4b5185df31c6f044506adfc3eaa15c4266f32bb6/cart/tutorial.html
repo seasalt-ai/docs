@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Menu Example" href="example_menu.html" />
-    <link rel="prev" title="ngChat Cart Technical Documentation" href="ngchat_cart.html" /> 
+    <link rel="next" title="ngChat FAQ Tutorial" href="../ngchat/faq_tutorial.html" />
+    <link rel="prev" title="ngChat Policy Tutorial" href="../ngchat/policy_tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,33 +83,30 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">ngChat</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../ngchat/index.html">ngChat</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html">ngChat Cart Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/policy_tutorial.html">ngChat Policy Tutorial</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ngChat Cart Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/faq_tutorial.html">ngChat FAQ Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_config.html">Config Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_cart_config.html">Cart Config Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_domain.html">Domain Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_actions.html">Actions Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_menu.html">Menu Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_chatette.html">Chatette Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_lookup.html">Lookup Table Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ngchat/policy_tutorial.html">ngChat Policy Tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ngChat Cart Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ngchat/faq_tutorial.html">ngChat FAQ Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ngchat/example_files.html">Bot Tutorial Example Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
 </ul>
 
@@ -157,11 +154,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../ngchat/index.html">Welcome to ngChat’s documentation!</a> &raquo;</li>
-        
-          <li><a href="index.html">ngChat Cart Documentation</a> &raquo;</li>
-        
-          <li><a href="readme.html">NgChat Cart Overview</a> &raquo;</li>
+          <li><a href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a> &raquo;</li>
         
       <li>ngChat Cart Tutorial</li>
     
@@ -188,43 +181,43 @@
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#creating-the-menu" id="id1">Creating the Menu</a></p>
+<li><p><a class="reference internal" href="#creating-the-menu" id="id3">Creating the Menu</a></p>
 <ul>
-<li><p><a class="reference internal" href="#main-components" id="id2">Main Components</a></p></li>
-<li><p><a class="reference internal" href="#the-product-list" id="id3">The Product list</a></p></li>
-<li><p><a class="reference internal" href="#basic-item-example" id="id4">Basic Item Example</a></p></li>
-<li><p><a class="reference internal" href="#combo-item-example" id="id5">Combo Item Example</a></p></li>
-<li><p><a class="reference internal" href="#virtual-item-example" id="id6">Virtual Item Example</a></p></li>
-<li><p><a class="reference internal" href="#the-modifier-list" id="id7">The Modifier list</a></p></li>
-<li><p><a class="reference internal" href="#a-complete-menu-example" id="id8">A Complete Menu Example</a></p></li>
+<li><p><a class="reference internal" href="#main-components" id="id4">Main Components</a></p></li>
+<li><p><a class="reference internal" href="#the-product-list" id="id5">The Product list</a></p></li>
+<li><p><a class="reference internal" href="#basic-item-example" id="id6">Basic Item Example</a></p></li>
+<li><p><a class="reference internal" href="#combo-item-example" id="id7">Combo Item Example</a></p></li>
+<li><p><a class="reference internal" href="#virtual-item-example" id="id8">Virtual Item Example</a></p></li>
+<li><p><a class="reference internal" href="#the-modifier-list" id="id9">The Modifier list</a></p></li>
+<li><p><a class="reference internal" href="#a-complete-menu-example" id="id10">A Complete Menu Example</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#generating-lookup-tables-chatette-templates" id="id9">Generating Lookup Tables &amp; Chatette Templates</a></p></li>
-<li><p><a class="reference internal" href="#writing-the-cart-config-yml-file" id="id10">Writing the cart_config.yml File</a></p></li>
-<li><p><a class="reference internal" href="#integrating-with-rasa" id="id11">Integrating with Rasa</a></p>
+<li><p><a class="reference internal" href="#generating-lookup-tables-chatette-templates" id="id11">Generating Lookup Tables &amp; Chatette Templates</a></p></li>
+<li><p><a class="reference internal" href="#writing-the-cart-config-yml-file" id="id12">Writing the cart_config.yml File</a></p></li>
+<li><p><a class="reference internal" href="#integrating-with-rasa" id="id13">Integrating with Rasa</a></p>
 <ul>
-<li><p><a class="reference internal" href="#importing-configuring-and-loading-menus" id="id12">Importing, Configuring, and Loading Menus</a></p></li>
-<li><p><a class="reference internal" href="#session-start" id="id13">Session Start</a></p></li>
-<li><p><a class="reference internal" href="#calling-cart-methods-from-actions" id="id14">Calling Cart Methods from Actions</a></p></li>
-<li><p><a class="reference internal" href="#action-examples" id="id15">Action Examples</a></p></li>
+<li><p><a class="reference internal" href="#importing-configuring-and-loading-menus" id="id14">Importing, Configuring, and Loading Menus</a></p></li>
+<li><p><a class="reference internal" href="#session-start" id="id15">Session Start</a></p></li>
+<li><p><a class="reference internal" href="#calling-cart-methods-from-actions" id="id16">Calling Cart Methods from Actions</a></p></li>
+<li><p><a class="reference internal" href="#action-examples" id="id17">Action Examples</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#test" id="id16">Test</a></p></li>
-<li><p><a class="reference internal" href="#notes-on-best-practices" id="id17">Notes on Best Practices</a></p></li>
+<li><p><a class="reference internal" href="#try-it" id="id18">Try It</a></p></li>
+<li><p><a class="reference internal" href="#notes-on-best-practices" id="id19">Notes on Best Practices</a></p></li>
 </ul>
 </div>
 <p>For this tutorial we will imagine that we are building a new coffee shop bot from the ground up. Take it that the new bot can already handle basic intents, and can extract entities to slots. From there we will walk through adding menu and cart support.
 For more detailed information about why and how the cart is implemented, see the <a class="reference internal" href="readme.html#cart-readme"><span class="std std-ref">readme</span></a> or the
 <a class="reference internal" href="ngchat_cart.html#ngchat-cart"><span class="std std-ref">technical documentation</span></a>.</p>
 <div class="section" id="creating-the-menu">
-<h2><a class="toc-backref" href="#id1">Creating the Menu</a><a class="headerlink" href="#creating-the-menu" title="Permalink to this headline">¶</a></h2>
-<p>Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: <code class="docutils literal notranslate"><span class="pre">/data/menu.json</span></code>.</p>
+<h2><a class="toc-backref" href="#id3">Creating the Menu</a><a class="headerlink" href="#creating-the-menu" title="Permalink to this headline">¶</a></h2>
+<p>Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: <code class="docutils literal notranslate"><span class="pre">data/menu.json</span></code>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encourage to automate as much of this process as possible to avoid tedious menu construction by hand.</p>
+<p>Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encouraged to automate as much of this process as possible to avoid tedious menu construction by hand.</p>
 </div>
 <div class="section" id="main-components">
-<h3><a class="toc-backref" href="#id2">Main Components</a><a class="headerlink" href="#main-components" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4">Main Components</a><a class="headerlink" href="#main-components" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">menu</span></code> consists of four top-level components: <code class="docutils literal notranslate"><span class="pre">store_name</span></code>, <code class="docutils literal notranslate"><span class="pre">currency</span></code>, <code class="docutils literal notranslate"><span class="pre">products</span></code>, and <code class="docutils literal notranslate"><span class="pre">modifiers</span></code>. The first two are quite simple to fill out:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;store_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Coffee Shop&quot;</span><span class="p">,</span>
@@ -235,7 +228,7 @@ For more detailed information about why and how the cart is implemented, see the
 <p><code class="docutils literal notranslate"><span class="pre">store_name</span></code> and <code class="docutils literal notranslate"><span class="pre">currency</span></code> should both be strings, and the <code class="docutils literal notranslate"><span class="pre">currency</span></code> should be represented as the standard three-letter abbreviation for that currency. The <code class="docutils literal notranslate"><span class="pre">products</span></code> and <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> fields of the menu are lists containing information about all the items available for purchase and how they can be modified. <code class="docutils literal notranslate"><span class="pre">products</span></code> are items that can be purchased on their own, while <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> can only be added to a user’s cart if they’re attached to a product.</p>
 </div>
 <div class="section" id="the-product-list">
-<h3><a class="toc-backref" href="#id3">The Product list</a><a class="headerlink" href="#the-product-list" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5">The Product list</a><a class="headerlink" href="#the-product-list" title="Permalink to this headline">¶</a></h3>
 <p>For our basic item example, we’ll consider an <code class="docutils literal notranslate"><span class="pre">Americano</span></code>. For this item, the customer must specify if they want room or not. Additionally, they can ask for sweetener packets. To add this product to the menu, we will add a new entry to the product list:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;store_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Coffee Shop&quot;</span><span class="p">,</span>
@@ -250,7 +243,7 @@ For more detailed information about why and how the cart is implemented, see the
 </div>
 </div>
 <div class="section" id="basic-item-example">
-<h3><a class="toc-backref" href="#id4">Basic Item Example</a><a class="headerlink" href="#basic-item-example" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6">Basic Item Example</a><a class="headerlink" href="#basic-item-example" title="Permalink to this headline">¶</a></h3>
 <p><strong>Basic Item attributes</strong></p>
 <p>The item also needs the required information of <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>. The <code class="docutils literal notranslate"><span class="pre">id</span></code> is a unique string which will be used to reference the correct item if there are multiple of the same name. The <code class="docutils literal notranslate"><span class="pre">type</span></code> gives information to the cart system about how the product should be manipulated and displayed. The type for a basic item is simply <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -363,8 +356,8 @@ For more detailed information about why and how the cart is implemented, see the
     <span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Fill Options&quot;</span><span class="p">,</span>
     <span class="nt">&quot;minimum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nt">&quot;maximum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="s2">&quot;modifiers&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;modifiers&quot;</span><span class="p">:</span> <span class="p">[]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -582,7 +575,7 @@ There is one other field that can be included on modifiers: a variant list. Vari
 <p>So we have completed our first basic <code class="docutils literal notranslate"><span class="pre">product</span></code> entry in the menu.</p>
 </div>
 <div class="section" id="combo-item-example">
-<h3><a class="toc-backref" href="#id5">Combo Item Example</a><a class="headerlink" href="#combo-item-example" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">Combo Item Example</a><a class="headerlink" href="#combo-item-example" title="Permalink to this headline">¶</a></h3>
 <p>Next we’ll look at a slightly more complex type of product: the <code class="docutils literal notranslate"><span class="pre">combo</span></code>. A combo item has the same basic structure as a basic item, but is of type <code class="docutils literal notranslate"><span class="pre">combo</span></code>. The main difference between the two is that, while regular items can only be modified by modifiers, the combo’s modifier groups can contain modifiers or <em>other products</em>. Take for example a coffee and pastry combo. Customers may have the choice between regular or decaf coffee, and their choice of muffin, croissant, or bagel. Let’s construct an example.</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
     <span class="p">{</span>
@@ -682,7 +675,7 @@ There is one other field that can be included on modifiers: a variant list. Vari
 <p>The combo item can also have modifier groups containing modifier (rather than product) objects. A good example of this is if the combo item is ‘here’ or ‘to-go’. The use of a <code class="docutils literal notranslate"><span class="pre">modifier</span></code> in this case is affecting the whole combo item.</p>
 </div>
 <div class="section" id="virtual-item-example">
-<h3><a class="toc-backref" href="#id6">Virtual Item Example</a><a class="headerlink" href="#virtual-item-example" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Virtual Item Example</a><a class="headerlink" href="#virtual-item-example" title="Permalink to this headline">¶</a></h3>
 <p>The last type of product is of type <code class="docutils literal notranslate"><span class="pre">virtual</span></code>. A virtual product is similar to a combo, but always contains an item in one of its modifier groups whose details and own modifier groups the bot should treat as if they were those of the main item. For example, rather than selecting a panini sandwich, then choosing between ham and turkey as modifiers, a user would select the virtual Panini item, then select either <code class="docutils literal notranslate"><span class="pre">Ham</span> <span class="pre">Panini</span></code> or <code class="docutils literal notranslate"><span class="pre">Turkey</span> <span class="pre">Panini</span></code> as a modifier. The bot should then treat this selection as it were the actual cart item when displaying information. The menu implementation is nearly identical to a combo, but the cart treats these two types slightly differently. Here’s an example:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Panini&quot;</span><span class="p">,</span>
@@ -736,7 +729,7 @@ There is one other field that can be included on modifiers: a variant list. Vari
 <p>Once the user has selected either ham or turkey panini, going forward the cart will always display <code class="docutils literal notranslate"><span class="pre">Turkey</span> <span class="pre">Bacon</span> <span class="pre">Panini</span></code> or <code class="docutils literal notranslate"><span class="pre">Ham</span> <span class="pre">Panini</span></code> as the item name, and the virtual item will inherit all of the customization available for either the turkey or ham item.</p>
 </div>
 <div class="section" id="the-modifier-list">
-<h3><a class="toc-backref" href="#id7">The Modifier list</a><a class="headerlink" href="#the-modifier-list" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">The Modifier list</a><a class="headerlink" href="#the-modifier-list" title="Permalink to this headline">¶</a></h3>
 <p>Now that we have completed examples for each of the types of products available in the <code class="docutils literal notranslate"><span class="pre">products</span></code> list, there is one more menu attribute to complete: the <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> list. This list, similar to the <code class="docutils literal notranslate"><span class="pre">products</span></code> list, contains objects for each <code class="docutils literal notranslate"><span class="pre">modifier</span></code> available on the menu. We looked at how modifiers are instantiated when they are applied to an item, but each unique modifier also has a stand-alone representation in the <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> list. This object is very similar to our basic product object, including many of the same top-level attributes. Here’s an example using the ‘sugar packet’ example from before:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sugar&quot;</span><span class="p">,</span>
@@ -789,12 +782,12 @@ There is one other field that can be included on modifiers: a variant list. Vari
 </div>
 </div>
 <div class="section" id="a-complete-menu-example">
-<h3><a class="toc-backref" href="#id8">A Complete Menu Example</a><a class="headerlink" href="#a-complete-menu-example" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">A Complete Menu Example</a><a class="headerlink" href="#a-complete-menu-example" title="Permalink to this headline">¶</a></h3>
 <p>Now that we have completed an example of each element on the menu, we can put it all together to create a full example menu. View the full example <a class="reference internal" href="example_menu.html"><span class="doc">here</span></a>.</p>
 </div>
 </div>
 <div class="section" id="generating-lookup-tables-chatette-templates">
-<h2><a class="toc-backref" href="#id9">Generating Lookup Tables &amp; Chatette Templates</a><a class="headerlink" href="#generating-lookup-tables-chatette-templates" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">Generating Lookup Tables &amp; Chatette Templates</a><a class="headerlink" href="#generating-lookup-tables-chatette-templates" title="Permalink to this headline">¶</a></h2>
 <p><strong>Chatette</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">cart.py</span></code> file has two methods to assist with exporting NLU training data from the menu. Additionally, there are two convenience scripts available to call these methods. The first script is <code class="docutils literal notranslate"><span class="pre">generate_chatette.py</span></code>. We can run the script with the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">generate_chatette</span><span class="o">.</span><span class="n">py</span> <span class="p">{</span><span class="n">bot_path</span><span class="p">}</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">menu</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span><span class="n">bot</span> <span class="n">path</span><span class="p">}</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">menu</span><span class="o">.</span><span class="n">chatette</span>
@@ -806,7 +799,7 @@ There is one other field that can be included on modifiers: a variant list. Vari
 </pre></div>
 </div>
 <p><strong>Lookup Tables</strong></p>
-<p>You can generate Rasa lookup tables with the following command:</p>
+<p>You can generate <a href="#id1"><span class="problematic" id="id2">:ref:`Rasa lookup tables &lt;https://rasa.com/docs/rasa/nlu-training-data/#lookup-tables&gt;`_</span></a> with the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">generate_lookup_tables</span><span class="o">.</span><span class="n">py</span> <span class="p">{</span><span class="n">bot</span> <span class="n">path</span><span class="p">}</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">menu</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span><span class="n">bot</span> <span class="n">path</span><span class="p">}</span><span class="o">/</span><span class="n">data</span>
 </pre></div>
 </div>
@@ -828,7 +821,7 @@ path/to/query_topics.txt
 </div>
 </div>
 <div class="section" id="writing-the-cart-config-yml-file">
-<h2><a class="toc-backref" href="#id10">Writing the cart_config.yml File</a><a class="headerlink" href="#writing-the-cart-config-yml-file" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">Writing the cart_config.yml File</a><a class="headerlink" href="#writing-the-cart-config-yml-file" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have a working menu, we can prepare to integrate ngChat Cart with our bot. First, we’ll need to set up a cart config file so that we can adjust the cart settings and set up our menu path. Create a file called <code class="docutils literal notranslate"><span class="pre">cart_config.yml</span></code> in your bot directory.</p>
 <p>The following is a list of configurable parameters, with their default values listed:</p>
 <table class="docutils align-default">
@@ -933,10 +926,10 @@ with ES.</p></td>
 <p>You can find a full example of a <code class="docutils literal notranslate"><span class="pre">cart_config.yml</span></code> file <a class="reference internal" href="example_cart_config.html#cart-config"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="integrating-with-rasa">
-<h2><a class="toc-backref" href="#id11">Integrating with Rasa</a><a class="headerlink" href="#integrating-with-rasa" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">Integrating with Rasa</a><a class="headerlink" href="#integrating-with-rasa" title="Permalink to this headline">¶</a></h2>
 <p>Once a valid menu is created and the cart setting are configured, ngChat Cart can be integrated with Rasa. The only point of contact between the bot and the cart system is through <code class="docutils literal notranslate"><span class="pre">actions.py</span></code>. The bot is in charge of extracting intents &amp; entities from user utterances and deciding which actions to execute next. During action execution, custom actions can call <code class="docutils literal notranslate"><span class="pre">cart.py</span></code> methods in order to pass slot data to the cart, manipulate the user’s cart, request information from the cart, etc.</p>
 <div class="section" id="importing-configuring-and-loading-menus">
-<h3><a class="toc-backref" href="#id12">Importing, Configuring, and Loading Menus</a><a class="headerlink" href="#importing-configuring-and-loading-menus" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Importing, Configuring, and Loading Menus</a><a class="headerlink" href="#importing-configuring-and-loading-menus" title="Permalink to this headline">¶</a></h3>
 <p>Before calling methods from <code class="docutils literal notranslate"><span class="pre">cart.py</span></code>, however, there is a bit more configuration that must be done in the actions file itself. First, upon bot startup, the cart should be configured and the menus loaded. This can be accomplished with the follow code heading the actions file:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ngchat_cart</span> <span class="kn">import</span> <span class="n">cart</span>
 <span class="n">cart</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;./cart_config.yml&#39;</span><span class="p">)</span>
@@ -946,7 +939,7 @@ with ES.</p></td>
 <p>This will initialize an instance of <code class="docutils literal notranslate"><span class="pre">cart.py</span></code> that has the appropriate menus and configurations for the bot.</p>
 </div>
 <div class="section" id="session-start">
-<h3><a class="toc-backref" href="#id13">Session Start</a><a class="headerlink" href="#session-start" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">Session Start</a><a class="headerlink" href="#session-start" title="Permalink to this headline">¶</a></h3>
 <p>Next, upon session start the bot will need to initialize a <code class="docutils literal notranslate"><span class="pre">Cart</span></code> object for the specific user. Here it is recommended to override Rasa’s built in <code class="docutils literal notranslate"><span class="pre">ActionSessionStart</span></code> action. Add the action to your <code class="docutils literal notranslate"><span class="pre">actions.py</span></code> file, as is shown in the following example:</p>
 <div class="highlight-Python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1019,12 +1012,12 @@ with ES.</p></td>
 <p>Lastly, the bot must also return an <code class="docutils literal notranslate"><span class="pre">ActionExecuted('action_listen')</span></code> event. This will ensure that after the session start action has finished, the next action to be executed will always be <code class="docutils literal notranslate"><span class="pre">action_listen</span></code>.</p>
 </div>
 <div class="section" id="calling-cart-methods-from-actions">
-<h3><a class="toc-backref" href="#id14">Calling Cart Methods from Actions</a><a class="headerlink" href="#calling-cart-methods-from-actions" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Calling Cart Methods from Actions</a><a class="headerlink" href="#calling-cart-methods-from-actions" title="Permalink to this headline">¶</a></h3>
 <p>Once the actions file is configured, all custom actions in the file can access the user cart and call methods from <code class="docutils literal notranslate"><span class="pre">cart.py</span></code>. There are some actions that can be called on their own, and do not need to work together with other actions. These can be tasks like: showing the menu, giving suggestions, and checking the contents of the cart.</p>
 <p>Other tasks, like adding an item to the cart, require a more complex navigation of dialogue &amp; actions. For example, when a user requests an item to be added to the cart, the <code class="docutils literal notranslate"><span class="pre">item</span></code> and <code class="docutils literal notranslate"><span class="pre">modifier</span></code> slots should first be validated with the menu to make sure the user has requested a legitimate item. Next, a new <code class="docutils literal notranslate"><span class="pre">CartItem</span></code> object should be created and any user-specified modifiers added. The bot should then ask the user if they want to customize it any more, and if not finally confirm if the user wants to add it, then add the item to the cart. This flow will require several actions that work together, calling methods and passing slots back and forth.</p>
 </div>
 <div class="section" id="action-examples">
-<h3><a class="toc-backref" href="#id15">Action Examples</a><a class="headerlink" href="#action-examples" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">Action Examples</a><a class="headerlink" href="#action-examples" title="Permalink to this headline">¶</a></h3>
 <p><strong>Displaying the Menu</strong></p>
 <p>In the dialogue tutorial, we set up a framework to execute two tasks: displaying the menu and adding an item to the cart. First, add <code class="docutils literal notranslate"><span class="pre">action_display_menu</span></code> to the actions list in your <code class="docutils literal notranslate"><span class="pre">domain.yml</span></code> file. Next, add the following action to your <code class="docutils literal notranslate"><span class="pre">actions.py</span></code> file.</p>
 <div class="highlight-Python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -1236,8 +1229,8 @@ Add <code class="docutils literal notranslate"><span class="pre">action_add_item
 <p>See the full dialogue example <a class="reference internal" href="../ngchat/tutorial_resources/bot_dialogue.html#bot-dialogue"><span class="std std-ref">here</span></a> and the full actions example <a class="reference internal" href="example_actions.html#bot-actions"><span class="std std-ref">here</span></a>.</p>
 </div>
 </div>
-<div class="section" id="test">
-<h2><a class="toc-backref" href="#id16">Test</a><a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="try-it">
+<h2><a class="toc-backref" href="#id18">Try It</a><a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
 <p>We can now test our bot with full cart support. Now that we are using actions, we must start the Rasa actions server and the ElasticSearch instance before running.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -1246,7 +1239,7 @@ Add <code class="docutils literal notranslate"><span class="pre">action_add_item
 <img alt="../_images/finished_bot.PNG" src="../_images/finished_bot.PNG" />
 </div>
 <div class="section" id="notes-on-best-practices">
-<h2><a class="toc-backref" href="#id17">Notes on Best Practices</a><a class="headerlink" href="#notes-on-best-practices" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">Notes on Best Practices</a><a class="headerlink" href="#notes-on-best-practices" title="Permalink to this headline">¶</a></h2>
 <p>The following are some quick notes concerning best practices, to keep in mind while developing.</p>
 <p><strong>Pass by Reference</strong></p>
 <p>Pass by Reference when possible to reduce string matching &amp; <code class="docutils literal notranslate"><span class="pre">ElasticSearch</span></code> calls. While this isn’t always possible (for example if you have to confirm something with the user or store a value as a string in a slot) it is worth keeping in mind as it can improve performance. Within actions, if calling multiple methods from <code class="docutils literal notranslate"><span class="pre">cart.py</span></code>, do try to pass objects by reference whenever possible.</p>
@@ -1263,10 +1256,10 @@ Add <code class="docutils literal notranslate"><span class="pre">action_add_item
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="example_menu.html" class="btn btn-neutral float-right" title="Menu Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../ngchat/faq_tutorial.html" class="btn btn-neutral float-right" title="ngChat FAQ Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ngchat_cart.html" class="btn btn-neutral float-left" title="ngChat Cart Technical Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../ngchat/policy_tutorial.html" class="btn btn-neutral float-left" title="ngChat Policy Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

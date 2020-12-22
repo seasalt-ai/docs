@@ -17,9 +17,9 @@ For more detailed information about why and how the cart is implemented, see the
 Creating the Menu
 ==================
 
-Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: ``/data/menu.json``.
+Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: ``data/menu.json``.
 
-.. TIP:: Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encourage to automate as much of this process as possible to avoid tedious menu construction by hand. 
+.. TIP:: Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encouraged to automate as much of this process as possible to avoid tedious menu construction by hand. 
 
 Main Components
 ----------------
@@ -180,7 +180,7 @@ We we also add a ``category`` field (to assist when users query about what type 
         "category": "Fill Options",
         "minimum": 1,
         "maximum": 1,
-        "query_users_for_modifiers": true
+        "query_users_for_modifiers": true,
         "modifiers": []
     }
 
@@ -647,7 +647,7 @@ To load this file into a common Chatette file, make sure all your chatette files
 
 **Lookup Tables**
 
-You can generate Rasa lookup tables with the following command:
+You can generate :ref:`Rasa lookup tables <https://rasa.com/docs/rasa/nlu-training-data/#lookup-tables>`_ with the following command:
 
 .. code-block:: 
 
@@ -962,8 +962,8 @@ This action simply grabs the user cart, extracts the item names and total cost, 
 
 See the full dialogue example :ref:`here <bot_dialogue>` and the full actions example :ref:`here <bot_actions>`.
 
-Test 
-=====
+Try It
+=======
 
 We can now test our bot with full cart support. Now that we are using actions, we must start the Rasa actions server and the ElasticSearch instance before running.
 

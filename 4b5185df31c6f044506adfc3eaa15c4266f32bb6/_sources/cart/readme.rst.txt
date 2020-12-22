@@ -448,13 +448,3 @@ menu file naming: '/{store_name}.json'
     }
 
 .. NOTE:: Base price should be based on the default version of the item, like the standard size. Base price is summed with the price of the item's modifiers to get the total cost.
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Related Pages
-
-   ngchat_cart.rst
-   tutorial.rst
-   example_menu.rst
-   example_lookup.rst
-   example_chatette.rst

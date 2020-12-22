@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Domain Example &mdash; ngChat 0.0.1 documentation</title>
+  <title>Chatette Example &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Dialogue.yml Example" href="bot_dialogue.html" />
-    <link rel="prev" title="Config Example" href="bot_config.html" /> 
+    <link rel="next" title="Config Example" href="bot_config.html" />
+    <link rel="prev" title="Bot Tutorial Example Files" href="../example_files.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,9 +91,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../cart/tutorial.html">ngChat Cart Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../faq_tutorial.html">ngChat FAQ Tutorial</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../example_files.html">Bot Tutorial Example Files</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="bot_chatette.html">Chatette Example</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Chatette Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bot_config.html">Config Example</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Domain Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bot_domain.html">Domain Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bot_dialogue.html">Dialogue.yml Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cart/example_cart_config.html">Cart Config Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../cart/example_menu.html">Menu Example</a></li>
@@ -170,13 +170,13 @@
         
           <li><a href="../example_files.html">Bot Tutorial Example Files</a> &raquo;</li>
         
-      <li>Domain Example</li>
+      <li>Chatette Example</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/ngchat/tutorial_resources/bot_domain.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/ngchat/tutorial_resources/bot_chatette.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -189,51 +189,117 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="domain-example">
-<span id="bot-domain"></span><h1>Domain Example<a class="headerlink" href="#domain-example" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">intents</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">greet</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">faq</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_menu</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">select_item</span>
+  <div class="section" id="chatette-example">
+<span id="bot-chatette"></span><h1>Chatette Example<a class="headerlink" href="#chatette-example" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//To-run: ~/starbucks/$ python -m chatette data/common.chatette -o data/chatette_output -a rasa-md -s volli
+//Move output.md to nlu directory and rename.
 
-<span class="nt">entities</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">item</span>
+// Import the other chatette file with entities from the menu
+|menu.chatette // Menu-specific templates 
 
-<span class="nt">slots</span><span class="p">:</span>
-  <span class="nt">item</span><span class="p">:</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
 
-<span class="nt">responses</span><span class="p">:</span>
-  <span class="nt">utter_default</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">text</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">I&#39;m sorry, I didn&#39;t understand that.</span> 
+%[greet](10)
+    ~[&amp;greeting][!?]
 
-  <span class="nt">utter_display_menu</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">text</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Here&#39;s what&#39;s on the menu; Americano, House Coffee, Decaf Coffee, Breakfast Combo, Muffin, Croissant, Bagel, and Panini.</span>
+%[display_menu](20)
+    ~[&amp;show] more information about[ the?] [Coffee Shop?] menu[ please?]
+    ~[&amp;show] the [categories|sections|groups|types of things] [in|under|on][ the?][ Coffee Shop?] menu
+    ~[&amp;I_want_to] [hear|get][[ more?] info[rmation?]] about the[ Coffee Shop?] menu
+    [[&amp;tell] me[ more?] about|[&amp;explain][ more about?]|[&amp;describe]] the[ CoffeeShop?] menu[ please?]
+    [[&amp;what] are|list] the menu [[categories|sections|groups]|[categories|sections|groups]]
 
-  <span class="nt">utter_select_item</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">text</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Okay, you want to select an item.</span>
+%[select_item](30)
+    ~[&amp;I_want_to_get] @[item][ please?]
+    ~[&amp;I_want__NP] @[item][ please?]
+    [&amp;add] @[item][ to my ~[cart]?][ please?]
+    [&amp;put] @[item][ in my ~[cart]][ please?]
+    [&amp;select] @[item][ please?]
+    @[item] [looks|sounds|seems] good [to me?]
 
-  <span class="nt">utter_added_item</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">text</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Okay, I&#39;ll add a {item} to you cart.</span>
+~[greeting]
+    Hi
+    Hey
+    Hi bot
+    Hey bot
+    Hello
+    Good morning
+    hi again
+    hi folks
+    hello
+    Howdy
+    Heya
+    How&#39;s it going
+    Hey there
+    hiya
+    Howdy do
 
-  <span class="nt">utter_no_item_selected</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">text</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">You didn&#39;t specify what item you want.</span>
+~[I_want__NP]
+    ~[subj_fp] ~[want]
+    give ~[obj_fp]
+    ~[subj_fp][&#39;d| would] like
 
-  <span class="nt">utter_greet</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">text</span><span class="p">:</span> <span class="s">&quot;Hey!</span><span class="nv"> </span><span class="s">What</span><span class="nv"> </span><span class="s">can</span><span class="nv"> </span><span class="s">I</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">you?&quot;</span>
+~[I_want_to_get]
+    ~[I_will] [also?] ~[get]
+    ~[I_want_to] [also?] ~[get]
+    ~[I_want__NP] [also?]
+    ~[can] ~[subj_fp] [please?] [also?] ~[get]
 
-<span class="nt">actions</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">respond_faq</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">action_session_start</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">action_display_menu</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">action_validate_item</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">action_add_item</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">action_display_cart</span>
+~[I_want_to]
+    ~[subj_fp] ~[want] to
+    let ~[obj_fp]
+    ~[subj_fp]&#39;d like to
+    ~[subj_fp] would like to
+    ~[subj_fp] wanna
+    can ~[subj_fp]
 
-<span class="nt">session_config</span><span class="p">:</span>
-  <span class="nt">session_expiration_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">60</span>
-  <span class="nt">carry_over_slots_to_new_session</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+~[show]
+    open
+    show me
+    select
+    give me
+    gimme
+
+~[I_will]
+    I[&#39;m| am] going to
+    We[&#39;re| are] going to
+    I&#39;m gunna
+    We[&#39;re| are] gunna
+
+~[get]
+    have
+    get
+    buy
+    add
+    order
+    do
+
+~[subj_fp]
+    I
+    we
+
+~[obj_fp]
+    me
+    us
+
+~[can]
+    could
+    can
+    may
+    might
+
+~[want]
+    want
+    need
+    desire
+    crave
+    demand
+    require
+
+~[cart]
+    cart
+    basket
+    order
+    purchase
 </pre></div>
 </div>
 </div>
@@ -246,10 +312,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="bot_dialogue.html" class="btn btn-neutral float-right" title="Dialogue.yml Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="bot_config.html" class="btn btn-neutral float-right" title="Config Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="bot_config.html" class="btn btn-neutral float-left" title="Config Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../example_files.html" class="btn btn-neutral float-left" title="Bot Tutorial Example Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="FAQ Data Example" href="../ngchat/tutorial_resources/bot_faq.html" />
-    <link rel="prev" title="Domain Example" href="../ngchat/tutorial_resources/bot_domain.html" /> 
+    <link rel="prev" title="Lookup Table Example" href="example_lookup.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,33 +83,42 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">ngChat</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../ngchat/index.html">ngChat</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html">ngChat Cart Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/policy_tutorial.html">ngChat Policy Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial.html">ngChat Cart Tutorial</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/faq_tutorial.html">ngChat FAQ Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ngchat/policy_tutorial.html">ngChat Policy Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html">ngChat Cart Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ngchat/faq_tutorial.html">ngChat FAQ Tutorial</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ngchat/example_files.html">Bot Tutorial Example Files</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_chatette.html">Chatette Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_config.html">Config Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_cart_config.html">Cart Config Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_domain.html">Domain Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_dialogue.html">Dialogue.yml Example</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Actions Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_cart_config.html">Cart Config Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_menu.html">Menu Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_chatette.html">Chatette Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_lookup.html">Lookup Table Example</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Actions Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ngchat/tutorial_resources/bot_faq.html">FAQ Data Example</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat-FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
 </ul>
 
@@ -157,9 +166,9 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../ngchat/index.html">Welcome to ngChat’s documentation!</a> &raquo;</li>
-        
           <li><a href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a> &raquo;</li>
+        
+          <li><a href="../ngchat/example_files.html">Bot Tutorial Example Files</a> &raquo;</li>
         
       <li>Actions Example</li>
     
@@ -182,6 +191,141 @@
             
   <div class="section" id="actions-example">
 <span id="bot-actions"></span><h1>Actions Example<a class="headerlink" href="#actions-example" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This files contains your custom actions which can be used to run custom Python code.&quot;&quot;&quot;</span>
+
+<span class="c1"># See this guide on how to implement these action:</span>
+<span class="c1"># https://rasa.com/docs/rasa/core/actions/#custom-actions/</span>
+
+<span class="kn">from</span> <span class="nn">rasa_sdk</span> <span class="kn">import</span> <span class="n">Action</span><span class="p">,</span> <span class="n">Tracker</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">rasa_sdk.executor</span> <span class="kn">import</span> <span class="n">CollectingDispatcher</span>
+<span class="kn">from</span> <span class="nn">rasa_sdk.events</span> <span class="kn">import</span> <span class="n">SessionStarted</span><span class="p">,</span> <span class="n">ActionExecuted</span><span class="p">,</span> <span class="n">EventType</span><span class="p">,</span> <span class="n">SlotSet</span>
+
+<span class="kn">from</span> <span class="nn">ngchat_cart</span> <span class="kn">import</span> <span class="n">cart</span>
+<span class="n">cart</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;./cart_config.yml&#39;</span><span class="p">)</span>
+<span class="n">cart</span><span class="o">.</span><span class="n">load_menus</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">ActionSessionStart</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Perform actions when user begins a session with the bot.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set action name to action_session_start.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;action_session_start&quot;</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+        <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span>
+        <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">EventType</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize a user&#39;s cart and menu at session start.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            SessionStarted action(required)</span>
+<span class="sd">            Carry over slot sets</span>
+<span class="sd">            Execute action_listen</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+        <span class="c1"># if the bot only uses one menu, simply load pre-load the menu</span>
+        <span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">get_matching_menu</span><span class="p">(</span><span class="n">store_name</span><span class="o">=</span><span class="s1">&#39;Coffee Shop&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="p">:</span>
+            <span class="ne">Warning</span><span class="p">(</span><span class="s2">&quot;There was an error loading the menu&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully loaded the </span><span class="si">{</span><span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> menu.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">SessionStarted</span><span class="p">(),</span>
+                <span class="n">ActionExecuted</span><span class="p">(</span><span class="s1">&#39;action_listen&#39;</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">DisplayMenu</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;action_display_menu&quot;</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">Domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Describe menu in general terms, such as categories.&quot;&quot;&quot;</span>
+        <span class="c1"># ALWAYS get the user cart with the sender id first</span>
+        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">user_cart</span> <span class="ow">and</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="p">:</span>
+            <span class="c1"># dispatch the menu description directly to the user</span>
+            <span class="n">dispatcher</span><span class="o">.</span><span class="n">utter_message</span><span class="p">(</span><span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">describe_menu</span><span class="p">())</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+
+<span class="k">class</span> <span class="nc">ValidateItem</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;action_validate_item&#39;</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Check that the requested item is in the menu.&quot;&quot;&quot;</span>
+        <span class="c1"># Get user cart</span>
+        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+
+        <span class="c1"># query the menu for a matching item</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_slot</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">get_matching_menu_item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">[])</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">user_cart</span><span class="o">.</span><span class="n">active_item</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">CartItem</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span><span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">AddItem</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to add item to cart.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set action name to action_add_to_cart.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;action_add_item&quot;</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Add item to cart.&quot;&quot;&quot;</span>
+        <span class="c1"># Get user cart</span>
+        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+
+        <span class="c1"># Add the active item to the cart</span>
+        <span class="n">user_cart</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">user_cart</span><span class="o">.</span><span class="n">active_item</span><span class="p">,</span> <span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+        <span class="c1"># affirm that the action is complete, and reset the active item</span>
+        <span class="n">dispatcher</span><span class="o">.</span><span class="n">utter_message</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;utter_affirm_add&#39;</span><span class="p">)</span>
+        <span class="n">user_cart</span><span class="o">.</span><span class="n">active_item</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Reset all slots that may have been carrying information about the active item.</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
+
+
+<span class="k">class</span> <span class="nc">DisplayCart</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;action_display_cart&quot;</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Display the contents of the user&#39;s cart.&quot;&quot;&quot;</span>
+        <span class="c1"># Get the user cart</span>
+        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">get_item_names</span><span class="p">()</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">sum_price</span><span class="p">()</span>
+
+        <span class="n">dispatcher</span><span class="o">.</span><span class="n">utter_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You have the following items in your cart: </span><span class="si">{</span><span class="n">items</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">Your total is $</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">[]</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -195,7 +339,7 @@
         <a href="../ngchat/tutorial_resources/bot_faq.html" class="btn btn-neutral float-right" title="FAQ Data Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../ngchat/tutorial_resources/bot_domain.html" class="btn btn-neutral float-left" title="Domain Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="example_lookup.html" class="btn btn-neutral float-left" title="Lookup Table Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -49,12 +49,15 @@ Defaults:
 Creating the Dialogue File 
 ===========================
 
-In order to control the flow of dialogue, we will need to create a set of dialogue states. Each state dictates what enter conditions must be met, and which actions are to be executed if the state is entered. See the `policy overview <policy>`_ for more information about the state format. Create a new file in your bot folder called ``dialogue.yml``.
+In order to control the flow of dialogue, we will need to create a set of dialogue states.
+Each state contains enter conditions (expressions that must evaluate true, such as the user's intent, slot status, etc) and a set of bot actions that will be executed if the state is entered.
+At each point that the bot must make a decision, it will evaulate all the states and assign each state with a score; the highest scoring state will have its actions executed by the bot.
+See the :ref:`policy overview <policy>` for more information about the state format. Create a new file in your bot folder called ``dialogue.yml``.
 
 A Simple State Example
 -----------------------
 
-We can use the nlu data that Rasa provided at initialization to set up our first state. In our domain and data we have a ``greet`` intent. If the user provides an utterance with intent ``greet``, the bot should respond with a response from the ``utter_greet`` template provided in the domain. This is the basis of our 'if/then' state conditions and actions. 
+We can use the NLU data that Rasa provided at initialization to set up our first state. In our domain and data we have a ``greet`` intent. If the user provides an utterance with intent ``greet``, the bot should respond with a response from the ``utter_greet`` template provided in the domain. This is the basis of our 'if/then' state conditions and actions. 
 
 .. code-block:: YAML
 
@@ -65,6 +68,8 @@ We can use the nlu data that Rasa provided at initialization to set up our first
       - utter_greet
 
 .. IMPORTANT:: At the end of our actions list, we must also include an ``action_listen`` event, or else the bot will not stop to recieve user input, and could end up in an endless loop.
+
+.. NOTE:: We use the ``$[]`` notation to mark state names. The format is not required, but suggested as it helps the unique state names stand out in the dialogue file.
 
 Additionally, since the bot should always respond with ``utter_greet``, we can include a high rank score to make sure this state is chosen if there are several enterable states.
 
@@ -86,7 +91,7 @@ A More Complex Example
 -----------------------
 For this tutorial, we want our bot to be able to greet the user, display the menu, and add a requested item to the cart. In the cart tutorial, we will go over how to integrate ngChat Cart through custom actions. For now, we just work on controlling to dialogue flow and will use response templates only, until we create the custom actions in the cart tutorial. 
 
-For these two tasks (querying the menu and selecting an item), we will need to break down the possible user utterances into intents and entities. We can create two new intents, ``display_menu`` and ``select_item``, to represent the users desire to execute one of these two events. Add these to the ``intents`` list on the ``domain.yml`` file.
+For these two tasks (querying the menu and selecting an item), we will need to break down the possible user utterances into intents and entities. We can create two new intents, ``display_menu`` and ``select_item``, to represent the users desire to execute one of these two events. Add these to the ``intents`` list on the ``domain.yml`` file. See :ref:`Rasa docs <https://rasa.com/docs/rasa/domain#entities>`_ for a review of intents if necessary.
 
 .. code-block:: YAML
 
@@ -95,6 +100,7 @@ For these two tasks (querying the menu and selecting an item), we will need to b
     - select_item
 
 For the ``select_item`` intent, we can also expect the user to specify which item they want. We will want to extract this with as an entity, and store it as a slot so that the bot can work with it in the actions. Add ``item`` as both and entity and a slot to the domain.
+See :ref:`Rasa docs <https://rasa.com/docs/rasa/domain#slots>`_ for a review of slots if necessary.
 
 .. code-block:: YAML
 
@@ -220,20 +226,21 @@ First we will need to create a visualization directory and add it to the config.
   policies:
     - name: ngchat_plugins.core.policy.ngchat.ngChatPolicy
       nlu_threshold: .20
-      visualization_directory: ./visual
-      output_static_visualization: false
-      vega_spec_path: ./visual/tree_spec.json
-      output_at_each_turn: false
-      output_live_update: false
-      output_vega: false
-      output_dot: false
+      visual:
+        visualization_directory: ./visual
+        output_static_visualization: false
+        vega_spec_path: ./visual/tree_spec.json
+        output_at_each_turn: false
+        output_live_update: false
+        output_vega: false
+        output_dot: false
 
 .. NOTE:: In order to output vega format, a file called ``tree_spec.json`` must be present in the visualization directory. An example of this file can be found at ``/ngchat_plugins/core/policy/visualization``.
 
 The various flags can be set to true/false to output different types of visualizations. The following is an example of a vega live update visualization:
 
-Test 
-=====
+Try It
+========
 
 You can now test the dialogue flow and visualization by retraining and running the bot with ``rasa shell``.
 
