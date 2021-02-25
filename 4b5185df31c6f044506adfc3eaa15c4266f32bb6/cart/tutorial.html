@@ -809,13 +809,13 @@ There is one other field that can be included on modifiers: a variant list. Vari
 </div>
 <p>This script will output individual files for <code class="docutils literal notranslate"><span class="pre">items</span></code>, <code class="docutils literal notranslate"><span class="pre">modifiers</span></code>, and <code class="docutils literal notranslate"><span class="pre">query_topics</span></code>. These files contain the same information at the chatette file, but just in a different format. You can see the result from our example menu <a class="reference internal" href="example_lookup.html#lookup-example"><span class="std std-ref">here</span></a>.</p>
 <p>To use these lookup tables, include references in your bot’s NLU data. To include them, you would append the following to one of your Rasa NLU files:</p>
-<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">## lookup:item</span>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">##</span> lookup:item
 path/to/items.txt
 
-<span class="gu">## lookup:options</span>
+<span class="gu">##</span> lookup:options
 path/to/options.txt
 
-<span class="gu">## lookup:query_topics</span>
+<span class="gu">##</span> lookup:query_topics
 path/to/query_topics.txt
 </pre></div>
 </div>

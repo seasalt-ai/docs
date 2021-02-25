@@ -177,7 +177,7 @@
 <p>NLU training examples produced by chatette.</p>
 <div class="highlight-MD notranslate"><div class="highlight"><pre><span></span>&lt;!-- Generated using Chatette v1.6.2 --&gt;
 
-<span class="gu">## intent:greet</span>
+<span class="gu">##</span> intent:greet
 <span class="k">-</span> Good morning!
 <span class="k">-</span> Heya
 <span class="k">-</span> Hi folks!
@@ -189,7 +189,7 @@
 <span class="k">-</span> hi!
 <span class="k">-</span> howdy
 
-<span class="gu">## intent:display_menu</span>
+<span class="gu">##</span> intent:display_menu
 <span class="k">-</span> Describe the CoffeeShop menu please
 <span class="k">-</span> Select more information about Coffee Shop menu please
 <span class="k">-</span> Select more information about the Coffee Shop menu please
@@ -211,7 +211,7 @@
 <span class="k">-</span> what are the menu categories
 <span class="k">-</span> what are the menu sections
 
-<span class="gu">## intent:select_item</span>
+<span class="gu">##</span> intent:select_item
 <span class="k">-</span> Can we also order [<span class="nt">House Coffee</span>](<span class="na">item</span>) please
 <span class="k">-</span> Could we please order [<span class="nt">hot americano</span>](<span class="na">item</span>)
 <span class="k">-</span> Give me [<span class="nt">panini sandwich</span>](<span class="na">item</span>)
@@ -248,7 +248,7 @@
 <div class="section" id="annotated-nlu">
 <h2>Annotated NLU<a class="headerlink" href="#annotated-nlu" title="Permalink to this headline">¶</a></h2>
 <p>Annotated training examples from real users.</p>
-<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">## intent:greet</span>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">##</span> intent:greet
 <span class="k">-</span> hey
 <span class="k">-</span> hello
 <span class="k">-</span> hi
@@ -256,14 +256,14 @@
 <span class="k">-</span> good evening
 <span class="k">-</span> hey there
 
-<span class="gu">## intent:display_menu</span>
+<span class="gu">##</span> intent:display_menu
 <span class="k">-</span> show me the menu
 <span class="k">-</span> what&#39;s on the menu?
 <span class="k">-</span> can I see the menu?
 <span class="k">-</span> Show me what&#39;s on the menu?
 <span class="k">-</span> display the menu please
 
-<span class="gu">## intent:select_item</span>
+<span class="gu">##</span> intent:select_item
 <span class="k">-</span> I want an [<span class="nt">Americano</span>](<span class="na">item</span>)
 <span class="k">-</span> give me a [<span class="nt">breakfast pastry combo</span>](<span class="na">item</span>)
 <span class="k">-</span> I&#39;ll have a [<span class="nt">panini</span>](<span class="na">item</span>)
@@ -280,16 +280,16 @@
 <div class="section" id="extra-nlu">
 <h2>Extra NLU<a class="headerlink" href="#extra-nlu" title="Permalink to this headline">¶</a></h2>
 <p>Purely utility features such as lookup table sepecifications, synonym mapping, dummy intents for buttons, etc.</p>
-<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">## lookup:item</span>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span><span class="gu">##</span> lookup:item
 ./data/items.txt
 
-<span class="gu">## lookup:options</span>
+<span class="gu">##</span> lookup:options
 ./data/options.txt
 
-<span class="gu">## lookup:query_topics</span>
+<span class="gu">##</span> lookup:query_topics
 ./data/query_topics.txt
 
-<span class="gu">## synonym: House Coffee</span>
+<span class="gu">##</span> synonym: House Coffee
 <span class="k">-</span> hot coffee
 <span class="k">-</span> coffee
 <span class="k">-</span> regular coffee
