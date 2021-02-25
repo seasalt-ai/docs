@@ -4,14 +4,5 @@
 Lookup Table Example
 =====================
 
-Item Lookup Table
-------------------
-.. literalinclude:: ./example_files/items.txt
-
-Modifier Lookup Table
-----------------------
-.. literalinclude:: ./example_files/options.txt
-
-Query Topic Lookup Table
--------------------------
-.. literalinclude:: ./example_files/query_topics.txt
+.. literalinclude:: ./example_files/lookup_table.yml
+    :language: YAML

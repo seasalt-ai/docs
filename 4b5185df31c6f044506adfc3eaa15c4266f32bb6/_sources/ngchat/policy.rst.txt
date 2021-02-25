@@ -116,13 +116,13 @@ Dialogue Schema
     direct_connection: bool
     rank_score: int
     conditions: list[Text]
-      - a list of evaluatable strings
-      - can reference certain variables such as SLOTS, INTENT, etc
+      # a list of evaluatable strings
+      # can reference certain variables such as SLOTS, INTENT, etc
       - INTENT.name == 'greet'
       - SLOTS.username is not None
     actions: list[Text]
-      - a list of action names as defined in domain.yml
-      - actions will be executed in order and will continue until an action_listen is triggered
+      # a list of action names as defined in domain.yml
+      # actions will be executed in order and will continue until an action_listen is triggered
       - utter_greet
       - action_greet_user_by_name
       - action_listen
@@ -179,9 +179,6 @@ The conditions are a list of evaluatable python expressions written as strings. 
 |                 |                 | example: ``SLOTS.item`` might return the user- |
 |                 |                 | specified item ``Americano``.                  |
 +-----------------+-----------------+------------------------------------------------+
-| ``PREV_ACTION`` | Text            | The name of the last action taken by the bot   |
-|                 |                 | as a string                                    |
-+-----------------+-----------------+------------------------------------------------+
 | ``LAST_UTT``    | Text            | The most recent utterance from the bot         |
 +-----------------+-----------------+------------------------------------------------+
 | ``LAST_ACTION`` | Text            | The name of the most recent action             |
@@ -208,9 +205,9 @@ Example:
 .. code-block:: YAML
 
   actions:
-    - 'utter_greet'
-    - 'action_ask_name'
-    - 'action_listen'
+    - utter_greet
+    - action_ask_name
+    - action_listen
 
 Connections
 -------------
@@ -226,7 +223,7 @@ Example:
         conditions:
           - SLOTS.name is not None
         actions:
-          - 'action_greet_with_name'
+          - action_greet_with_name
 
 Dialogue Example
 -----------------
@@ -299,17 +296,28 @@ Interpreting the Graphic
 -------------------------
 
 - Direct/indirect connections: the type of connections between nodes represents whether it is a direct connection or not.
+
   - Dotted line = indirect connection
   - Solid line = direct connection
+
 - Current state: the state that was chosen most recently. The actions from this state have already been executed by the bot.
+
   - Green highlighted state (dot: green bot around state info; json: green dot for state node)
+
 - Enterable states: all states that have their conditions met by at the current state of the conversation.
+
   - Black connection to that node, can be dotted or solid
+
 - Next state: the state that will be executed next. All of the conditions are met and it has the highest ranks score of all the enterable nodes.
+
   - Green connection to that node, can be dotted or solid
+
 - Rank score: the rank score for that state
+
   - A number labeling the node or the transition between nodes
+
 - Vega only:
+
   - Tracker: a separate node next to to the enter node, which contains information about the current tracker state.
   - Hover actions: hovering over a node will display the conditions and actions for that node.
 
@@ -335,6 +343,14 @@ Configurable parameters:
 |                                |       | the threshold, the policy will default to the         |                    |
 |                                |       | fallback action.                                      |                    |
 +--------------------------------+-------+-------------------------------------------------------+--------------------+
+| ``visual``                     | Dict  | A dict of visualization configurations, see next table|                    |
++--------------------------------+-------+-------------------------------------------------------+--------------------+
+
+Visualization parameters:
+
++--------------------------------+-------+-------------------------------------------------------+--------------------+
+| NAME                           | TYPE  | DESCRIPTION                                           | DEFAULT            |
++================================+=======+=======================================================+====================+
 | ``visualization_directory``    | Text  | The path to a folder where the visualization          | ``./visual``       |
 |                                |       | output will be stored.                                |                    |
 +--------------------------------+-------+-------------------------------------------------------+--------------------+
@@ -347,8 +363,11 @@ Configurable parameters:
 | ``output_live_update``         | bool  | Whether or not to output a file that updates itself   | ``True``           |
 |                                |       | in real-time.                                         |                    |
 +--------------------------------+-------+-------------------------------------------------------+--------------------+
-| ``output_json``                | bool  | Whether or not to output json formatted               | ``True``           |
+| ``output_vega``                | bool  | Whether or not to output json formatted               | ``True``           |
 |                                |       | visualization files.                                  |                    |
++--------------------------------+-------+-------------------------------------------------------+--------------------+
+| ``vega_spec_path``             | Text  | The path to a vega ``tree_spec.json`` file            | ``./visual/tree    |
+|                                |       |                                                       | _spec.json``       |
 +--------------------------------+-------+-------------------------------------------------------+--------------------+
 | ``output_dot``                 | bool  | Whether or not to output dot formatted                | ``True``           |
 |                                |       | visualization files.                                  |                    |
@@ -362,12 +381,14 @@ Example:
     - name: ngchat_plugins.core.policy.ngchat.ngChatPolicy
       dialogue_path: ./dialogue.yml
       nlu_threshold: .40
-      visualization_directory: ./visual
-      output_static_visualization: false
-      output_at_each_turn: false
-      output_live_update: true
-      output_json: true
-      output_dot: false
+      visual:
+        visualization_directory: ./visual
+        output_static_visualization: false
+        output_at_each_turn: false
+        output_live_update: true
+        output_vega: true
+        vega_spec_path: ./visual/tree_spec.json
+        output_dot: false
 
 Write the Dialogue File
 ------------------------

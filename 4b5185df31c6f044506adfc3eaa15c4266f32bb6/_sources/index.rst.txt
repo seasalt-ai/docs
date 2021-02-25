@@ -24,7 +24,7 @@ Welcome to ngChat's Master Documentation!
    :titlesonly:
    :caption: ngChat-cart
 
-   Readme <cart/readme>
+   ngChat Cart <cart/readme>
    Technical Docs <cart/ngchat_cart>
 
 

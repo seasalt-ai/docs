@@ -637,7 +637,7 @@ The ``cart.py`` file has two methods to assist with exporting NLU training data 
 
 .. code-block::
 
-    python generate_chatette.py {bot_path}/data/menu.json {bot path}/data/menu.chatette
+    python generate_chatette.py {menu path} {output directory path}/menu.chatette
 
 This outputs a `chatette <https://github.com/SimGus/Chatette>`_ formatted file that contains entity examples for ``items``, ``modifiers``, ``query_topics``. The item and modifier examples will include a set of the names of all of ``products``, ``modifiers``, and ``aliases`` present in the menu. The query topic examples include a set of all menu ``categories`` and ``tags``, helpful for when the user queries the menu. You can see an the full extracted file from our example menu :ref:`here<example_chatette>`.
 
@@ -647,28 +647,15 @@ To load this file into a common Chatette file, make sure all your chatette files
 
 **Lookup Tables**
 
-You can generate :ref:`Rasa lookup tables <https://rasa.com/docs/rasa/nlu-training-data/#lookup-tables>`_ with the following command:
+You can generate `Rasa lookup tables <https://rasa.com/docs/rasa/nlu-training-data/#lookup-tables>`_ with the following command:
 
 .. code-block:: 
 
-    python generate_lookup_tables.py {bot path}/data/menu.json {bot path}/data
+    python generate_lookup_tables.py {menu path} {output directory path}
 
-This script will output individual files for ``items``, ``modifiers``, and ``query_topics``. These files contain the same information at the chatette file, but just in a different format. You can see the result from our example menu :ref:`here<lookup_example>`.
+This script will output a ``lookup_table.yml`` file. This file contains the same information as the chatette file, but just in a different format. You can see the result from our example menu :ref:`here<lookup_example>`. Lookup tables will be automatically included during the bot's training as long as they are in the ``data`` directory.
 
-To use these lookup tables, include references in your bot's NLU data. To include them, you would append the following to one of your Rasa NLU files:
-
-.. code-block:: MD
-
-    ## lookup:item
-    path/to/items.txt
-
-    ## lookup:options
-    path/to/options.txt
-
-    ## lookup:query_topics
-    path/to/query_topics.txt
-
-.. TIP:: While lookup table specifications and chatette generated examples can go in any NLU data file used by the bot, we suggest keeping three separate files: ``anno_nlu.md`` for annotate user utterances, ``chatette_nlu.md`` for generated examples, and ``extra_nlu.md``, which includes bot-specific NLU data not generated from templates or real users (such as lookup table specifications, dummy intents used for buttons, etc).
+.. TIP:: While lookup table specifications and chatette generated examples can go in any NLU data file used by the bot, we suggest keeping three separate files: ``anno_nlu.md`` for annotate user utterances, ``chatette_nlu.md`` for generated examples, and ``extra_nlu.md``, which includes bot-specific NLU data not generated from templates or real users (such as lookup tables, dummy intents used for buttons, etc).
 
 Writing the cart_config.yml File
 =================================
@@ -683,10 +670,13 @@ The following is a list of configurable parameters, with their default values li
 |                       |            | will be loaded by the cart           |                             |
 +-----------------------+------------+--------------------------------------+-----------------------------+
 | ES_HOST               | Text       | The host name for the ElasticSearch  | 'localhost'                 |
-|                       |            | client                               |                             |
+|                       |            | client (this value is set            |                             |
+|                       |            | automatically if deployed to the     |                             |
+|                       |            | cluster)                             |                             |
 +-----------------------+------------+--------------------------------------+-----------------------------+
 | ES_PORT               | int        | The port name for the ElasticSearch  | 9200                        |
-|                       |            | client                               |                             |
+|                       |            | client (set automatically if deployed|                             |
+|                       |            | to the cluster)                      |                             |
 +-----------------------+------------+--------------------------------------+-----------------------------+
 | ES_TRY_LOCAL_FIRST    | bool       | Whether or not the cart should try   | True                        |
 |                       |            | to connect to a local ElasticSearch  |                             | 
@@ -726,8 +716,6 @@ The following is a list of configurable parameters, with their default values li
 |                       |            | match when querying for an item      | 'categories']               |
 |                       |            | with ES.                             |                             |
 +-----------------------+------------+--------------------------------------+-----------------------------+
-
-Most defaults will work fine for running locally, but before running on a cluster the ElasticSearch ``host`` and ``port`` must be configured. The various thresholds can be raised or lowered to adjust how the bot will user queries.
 
 You can find a full example of a ``cart_config.yml`` file :ref:`here <cart_config>`.
 

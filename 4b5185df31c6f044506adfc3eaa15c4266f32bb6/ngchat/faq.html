@@ -98,7 +98,7 @@
 </ul>
 <p class="caption"><span class="caption-text">ngChat-cart</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">ngChat Cart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
@@ -353,11 +353,6 @@ Need to change the params of ES to our online version</p>
 </div>
 <p>For importing NLU data, the default <a class="reference external" href="https://rasa.com/docs/rasa/training-data-importers/">RasaFileImporter</a> needs to be used. Then ngChat searches corresponding training data
 from the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder by default.</p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>FAQImporter must be the first to be placed in the <code class="docutils literal notranslate"><span class="pre">importers</span></code> list, i.e.,
-<em>in front of</em> the <code class="docutils literal notranslate"><span class="pre">RasaFileImporter</span></code>.</p>
-</div>
 <p>For training NLU, <a class="reference external" href="https://rasa.com/docs/rasa/tuning-your-model">configure the NLU pipeline</a>
 as usual. Just replace the default <a class="reference external" href="https://rasa.com/docs/rasa/2.0.x/components#responseselector">ResponseSelector</a>.
 with ngChat’s <code class="docutils literal notranslate"><span class="pre">ElasticSelector</span></code>.</p>

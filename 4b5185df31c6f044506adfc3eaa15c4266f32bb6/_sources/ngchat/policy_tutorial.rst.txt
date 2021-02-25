@@ -20,11 +20,10 @@ The Rasa initialized bot will come with a policy configuration like this:
     # Configuration for Rasa Core.
     # https://rasa.com/docs/rasa/core/policies/
     policies:
-      - name: MemoizationPolicy
       - name: TEDPolicy
         max_history: 5
         epochs: 100
-      - name: MappingPolicy
+      - name: RulePolicy
 
 In ``config.yml`` we will remove all of the policies, and add the ngChat Policy. 
 
@@ -91,7 +90,7 @@ A More Complex Example
 -----------------------
 For this tutorial, we want our bot to be able to greet the user, display the menu, and add a requested item to the cart. In the cart tutorial, we will go over how to integrate ngChat Cart through custom actions. For now, we just work on controlling to dialogue flow and will use response templates only, until we create the custom actions in the cart tutorial. 
 
-For these two tasks (querying the menu and selecting an item), we will need to break down the possible user utterances into intents and entities. We can create two new intents, ``display_menu`` and ``select_item``, to represent the users desire to execute one of these two events. Add these to the ``intents`` list on the ``domain.yml`` file. See :ref:`Rasa docs <https://rasa.com/docs/rasa/domain#entities>`_ for a review of intents if necessary.
+For these two tasks (querying the menu and selecting an item), we will need to break down the possible user utterances into intents and entities. We can create two new intents, ``display_menu`` and ``select_item``, to represent the users desire to execute one of these two events. Add these to the ``intents`` list on the ``domain.yml`` file. See `Rasa docs <https://rasa.com/docs/rasa/domain#entities>`_ for a review of intents if necessary.
 
 .. code-block:: YAML
 
@@ -100,7 +99,7 @@ For these two tasks (querying the menu and selecting an item), we will need to b
     - select_item
 
 For the ``select_item`` intent, we can also expect the user to specify which item they want. We will want to extract this with as an entity, and store it as a slot so that the bot can work with it in the actions. Add ``item`` as both and entity and a slot to the domain.
-See :ref:`Rasa docs <https://rasa.com/docs/rasa/domain#slots>`_ for a review of slots if necessary.
+See `Rasa docs <https://rasa.com/docs/rasa/domain#slots>`_ for a review of slots if necessary. Note that the ``influence_conversation`` attribute of on a slot will not influence the behavior of the bot if you are not using Rasa's ``TEDPolicy``.
 
 .. code-block:: YAML
 
@@ -113,26 +112,29 @@ See :ref:`Rasa docs <https://rasa.com/docs/rasa/domain#slots>`_ for a review of 
 
 Now that we have identified what can be extracted, we will need to add some training data for these intents. Add some Rasa training examples to the ``data/nlu.md`` file.
 
-.. code-block:: MD 
+.. code-block:: YAML
 
-  ## intent:display_menu
-  - show me the menu
-  - what's on the menu?
-  - can I see the menu?
-  - Show me what's on the menu?
-  - display the menu please
+  nlu:
+    - intent: display_menu
+      examples: |
+        - show me the menu
+        - what's on the menu?
+        - can I see the menu?
+        - Show me what's on the menu?
+        - display the menu please
 
-  ## intent:select_item
-  - I want an [Americano](item)
-  - give me a [breakfast pastry combo](item)
-  - I'll have a [panini](item)
-  - i'd like a [house coffee](item)
-  - get me a [decaf coffee](item)
-  - i also want a [muffin](item)
-  - gimme a [croissant](item)
-  - i'd also like a [bagel](item)
-  - i'll order a [turkey bacon panini](item)
-  - i want to order a [ham panini](item)
+    - intent: select_item
+      examples: |
+        - I want an [Americano](item)
+        - give me a [breakfast pastry combo](item)
+        - I'll have a [panini](item)
+        - i'd like a [house coffee](item)
+        - get me a [decaf coffee](item)
+        - i also want a [muffin](item)
+        - gimme a [croissant](item)
+        - i'd also like a [bagel](item)
+        - i'll order a [turkey bacon panini](item)
+        - i want to order a [ham panini](item)
 
 For now, while we don't have the actions set up, let's create some response templates that the bot can display for these intents. In the domain add the following the to responses:
 
@@ -237,7 +239,7 @@ First we will need to create a visualization directory and add it to the config.
 
 .. NOTE:: In order to output vega format, a file called ``tree_spec.json`` must be present in the visualization directory. An example of this file can be found at ``/ngchat_plugins/core/policy/visualization``.
 
-The various flags can be set to true/false to output different types of visualizations. The following is an example of a vega live update visualization:
+The various flags can be set to true/false to output different types of visualizations. Either the ``output_vega`` or ``output_dot`` flag must be set to ``True`` in order to produce output. The vega version will automatically open a browser window to display the visualization. For viewing the dot version, it is recommended to open the output file in a dot file preview extension for your IDE. The next section shows an example of a vega live update visualization.
 
 Try It
 ========

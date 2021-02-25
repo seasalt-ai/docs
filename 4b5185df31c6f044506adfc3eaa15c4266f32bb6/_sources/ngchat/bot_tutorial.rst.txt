@@ -38,7 +38,7 @@ directory.
     $ cd tutorial_bot
     $ rasa init
 
-.. IMPORTANT:: ngChat is built on top of Rasa 1.10.x, make sure you are using this version, or there may be compatibility issues. 
+.. IMPORTANT:: ngChat is built on top of Rasa 2.2.x, make sure you are using this version, or there may be compatibility issues. 
 
 We will use this simple bot to walk through how to incorporate each ngChat component.  
 
@@ -59,7 +59,7 @@ Bot Command Reference
 
 Optional: Chatette Setup
 -------------------------
-:ref:`Chatette <https://github.com/SimGus/Chatette>`_ is a powerful data generation tool for NLU training data. The cart tutorial will include tools for generating chatette files, so if you are not familiar with chatette, it is highly suggested to review its use and try it out in the tutorial bot. You can find an example chatette template file :ref:`here <bot_chatette>`.
+`Chatette <https://github.com/SimGus/Chatette>`_ is a powerful data generation tool for NLU training data. The cart tutorial will include tools for generating chatette files, so if you are not familiar with chatette, it is highly suggested to review its use and try it out in the tutorial bot. You can find an example chatette template file :ref:`here <bot_chatette>`.
 
 ngChat Policy
 ==============

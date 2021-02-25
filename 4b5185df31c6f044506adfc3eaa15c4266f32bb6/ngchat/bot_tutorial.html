@@ -102,7 +102,7 @@
 </ul>
 <p class="caption"><span class="caption-text">ngChat-cart</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">ngChat Cart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
@@ -182,15 +182,15 @@
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#before-starting" id="id3">Before Starting</a></p>
+<li><p><a class="reference internal" href="#before-starting" id="id1">Before Starting</a></p>
 <ul>
-<li><p><a class="reference internal" href="#bot-command-reference" id="id4">Bot Command Reference</a></p></li>
-<li><p><a class="reference internal" href="#optional-chatette-setup" id="id5">Optional: Chatette Setup</a></p></li>
+<li><p><a class="reference internal" href="#bot-command-reference" id="id2">Bot Command Reference</a></p></li>
+<li><p><a class="reference internal" href="#optional-chatette-setup" id="id3">Optional: Chatette Setup</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#ngchat-policy" id="id6">ngChat Policy</a></p></li>
-<li><p><a class="reference internal" href="#ngchat-cart" id="id7">ngChat Cart</a></p></li>
-<li><p><a class="reference internal" href="#ngchat-faq" id="id8">ngChat FAQ</a></p></li>
+<li><p><a class="reference internal" href="#ngchat-policy" id="id4">ngChat Policy</a></p></li>
+<li><p><a class="reference internal" href="#ngchat-cart" id="id5">ngChat Cart</a></p></li>
+<li><p><a class="reference internal" href="#ngchat-faq" id="id6">ngChat FAQ</a></p></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -243,7 +243,7 @@
 </dl>
 <p>The end result will be a relatively simple cafe ordering bot that can answer FAQs, ask the user what they want, display the menu, and validate a user’s item request. The bot will lay the groundwork for using all three ngChat compenents and can be easily customized or built-upon to work towards a more complex e-commerce bot.</p>
 <div class="section" id="before-starting">
-<h2><a class="toc-backref" href="#id3">Before Starting</a><a class="headerlink" href="#before-starting" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1">Before Starting</a><a class="headerlink" href="#before-starting" title="Permalink to this headline">¶</a></h2>
 <p>It is highly encouraged that before starting this tutorial, you are familiar with <a class="reference external" href="https://rasa.com/docs/rasa/">Rasa Open Source</a>. If you have not used
 Rasa before, we suggest completing the <a class="reference external" href="https://legacy-docs-v1.rasa.com/1.8.3/user-guide/rasa-tutorial/">Rasa tutorial</a> before
 starting the ngChat tutorial. Additionally, before starting <em>this</em> tutorial please initialize a new Rasa bot in a new
@@ -255,11 +255,11 @@ $ rasa init
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>ngChat is built on top of Rasa 1.10.x, make sure you are using this version, or there may be compatibility issues.</p>
+<p>ngChat is built on top of Rasa 2.2.x, make sure you are using this version, or there may be compatibility issues.</p>
 </div>
 <p>We will use this simple bot to walk through how to incorporate each ngChat component.</p>
 <div class="section" id="bot-command-reference">
-<h3><a class="toc-backref" href="#id4">Bot Command Reference</a><a class="headerlink" href="#bot-command-reference" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id2">Bot Command Reference</a><a class="headerlink" href="#bot-command-reference" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 54%" />
@@ -287,12 +287,12 @@ $ rasa init
 </div>
 </div>
 <div class="section" id="optional-chatette-setup">
-<h3><a class="toc-backref" href="#id5">Optional: Chatette Setup</a><a class="headerlink" href="#optional-chatette-setup" title="Permalink to this headline">¶</a></h3>
-<p><a href="#id1"><span class="problematic" id="id2">:ref:`Chatette &lt;https://github.com/SimGus/Chatette&gt;`_</span></a> is a powerful data generation tool for NLU training data. The cart tutorial will include tools for generating chatette files, so if you are not familiar with chatette, it is highly suggested to review its use and try it out in the tutorial bot. You can find an example chatette template file <a class="reference internal" href="tutorial_resources/bot_chatette.html#bot-chatette"><span class="std std-ref">here</span></a>.</p>
+<h3><a class="toc-backref" href="#id3">Optional: Chatette Setup</a><a class="headerlink" href="#optional-chatette-setup" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/SimGus/Chatette">Chatette</a> is a powerful data generation tool for NLU training data. The cart tutorial will include tools for generating chatette files, so if you are not familiar with chatette, it is highly suggested to review its use and try it out in the tutorial bot. You can find an example chatette template file <a class="reference internal" href="tutorial_resources/bot_chatette.html#bot-chatette"><span class="std std-ref">here</span></a>.</p>
 </div>
 </div>
 <div class="section" id="ngchat-policy">
-<h2><a class="toc-backref" href="#id6">ngChat Policy</a><a class="headerlink" href="#ngchat-policy" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">ngChat Policy</a><a class="headerlink" href="#ngchat-policy" title="Permalink to this headline">¶</a></h2>
 <p>ngChat Policy is a custom Rasa policy component. It will allow you to define simple and consistent rules for your dialogue flow.
 The policy can be used as a stand-alone dialogue manager or can be used in conjunction with other Rasa policies.
 The tutorial will walk through how to add the policy to your configuration, how to write the dialogue states,
@@ -300,14 +300,14 @@ and how to view dialogue states via dynamic visualization.</p>
 <p><a class="reference internal" href="policy_tutorial.html#policy-tutorial"><span class="std std-ref">Policy Tutorial —&gt;</span></a></p>
 </div>
 <div class="section" id="ngchat-cart">
-<h2><a class="toc-backref" href="#id7">ngChat Cart</a><a class="headerlink" href="#ngchat-cart" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">ngChat Cart</a><a class="headerlink" href="#ngchat-cart" title="Permalink to this headline">¶</a></h2>
 <p>ngChat Cart is a cart management backend for e-commerce chatbots. It will allow your bot to query a menu, customize items, and
 modify the user’s cart. The tutorial will walk through how to format the menu, configure the cart to work with your bot, and
 use the cart methods in Rasa custom actions.</p>
 <p><a class="reference internal" href="../cart/tutorial.html#cart-tutorial"><span class="std std-ref">Cart Tutorial —&gt;</span></a></p>
 </div>
 <div class="section" id="ngchat-faq">
-<h2><a class="toc-backref" href="#id8">ngChat FAQ</a><a class="headerlink" href="#ngchat-faq" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">ngChat FAQ</a><a class="headerlink" href="#ngchat-faq" title="Permalink to this headline">¶</a></h2>
 <p>ngChat FAQ is a fast and accurate response selector component for Rasa. The tutorial will explain why ngChat FAQ is a better
 alternative to Rasa’s ResponseSelector, how to set up the component, and how to format the data.</p>
 <p><a class="reference internal" href="faq_tutorial.html#faq-tutorial"><span class="std std-ref">FAQ Tutorial —&gt;</span></a></p>

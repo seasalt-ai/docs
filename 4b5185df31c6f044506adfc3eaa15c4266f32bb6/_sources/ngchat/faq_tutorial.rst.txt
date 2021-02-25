@@ -71,8 +71,6 @@ Next, we can specify the regular Rasa importer so that our Rasa formatted files 
     importers:
       - name: RasaFileImporter
 
-.. IMPORTANT:: The custom FAQImporter must be included first on the ``importers`` list, before ``RasaFileImporter``.
-
 For a more detailed explanation of how the importer can be configured, see :ref:`FAQImporter <faq_importer>` in the FAQ overview.
 
 Adding FAQ to the NLU pipeline
@@ -87,26 +85,13 @@ For now, the following can be copied and pasted into the ``config.yml`` file in 
 .. code-block:: YAML
 
   - name: ngchat_plugins.nlu.selectors.elastic_selector.ElasticSelector
-    retrieval_intent: faq
-    batch_size: 2048
-    method: text
     es_indexing:
-      analyzer: standard
       index_name: tutorial_faq
       # On the k8s cluster, login/secret will be set automatically.
-      host: localhost
+      host: localhost # or quickstart-es-http.default.svc.cluster.local for the cluster
       port: 9200
-    bert_client:
-      enabled: false
-      host: bert-as-service
-      port: 5555
-      port_out: 5556
-    eval:
-      enabled: false
-      metric: map
-      N: 1
-    reranker:
-      enabled: false
+
+These are the minimal configurations required to run the ElasticSelector. For additional configurations, such a re-ranking and BERT embedding integration, see the :ref:`FAQ Overview <ngchat_faq>`.
 
 .. TIP:: If you are running the bot locally, make sure you have an instance of ElasticSearch running *before* you start to train or test the bot.
 
@@ -122,13 +107,13 @@ To the ``intents`` list in the ``domain.yml`` file, add ``faq``.
         - faq
 
 This intent name should match the ``retrieval_intent`` field on the ElasticSelector configuration.
-Also, add ``respond_faq`` to the ``actions`` list. 
+Also, add ``utter_faq`` to the ``actions`` list. 
 This is the default action name for the ElasticSelectors action.
 
 .. code-block:: YAML
 
     actions:
-        - respond_faq
+        - utter_faq
 
 
 Finally, we will need to add a new state to the ``dialogue.yml`` file that recognizes the FAQ intent, and returns the ``respond_faq`` action.
@@ -140,7 +125,7 @@ Finally, we will need to add a new state to the ``dialogue.yml`` file that recog
     conditions:
         - INTENT.name == 'faq'
     actions:
-        - respond_faq
+        - utter_faq
         - action_listen
 
 Try It 

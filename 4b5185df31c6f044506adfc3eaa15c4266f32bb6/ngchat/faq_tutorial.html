@@ -102,7 +102,7 @@
 </ul>
 <p class="caption"><span class="caption-text">ngChat-cart</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">ngChat Cart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
@@ -279,10 +279,6 @@ You can also optionally specify the <code class="docutils literal notranslate"><
   <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RasaFileImporter</span>
 </pre></div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The custom FAQImporter must be included first on the <code class="docutils literal notranslate"><span class="pre">importers</span></code> list, before <code class="docutils literal notranslate"><span class="pre">RasaFileImporter</span></code>.</p>
-</div>
 <p>For a more detailed explanation of how the importer can be configured, see <a class="reference internal" href="faq.html#faq-importer"><span class="std std-ref">FAQImporter</span></a> in the FAQ overview.</p>
 </div>
 <div class="section" id="adding-faq-to-the-nlu-pipeline">
@@ -293,28 +289,14 @@ For this tutorial bot we will set up ElasticSearch to use a local service and wi
 See <a class="reference internal" href="faq.html#elastic-selector"><span class="std std-ref">ElasticSelector</span></a> in the FAQ overview for detailed information about how the component can be configured.
 For now, the following can be copied and pasted into the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file in place of Rasa’s ResponseSelector.</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ngchat_plugins.nlu.selectors.elastic_selector.ElasticSelector</span>
-  <span class="nt">retrieval_intent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">faq</span>
-  <span class="nt">batch_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2048</span>
-  <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
   <span class="nt">es_indexing</span><span class="p">:</span>
-    <span class="nt">analyzer</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">standard</span>
     <span class="nt">index_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tutorial_faq</span>
     <span class="c1"># On the k8s cluster, login/secret will be set automatically.</span>
-    <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+    <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span> <span class="c1"># or quickstart-es-http.default.svc.cluster.local for the cluster</span>
     <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9200</span>
-  <span class="nt">bert_client</span><span class="p">:</span>
-    <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-    <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bert-as-service</span>
-    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5555</span>
-    <span class="nt">port_out</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5556</span>
-  <span class="nt">eval</span><span class="p">:</span>
-    <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-    <span class="nt">metric</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">map</span>
-    <span class="nt">N</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-  <span class="nt">reranker</span><span class="p">:</span>
-    <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 </pre></div>
 </div>
+<p>These are the minimal configurations required to run the ElasticSelector. For additional configurations, such a re-ranking and BERT embedding integration, see the <a class="reference internal" href="faq.html#ngchat-faq"><span class="std std-ref">FAQ Overview</span></a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you are running the bot locally, make sure you have an instance of ElasticSearch running <em>before</em> you start to train or test the bot.</p>
@@ -330,10 +312,10 @@ To the <code class="docutils literal notranslate"><span class="pre">intents</spa
 </pre></div>
 </div>
 <p>This intent name should match the <code class="docutils literal notranslate"><span class="pre">retrieval_intent</span></code> field on the ElasticSelector configuration.
-Also, add <code class="docutils literal notranslate"><span class="pre">respond_faq</span></code> to the <code class="docutils literal notranslate"><span class="pre">actions</span></code> list.
+Also, add <code class="docutils literal notranslate"><span class="pre">utter_faq</span></code> to the <code class="docutils literal notranslate"><span class="pre">actions</span></code> list.
 This is the default action name for the ElasticSelectors action.</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">actions</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">respond_faq</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">utter_faq</span>
 </pre></div>
 </div>
 <p>Finally, we will need to add a new state to the <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code> file that recognizes the FAQ intent, and returns the <code class="docutils literal notranslate"><span class="pre">respond_faq</span></code> action.</p>
@@ -342,7 +324,7 @@ This is the default action name for the ElasticSelectors action.</p>
 <span class="nt">conditions</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;faq&#39;</span>
 <span class="nt">actions</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">respond_faq</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">utter_faq</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">action_listen</span>
 </pre></div>
 </div>

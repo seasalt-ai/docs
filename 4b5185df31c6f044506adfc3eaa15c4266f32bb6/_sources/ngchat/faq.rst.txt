@@ -168,9 +168,6 @@ Minimal Configuration for FAQ + NLU
 For importing NLU data, the default `RasaFileImporter <https://rasa.com/docs/rasa/training-data-importers/>`_ needs to be used. Then ngChat searches corresponding training data
 from the ``data`` folder by default.
 
-.. Attention:: FAQImporter must be the first to be placed in the ``importers`` list, i.e.,
-   *in front of* the ``RasaFileImporter``.
-
 For training NLU, `configure the NLU pipeline <https://rasa.com/docs/rasa/tuning-your-model>`_
 as usual. Just replace the default `ResponseSelector <https://rasa.com/docs/rasa/2.0.x/components#responseselector>`__.
 with ngChat's ``ElasticSelector``.

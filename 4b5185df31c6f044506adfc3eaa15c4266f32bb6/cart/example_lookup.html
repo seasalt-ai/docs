@@ -114,7 +114,7 @@
 </ul>
 <p class="caption"><span class="caption-text">ngChat-cart</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">ngChat Cart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ngchat_cart.html">Technical Docs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
@@ -195,69 +195,64 @@
             
   <div class="section" id="lookup-table-example">
 <span id="lookup-example"></span><h1>Lookup Table Example<a class="headerlink" href="#lookup-table-example" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="item-lookup-table">
-<h2>Item Lookup Table<a class="headerlink" href="#item-lookup-table" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coffee</span> <span class="ow">and</span> <span class="n">pastry</span> <span class="n">combo</span>
-<span class="n">pressed</span> <span class="n">turkey</span> <span class="n">sandwich</span>
-<span class="n">Breakfast</span> <span class="n">Pastry</span> <span class="n">Combo</span>
-<span class="n">breakfast</span> <span class="n">pastry</span> <span class="n">combo</span>
-<span class="n">pressed</span> <span class="n">ham</span> <span class="n">sandwich</span>
-<span class="n">turkey</span> <span class="n">bacon</span> <span class="n">panini</span>
-<span class="n">Turkey</span> <span class="n">Bacon</span> <span class="n">Panini</span>
-<span class="n">pressed</span> <span class="n">sandwich</span>
-<span class="n">panini</span> <span class="n">sandwich</span>
-<span class="n">turkey</span> <span class="n">sandwich</span>
-<span class="n">breakfast</span> <span class="n">combo</span>
-<span class="n">hot</span> <span class="n">americano</span>
-<span class="n">House</span> <span class="n">Coffee</span>
-<span class="n">pastry</span> <span class="n">combo</span>
-<span class="n">decaf</span> <span class="n">coffee</span>
-<span class="n">Decaf</span> <span class="n">Coffee</span>
-<span class="n">house</span> <span class="n">coffee</span>
-<span class="n">ham</span> <span class="n">sandwich</span>
-<span class="n">Ham</span> <span class="n">Panini</span>
-<span class="n">ham</span> <span class="n">panini</span>
-<span class="n">croissant</span>
-<span class="n">americano</span>
-<span class="n">Americano</span>
-<span class="n">panini</span>
-<span class="n">Panini</span>
-<span class="n">muffin</span>
-<span class="n">coffee</span>
-<span class="n">decaf</span>
-<span class="n">bagel</span>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;2.0&quot;</span>
+<span class="nt">nlu</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">lookup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">items</span>
+  <span class="nt">examples</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+    <span class="no">- coffee and pastry combo</span>
+    <span class="no">- pressed turkey sandwich</span>
+    <span class="no">- Breakfast Pastry Combo</span>
+    <span class="no">- breakfast pastry combo</span>
+    <span class="no">- pressed ham sandwich</span>
+    <span class="no">- turkey bacon panini</span>
+    <span class="no">- Turkey Bacon Panini</span>
+    <span class="no">- pressed sandwich</span>
+    <span class="no">- panini sandwich</span>
+    <span class="no">- turkey sandwich</span>
+    <span class="no">- breakfast combo</span>
+    <span class="no">- hot americano</span>
+    <span class="no">- House Coffee</span>
+    <span class="no">- pastry combo</span>
+    <span class="no">- decaf coffee</span>
+    <span class="no">- Decaf Coffee</span>
+    <span class="no">- house coffee</span>
+    <span class="no">- ham sandwich</span>
+    <span class="no">- Ham Panini</span>
+    <span class="no">- ham panini</span>
+    <span class="no">- croissant</span>
+    <span class="no">- americano</span>
+    <span class="no">- Americano</span>
+    <span class="no">- panini</span>
+    <span class="no">- Panini</span>
+    <span class="no">- muffin</span>
+    <span class="no">- coffee</span>
+    <span class="no">- decaf</span>
+    <span class="no">- bagel</span>
+<span class="p p-Indicator">-</span> <span class="nt">lookup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">options</span>
+  <span class="nt">examples</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+    <span class="no">- non-dairy cream</span>
+    <span class="no">- raw sugar</span>
+    <span class="no">- splenda</span>
+    <span class="no">- no room</span>
+    <span class="no">- sugar</span>
+    <span class="no">- cream</span>
+    <span class="no">- room</span>
+    <span class="no">- none</span>
+<span class="p p-Indicator">-</span> <span class="nt">lookup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">query_topics</span>
+  <span class="nt">examples</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+    <span class="no">- hot coffee</span>
+    <span class="no">- sandwiches</span>
+    <span class="no">- breakfast</span>
+    <span class="no">- beverage</span>
+    <span class="no">- espresso</span>
+    <span class="no">- savory</span>
+    <span class="no">- combos</span>
+    <span class="no">- lunch</span>
+    <span class="no">- combo</span>
+    <span class="no">- decaf</span>
+    <span class="no">- food</span>
+    <span class="no">- hot</span>
 </pre></div>
-</div>
-</div>
-<div class="section" id="modifier-lookup-table">
-<h2>Modifier Lookup Table<a class="headerlink" href="#modifier-lookup-table" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">non</span><span class="o">-</span><span class="n">dairy</span> <span class="n">cream</span>
-<span class="n">raw</span> <span class="n">sugar</span>
-<span class="n">splenda</span>
-<span class="n">no</span> <span class="n">room</span>
-<span class="n">sugar</span>
-<span class="n">cream</span>
-<span class="n">room</span>
-<span class="n">none</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="query-topic-lookup-table">
-<h2>Query Topic Lookup Table<a class="headerlink" href="#query-topic-lookup-table" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hot</span> <span class="n">coffee</span>
-<span class="n">sandwiches</span>
-<span class="n">breakfast</span>
-<span class="n">beverage</span>
-<span class="n">espresso</span>
-<span class="n">savory</span>
-<span class="n">combos</span>
-<span class="n">lunch</span>
-<span class="n">combo</span>
-<span class="n">decaf</span>
-<span class="n">food</span>
-<span class="n">hot</span>
-</pre></div>
-</div>
 </div>
 </div>
 
