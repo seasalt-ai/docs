@@ -15,6 +15,7 @@ ngChat Bot Tutorial
    policy_tutorial.rst 
    ../cart/tutorial.rst 
    faq_tutorial.rst
+   deployment_tutorial.rst
    example_files.rst
 
 The purpose of this tutorial is to demonstrate how ngChat products can be used with Rasa chatbots. In this tutorial we will walk-through:
@@ -84,3 +85,9 @@ ngChat FAQ is a fast and accurate response selector component for Rasa. The tuto
 alternative to Rasa's ResponseSelector, how to set up the component, and how to format the data.
 
 :ref:`FAQ Tutorial ---> <faq_tutorial>`
+
+ngChat Extension & Deployment
+==============================
+ngChat extension is a plugin for the VSCode IDE. Through the extension, you can register a new bot on the Seasalt cluster and integrate it in our deployment workflow. This final tutorial will show you how to install the extension, register a bot, and train, deploy & debug on the cluster.
+
+:ref:`Deployment Tutorial ---> <deployment_tutorial>`
