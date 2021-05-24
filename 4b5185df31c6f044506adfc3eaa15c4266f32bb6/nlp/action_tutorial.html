@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to ngChat’s documentation! &mdash; ngChat 0.0.1 documentation</title>
+  <title>ngChat Action Extraction API Tutorial &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -37,7 +37,9 @@
 
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Welcome to ngChat-speech’s documentation!" href="../speech/index.html" />
+    <link rel="prev" title="ngChat Topic Prediction API Tutorial" href="topic_tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,10 +89,10 @@
             
               <p class="caption"><span class="caption-text">ngChat</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bot_tutorial.html">ngChat Bot Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="policy.html">ngChat Policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat FAQ</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-cart</span></p>
 <ul>
@@ -98,11 +100,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-nlp</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">ngChat NLP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Prediction API Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">ngChat NLP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic_tutorial.html">Topic Prediction API Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Action Extraction API Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
 <ul>
@@ -157,13 +159,13 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Welcome to ngChat’s documentation!</li>
+      <li>ngChat Action Extraction API Tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/ngchat/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/nlp/action_tutorial.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,54 +178,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-ngchat-s-documentation">
-<h1>Welcome to ngChat’s documentation!<a class="headerlink" href="#welcome-to-ngchat-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">ngChat</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#accessing-ngchat">Accessing ngChat</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bot_tutorial.html">ngChat Bot Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="policy_tutorial.html">ngChat Policy Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html">ngChat Cart Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq_tutorial.html">ngChat FAQ Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deployment_tutorial.html">ngChat Deployment Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_files.html">Bot Tutorial Example Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bot_tutorial.html#before-starting">Before Starting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bot_tutorial.html#ngchat-policy">ngChat Policy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bot_tutorial.html#ngchat-cart">ngChat Cart</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bot_tutorial.html#ngchat-faq">ngChat FAQ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bot_tutorial.html#ngchat-extension-deployment">ngChat Extension &amp; Deployment</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="policy.html">ngChat Policy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="policy.html#purpose">Purpose</a></li>
-<li class="toctree-l2"><a class="reference internal" href="policy.html#implementation">Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="policy.html#policy-pseudo-code">Policy Pseudo-code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="policy.html#rasa-integration">Rasa Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="policy.html#dialogue-yml-file">Dialogue.yml File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="policy.html#visualization">Visualization</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">ngChat FAQ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="faq.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="faq.html#file-format">File Format</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference internal" href="../genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="../py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="../search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-</div>
+  <div class="section" id="ngchat-action-extraction-api-tutorial">
+<span id="action-tutorial"></span><h1>ngChat Action Extraction API Tutorial<a class="headerlink" href="#ngchat-action-extraction-api-tutorial" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -231,6 +187,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../speech/index.html" class="btn btn-neutral float-right" title="Welcome to ngChat-speech’s documentation!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="topic_tutorial.html" class="btn btn-neutral float-left" title="ngChat Topic Prediction API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ngChat Summarization API Tutorial &mdash; ngChat 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ngChat Topic Prediction API Tutorial" href="topic_tutorial.html" />
+    <link rel="prev" title="ngChat NLP Overview" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ngChat
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ngChat</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">ngChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-nlp</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">ngChat NLP</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic_tutorial.html">Topic Prediction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="action_tutorial.html">Action Extraction API Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ngChat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ngChat Summarization API Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nlp/sum_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ngchat-summarization-api-tutorial">
+<span id="sum-tutorial"></span><h1>ngChat Summarization API Tutorial<a class="headerlink" href="#ngchat-summarization-api-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will walk through how to use multilingual models with the ngChat Summarization API for meeting analytics.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#multilingual-support" id="id1">Multilingual Support</a></p></li>
+<li><p><a class="reference internal" href="#inference" id="id2">Inference</a></p>
+<ul>
+<li><p><a class="reference internal" href="#short-summary" id="id3">Short Summary</a></p></li>
+<li><p><a class="reference internal" href="#long-summary" id="id4">Long Summary</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The endpoint for the Summarization API is <code class="docutils literal notranslate"><span class="pre">https://ngchat-backstage.seasalt.ai/summarization</span></code>.</p>
+<p>All of the following API calls can be viewed and tested with the <a class="reference external" href="https://ngchat-backstage.seasalt.ai/summarization/docs#/">Swagger docs</a> for this API.</p>
+<p>The current summarization models are stored in the Azure fileshare at <code class="docutils literal notranslate"><span class="pre">/mnt/models/nlp/summarization</span></code>.</p>
+<div class="section" id="multilingual-support">
+<h2><a class="toc-backref" href="#id1">Multilingual Support</a><a class="headerlink" href="#multilingual-support" title="Permalink to this headline">¶</a></h2>
+<p>The Summarization API currently supports four languages, English, Traditional Chinese, Simplified Chinese, and Indonesian. All API calls for each language include a language code in the URL.</p>
+<p>The language codes for supported languages are the following:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 80%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Language</p></th>
+<th class="head"><p>Code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>English</p></td>
+<td><p>en-XX</p></td>
+</tr>
+<tr class="row-odd"><td><p>Traditional Chinese</p></td>
+<td><p>zh-TW</p></td>
+</tr>
+<tr class="row-even"><td><p>Simplified Chinese</p></td>
+<td><p>zh-CN</p></td>
+</tr>
+<tr class="row-odd"><td><p>Indonesian</p></td>
+<td><p>id-XX</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="inference">
+<h2><a class="toc-backref" href="#id2">Inference</a><a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<p>The ngChat Sumamrization API supports two types of transcript summarization, short and long. The short summary method is intended to summarize a single utterance from a transcript, to provide fine-grained summarization of the transcript. The long summary method is intended to summarize the entire transcript in large chunks, to provide an overall summary of the transcript.</p>
+<div class="section" id="short-summary">
+<h3><a class="toc-backref" href="#id3">Short Summary</a><a class="headerlink" href="#short-summary" title="Permalink to this headline">¶</a></h3>
+<p>The short summary model produces a summary of a single turn of a transcript.</p>
+<p>This process is called with the following POST request:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/short/summarize
+</pre></div>
+</div>
+<p>The required request body for inference contains a single turn from a transcript in the following format:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A successful response returns the summary of the transcription in the following JSON format.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;You know that there are many meetings with the Taiwan team and I get started on the MDA proposal.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As summaries of extremely short utterances are not informative, if the utterances is shorter than 5 words, the summarizer will return an empty summary. To avoid going over the model’s character limit, the summarizer will also truncate any utterance longer than 700 words.</p>
+</div>
+</div>
+<div class="section" id="long-summary">
+<h3><a class="toc-backref" href="#id4">Long Summary</a><a class="headerlink" href="#long-summary" title="Permalink to this headline">¶</a></h3>
+<p>The long summary model produces a summary of the largest possible segment of a transcript.</p>
+<p>This process is called with the following POST request:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/long/summarize
+</pre></div>
+</div>
+<p>The required request body for inference contains the entire transcipt in the following format, with speakers and utterances in the <code class="docutils literal notranslate"><span class="pre">data</span></code> list. The <code class="docutils literal notranslate"><span class="pre">url</span></code> element is the callback url where the final summary will be returned.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:5002/result&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Yesterday was pretty smooth day.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Many spent the time in the.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Then you chat about a proposal on the Air Force Recruitment Center and today I continue to work on the proposal.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>As it takes a comparatively long time to summarize a long segment, this is implemented as a callback. A successful response will return a success message of the process starting, not a summary directly.</p>
+</div>
+<p>The transcipt will be automatically segmentented into the largest chunks possible under 300 words. The callback function will then start producing summaries. When the summarization is complete, a PUT request will be sent with the generated summary to the callback url provided in the original request body.</p>
+<p>The final summaries will appear in the following JSON format:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;Yesterday was a busy day for Speaker. He had many meetings with the Taiwan team and he worked on the MDA proposal. Today he continues to work on the proposal.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The long summarization processing time will vary depending on the length of the transcript, as it depends on how many &lt;300 word segments there are in the transcript.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="topic_tutorial.html" class="btn btn-neutral float-right" title="ngChat Topic Prediction API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="readme.html" class="btn btn-neutral float-left" title="ngChat NLP Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Seasalt.ai
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10405841-8', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

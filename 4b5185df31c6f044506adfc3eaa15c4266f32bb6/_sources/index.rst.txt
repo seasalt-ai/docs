@@ -27,6 +27,16 @@ Welcome to ngChat's Master Documentation!
    ngChat Cart <cart/readme>
    Technical Docs <cart/ngchat_cart>
 
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: ngChat-nlp
+
+   ngChat NLP <nlp/readme>
+   Summarization API Tutorial <nlp/sum_tutorial>
+   Topic Prediction API Tutorial <nlp/topic_tutorial>
+   Action Extraction API Tutorial <nlp/action_tutorial>
 
 .. toctree::
    :maxdepth: 2
