@@ -3,3 +3,233 @@
 =====================================
 ngChat Action Extraction API Tutorial
 =====================================
+
+This tutorial will walk through the usage of the ngChat Action Extractor API for meeting analytics.
+
+.. contents:: Table of Contents
+    :local:
+    :depth: 3
+
+Introduction
+============
+
+The purpose of the Action Extractor system is to create short abstractive summaries of action items extracted from meeting transcriptions.
+The result of running the Action Extractor over a meeting transcription is a list of commands, suggestions, statements of intent, and other actionable segments that can be presented as to-dos or follow-ups for the meeting participants.
+In the future, the extractor will also capture the names of assignees & assigners as well as due dates tied to each action item.
+
+The current endpoint for the Action extractor is ``https://ngchat-backstage.seasalt.ai/actions``.
+
+See technical documentation and try out the API with the `Swagger docs <https://ngchat-backstage.seasalt.ai/actions/docs>`_.
+
+Current models for Action Extraction can be found in the Azure fileshare at ``/mnt/models/nlp/action_extraction``.
+
+Implementation
+--------------
+
+The action extraction pipeline consists of three parts: a segmenter, a classifier, and a summarizer.
+The input transcripts from STT often have awkward line breaks due to pauses in speaking - this can result in fragmented sentences.
+The segmenter concatenates all contiguous utterances by the same speaker and then uses a SpaCy tokenizer to re-segment each speaker-chunk into sentences.
+Next, each segment is passed into a multi-class classifier. 
+Currently we are using Rasa NLU to construct the classification pipeline, and the DIETClassifier is functioning as the main classification model.
+The segment receives on of the following labels:
+
++--------------------+------------------------+-------------------------------------------+
+| CLASS LABEL        | DESCRIPTION            | EXAMPLE                                   |
++====================+========================+===========================================+
+| ``question``       | A question with the    | "Guoguo: would you send that link to me   |
+|                    | implication of asking  | again?"                                   |
+|                    | someone to do something|                                           |
++--------------------+------------------------+-------------------------------------------+
+| ``imperative``     | A direct order in      | "Speaker 3: look at the web page"         |
+|                    | imperative form        |                                           |
++--------------------+------------------------+-------------------------------------------+
+| ``suggestion``     | A suggestion of an     | "Speaker 3: and lets talk about it        |
+|                    | action to perform      | maybe tomorrow afternoon."                |
+|                    |                        |                                           |
++--------------------+------------------------+-------------------------------------------+
+| ``desire``         | Expressing want, need, | "speaker01: We have to educate the        |
+|                    | or obligation to do    | children from young"                      |
+|                    | something              |                                           |
++--------------------+------------------------+-------------------------------------------+
+| ``statement``      | A simple statement     | "Speaker 15: i will send it               |
+|                    | that someone will      | electronically."                          |
+|                    | perform an action      |                                           |
++--------------------+------------------------+-------------------------------------------+
+| ``non-actionable`` | Any text that does not | "B8: I havent been there for a long time."|
+|                    | contain an actionable  |                                           |
+|                    | segment (does not fit  |                                           |
+|                    | into any above labels) |                                           |
++--------------------+------------------------+-------------------------------------------+
+
+If the segment receives any label other than ``non-actionable``, it is sent to the summarization component. 
+The previous two segments in the transcript are passed in with the actionable segment to provide more context for the summarization.
+This context is particularly helpful in the summarization process for coreference resolution.
+We use a BART summarization model to product the summaries.
+
+Example 
+-------
+
+The following excerpt from a meeting transcript is submitted to the system:
+
+.. code-block:: JSON
+
+    {
+        "data": [
+            {
+                "speaker": [
+                    "Speaker1"
+                ],
+                "transcription": "and so I have a plan for today.\n"
+            },
+            {
+                "speaker": [
+                    "Speaker2"
+                ],
+                "transcription": "Resident.\n"
+            },
+            {
+                "speaker": [
+                    "Speaker1"
+                ],
+                "transcription": "We're going to start with LSA at LDA since they started very similarly with the document term matrix.\n"
+            },
+            {
+                "speaker": [
+                    "Speaker1"
+                ],
+                "transcription": "And then I'm going to spend the remainder of my time by continued to studying, continuing to study Docker and 1st API.\n"
+            }
+        ],
+        "url": "http://127.0.0.1"
+    }
+
+The system outputs two action items:
+
+.. code-block:: JSON
+ 
+    {
+        "action_items": [
+            {
+                "actionable_segment": "Speaker1: We're going to start with LSA at LDA since they started very similarly with the document term matrix.",
+                "transcription_id": 13,
+                "classification_result": "statement",
+                "classification_confidence": 0.9999954700469971,
+                "summarization_context": "Speaker1: and so I have a plan for today.\nSpeaker2:  Resident.\nSpeaker1: We're going to start with LSA at LDA since they started very similarly with the document term matrix.",
+                "summary": "Speaker1 says the team will start with LSA at LDA.",
+                "assigner": null,
+                "assignee": null,
+                "due_date": null
+            },
+            {
+                "actionable_segment": "Speaker1: And then I'm going to spend the remainder of my time by continued to studying, continuing to study Docker and 1st API.",
+                "transcription_id": 14,
+                "classification_result": "statement",
+                "classification_confidence": 1,
+                "summarization_context": "Speaker2:  Resident.\nSpeaker1: We're going to start with LSA at LDA since they started very similarly with the document term matrix.\nSpeaker1: And then I'm going to spend the remainder of my time by continued to studying, continuing to study Docker and 1st API.",
+                "summary": "Speaker1 will continue to study Docker and 1st API.",
+                "assigner": null,
+                "assignee": null,
+                "due_date": null
+            }
+        ]
+    }
+
+The final result from the system is the ``summary`` field. The resulting two action items are:
+
+.. code-block:: bash
+
+    "Speaker1 says the team will start with LSA at LDA."
+    "Speaker1 will continue to study Docker and 1st API."
+
+
+Language Support
+================
+
+The Action Extraction API currently supports 3 languages. 
+The input language is specified via a query parameter when calling the extract endpoint.
+
+While we intent to add more language support in the future, the following language codes are currently supported
+
+====================  =====
+Language              Code
+====================  =====
+English               en-XX
+Traditional Chinese   zh-TW
+Simplified Chinese    zh-CN
+====================  =====
+
+API usage
+=========
+
+POST /extract
+-------------
+
+To extract a list of action items from a long transcription, send a POST request to the ``/extract`` endpoint.
+Because prediction may take several minutes for long transcripts, the ``/extract`` endpoint sends the result to a callback URL via a POST request.
+The callback URL must be specified in the input json body.
+Additionally, the language must be specified as a query parameter in the URL.
+
+.. code-block:: bash
+
+    POST https://ngchat-backstage.seasalt.ai/actions/{lang_code}/extract
+
+The endpoint expects a transcript in the standard format from the Speech frontend.
+The required request body for action extraction requires only the following fields:
+
+.. code-block:: JSON
+
+    {
+        "data": [
+            {
+                "transcription": "string",
+                "id": "string",
+                "speaker": [
+                    "string"
+                ]
+            }
+        ],
+        "url": "HTTPUrl"
+    }
+
+A successful response will return the following message immediately:
+
+.. code-block:: JSON
+
+    {"message": "Action Extraction process started."}
+
+Once the Action Extraction has been performed on the full transcript, a POST request will be sent to the callback URL provided in the json body.
+The format of the final result is as follows:
+
+.. code-block:: JSON
+
+    {
+        "action_items": [
+            {
+                "actionable_segment": "string",
+                "transcription_id": "string",
+                "classification_result": "string",
+                "classification_confidence": 0,
+                "summarization_context": "string",
+                "summary": "string",
+                "assigner": "string",
+                "assignee": "string",
+                "due_date": "string"
+            }
+        ]
+    }
+
+In this result the ``summary`` field represents the final summarized action item, and ``summarization_context`` is the full string that was passed to the summarization model to construct the abstractive summary.
+``summary`` is the field that should be use downstream.
+
+The ``actionable_segment`` is the chunk of the original transcription that was classified as 'actionable'.
+``classification_result`` is the label (such as 'suggestion', 'question', etc) that was assigned to the segment, and ``classification_confidence`` is the model's confidence in that prediction.
+The ``transcription_id`` ties this actionable segment back to an original location in the transcript.
+
+``assigner``, ``assignee``, and ``due_date`` currently always return ``None``.
+In the future these fields will return more relevant information extracted from the transcript concerning the action item.
+
+
+POST /extract_no_callback
+-------------------------
+
+This second endpoint performs exactly the same function as the ``/extract`` endpoint, just without callback; this endpoint will directly return the result instead of sending the result as a POST request to a callback URL. Long transcripts can take too long to process and may result in a timeout error - for this reason, any meeting transcripts over a few hundred lines long should use the ``/extract`` endpoint. For short transcripts and demos, the ``/extract_no_callback`` endpoint performs the same functionality without the hassle of a callback.
