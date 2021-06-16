@@ -12,3 +12,4 @@ Welcome to ngChat NLP
    sum_tutorial
    topic_tutorial
    action_tutorial
+   xlingualNER_tutorial

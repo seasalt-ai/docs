@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ngChat xlingualNER API Tutorial &mdash; ngChat 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Welcome to ngChat-speech’s documentation!" href="../speech/index.html" />
+    <link rel="prev" title="ngChat Action Extraction API Tutorial" href="action_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ngChat
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ngChat</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">ngChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-nlp</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">ngChat NLP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic_tutorial.html">Topic Prediction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="action_tutorial.html">Action Extraction API Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cross Lingual NER API Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-speech</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../speech/index.html">Welcome to ngChat-speech’s documentation!</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ngChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ngChat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ngChat xlingualNER API Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nlp/xlingualNER_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ngchat-xlingualner-api-tutorial">
+<span id="xlingualner-tutorial"></span><h1>ngChat xlingualNER API Tutorial<a class="headerlink" href="#ngchat-xlingualner-api-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will walk through the usage of the ngChat xlingualNER API.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p>
+<ul>
+<li><p><a class="reference internal" href="#implementation" id="id2">Implementation</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id3">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#language-support" id="id4">Language Support</a></p></li>
+<li><p><a class="reference internal" href="#api-usage" id="id5">API usage</a></p>
+<ul>
+<li><p><a class="reference internal" href="#post-extract" id="id6">POST /extract</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of the xlingualNER system is to tag sentences of various languages with our fine-grained NER labels.
+The result this system, will be a file with the word on the left, and the tag on the right, space seperated.
+In the future, we hope this system will support more languages and also have increased accuracy.</p>
+<p>The current endpoint for the xlingualNER is <code class="docutils literal notranslate"><span class="pre">https://ngchat-backstage.seasalt.ai/ner/</span></code>.</p>
+<p>See technical documentation and try out the API with the <code class="docutils literal notranslate"><span class="pre">Swagger</span> <span class="pre">docs</span> <span class="pre">&lt;https://ngchat-backstage.seasalt.ai/ner/docs&gt;</span></code>.</p>
+<p>Current models for xlingualNER can be found in the Azure fileshare at <code class="docutils literal notranslate"><span class="pre">/mnt/models/nlp/xlingual-ner/</span></code>.
+model_final is our final model, and the model_baseline is trained on all English and Chinese Ontonotes.</p>
+<div class="section" id="implementation">
+<h3><a class="toc-backref" href="#id2">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h3>
+<p>The xlingualNER pipeline consists of three parts: NERtagger, a datetime, misc outputs (ip, email address, url).
+The input is a sentence of any supported language, and an output example is listed further below.
+Our model uses NLTK’s word tokenizer by default, and uses Jieba for ZH.</p>
+<p>The labels are as follows (copied from annotation instructions document):</p>
+<dl class="simple">
+<dt>PERSON</dt><dd><p>Identifies the first names, last names, family names, unique nicknames of people and fictional characters. Generational markers (Jr., IV) are included in the extent, while personal and occupational titles such as Ms., Dr., President, Secretary are NOT included.</p>
+<ul class="simple">
+<li><p>Example: Dr. [TITLE] Bob Smith, Sr. [PERSON] is Chinese-American [NATIONALITY]</p></li>
+<li><p>Example:  Mitt Romney[PERSON] is a politician</p></li>
+</ul>
+</dd>
+<dt>NORP</dt><dd><p>Adjectival forms of named religions (e.g. Christian, Muslim, Jewish), heritage, tribes, political groups(e.g. Democratic, Republicans)</p>
+<ul class="simple">
+<li><p>Example: Ramadhan[EVENT] is a holy month for Muslim[NORP] communities</p></li>
+<li><p>Example: I love  South American[NORP] cuisines</p></li>
+</ul>
+</dd>
+<dt>FAC</dt><dd><p>Man-made infrastructures such as streets, bridges, highways, buildings, monuments, airports, parks.</p>
+<ul class="simple">
+<li><p>Example: When I go to New York City[CITY], I shop on 5th Avenue[FAC].</p></li>
+<li><p>Example: I will be flying from YVR Airport  [FAC]</p></li>
+<li><p>Example: I drove through the I-95 [FAC] to Maine[STATE_OR_PROVINCE]</p></li>
+<li><p>Example: I went to Baxter State Park[FAC]</p></li>
+</ul>
+</dd>
+<dt>ORG</dt><dd><p>Describes government agencies, political agencies, educational institutions, sport teams, and musical groups. Names of hospitals, libraries, and museums are marked as ORG except when those are referred to in a locative way (expressing location).</p>
+<ul class="simple">
+<li><p>Example: United States Congress[ORG] had a meeting</p></li>
+<li><p>Example:The United Nations [ORG] meeting took place this weekend [DATE]</p></li>
+<li><p>Example: the Supreme Court Justice[ORG]</p></li>
+<li><p>Example: the White House[ORG]</p></li>
+</ul>
+</dd>
+<dt>ORG_COMP</dt><dd><p>Describes names of companies</p>
+<ul class="simple">
+<li><p>Example: They recently opened the first[ORDINAL] Paul Bakery[ORG_COMP] in Canada[COUNTRY]</p></li>
+</ul>
+</dd>
+<dt>TITLE</dt><dd><p>Includes job and position titles such as Professor, Doctor, as well as royal family titles</p>
+<ul class="simple">
+<li><p>Example: The Queen[TITLE] of England[COUNTRY] loves ice cream</p></li>
+<li><p>Example: I am a queen who loves ice cream → no named-entity</p></li>
+</ul>
+</dd>
+<dt>RELIGION</dt><dd><p>Religious beliefs and concepts like Judaism, Hinduism, Buddhism, Islam. However, it does not include religious groups.</p>
+<ul class="simple">
+<li><p>Example: The spread of Islam[RELIGION] in Indonesia[COUNTRY] did not come directly from Arabic[NATIONALITY] country. Source</p></li>
+<li><p>Example: Christianity[RELIGION] is a religion, while Christians[NORP] are religious groups</p></li>
+</ul>
+</dd>
+<dt>LOC</dt><dd><p>Named place such as mountain, river, region, continent, street name.
+IMPORTANT NOTE about LOC VS FAC labels: LOC are named-entities that indicate location but not a specific public man-made facility. LOC is more general and is used more often.</p>
+<ul class="simple">
+<li><p>Example: Montenegro[COUNTRY] is located in Eastern Europe[LOC].</p></li>
+<li><p>Example: East of France[LOC]</p></li>
+<li><p>Example: South Boston[LOC]</p></li>
+<li><p>Example: I will meet you at Chinatown[LOC]</p></li>
+</ul>
+</dd>
+<dt>CITY</dt><dd><p>City names, towns</p>
+<ul class="simple">
+<li><p>Example: The first Starbucks[ORG_COMP] store was opened in Seattle[CITY].</p></li>
+<li><p>Example: Company based in Bloomfield Township[CITY] , Oakland County[CITY] , Michigan[STATE_OR_PROVINCE].</p></li>
+</ul>
+</dd>
+<dt>STATE_OR_PROVINCE</dt><dd><p>Includes names of state or province</p>
+<ul class="simple">
+<li><p>Example: New Hampshire[STATE_OR_PROVINCE] is the perfect outdoor playground</p></li>
+</ul>
+</dd>
+<dt>ZIP_CODE</dt><dd><p>A zip code for Canadian or American zipcodes</p>
+<ul class="simple">
+<li><p>Example: V1D6P3 or V1D 6P3 or 79645</p></li>
+</ul>
+</dd>
+<dt>COUNTRY</dt><dd><p>Includes names of countries</p>
+<ul class="simple">
+<li><p>Example: Bali[CITY] is located in Indonesia[COUNTRY]</p></li>
+</ul>
+</dd>
+<dt>NATIONALITY</dt><dd><p>Any members of state, country, city</p>
+<ul class="simple">
+<li><p>Example: Many Canadians[NATIONALITY] want to become Parisians[NATIONALITY].</p></li>
+</ul>
+</dd>
+<dt>MISC</dt><dd><p>Anything that would be capitalized in English, even if it’s not in your language. (EG: Grammy Awards)</p>
+<ul class="simple">
+<li><p>Example: They are using the latest Wi-Fi[MISC] technology.</p></li>
+</ul>
+</dd>
+<dt>PRODUCT</dt><dd><p>Named products by companies</p>
+<ul class="simple">
+<li><p>Example: I want to buy the latest Sony Camera[PRODUCT] by Sony[ORG_COMP]</p></li>
+<li><p>Example: I got a new iPod[PRODUCT] for my birthday</p></li>
+<li><p>Example: I do not want to buy cameras produced by Fuji[ORG_COMP]</p></li>
+</ul>
+</dd>
+<dt>EVENT</dt><dd><p>Any popular/repeating events</p>
+<ul class="simple">
+<li><p>Example: He attended The Presidential Election[EVENT]</p></li>
+</ul>
+</dd>
+<dt>WORK_OF_ART</dt><dd><p>Name of a play, movie, song, painting, or book</p>
+<ul class="simple">
+<li><p>Example: He stole The Mona Lisa[WORK_OF_ART] last week from Louvre Museum[FAC].</p></li>
+</ul>
+</dd>
+<dt>LAW</dt><dd><p>Legal entity names</p>
+<ul class="simple">
+<li><p>Example: They passed the American Constitution[LAW] in 1867[DATE]</p></li>
+</ul>
+</dd>
+<dt>LANGUAGE</dt><dd><p>Any language name</p>
+<ul class="simple">
+<li><p>Example: I speak English[LANGUAGE], Bahasa Indonesia[LANGUAGE], and French[LANGUAGE]</p></li>
+</ul>
+</dd>
+<dt>DATE</dt><dd><p>Includes day, month, or year.  Note that indirect references, such as “today”, “yesterday”, and “3 weeks from now” should also be tagged.</p>
+<ul class="simple">
+<li><p>Example: He was born on January 3, 2002[DATE].</p></li>
+<li><p>Example: On Monday[DATE], he was stuck in traffic for 2 hours[TIME]</p></li>
+<li><p>Example: Last week[DATE], I worked for 8 hours[TIME]</p></li>
+<li><p>Example: I love the 1940s[DATE] movies</p></li>
+<li><p>Example: In the fall of 2008, I moved to Australia [COUNTRY]</p></li>
+</ul>
+</dd>
+<dt>TIME</dt><dd><p>Specific hour / minute / seconds.</p>
+<ul class="simple">
+<li><p>Example: I have a meeting today[DATE] at 9:30am[TIME]</p></li>
+<li><p>Negative example: On Wednesday[DATE], he was stuck in traffic for 2 hours[DURATION]</p></li>
+</ul>
+</dd>
+<dt>DURATION</dt><dd><p>General time span</p>
+<ul class="simple">
+<li><p>Example: I have a piano lesson every Wednesday[SET] from 2pm to 3pm[DURATION]</p></li>
+</ul>
+</dd>
+<dt>SET</dt><dd><p>Specific repeating time span</p>
+<ul class="simple">
+<li><p>Example: Every Tuesday[SET] he plays tennis</p></li>
+</ul>
+</dd>
+<dt>PERCENT</dt><dd><p>Anything with percentage</p>
+<ul class="simple">
+<li><p>Example: He made around 75 percent[PERCENT] in profit.</p></li>
+</ul>
+</dd>
+<dt>MONEY</dt><dd><p>Related to money and currencies</p>
+<ul class="simple">
+<li><p>Example: He borrowed 17,000 British pounds[MONEY]</p></li>
+<li><p>Another example: The Indonesian rupiah[MONEY] depreciated 50%[PERCENT] against the U.S. dollar[MONEY]</p></li>
+</ul>
+</dd>
+<dt>CARDINAL</dt><dd><p>Number that doesn’t have a measurement</p>
+<ul class="simple">
+<li><p>Example: Scrabble[PRODUCT] is a game played by 2[CARDINAL] , 3[CARDINAL] or 4[CARDINAL] people</p></li>
+<li><p>Example: about half[ORDINAL] of the class received good marks</p></li>
+<li><p>Example: four[ORDINAL] of my family members love skiing</p></li>
+<li><p>Negative example: He bought one kg[QUANTITY] of oranges</p></li>
+</ul>
+</dd>
+<dt>QUANTITY</dt><dd><p>Number and must have units of measurement (as of distance, weight)</p>
+<ul class="simple">
+<li><p>Example: Sharks grow up to 20 feet [QUANTITY]</p></li>
+<li><p>Example: Twenty[CARDINAL] 20 feet[QUANTITY] sharks</p></li>
+<li><p>Example: I walked 4 miles [QUANTITY] to my home and carried one kg[QUANTITY]of oranges</p></li>
+</ul>
+</dd>
+<dt>ORDINAL</dt><dd><p>Numbers that contain some sort of order</p>
+<ul class="simple">
+<li><p>Example: He was first[ORDINAL] to arrive.</p></li>
+<li><p>Another example: He was the millionth[ORDINAL] person to win.</p></li>
+<li><p>Another example: Kamala Harris[PERSON] is the first[ORDINAL] African American[NATIONALITY] to hold the office of Attorney General[TITLE] in the state’s history.</p></li>
+</ul>
+</dd>
+<dt>URL</dt><dd><p>Website url</p>
+<ul class="simple">
+<li><p>Example: For more information, please visit our website at JD.com [URL]</p></li>
+</ul>
+</dd>
+<dt>CRIMINAL_CHARGE</dt><dd><p>Legal term</p>
+<ul class="simple">
+<li><p>Example: He was charged with manslaughter[CRIMINAL_CHARGE] last week[TIME]</p></li>
+</ul>
+</dd>
+</dl>
+<p>The last 3 tags were confusing so we removed them from our Label Studio annotations. They are not long in the gold data, only the silver data that we trained on.</p>
+<ul class="simple">
+<li><p>CAUSE_OF_DEATH</p></li>
+<li><p>HANDLE</p></li>
+<li><p>IDEOLOGY</p></li>
+</ul>
+</div>
+<div class="section" id="example">
+<h3><a class="toc-backref" href="#id3">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>The following english sentence is submitted to the system:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;In the World War(1914–1918) the First Çanakkale was a battle area. Millions died in this war.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The system outputs three key elements which are a list of named entity tags at a token level, datetime grounding and miscellaneous information such as Email, URL and IP-address:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;In&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;the&quot;</span><span class="p">:</span> <span class="s2">&quot;B-EVENT&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;World&quot;</span><span class="p">:</span> <span class="s2">&quot;I-EVENT&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;War&quot;</span><span class="p">:</span> <span class="s2">&quot;I-EVENT&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;(&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;1914–1918&quot;</span><span class="p">:</span> <span class="s2">&quot;B-DATE&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;)&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;the&quot;</span><span class="p">:</span> <span class="s2">&quot;B-LOC&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;First&quot;</span><span class="p">:</span> <span class="s2">&quot;I-LOC&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;Çanakkale&quot;</span><span class="p">:</span> <span class="s2">&quot;I-LOC&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;was&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;a&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;battle&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;area&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;.&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;Millions&quot;</span><span class="p">:</span> <span class="s2">&quot;B-CARDINAL&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;died&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;in&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;this&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;war&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;.&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;datetime&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+            <span class="nt">&quot;end&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="nt">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="nt">&quot;timex&quot;</span><span class="p">:</span> <span class="s2">&quot;1914&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;daterange&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;1914-01-01&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;end&quot;</span><span class="p">:</span> <span class="s2">&quot;1915-01-01&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;1914&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type_name&quot;</span><span class="p">:</span> <span class="s2">&quot;datetimeV2.daterange&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+            <span class="nt">&quot;end&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+            <span class="nt">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="nt">&quot;timex&quot;</span><span class="p">:</span> <span class="s2">&quot;1918&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;daterange&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;1918-01-01&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;end&quot;</span><span class="p">:</span> <span class="s2">&quot;1919-01-01&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;1918&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type_name&quot;</span><span class="p">:</span> <span class="s2">&quot;datetimeV2.daterange&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;misc&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;Email&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nt">&quot;URL&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nt">&quot;IP-address&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The final tagging result from the system is the tags field. The datetime field shows the datetime grounding with start date and end date
+as well as the corresponding span of the input sentence. The misc field shows information about Email, URL and IP-address.</p>
+</div>
+</div>
+<div class="section" id="language-support">
+<h2><a class="toc-backref" href="#id4">Language Support</a><a class="headerlink" href="#language-support" title="Permalink to this headline">¶</a></h2>
+<p>The Cross-Lingual Named Entity Recognition API currently supports 9 languages.
+The input language following a convention of <code class="docutils literal notranslate"><span class="pre">{lang_code}-{country-code}</span></code> is specified via a query parameter when calling the demo endpoint.</p>
+<p>While we intent to add more language support in the future, the following language codes are currently supported</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Language</p></th>
+<th class="head"><p>Code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>English</p></td>
+<td><p>en-XX, en-US, en-GB, en-AU, en-SG</p></td>
+</tr>
+<tr class="row-odd"><td><p>Traditional Chinese</p></td>
+<td><p>zh-TW</p></td>
+</tr>
+<tr class="row-even"><td><p>Simplifed Chinese</p></td>
+<td><p>zh-CN</p></td>
+</tr>
+<tr class="row-odd"><td><p>Indonesian</p></td>
+<td><p>id-ID</p></td>
+</tr>
+<tr class="row-even"><td><p>Javanese</p></td>
+<td><p>jv-ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>Malay</p></td>
+<td><p>ms-MY</p></td>
+</tr>
+<tr class="row-even"><td><p>Tagalog</p></td>
+<td><p>tl-PH</p></td>
+</tr>
+<tr class="row-odd"><td><p>Vietnamese</p></td>
+<td><p>vi-VN</p></td>
+</tr>
+<tr class="row-even"><td><p>Czech</p></td>
+<td><p>cs-CZ</p></td>
+</tr>
+<tr class="row-odd"><td><p>Croation</p></td>
+<td><p>hr-HR</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="api-usage">
+<h2><a class="toc-backref" href="#id5">API usage</a><a class="headerlink" href="#api-usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="post-extract">
+<h3><a class="toc-backref" href="#id6">POST /extract</a><a class="headerlink" href="#post-extract" title="Permalink to this headline">¶</a></h3>
+<p>To tag named-entities of a sentence, send a POST request to the <code class="docutils literal notranslate"><span class="pre">/extract</span></code> endpoint.
+Additionally, the language must be specified as a query parameter in the URL.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/ner/<span class="o">{</span>lang_code<span class="o">}</span>/extract
+</pre></div>
+</div>
+<p>The endpoint tags a list of named entities calculates datetime grounding and extracts Email, URL and IP-address from the input sentences.
+The required request body for Named Entity Recognition requires only the following fields:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Once the Named Entity tagging has been performed on the full sentence, you will get the following result:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;tags&quot;</span><span class="p">:</span> <span class="s2">&quot;List&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;List&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;misc&quot;</span><span class="p">:</span> <span class="s2">&quot;Dict&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this result the <code class="docutils literal notranslate"><span class="pre">tags</span></code> field represents the final tagged named entities, <code class="docutils literal notranslate"><span class="pre">datetime</span></code> is a list of datetime grounding that appears in the input sentence, <code class="docutils literal notranslate"><span class="pre">misc</span></code> is a dictionary contains Email, URL and IP-address extracted from the input sentence.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../speech/index.html" class="btn btn-neutral float-right" title="Welcome to ngChat-speech’s documentation!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="action_tutorial.html" class="btn btn-neutral float-left" title="ngChat Action Extraction API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Seasalt.ai
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-10405841-8', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

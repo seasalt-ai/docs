@@ -1,0 +1,404 @@
+.. _xlingualNER_tutorial:
+
+=====================================
+ngChat xlingualNER API Tutorial
+=====================================
+
+This tutorial will walk through the usage of the ngChat xlingualNER API.
+
+.. contents:: Table of Contents
+    :local:
+    :depth: 3
+
+Introduction
+============
+
+The purpose of the xlingualNER system is to tag sentences of various languages with our fine-grained NER labels.
+The result this system, will be a file with the word on the left, and the tag on the right, space seperated.
+In the future, we hope this system will support more languages and also have increased accuracy.
+
+The current endpoint for the xlingualNER is ``https://ngchat-backstage.seasalt.ai/ner/``.
+
+See technical documentation and try out the API with the ``Swagger docs <https://ngchat-backstage.seasalt.ai/ner/docs>``.
+
+Current models for xlingualNER can be found in the Azure fileshare at ``/mnt/models/nlp/xlingual-ner/``. 
+model_final is our final model, and the model_baseline is trained on all English and Chinese Ontonotes.
+
+Implementation
+--------------
+The xlingualNER pipeline consists of three parts: NERtagger, a datetime, misc outputs (ip, email address, url).
+The input is a sentence of any supported language, and an output example is listed further below. 
+Our model uses NLTK's word tokenizer by default, and uses Jieba for ZH. 
+
+The labels are as follows (copied from annotation instructions document):
+
+PERSON
+    Identifies the first names, last names, family names, unique nicknames of people and fictional characters. Generational markers (Jr., IV) are included in the extent, while personal and occupational titles such as Ms., Dr., President, Secretary are NOT included.
+
+    - Example: Dr. [TITLE] Bob Smith, Sr. [PERSON] is Chinese-American [NATIONALITY] 
+    - Example:  Mitt Romney[PERSON] is a politician
+
+NORP
+    Adjectival forms of named religions (e.g. Christian, Muslim, Jewish), heritage, tribes, political groups(e.g. Democratic, Republicans)
+
+    - Example: Ramadhan[EVENT] is a holy month for Muslim[NORP] communities
+    - Example: I love  South American[NORP] cuisines
+
+FAC
+    Man-made infrastructures such as streets, bridges, highways, buildings, monuments, airports, parks.
+
+    - Example: When I go to New York City[CITY], I shop on 5th Avenue[FAC].
+    - Example: I will be flying from YVR Airport  [FAC]
+    - Example: I drove through the I-95 [FAC] to Maine[STATE_OR_PROVINCE]
+    - Example: I went to Baxter State Park[FAC]
+
+ORG
+    Describes government agencies, political agencies, educational institutions, sport teams, and musical groups. Names of hospitals, libraries, and museums are marked as ORG except when those are referred to in a locative way (expressing location).
+
+    - Example: United States Congress[ORG] had a meeting
+    - Example:The United Nations [ORG] meeting took place this weekend [DATE]
+    - Example: the Supreme Court Justice[ORG]
+    - Example: the White House[ORG]
+
+ORG_COMP
+    Describes names of companies 
+
+    - Example: They recently opened the first[ORDINAL] Paul Bakery[ORG_COMP] in Canada[COUNTRY]
+
+TITLE
+    Includes job and position titles such as Professor, Doctor, as well as royal family titles
+
+    - Example: The Queen[TITLE] of England[COUNTRY] loves ice cream
+    - Example: I am a queen who loves ice cream → no named-entity
+
+RELIGION
+    Religious beliefs and concepts like Judaism, Hinduism, Buddhism, Islam. However, it does not include religious groups.
+
+    - Example: The spread of Islam[RELIGION] in Indonesia[COUNTRY] did not come directly from Arabic[NATIONALITY] country. Source
+    - Example: Christianity[RELIGION] is a religion, while Christians[NORP] are religious groups
+
+LOC
+    Named place such as mountain, river, region, continent, street name. 
+    IMPORTANT NOTE about LOC VS FAC labels: LOC are named-entities that indicate location but not a specific public man-made facility. LOC is more general and is used more often.
+
+    - Example: Montenegro[COUNTRY] is located in Eastern Europe[LOC]. 
+    - Example: East of France[LOC]
+    - Example: South Boston[LOC]
+    - Example: I will meet you at Chinatown[LOC]
+
+CITY
+    City names, towns
+
+    - Example: The first Starbucks[ORG_COMP] store was opened in Seattle[CITY].
+    - Example: Company based in Bloomfield Township[CITY] , Oakland County[CITY] , Michigan[STATE_OR_PROVINCE].
+
+STATE_OR_PROVINCE
+    Includes names of state or province
+
+    - Example: New Hampshire[STATE_OR_PROVINCE] is the perfect outdoor playground
+
+ZIP_CODE
+    A zip code for Canadian or American zipcodes
+
+    - Example: V1D6P3 or V1D 6P3 or 79645
+
+COUNTRY
+    Includes names of countries
+
+    - Example: Bali[CITY] is located in Indonesia[COUNTRY]
+
+NATIONALITY
+    Any members of state, country, city 
+
+    - Example: Many Canadians[NATIONALITY] want to become Parisians[NATIONALITY].
+
+MISC
+    Anything that would be capitalized in English, even if it’s not in your language. (EG: Grammy Awards)
+
+    - Example: They are using the latest Wi-Fi[MISC] technology. 
+
+PRODUCT
+    Named products by companies
+
+    - Example: I want to buy the latest Sony Camera[PRODUCT] by Sony[ORG_COMP]
+    - Example: I got a new iPod[PRODUCT] for my birthday
+    - Example: I do not want to buy cameras produced by Fuji[ORG_COMP]
+
+EVENT
+    Any popular/repeating events
+
+    - Example: He attended The Presidential Election[EVENT]
+
+WORK_OF_ART
+    Name of a play, movie, song, painting, or book
+
+    - Example: He stole The Mona Lisa[WORK_OF_ART] last week from Louvre Museum[FAC].
+
+LAW
+    Legal entity names
+
+    - Example: They passed the American Constitution[LAW] in 1867[DATE]
+
+LANGUAGE
+    Any language name
+
+    - Example: I speak English[LANGUAGE], Bahasa Indonesia[LANGUAGE], and French[LANGUAGE]
+
+DATE
+    Includes day, month, or year.  Note that indirect references, such as “today”, “yesterday”, and “3 weeks from now” should also be tagged.
+
+    - Example: He was born on January 3, 2002[DATE].
+    - Example: On Monday[DATE], he was stuck in traffic for 2 hours[TIME]
+    - Example: Last week[DATE], I worked for 8 hours[TIME]
+    - Example: I love the 1940s[DATE] movies
+    - Example: In the fall of 2008, I moved to Australia [COUNTRY]
+
+TIME
+    Specific hour / minute / seconds. 
+
+    - Example: I have a meeting today[DATE] at 9:30am[TIME]
+    - Negative example: On Wednesday[DATE], he was stuck in traffic for 2 hours[DURATION]
+
+DURATION
+    General time span
+
+    - Example: I have a piano lesson every Wednesday[SET] from 2pm to 3pm[DURATION]
+
+SET
+    Specific repeating time span
+
+    - Example: Every Tuesday[SET] he plays tennis
+
+PERCENT
+    Anything with percentage 
+
+    - Example: He made around 75 percent[PERCENT] in profit.
+
+MONEY
+    Related to money and currencies
+
+    - Example: He borrowed 17,000 British pounds[MONEY]
+    - Another example: The Indonesian rupiah[MONEY] depreciated 50%[PERCENT] against the U.S. dollar[MONEY]
+
+CARDINAL
+    Number that doesn’t have a measurement
+
+    - Example: Scrabble[PRODUCT] is a game played by 2[CARDINAL] , 3[CARDINAL] or 4[CARDINAL] people
+    - Example: about half[ORDINAL] of the class received good marks
+    - Example: four[ORDINAL] of my family members love skiing
+    - Negative example: He bought one kg[QUANTITY] of oranges
+
+QUANTITY
+    Number and must have units of measurement (as of distance, weight)
+
+    - Example: Sharks grow up to 20 feet [QUANTITY]
+    - Example: Twenty[CARDINAL] 20 feet[QUANTITY] sharks
+    - Example: I walked 4 miles [QUANTITY] to my home and carried one kg[QUANTITY]of oranges
+
+ORDINAL
+    Numbers that contain some sort of order
+
+    - Example: He was first[ORDINAL] to arrive.
+    - Another example: He was the millionth[ORDINAL] person to win.
+    - Another example: Kamala Harris[PERSON] is the first[ORDINAL] African American[NATIONALITY] to hold the office of Attorney General[TITLE] in the state's history.
+
+URL
+    Website url 
+
+    - Example: For more information, please visit our website at JD.com [URL]
+
+CRIMINAL_CHARGE
+    Legal term
+
+    - Example: He was charged with manslaughter[CRIMINAL_CHARGE] last week[TIME]
+
+
+The last 3 tags were confusing so we removed them from our Label Studio annotations. They are not long in the gold data, only the silver data that we trained on.
+
+- CAUSE_OF_DEATH
+- HANDLE
+- IDEOLOGY
+
+
+Example 
+-------
+
+The following english sentence is submitted to the system:
+
+.. code-block:: JSON
+
+    {
+        "text": "In the World War(1914–1918) the First Çanakkale was a battle area. Millions died in this war."
+    }
+
+The system outputs three key elements which are a list of named entity tags at a token level, datetime grounding and miscellaneous information such as Email, URL and IP-address:
+
+.. code-block:: JSON
+ 
+    {
+        "tags": [
+            {
+                "In": "O"
+            },
+            {
+                "the": "B-EVENT"
+            },
+            {
+                "World": "I-EVENT"
+            },
+            {
+                "War": "I-EVENT"
+            },
+            {
+                "(": "O"
+            },
+            {
+                "1914–1918": "B-DATE"
+            },
+            {
+                ")": "O"
+            },
+            {
+                "the": "B-LOC"
+            },
+            {
+                "First": "I-LOC"
+            },
+            {
+                "Çanakkale": "I-LOC"
+            },
+            {
+                "was": "O"
+            },
+            {
+                "a": "O"
+            },
+            {
+                "battle": "O"
+            },
+            {
+                "area": "O"
+            },
+            {
+                ".": "O"
+            },
+            {
+                "Millions": "B-CARDINAL"
+            },
+            {
+                "died": "O"
+            },
+            {
+                "in": "O"
+            },
+            {
+                "this": "O"
+            },
+            {
+                "war": "O"
+            },
+            {
+                ".": "O"
+            }
+        ],
+        "datetime": [
+            {
+                "start": 17,
+                "end": 20,
+                "resolution": {
+                    "values": [
+                        {
+                            "timex": "1914",
+                            "type": "daterange",
+                            "start": "1914-01-01",
+                            "end": "1915-01-01"
+                        }
+                    ]
+                },
+                "text": "1914",
+                "type_name": "datetimeV2.daterange"
+            },
+            {
+                "start": 22,
+                "end": 25,
+                "resolution": {
+                    "values": [
+                        {
+                            "timex": "1918",
+                            "type": "daterange",
+                            "start": "1918-01-01",
+                            "end": "1919-01-01"
+                        }
+                    ]
+                },
+                "text": "1918",
+                "type_name": "datetimeV2.daterange"
+            }
+        ],
+        "misc": {
+            "Email": [],
+            "URL": [],
+            "IP-address": []
+        }
+    }
+
+The final tagging result from the system is the tags field. The datetime field shows the datetime grounding with start date and end date 
+as well as the corresponding span of the input sentence. The misc field shows information about Email, URL and IP-address.
+
+
+Language Support
+================
+
+The Cross-Lingual Named Entity Recognition API currently supports 9 languages. 
+The input language following a convention of ``{lang_code}-{country-code}`` is specified via a query parameter when calling the demo endpoint.
+
+While we intent to add more language support in the future, the following language codes are currently supported
+
+====================  =====
+Language              Code
+====================  =====
+English               en-XX, en-US, en-GB, en-AU, en-SG
+Traditional Chinese   zh-TW
+Simplifed Chinese     zh-CN
+Indonesian            id-ID
+Javanese              jv-ID
+Malay                 ms-MY
+Tagalog               tl-PH
+Vietnamese            vi-VN
+Czech                 cs-CZ
+Croation              hr-HR
+====================  =====
+
+API usage
+=========
+
+POST /extract
+-------------
+
+To tag named-entities of a sentence, send a POST request to the ``/extract`` endpoint.
+Additionally, the language must be specified as a query parameter in the URL.
+
+.. code-block:: bash
+
+    POST https://ngchat-backstage.seasalt.ai/ner/{lang_code}/extract
+
+The endpoint tags a list of named entities calculates datetime grounding and extracts Email, URL and IP-address from the input sentences.
+The required request body for Named Entity Recognition requires only the following fields:
+
+.. code-block:: JSON
+
+    {
+        "text": "string"
+    }
+
+Once the Named Entity tagging has been performed on the full sentence, you will get the following result:
+
+.. code-block:: JSON
+
+    {
+        "tags": "List",
+        "datetime": "List",
+        "misc": "Dict"
+    }
+
+In this result the ``tags`` field represents the final tagged named entities, ``datetime`` is a list of datetime grounding that appears in the input sentence, ``misc`` is a dictionary contains Email, URL and IP-address extracted from the input sentence.

@@ -26,9 +26,20 @@ The tutorial will walk through the different API calls to access these models.
 Topic Prediction API
 ====================
 
+The Topic Prediction API uses a combination of abstractive and extractive techniques to return a list of relevant topics and keywords from a document.
+
 :ref:`Topic Prediction Tutorial ---> <topic_tutorial>`
 
 Action Extraction API
 =====================
 
+The Action Extraction API extracts and summarizes action items from a document. 
+
 :ref:`Action Extraction Tutorial ---> <action_tutorial>`
+
+Cross Lingual NER API
+=====================
+
+The Cross Lingual NER API uses one model to extract 30+ common entities from over 100 languages.
+
+:ref:`Cross Lingual NER Tutorial ---> <xlingualNER_tutorial>`
