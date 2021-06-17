@@ -1,10 +1,10 @@
 .. _xlingualNER_tutorial:
 
 =====================================
-ngChat xlingualNER API Tutorial
+xlingualNER API Tutorial
 =====================================
 
-This tutorial will walk through the usage of the ngChat xlingualNER API.
+This tutorial will walk through the usage of the xlingualNER API.
 
 .. contents:: Table of Contents
     :local:
@@ -213,7 +213,7 @@ CRIMINAL_CHARGE
     - Example: He was charged with manslaughter[CRIMINAL_CHARGE] last week[TIME]
 
 
-The last 3 tags were confusing so we removed them from our Label Studio annotations. They are not long in the gold data, only the silver data that we trained on.
+The last 3 tags were confusing so we removed them from our Label Studio annotations. They are no longer in the gold data, only the silver data that we trained on.
 
 - CAUSE_OF_DEATH
 - HANDLE
