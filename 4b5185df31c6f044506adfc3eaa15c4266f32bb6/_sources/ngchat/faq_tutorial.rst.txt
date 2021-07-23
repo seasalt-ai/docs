@@ -88,7 +88,7 @@ For now, the following can be copied and pasted into the ``config.yml`` file in 
     es_indexing:
       index_name: tutorial_faq
       # On the k8s cluster, login/secret will be set automatically.
-      host: localhost # or quickstart-es-http.default.svc.cluster.local for the cluster
+      host: localhost # or elastic.seasalt.ai for the cluster
       port: 9200
 
 These are the minimal configurations required to run the ElasticSelector. For additional configurations, such a re-ranking and BERT embedding integration, see the :ref:`FAQ Overview <ngchat_faq>`.
