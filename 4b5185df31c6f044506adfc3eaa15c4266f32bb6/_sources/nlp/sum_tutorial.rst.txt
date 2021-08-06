@@ -1,18 +1,18 @@
 .. _sum_tutorial:
 
 ==================================
-ngChat Summarization API Tutorial
+Summarization API Tutorial
 ==================================
 
-This tutorial will walk through how to use multilingual models with the ngChat Summarization API for meeting analytics.
+This tutorial will walk through how to use multilingual models with the Summarization API for meeting analytics.
 
 .. contents:: Table of Contents
     :local:
     :depth: 3
 
-The endpoint for the Summarization API is ``https://ngchat-backstage.seasalt.ai/summarization``.
+The endpoint for the Summarization API is ``https://seachat-backstage.seasalt.ai/summarization``.
 
-All of the following API calls can be viewed and tested with the `Swagger docs <https://ngchat-backstage.seasalt.ai/summarization/docs#/>`_ for this API.
+All of the following API calls can be viewed and tested with the `Swagger docs <https://seachat-backstage.seasalt.ai/summarization/docs#/>`_ for this API.
 
 The current summarization models are stored in the Azure fileshare at ``/mnt/models/nlp/summarization``.
 
@@ -36,7 +36,7 @@ Indonesian            id-XX
 Inference
 ==========
 
-The ngChat Sumamrization API supports two types of transcript summarization, short and long. The short summary method is intended to summarize a single utterance from a transcript, to provide fine-grained summarization of the transcript. The long summary method is intended to summarize the entire transcript in large chunks, to provide an overall summary of the transcript.
+The Sumamrization API supports two types of transcript summarization, short and long. The short summary method is intended to summarize a single utterance from a transcript, to provide fine-grained summarization of the transcript. The long summary method is intended to summarize the entire transcript in large chunks, to provide an overall summary of the transcript.
 
 Short Summary
 --------------
@@ -47,7 +47,7 @@ This process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://ngchat-backstage.seasalt.ai/summarization/{lang_code}/short/summarize
+    POST https://seachat-backstage.seasalt.ai/summarization/{lang_code}/short/summarize
     
 The required request body for inference contains a single turn from a transcript in the following format:
 
@@ -77,7 +77,7 @@ This process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://ngchat-backstage.seasalt.ai/summarization/{lang_code}/long/summarize
+    POST https://seachat-backstage.seasalt.ai/summarization/{lang_code}/long/summarize
 
 The required request body for inference contains the entire transcipt in the following format, with speakers and utterances in the ``data`` list. The ``url`` element is the callback url where the final summary will be returned.
 

@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Welcome to ngChat-speech’s documentation!" href="../speech/index.html" />
-    <link rel="prev" title="ngChat Action Extraction API Tutorial" href="action_tutorial.html" /> 
+    <link rel="next" title="Machine Reading API Tutorial" href="mr_tutorial.html" />
+    <link rel="prev" title="Action Extraction API Tutorial" href="action_tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="topic_tutorial.html">Topic Prediction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="action_tutorial.html">Action Extraction API Tutorial</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mr_tutorial.html">Machine Reading API Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
 <ul>
@@ -204,8 +205,8 @@
 <p>The purpose of the xlingualNER system is to tag sentences of various languages with our fine-grained NER labels.
 The result this system, will be a file with the word on the left, and the tag on the right, space seperated.
 In the future, we hope this system will support more languages and also have increased accuracy.</p>
-<p>The current endpoint for the xlingualNER is <code class="docutils literal notranslate"><span class="pre">https://ngchat-backstage.seasalt.ai/ner/</span></code>.</p>
-<p>See technical documentation and try out the API with the <code class="docutils literal notranslate"><span class="pre">Swagger</span> <span class="pre">docs</span> <span class="pre">&lt;https://ngchat-backstage.seasalt.ai/ner/docs&gt;</span></code>.</p>
+<p>The current endpoint for the xlingualNER is <code class="docutils literal notranslate"><span class="pre">https://seachat-backstage.seasalt.ai/ner/</span></code>.</p>
+<p>See technical documentation and try out the API with the <code class="docutils literal notranslate"><span class="pre">Swagger</span> <span class="pre">docs</span> <span class="pre">&lt;https://seachat-backstage.seasalt.ai/ner/docs&gt;</span></code>.</p>
 <p>Current models for xlingualNER can be found in the Azure fileshare at <code class="docutils literal notranslate"><span class="pre">/mnt/models/nlp/xlingual-ner/</span></code>.
 model_final is our final model, and the model_baseline is trained on all English and Chinese Ontonotes.</p>
 <div class="section" id="implementation">
@@ -579,7 +580,7 @@ The input language following a convention of <code class="docutils literal notra
 <h3><a class="toc-backref" href="#id6">POST /extract</a><a class="headerlink" href="#post-extract" title="Permalink to this headline">¶</a></h3>
 <p>To tag named-entities of a sentence, send a POST request to the <code class="docutils literal notranslate"><span class="pre">/extract</span></code> endpoint.
 Additionally, the language must be specified as a query parameter in the URL.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/ner/<span class="o">{</span>lang_code<span class="o">}</span>/extract
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seachat-backstage.seasalt.ai/ner/<span class="o">{</span>lang_code<span class="o">}</span>/extract
 </pre></div>
 </div>
 <p>The endpoint tags a list of named entities calculates datetime grounding and extracts Email, URL and IP-address from the input sentences.
@@ -610,10 +611,10 @@ The required request body for Named Entity Recognition requires only the followi
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../speech/index.html" class="btn btn-neutral float-right" title="Welcome to ngChat-speech’s documentation!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mr_tutorial.html" class="btn btn-neutral float-right" title="Machine Reading API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="action_tutorial.html" class="btn btn-neutral float-left" title="ngChat Action Extraction API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="action_tutorial.html" class="btn btn-neutral float-left" title="Action Extraction API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

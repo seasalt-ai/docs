@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ngChat Topic Prediction API Tutorial &mdash; ngChat 0.0.1 documentation</title>
+  <title>Topic Prediction API Tutorial &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ngChat Action Extraction API Tutorial" href="action_tutorial.html" />
-    <link rel="prev" title="ngChat Summarization API Tutorial" href="sum_tutorial.html" /> 
+    <link rel="next" title="Action Extraction API Tutorial" href="action_tutorial.html" />
+    <link rel="prev" title="Summarization API Tutorial" href="sum_tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +106,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Topic Prediction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="action_tutorial.html">Action Extraction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mr_tutorial.html">Machine Reading API Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
 <ul>
@@ -160,7 +161,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>ngChat Topic Prediction API Tutorial</li>
+      <li>Topic Prediction API Tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,8 +180,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ngchat-topic-prediction-api-tutorial">
-<span id="topic-tutorial"></span><h1>ngChat Topic Prediction API Tutorial<a class="headerlink" href="#ngchat-topic-prediction-api-tutorial" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="topic-prediction-api-tutorial">
+<span id="topic-tutorial"></span><h1>Topic Prediction API Tutorial<a class="headerlink" href="#topic-prediction-api-tutorial" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial will walk through how to use the Topic Extraction API for meeting analytics.</p>
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
@@ -188,14 +189,15 @@
 <li><p><a class="reference internal" href="#multilingual-support" id="id1">Multilingual Support</a></p></li>
 <li><p><a class="reference internal" href="#topic-extraction" id="id2">Topic Extraction</a></p>
 <ul>
-<li><p><a class="reference internal" href="#extract" id="id3">extract</a></p></li>
-<li><p><a class="reference internal" href="#demo" id="id4">demo</a></p></li>
+<li><p><a class="reference internal" href="#post-extract" id="id3">POST /extract</a></p></li>
+<li><p><a class="reference internal" href="#post-extract-no-callback" id="id4">POST /extract_no_callback</a></p></li>
+<li><p><a class="reference internal" href="#post-extract-live" id="id5">POST /extract_live</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<p>The deployed version of the topic extraction API is hosted at <code class="docutils literal notranslate"><span class="pre">https://ngchat-backstage.seasalt.ai/topics</span></code>.</p>
-<p>All of the following API calls can be viewed and tested with the <a class="reference external" href="https://ngchat-backstage.seasalt.ai/topics/docs#/">Swagger docs</a> for this API.</p>
+<p>The deployed version of the topic extraction API is hosted at <code class="docutils literal notranslate"><span class="pre">https://seachat-backstage.seasalt.ai/topics</span></code>.</p>
+<p>All of the following API calls can be viewed and tested with the <a class="reference external" href="https://seachat-backstage.seasalt.ai/topics/docs#/">Swagger docs</a> for this API.</p>
 <p>The current topic extraction models are stored in the Azure fileshare at <code class="docutils literal notranslate"><span class="pre">/mnt/models/nlp/topic_extraction</span></code>.</p>
 <div class="section" id="multilingual-support">
 <h2><a class="toc-backref" href="#id1">Multilingual Support</a><a class="headerlink" href="#multilingual-support" title="Permalink to this headline">¶</a></h2>
@@ -243,32 +245,32 @@
 <div class="section" id="topic-extraction">
 <h2><a class="toc-backref" href="#id2">Topic Extraction</a><a class="headerlink" href="#topic-extraction" title="Permalink to this headline">¶</a></h2>
 <p>The topic extraction task uses a combination of abstractive and extractive approaches. Abstractive refers to a text classification approach, where each input is classified into a set of labels seen during training. Extractive refers to a keyphrase search approach where relevant keyphrases are returned as topics.</p>
-<div class="section" id="extract">
-<h3><a class="toc-backref" href="#id3">extract</a><a class="headerlink" href="#extract" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="post-extract">
+<h3><a class="toc-backref" href="#id3">POST /extract</a><a class="headerlink" href="#post-extract" title="Permalink to this headline">¶</a></h3>
 <p>To get the topics for an input, the process is called with a POST request to the <code class="docutils literal notranslate"><span class="pre">extract</span></code> endpoint:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/topics/extract/<span class="o">{</span>lang_code<span class="o">}</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seachat-backstage.seasalt.ai/topics/<span class="o">{</span>lang_code<span class="o">}</span>/extract
 </pre></div>
 </div>
 <p>This request takes a path parameter <code class="docutils literal notranslate"><span class="pre">{lang_code}</span></code>. Your choice of language code from the table above replaces the curly braces. By default, the language code is set to <code class="docutils literal notranslate"><span class="pre">en-US</span></code>.</p>
 <p>The required request body for topic extraction is as follows:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-    <span class="nt">&quot;sequence&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;wav_id&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;anchor_start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;verified_transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;is_verified&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;trans_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;string&quot;</span>
-    <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">],</span>
-<span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.0&quot;</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;sequence&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;wav_id&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;anchor_start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;verified_transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;is_verified&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;trans_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;string&quot;</span>
+        <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.0&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -283,11 +285,11 @@
 </pre></div>
 </div>
 <p>The output of topic extraction is sent to the front end where users will be able to see the topics in the user interface.</p>
-<p>To test that callback is working properly, start the callback API by running the following command in <code class="docutils literal notranslate"><span class="pre">ngChat/ngchat_nlp/topic_extraction/routers</span></code>:</p>
+<p>To test that callback is working properly, start the callback API by running the following command in <code class="docutils literal notranslate"><span class="pre">SeaWord/topic_extraction/routers</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uvicorn callback_test:callback_test --port <span class="m">8888</span>
 </pre></div>
 </div>
-<p>In another terminal, start the topic extraction API by running the following command in <code class="docutils literal notranslate"><span class="pre">ngChat/ngchat_nlp/topic_extraction</span></code>:</p>
+<p>In another terminal, start the topic extraction API by running the following command in <code class="docutils literal notranslate"><span class="pre">SeaWord/topic_extraction</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uvicorn main:app --port <span class="m">5003</span> --host <span class="m">0</span>.0.0.0
 </pre></div>
 </div>
@@ -296,7 +298,7 @@
 </pre></div>
 </div>
 <p>Send a request using a curl request as follows:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST http://0.0.0.0:5003/extract/en-US -H <span class="s1">&#39;Content-Type: application/json&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST http://0.0.0.0:5003/en-US/extract -H <span class="s1">&#39;Content-Type: application/json&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">    &quot;url&quot;: &quot;http://127.0.0.1:8888&quot;,</span>
 <span class="s1">    &quot;data&quot;: [{&quot;summarization&quot;: &quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;,</span>
 <span class="s1">              &quot;transcription&quot;: &quot;string&quot;</span>
@@ -308,7 +310,7 @@
 <p>You can modify the <code class="docutils literal notranslate"><span class="pre">&quot;summarization&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;transcription&quot;</span></code> fields, but they cannot be empty. The value of the <code class="docutils literal notranslate"><span class="pre">&quot;summarization&quot;</span></code> field will be the input to topic extraction, so make sure the input you want to test is placed in <code class="docutils literal notranslate"><span class="pre">&quot;summarization&quot;</span></code>. You can also change the language code in <code class="docutils literal notranslate"><span class="pre">http://0.0.0.0:5003/extract/en-US</span></code>. Notice that the <code class="docutils literal notranslate"><span class="pre">&quot;url&quot;</span></code> field is set to the port specified when you start the callback API.</p>
 <p>If the process is successful, the following logs will appear in the same terminal as the one you used to start the topic extraction API:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>INFO: <span class="p">|</span> <span class="m">2021</span>-05-26 <span class="m">19</span>:58:15,567 <span class="p">|</span> topic_api.py:start_topic_extraction_process <span class="p">|</span> Extraction task added to queue.
-INFO: <span class="m">127</span>.0.0.1:38702 - <span class="s2">&quot;POST /extract/en-US HTTP/1.1&quot;</span> <span class="m">202</span> Accepted
+INFO: <span class="m">127</span>.0.0.1:38702 - <span class="s2">&quot;POST /en-US/extract HTTP/1.1&quot;</span> <span class="m">202</span> Accepted
 INFO: <span class="p">|</span> <span class="m">2021</span>-05-26 <span class="m">19</span>:58:15,570 <span class="p">|</span> topic_api.py:topic_predict_callback <span class="p">|</span> Sending callback request to http://127.0.0.1:8888
 INFO: <span class="p">|</span> <span class="m">2021</span>-05-26 <span class="m">19</span>:58:15,570 <span class="p">|</span> topic_api.py:extract <span class="p">|</span> Language code: en-XX
 INFO: <span class="p">|</span> <span class="m">2021</span>-05-26 <span class="m">19</span>:58:15,570 <span class="p">|</span> topic_api.py:extract <span class="p">|</span> Extracting topics
@@ -326,73 +328,104 @@ INFO: <span class="p">|</span> <span class="m">2021</span>-05-26 <span class="m"
 INFO:fastapi:Callback succeeded. Code: <span class="m">200</span>
 </pre></div>
 </div>
-<p>In addition, there should be a file <code class="docutils literal notranslate"><span class="pre">results.json</span></code> in <code class="docutils literal notranslate"><span class="pre">ngChat/ngchat_nlp/topic_extraction/routers</span></code> that contains the response from topic extraction.</p>
+<p>In addition, there should be a file <code class="docutils literal notranslate"><span class="pre">results.json</span></code> in <code class="docutils literal notranslate"><span class="pre">SeaWord/topic_extraction/routers</span></code> that contains the response from topic extraction.</p>
 <p>When using the <code class="docutils literal notranslate"><span class="pre">extract</span></code> endpoint, we do not have to wait for topic extraction results when we send a request. We let the API process the input without having to worry about the request timing out. Once all the data is processed, the API sends its own request to the callback URL that it was given in the original request (i.e. it sends a request back to us with the topic extraction results)</p>
 <p>On the other hand, when using the <code class="docutils literal notranslate"><span class="pre">demo</span></code> endpoint, we have to wait for topic extraction to generate results. See below for instructions on using the <code class="docutils literal notranslate"><span class="pre">demo</span></code> endpoint.</p>
 </div>
-<div class="section" id="demo">
-<h3><a class="toc-backref" href="#id4">demo</a><a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h3>
-<p>In order to see the full topics returned without accesing the ngMeeting user interface, we send a POST request to the <code class="docutils literal notranslate"><span class="pre">demo</span></code> endpoint:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/topics/demo/<span class="o">{</span>lang_code<span class="o">}</span>
+<div class="section" id="post-extract-no-callback">
+<h3><a class="toc-backref" href="#id4">POST /extract_no_callback</a><a class="headerlink" href="#post-extract-no-callback" title="Permalink to this headline">¶</a></h3>
+<p>In order to see the full topics returned without accesing the ngMeeting user interface, we send a POST request to the <code class="docutils literal notranslate"><span class="pre">extract_no_callback</span></code> endpoint:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seachat-backstage.seasalt.ai/topics/<span class="o">{</span>lang_code<span class="o">}</span>/extract_no_callback
 </pre></div>
 </div>
 <p>Similarly, the choice of language code from the table above replaces the curly braces. By default, the language code is set to <code class="docutils literal notranslate"><span class="pre">en-US</span></code>.</p>
 <p>The required request body for topic extraction is the same as shown above. For completion, it is as follows:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-    <span class="nt">&quot;sequence&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;wav_id&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;anchor_start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;verified_transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;is_verified&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;trans_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;string&quot;</span>
-    <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">],</span>
-<span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.0&quot;</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+        <span class="nt">&quot;sequence&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;wav_id&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;anchor_start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;verified_transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;is_verified&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;trans_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;string&quot;</span>
+        <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.0&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>A successful response will have the following output:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="nt">&quot;RAKE&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s2">&quot;coronavirus disease 2019&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ongoing global pandemic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coronavirus pandemic&quot;</span>
-    <span class="p">]</span>
-<span class="p">},</span>
-<span class="nt">&quot;BERT&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s2">&quot;coronavirus pandemic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coronavirus disease&quot;</span>
-    <span class="p">]</span>
-<span class="p">},</span>
-<span class="nt">&quot;topics&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;transcript&quot;</span><span class="p">:</span> <span class="s2">&quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;topics&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s2">&quot;sanfrancisco&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;usa&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;london&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;berlin&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;australia&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;BusinessPerson&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Weapon&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Outbreak&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coronavirus pandemic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coronavirus disease&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coronavirus disease 2019&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ongoing global pandemic&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coronavirus pandemic&quot;</span>
-    <span class="p">]</span>
+    <span class="nt">&quot;RAKE&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;coronavirus disease 2019&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ongoing global pandemic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coronavirus pandemic&quot;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;BERT&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;coronavirus pandemic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coronavirus disease&quot;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;topics&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;transcript&quot;</span><span class="p">:</span> <span class="s2">&quot;The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;topics&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;sanfrancisco&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;usa&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;london&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;berlin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;australia&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BusinessPerson&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Weapon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Outbreak&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coronavirus pandemic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coronavirus disease&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coronavirus disease 2019&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ongoing global pandemic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coronavirus pandemic&quot;</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="post-extract-live">
+<h3><a class="toc-backref" href="#id5">POST /extract_live</a><a class="headerlink" href="#post-extract-live" title="Permalink to this headline">¶</a></h3>
+<p>In cases where we want to get live results and process a transcript piece by piece, we can use the <code class="docutils literal notranslate"><span class="pre">/extract_live</span></code> endpoint.
+Instead of an entire meeting transcript, this endpoint accepts a single transcription segment in the following format:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;command&quot;: Text,
+    &quot;meeting_id&quot;: Text,
+    &quot;sequence&quot;: int,
+    &quot;account_id&quot;: Text,
+    &quot;timestamp&quot;: Text,
+    &quot;speaker&quot;: Text,
+    &quot;transcription&quot;: Text,
+    &quot;voice_start_time&quot;: float,
+    &quot;voice_duration&quot;: float,
+    &quot;type&quot;: Text,
+    &quot;callback_url&quot;: HttpUrl
+}
+</pre></div>
+</div>
+<p>The topic extraction process will be performed on the segment and the resulting topics for each segment will be cached.
+If the topic extraction system predicts a unique topic for the transcript (ie. it predicts a topic for the first time on a specific meeting transcript),
+the API will send a callback containing the new topics in the following format:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;meeting_id&quot;: Text,
+    &quot;sequence&quot;: int,
+    &quot;account_id&quot;: Text,
+    &quot;topics&quot;: List[Keywords]
+}
 </pre></div>
 </div>
 </div>
@@ -407,10 +440,10 @@ INFO:fastapi:Callback succeeded. Code: <span class="m">200</span>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="action_tutorial.html" class="btn btn-neutral float-right" title="ngChat Action Extraction API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="action_tutorial.html" class="btn btn-neutral float-right" title="Action Extraction API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sum_tutorial.html" class="btn btn-neutral float-left" title="ngChat Summarization API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sum_tutorial.html" class="btn btn-neutral float-left" title="Summarization API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

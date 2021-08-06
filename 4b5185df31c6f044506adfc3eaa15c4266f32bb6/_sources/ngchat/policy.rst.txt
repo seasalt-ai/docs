@@ -63,6 +63,8 @@ Upon Prediction:
   predict_action_probabilities():
     if there is a chain of actions to be executed: 
       return next action in the chain
+    if machine reading is activated and the machine reading score < threshold:
+      return machine reading action
     if the NLU confidence < threshold: 
       return fallback
     else:
@@ -327,24 +329,33 @@ How to Use Policy
 
 **Add to config.yml**
 
-In order to use the policy with Rasa, you must specify the policy in the configuration file. The only required field is the name, which should be the path to the ngChatPolicy class from your working directory. Additionally, you can specify the location of the dialogue file (default: ``./dialogue.yml``), and the nlu threshold that determines when the fallback action will be triggered (default: ``.40``). The NgChat Policy can be used as the only policy in the config, or it can be used alongside other Rasa policies.
+In order to use the policy with Rasa, you must specify the policy in the configuration file. The only required field is the name, which should be the path to the ngChatPolicy class from your working directory. Additionally, you can specify the location of the dialogue file (default: ``./dialogue.yml``), and the nlu threshold that determines when the fallback action will be triggered (default: ``.40``). If the bot needs to use the machine reading reviews system, you need to indicate that the policy should use it (default: ``false``), as well as specifying the threshold for using the machine reading answer (default: ``.40``) and the path to the required file (default: ``./data/gm_reviews.text``). As a note, the machine reading reviews system only works with Rasa 2x+. The NgChat Policy can be used as the only policy in the config, or it can be used alongside other Rasa policies.
 
 Configurable parameters:
 
-+--------------------------------+-------+-------------------------------------------------------+--------------------+
-| NAME                           | TYPE  | DESCRIPTION                                           | DEFAULT            |
-+================================+=======+=======================================================+====================+
-| ``name``                       | Text  | The path the ngChatPolicy *class*, not just the file. | None               |
-+--------------------------------+-------+-------------------------------------------------------+--------------------+
-| ``dialogue_path``              | Text  | The path to the dialogue.yml file.                    | ``./dialogue.yml`` |
-+--------------------------------+-------+-------------------------------------------------------+--------------------+
-| ``nlu_threshold``              | float | Fallback threshold for nlu intent classification.     | ``.40``            |
-|                                |       | If the NLU intent classification confidence is below  |                    |
-|                                |       | the threshold, the policy will default to the         |                    |
-|                                |       | fallback action.                                      |                    |
-+--------------------------------+-------+-------------------------------------------------------+--------------------+
-| ``visual``                     | Dict  | A dict of visualization configurations, see next table|                    |
-+--------------------------------+-------+-------------------------------------------------------+--------------------+
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| NAME                           | TYPE  | DESCRIPTION                                           | DEFAULT                   |
++================================+=======+=======================================================+===========================+
+| ``name``                       | Text  | The path the ngChatPolicy *class*, not just the file. | None                      |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| ``dialogue_path``              | Text  | The path to the dialogue.yml file.                    | ``./dialogue.yml``        |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| ``nlu_threshold``              | float | Fallback threshold for nlu intent classification.     | ``.40``                   |
+|                                |       | If the NLU intent classification confidence is below  |                           |
+|                                |       | the threshold, the policy will default to the         |                           |
+|                                |       | fallback action.                                      |                           |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| ``use_mr``                     | bool  | Whether machine reading is used in the bot.           | ``False``                 |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| ``mr_threshold``               | float | Threshold for the machine reading system. If the      | ``.40``                   | 
+|                                |       | machine reading conficence is below the threshold,    |                           |
+|                                |       | the policy will default to the DIET classifier        |                           |
+|                                |       | classification.                                       |                           |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| ``mr_text_path``               | Text  | The path to the reviews text file.                    | ``./data/gm_reviews.txt`` |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
+| ``visual``                     | Dict  | A dict of visualization configurations, see next table|                           |
++--------------------------------+-------+-------------------------------------------------------+---------------------------+
 
 Visualization parameters:
 
@@ -381,6 +392,8 @@ Example:
     - name: ngchat_plugins.core.policy.ngchat.ngChatPolicy
       dialogue_path: ./dialogue.yml
       nlu_threshold: .40
+      use_mr: true
+      mr_threshold: .40
       visual:
         visualization_directory: ./visual
         output_static_visualization: false

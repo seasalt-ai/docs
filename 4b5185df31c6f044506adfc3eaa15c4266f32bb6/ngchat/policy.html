@@ -106,6 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Prediction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
 <ul>
@@ -256,6 +257,8 @@ The bot will continue to do this until a listen action is triggered, at which po
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">predict_action_probabilities</span><span class="p">():</span>
   <span class="k">if</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">chain</span> <span class="n">of</span> <span class="n">actions</span> <span class="n">to</span> <span class="n">be</span> <span class="n">executed</span><span class="p">:</span>
     <span class="k">return</span> <span class="nb">next</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">chain</span>
+  <span class="k">if</span> <span class="n">machine</span> <span class="n">reading</span> <span class="ow">is</span> <span class="n">activated</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">machine</span> <span class="n">reading</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">machine</span> <span class="n">reading</span> <span class="n">action</span>
   <span class="k">if</span> <span class="n">the</span> <span class="n">NLU</span> <span class="n">confidence</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">fallback</span>
   <span class="k">else</span><span class="p">:</span>
@@ -535,14 +538,14 @@ The result is that the developer can view the graphic in real time while interac
 <div class="section" id="how-to-use-policy">
 <h3><a class="toc-backref" href="#id15">How to Use Policy</a><a class="headerlink" href="#how-to-use-policy" title="Permalink to this headline">¶</a></h3>
 <p><strong>Add to config.yml</strong></p>
-<p>In order to use the policy with Rasa, you must specify the policy in the configuration file. The only required field is the name, which should be the path to the ngChatPolicy class from your working directory. Additionally, you can specify the location of the dialogue file (default: <code class="docutils literal notranslate"><span class="pre">./dialogue.yml</span></code>), and the nlu threshold that determines when the fallback action will be triggered (default: <code class="docutils literal notranslate"><span class="pre">.40</span></code>). The NgChat Policy can be used as the only policy in the config, or it can be used alongside other Rasa policies.</p>
+<p>In order to use the policy with Rasa, you must specify the policy in the configuration file. The only required field is the name, which should be the path to the ngChatPolicy class from your working directory. Additionally, you can specify the location of the dialogue file (default: <code class="docutils literal notranslate"><span class="pre">./dialogue.yml</span></code>), and the nlu threshold that determines when the fallback action will be triggered (default: <code class="docutils literal notranslate"><span class="pre">.40</span></code>). If the bot needs to use the machine reading reviews system, you need to indicate that the policy should use it (default: <code class="docutils literal notranslate"><span class="pre">false</span></code>), as well as specifying the threshold for using the machine reading answer (default: <code class="docutils literal notranslate"><span class="pre">.40</span></code>) and the path to the required file (default: <code class="docutils literal notranslate"><span class="pre">./data/gm_reviews.text</span></code>). As a note, the machine reading reviews system only works with Rasa 2x+. The NgChat Policy can be used as the only policy in the config, or it can be used alongside other Rasa policies.</p>
 <p>Configurable parameters:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 28%" />
+<col style="width: 26%" />
 <col style="width: 6%" />
-<col style="width: 48%" />
-<col style="width: 18%" />
+<col style="width: 45%" />
+<col style="width: 22%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>NAME</p></th>
@@ -570,7 +573,25 @@ the threshold, the policy will default to the
 fallback action.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">.40</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">visual</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_mr</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Whether machine reading is used in the bot.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mr_threshold</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Threshold for the machine reading system. If the
+machine reading conficence is below the threshold,
+the policy will default to the DIET classifier
+classification.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.40</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mr_text_path</span></code></p></td>
+<td><p>Text</p></td>
+<td><p>The path to the reviews text file.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">./data/gm_reviews.txt</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">visual</span></code></p></td>
 <td><p>Dict</p></td>
 <td><p>A dict of visualization configurations, see next table</p></td>
 <td></td>
@@ -642,6 +663,8 @@ visualization files.</p></td>
   <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ngchat_plugins.core.policy.ngchat.ngChatPolicy</span>
     <span class="nt">dialogue_path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./dialogue.yml</span>
     <span class="nt">nlu_threshold</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.40</span>
+    <span class="nt">use_mr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">mr_threshold</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.40</span>
     <span class="nt">visual</span><span class="p">:</span>
       <span class="nt">visualization_directory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./visual</span>
       <span class="nt">output_static_visualization</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>

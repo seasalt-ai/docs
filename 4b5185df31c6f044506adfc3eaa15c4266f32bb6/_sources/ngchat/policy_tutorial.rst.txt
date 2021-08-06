@@ -32,14 +32,23 @@ In ``config.yml`` we will remove all of the policies, and add the ngChat Policy.
   policies:
     - name: ngchat_plugins.core.policy.ngchat.ngChatPolicy
       nlu_threshold: .20
+      use_mr: true
+      mr_threshold: .40
+      mr_text_path: ./data/gm_reviews.txt
       dialogue_path: ./dialogue.yml
 
 .. IMPORTANT:: The ``name`` paramater should be a path to the ngChatPolicy *class*
 
-In this configuration you can also specify the ``nlu_threshold``, which controls when the bot will default to the fallback action dependent on the NLU confidence, and the ``dialogue_path`` which should point to a file in your bot directory called ``dialogue.yml``. 
+In this configuration you can also specify the ``nlu_threshold``, which controls when the bot will default to the fallback action dependent on the NLU confidence, and the ``dialogue_path`` which should point to a file in your bot directory called ``dialogue.yml``. If the bot uses the machine reading reviews system, you need to set ``use_mr`` to true. You can then specify the ``mr_threshold``, which controls when the bot will default to the machine reading response, and the ``mr_text_path``, which points to the file in your bot directory that contains the data for the machine reading system. As a note, the machine reading reviews system only works with Rasa 2x+.
 
 Defaults:
     ``nlu_threshold``: ``.4``
+
+    ``use_mr``: ``false``
+
+    ``mr_threshold``: ``.4``
+
+    ``mr_text_path``: ``./data/gm_reviews.txt``
 
     ``dialogue_path``: ``./dialogue.yml``
 

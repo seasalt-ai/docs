@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ngChat Summarization API Tutorial &mdash; ngChat 0.0.1 documentation</title>
+  <title>Summarization API Tutorial &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ngChat Topic Prediction API Tutorial" href="topic_tutorial.html" />
-    <link rel="prev" title="ngChat NLP Overview" href="readme.html" /> 
+    <link rel="next" title="Topic Prediction API Tutorial" href="topic_tutorial.html" />
+    <link rel="prev" title="SeaWord NLP Overview" href="readme.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +106,7 @@
 <li class="toctree-l1"><a class="reference internal" href="topic_tutorial.html">Topic Prediction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="action_tutorial.html">Action Extraction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mr_tutorial.html">Machine Reading API Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
 <ul>
@@ -160,7 +161,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>ngChat Summarization API Tutorial</li>
+      <li>Summarization API Tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,9 +180,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ngchat-summarization-api-tutorial">
-<span id="sum-tutorial"></span><h1>ngChat Summarization API Tutorial<a class="headerlink" href="#ngchat-summarization-api-tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial will walk through how to use multilingual models with the ngChat Summarization API for meeting analytics.</p>
+  <div class="section" id="summarization-api-tutorial">
+<span id="sum-tutorial"></span><h1>Summarization API Tutorial<a class="headerlink" href="#summarization-api-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will walk through how to use multilingual models with the Summarization API for meeting analytics.</p>
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title first">Table of Contents</p>
 <ul class="simple">
@@ -194,8 +195,8 @@
 </li>
 </ul>
 </div>
-<p>The endpoint for the Summarization API is <code class="docutils literal notranslate"><span class="pre">https://ngchat-backstage.seasalt.ai/summarization</span></code>.</p>
-<p>All of the following API calls can be viewed and tested with the <a class="reference external" href="https://ngchat-backstage.seasalt.ai/summarization/docs#/">Swagger docs</a> for this API.</p>
+<p>The endpoint for the Summarization API is <code class="docutils literal notranslate"><span class="pre">https://seachat-backstage.seasalt.ai/summarization</span></code>.</p>
+<p>All of the following API calls can be viewed and tested with the <a class="reference external" href="https://seachat-backstage.seasalt.ai/summarization/docs#/">Swagger docs</a> for this API.</p>
 <p>The current summarization models are stored in the Azure fileshare at <code class="docutils literal notranslate"><span class="pre">/mnt/models/nlp/summarization</span></code>.</p>
 <div class="section" id="multilingual-support">
 <h2><a class="toc-backref" href="#id1">Multilingual Support</a><a class="headerlink" href="#multilingual-support" title="Permalink to this headline">¶</a></h2>
@@ -229,12 +230,12 @@
 </div>
 <div class="section" id="inference">
 <h2><a class="toc-backref" href="#id2">Inference</a><a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
-<p>The ngChat Sumamrization API supports two types of transcript summarization, short and long. The short summary method is intended to summarize a single utterance from a transcript, to provide fine-grained summarization of the transcript. The long summary method is intended to summarize the entire transcript in large chunks, to provide an overall summary of the transcript.</p>
+<p>The Sumamrization API supports two types of transcript summarization, short and long. The short summary method is intended to summarize a single utterance from a transcript, to provide fine-grained summarization of the transcript. The long summary method is intended to summarize the entire transcript in large chunks, to provide an overall summary of the transcript.</p>
 <div class="section" id="short-summary">
 <h3><a class="toc-backref" href="#id3">Short Summary</a><a class="headerlink" href="#short-summary" title="Permalink to this headline">¶</a></h3>
 <p>The short summary model produces a summary of a single turn of a transcript.</p>
 <p>This process is called with the following POST request:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/short/summarize
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seachat-backstage.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/short/summarize
 </pre></div>
 </div>
 <p>The required request body for inference contains a single turn from a transcript in the following format:</p>
@@ -258,7 +259,7 @@
 <h3><a class="toc-backref" href="#id4">Long Summary</a><a class="headerlink" href="#long-summary" title="Permalink to this headline">¶</a></h3>
 <p>The long summary model produces a summary of the largest possible segment of a transcript.</p>
 <p>This process is called with the following POST request:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://ngchat-backstage.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/long/summarize
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seachat-backstage.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/long/summarize
 </pre></div>
 </div>
 <p>The required request body for inference contains the entire transcipt in the following format, with speakers and utterances in the <code class="docutils literal notranslate"><span class="pre">data</span></code> list. The <code class="docutils literal notranslate"><span class="pre">url</span></code> element is the callback url where the final summary will be returned.</p>
@@ -317,10 +318,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="topic_tutorial.html" class="btn btn-neutral float-right" title="ngChat Topic Prediction API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="topic_tutorial.html" class="btn btn-neutral float-right" title="Topic Prediction API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="readme.html" class="btn btn-neutral float-left" title="ngChat NLP Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="readme.html" class="btn btn-neutral float-left" title="SeaWord NLP Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

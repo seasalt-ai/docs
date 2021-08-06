@@ -113,6 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Prediction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ngChat-speech</span></p>
 <ul>
@@ -221,6 +222,9 @@
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">policies</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ngchat_plugins.core.policy.ngchat.ngChatPolicy</span>
     <span class="nt">nlu_threshold</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.20</span>
+    <span class="nt">use_mr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">mr_threshold</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.40</span>
+    <span class="nt">mr_text_path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./data/gm_reviews.txt</span>
     <span class="nt">dialogue_path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./dialogue.yml</span>
 </pre></div>
 </div>
@@ -228,9 +232,12 @@
 <p class="admonition-title">Important</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> paramater should be a path to the ngChatPolicy <em>class</em></p>
 </div>
-<p>In this configuration you can also specify the <code class="docutils literal notranslate"><span class="pre">nlu_threshold</span></code>, which controls when the bot will default to the fallback action dependent on the NLU confidence, and the <code class="docutils literal notranslate"><span class="pre">dialogue_path</span></code> which should point to a file in your bot directory called <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code>.</p>
+<p>In this configuration you can also specify the <code class="docutils literal notranslate"><span class="pre">nlu_threshold</span></code>, which controls when the bot will default to the fallback action dependent on the NLU confidence, and the <code class="docutils literal notranslate"><span class="pre">dialogue_path</span></code> which should point to a file in your bot directory called <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code>. If the bot uses the machine reading reviews system, you need to set <code class="docutils literal notranslate"><span class="pre">use_mr</span></code> to true. You can then specify the <code class="docutils literal notranslate"><span class="pre">mr_threshold</span></code>, which controls when the bot will default to the machine reading response, and the <code class="docutils literal notranslate"><span class="pre">mr_text_path</span></code>, which points to the file in your bot directory that contains the data for the machine reading system. As a note, the machine reading reviews system only works with Rasa 2x+.</p>
 <dl>
 <dt>Defaults:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">nlu_threshold</span></code>: <code class="docutils literal notranslate"><span class="pre">.4</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">use_mr</span></code>: <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">mr_threshold</span></code>: <code class="docutils literal notranslate"><span class="pre">.4</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">mr_text_path</span></code>: <code class="docutils literal notranslate"><span class="pre">./data/gm_reviews.txt</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">dialogue_path</span></code>: <code class="docutils literal notranslate"><span class="pre">./dialogue.yml</span></code></p>
 </dd>
 </dl>

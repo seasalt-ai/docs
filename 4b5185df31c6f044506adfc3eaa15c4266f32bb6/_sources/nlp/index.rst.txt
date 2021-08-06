@@ -13,3 +13,4 @@ Welcome to ngChat NLP
    topic_tutorial
    action_tutorial
    xlingualNER_tutorial
+   machine_reading

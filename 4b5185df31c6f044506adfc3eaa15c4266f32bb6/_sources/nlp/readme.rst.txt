@@ -1,7 +1,7 @@
 .. _nlp_readme:
 
 ====================
-ngChat NLP Overview
+SeaWord NLP Overview
 ====================
 
 .. contents:: Table of Contents
@@ -14,6 +14,8 @@ The purpose of this tutorial is to demonstrate how the ngChat meeting RESTFul AP
     - How to use the Action Extraction API to extract and summarize actionable items from a meeting transcript
 
 The end result will be a robust set of meeting analytics.
+
+The code for these systems can be found in the Seasalt.ai SeaWord repository.
 
 Summarization API
 =================
@@ -43,3 +45,10 @@ Cross Lingual NER API
 The Cross Lingual NER API uses one model to extract 30+ common entities from over 100 languages.
 
 :ref:`Cross Lingual NER Tutorial ---> <xlingualNER_tutorial>`
+
+Machine Reading API
+===================
+
+The Machine Reading API performs extracting machine reading to answer questions given a context text. The tutorial will walk through the API calls to access this model.
+
+:ref:`Machine Reading Tutorial ---> <mr_tutorial>`

@@ -1,10 +1,10 @@
 .. _action_tutorial:
 
 =====================================
-ngChat Action Extraction API Tutorial
+Action Extraction API Tutorial
 =====================================
 
-This tutorial will walk through the usage of the ngChat Action Extractor API for meeting analytics.
+This tutorial will walk through the usage of the Action Extractor API for meeting analytics.
 
 .. contents:: Table of Contents
     :local:
@@ -17,9 +17,9 @@ The purpose of the Action Extractor system is to create short abstractive summar
 The result of running the Action Extractor over a meeting transcription is a list of commands, suggestions, statements of intent, and other actionable segments that can be presented as to-dos or follow-ups for the meeting participants.
 In the future, the extractor will also capture the names of assignees & assigners as well as due dates tied to each action item.
 
-The current endpoint for the Action extractor is ``https://ngchat-backstage.seasalt.ai/actions``.
+The current endpoint for the Action extractor is ``https://seachat-backstage.seasalt.ai/actions``.
 
-See technical documentation and try out the API with the `Swagger docs <https://ngchat-backstage.seasalt.ai/actions/docs>`_.
+See technical documentation and try out the API with the `Swagger docs <https://seachat-backstage.seasalt.ai/actions/docs>`_.
 
 Current models for Action Extraction can be found in the Azure fileshare at ``/mnt/models/nlp/action_extraction``.
 
@@ -171,7 +171,7 @@ Additionally, the language must be specified as a query parameter in the URL.
 
 .. code-block:: bash
 
-    POST https://ngchat-backstage.seasalt.ai/actions/{lang_code}/extract
+    POST https://seachat-backstage.seasalt.ai/actions/{lang_code}/extract
 
 The endpoint expects a transcript in the standard format from the Speech frontend.
 The required request body for action extraction requires only the following fields:
@@ -233,3 +233,40 @@ POST /extract_no_callback
 -------------------------
 
 This second endpoint performs exactly the same function as the ``/extract`` endpoint, just without callback; this endpoint will directly return the result instead of sending the result as a POST request to a callback URL. Long transcripts can take too long to process and may result in a timeout error - for this reason, any meeting transcripts over a few hundred lines long should use the ``/extract`` endpoint. For short transcripts and demos, the ``/extract_no_callback`` endpoint performs the same functionality without the hassle of a callback.
+
+
+POST /extract_live
+-------------------------
+
+In cases where we want to get live results and process a transcript piece by piece, we can use the ``/extract_live`` endpoint.
+Instead of an entire meeting transcript, this endpoint accepts a single transcription segment in the following format:
+
+.. code-block:: JSON
+
+    {
+        "command": Text,
+        "meeting_id": Text,
+        "sequence": int,
+        "account_id": Text,
+        "timestamp": Text,
+        "speaker": Text,
+        "transcription": Text,
+        "voice_start_time": float,
+        "voice_duration": float,
+        "type": Text,
+        "callback_url": HttpUrl
+    }
+
+The action extraction process will be performed on the segment. Because the action extraction system uses the previous two segments as context for the
+action summarization, the system will automatically cache previous segments from each meeting to assist with summarization.
+If the action extraction system predicts an action item for the incoming segment,
+the API will send a callback containing the new actions in the following format:
+
+.. code-block:: JSON
+
+    {
+        "meeting_id": Text,
+        "sequence": int,
+        "account_id": Text,
+        "action_items": List[ActionItem]
+    }

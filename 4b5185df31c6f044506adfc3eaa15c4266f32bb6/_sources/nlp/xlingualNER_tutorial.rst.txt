@@ -17,9 +17,9 @@ The purpose of the xlingualNER system is to tag sentences of various languages w
 The result this system, will be a file with the word on the left, and the tag on the right, space seperated.
 In the future, we hope this system will support more languages and also have increased accuracy.
 
-The current endpoint for the xlingualNER is ``https://ngchat-backstage.seasalt.ai/ner/``.
+The current endpoint for the xlingualNER is ``https://seachat-backstage.seasalt.ai/ner/``.
 
-See technical documentation and try out the API with the ``Swagger docs <https://ngchat-backstage.seasalt.ai/ner/docs>``.
+See technical documentation and try out the API with the ``Swagger docs <https://seachat-backstage.seasalt.ai/ner/docs>``.
 
 Current models for xlingualNER can be found in the Azure fileshare at ``/mnt/models/nlp/xlingual-ner/``. 
 model_final is our final model, and the model_baseline is trained on all English and Chinese Ontonotes.
@@ -380,7 +380,7 @@ Additionally, the language must be specified as a query parameter in the URL.
 
 .. code-block:: bash
 
-    POST https://ngchat-backstage.seasalt.ai/ner/{lang_code}/extract
+    POST https://seachat-backstage.seasalt.ai/ner/{lang_code}/extract
 
 The endpoint tags a list of named entities calculates datetime grounding and extracts Email, URL and IP-address from the input sentences.
 The required request body for Named Entity Recognition requires only the following fields:
