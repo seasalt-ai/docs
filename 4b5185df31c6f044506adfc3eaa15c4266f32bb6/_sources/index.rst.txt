@@ -46,7 +46,7 @@ Welcome to ngChat's Master Documentation!
    :titlesonly:
    :caption: ngChat-speech
 
-   speech/*
+   Speech <speech/readme>
 
 .. toctree::
    :maxdepth: 2
