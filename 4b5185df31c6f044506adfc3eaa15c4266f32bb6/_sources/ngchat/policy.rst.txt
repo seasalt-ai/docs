@@ -285,7 +285,7 @@ In general, the dot format is much simpler, and is generated as a static image.
 The Vega format is more complex, allowing for interaction with the graphic in the web browser. 
 The output type can be set with the ``output_json`` and ``output_dot`` flags in the config file.
 
-.. IMPORTANT:: For the vega format, the policy requires a tree specification file named ``tree_spec.json`` to be present in the visualization directory. The tree specification contains all the information about how the tree will be rendered. The dialogue policy will read this file and output new spec files with updated ``data`` fields. Unlike the dot format, the vega ``tree_spec.json`` can be updated to adjust the look of the output graphic. 
+.. IMPORTANT:: For the vega format, the policy requires a tree specification file named ``flow_data.json`` to be present in the visualization directory. The tree specification contains all the information about how the tree will be rendered. The dialogue policy will read this file and output new spec files with updated ``data`` fields. Unlike the dot format, the vega ``flow_data.json`` can be updated to adjust the look of the output graphic. 
 
 For both formats, they can be configured for three different kind of output. 
 In the Rasa config file, if ``output_static_visualization`` is true, the bot will output a simple graphic of the full dialogue flow at train time and runtime. 
@@ -377,7 +377,7 @@ Visualization parameters:
 | ``output_vega``                | bool  | Whether or not to output json formatted               | ``True``           |
 |                                |       | visualization files.                                  |                    |
 +--------------------------------+-------+-------------------------------------------------------+--------------------+
-| ``vega_spec_path``             | Text  | The path to a vega ``tree_spec.json`` file            | ``./visual/tree    |
+| ``vega_spec_path``             | Text  | The path to a vega ``flow_data.json`` file            | ``./visual/tree    |
 |                                |       |                                                       | _spec.json``       |
 +--------------------------------+-------+-------------------------------------------------------+--------------------+
 | ``output_dot``                 | bool  | Whether or not to output dot formatted                | ``True``           |
@@ -400,7 +400,7 @@ Example:
         output_at_each_turn: false
         output_live_update: true
         output_vega: true
-        vega_spec_path: ./visual/tree_spec.json
+        vega_spec_path: ./visual/flow_data.json
         output_dot: false
 
 Write the Dialogue File

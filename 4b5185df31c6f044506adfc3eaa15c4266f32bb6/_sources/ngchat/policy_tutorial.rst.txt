@@ -240,13 +240,13 @@ First we will need to create a visualization directory and add it to the config.
       visual:
         visualization_directory: ./visual
         output_static_visualization: false
-        vega_spec_path: ./visual/tree_spec.json
+        vega_spec_path: ./visual/flow_data.json
         output_at_each_turn: false
         output_live_update: false
         output_vega: false
         output_dot: false
 
-.. NOTE:: In order to output vega format, a file called ``tree_spec.json`` must be present in the visualization directory. An example of this file can be found at ``/ngchat_plugins/core/policy/visualization``.
+.. NOTE:: In order to output vega format, a file called ``flow_data.json`` must be present in the visualization directory. An example of this file can be found at ``/ngchat_plugins/core/policy/visualization``.
 
 The various flags can be set to true/false to output different types of visualizations. Either the ``output_vega`` or ``output_dot`` flag must be set to ``True`` in order to produce output. The vega version will automatically open a browser window to display the visualization. For viewing the dot version, it is recommended to open the output file in a dot file preview extension for your IDE. The next section shows an example of a vega live update visualization.
 
