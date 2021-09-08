@@ -44,9 +44,11 @@ Welcome to ngChat's Master Documentation!
    :maxdepth: 2
    :glob:
    :titlesonly:
-   :caption: ngChat-speech
+   :caption: SeaVoice (Seasalt speech)
 
-   Speech <speech/readme>
+   SeaVoice README <speech/readme>
+   SeaVoice SDK (Python) <speech/seavoice_sdk_python_tutorial>
+   SeaVoice RESTful APIs <speech/seavoice_restful_apis_tutorial>
 
 .. toctree::
    :maxdepth: 2
