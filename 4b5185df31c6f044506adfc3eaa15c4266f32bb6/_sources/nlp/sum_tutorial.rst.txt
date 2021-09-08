@@ -53,7 +53,7 @@ The required request body for inference contains a single turn from a transcript
 
 .. code-block:: JSON
 
-    {
+   {
         "transcription": "You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal."
     }
 

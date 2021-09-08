@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>STT protocols: &mdash; ngChat 0.0.1 documentation</title>
+  <title>SeaVoice RESTful APIs &mdash; ngChat 0.0.1 documentation</title>
   
 
   
@@ -43,7 +43,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Welcome to ngChat-report’s documentation!" href="../report/index.html" />
-    <link rel="prev" title="SeaVoice SDK" href="seavoice_sdk_python_tutorial.html" /> 
+    <link rel="prev" title="SeaVoice Python SDK" href="seavoice_sdk_python_tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -117,6 +117,8 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">SeaVoice README</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SeaVoice RESTful APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#ostt-protocols">oSTT protocols:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#tts-protocols">TTS protocols:</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">ngChat-report</span></p>
 <ul>
@@ -169,7 +171,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>STT protocols:</li>
+      <li>SeaVoice RESTful APIs</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -188,145 +190,177 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stt-protocols">
-<h1>STT protocols:<a class="headerlink" href="#stt-protocols" title="Permalink to this headline">¶</a></h1>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>Client uses API ` <a class="reference external" href="https://suite.seasalt.ai/api/v1/user">https://suite.seasalt.ai/api/v1/user</a>/login` to login API server and get <cite>login_token</cite>.</dt><dd><dl class="simple">
-<dt>{</dt><dd><p>“account_id”: “username”,</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</li>
-</ol>
-<dl class="simple">
-<dt>“password”: “password”,</dt><dd><p>}</p>
-</dd>
-</dl>
-<p>test account: speechdemo, password: 12345678
-2. Client sends STT API request with <cite>language</cite> and <cite>login_token</cite> to API server: <a class="reference external" href="https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx">https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx</a> (please put “token” in Headers, “language” in the request body)
-{
-“language”:”zh-tw”
-}
-3. API server returns HTTP 200 with json string including the available STT server’s url and <cite>speech_service_token</cite> to the client, like,</p>
+  <div class="section" id="seavoice-restful-apis">
+<span id="seavoice-restful-apis-tutorial"></span><h1>SeaVoice RESTful APIs<a class="headerlink" href="#seavoice-restful-apis" title="Permalink to this headline">¶</a></h1>
+<p>This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.
+Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> if you have any questions.</p>
+</div>
+<div class="section" id="ostt-protocols">
+<h1>oSTT protocols:<a class="headerlink" href="#ostt-protocols" title="Permalink to this headline">¶</a></h1>
+<p>1. Client uses API <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login API server and get <cite>login_token</cite>.
+.. code-block:: JSON</p>
 <blockquote>
-<div><p>{</p>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“account_id”: “username”,
+“password”: “password”</p>
+</dd>
+</dl>
+<p>}</p>
 </div></blockquote>
-<p>“account_id”: “test123”,
+<p>test account: speechdemo, password: 12345678</p>
+<p>2. Client sends STT API request with <cite>language</cite> and <cite>login_token</cite> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx</span></code> (please put <cite>token</cite> in Headers, <cite>language</cite> in the request body)
+.. code-block:: JSON</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“language”: “zh-tw”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>3. API server returns HTTP 200 with json string including the available STT server’s url and <cite>speech_service_token</cite> to the client, like,
+.. code-block:: JSON</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“account_id”: “test123”,
 “server_url”: “wss://&lt;host&gt;:&lt;port&gt;/client/ws/speech”
 “token”: “xxxxxxxxxxxxxxxxxx(speech_service_token)”</p>
-<blockquote>
-<div><p>}</p>
+</dd>
+</dl>
+<p>}</p>
 </div></blockquote>
-<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.
-4. Client connects to the available STT server by websocket with <cite>speech_service_token</cite>, <cite>language</cite> and <cite>punctuation</cite> settings, e.g. <cite>wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&amp;language=zh-tw&amp;punctuation=True</cite>
-5. STT server verifies <cite>speech_service_token</cite> on API server, if something wrong, STT server will reply error message and close websocket connection:</p>
+<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
+<ol class="arabic simple" start="4">
+<li><p>Client connects to the available STT server by websocket with <cite>speech_service_token</cite>, <cite>language</cite> and <cite>punctuation</cite> settings, e.g. <cite>wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&amp;language=zh-tw&amp;punctuation=True</cite></p></li>
+</ol>
+<p>5. STT server verifies <cite>speech_service_token</cite> on API server, if something wrong, STT server will reply error message and close websocket connection:
+.. code-block:: JSON</p>
 <blockquote>
 <div><p>{“status”: 10, “result”: “Token invalid”}</p>
 </div></blockquote>
 <ol class="arabic simple" start="6">
 <li><p>After connecting, Client starts to record the microphone and stream audio data to STT server (See below for data format).</p></li>
-<li><dl class="simple">
-<dt>STT server receives audio data and does recognition, then send recognizing/recognized results to Client, the format is,</dt><dd><p>{“status”: 0, “result”: {“final”: true, “hypotheses”: [{“transcript”: “你 好”, “likelihood”: 377.78}]},   “segment-start”: 0.0, “segment-length”: 2.8, “total-length”: 3.75}</p>
-</dd>
-</dl>
-</li>
 </ol>
-<p>Note 1, if “status” is 0, it means no error happened.
-Note 2, if “final” is <cite>True</cite>, it means this is a final recognized result; <cite>False</cite> means it’s a recognizing result.
-8. Client receives recognizing/recognized results.
-9. Client closes websocket connection when finished recognizing.</p>
-<p>Audio data format to send to STT server:
-1. If the data is in wav format, which has wav head indicating audio format, then STT server will know the audio format by the wav head. Please just have wav head at the first package, wav head in other packages will be taken as audio data.
-2. If the data is in raw format, then when connecting to STT server, Client needs to include Content-Type in wss url. The format looks like
-&amp;content-type=audio/x-raw, layout=(string)interleaved, rate=(int)16000, format=(string)S16LE, channels=(int)1
-but Client needs to do urlencode and then connects to STT server, for example, the url with Content-Type looks like
-wss://speech.seasalt.ai:5019/client/ws/speech?token=67e44248-b473-11eb-95f1-ba52214202a6&amp;punctuation=True&amp;content-type=audio%2Fx-raw%2C+layout%3D%28string%29interleaved%2C+rate%3D%28int%2916000%2C+format%3D%28string%29S16LE%2C+channels%3D%28int%291</p>
-<p>TTS protocols:</p>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt>Client first calls API ` <a class="reference external" href="https://suite.seasalt.ai/api/v1/user">https://suite.seasalt.ai/api/v1/user</a>/login` to login and get <cite>login_token</cite>.</dt><dd><p>{</p>
-</dd>
-</dl>
-</li>
-</ol>
-<p>“account_id”: “username”,
-“password”: “password”,</p>
+<p>7. STT server receives audio data and does recognition, then send recognizing/recognized results to Client, the format is,
+.. code-block:: JSON</p>
 <blockquote>
-<div><p>}</p>
+<div><p>{“status”: 0, “result”: {“final”: true, “hypotheses”: [{“transcript”: “你 好”, “likelihood”: 377.78}]},   “segment-start”: 0.0, “segment-length”: 2.8, “total-length”: 3.75}</p>
+</div></blockquote>
+<p>Note 1, if “status” is 0, it means no error happened.
+Note 2, if “final” is <cite>True</cite>, it means this is a final recognized result; <cite>False</cite> means it’s a recognizing result.</p>
+<ol class="arabic simple" start="8">
+<li><p>Client receives recognizing/recognized results.</p></li>
+<li><p>Client closes websocket connection when finished recognizing.</p></li>
+</ol>
+<dl class="simple">
+<dt>Audio data format to send to STT server:</dt><dd><ul class="simple">
+<li><p>If the data is in wav format, which has wav head indicating audio format, then STT server will know the audio format by the wav head. Please just have wav head at the first package, wav head in other packages will be taken as audio data.</p></li>
+<li><p>If the data is in raw format, then when connecting to STT server, Client needs to include Content-Type in wss url. The format looks like
+<code class="docutils literal notranslate"><span class="pre">&amp;content-type=audio/x-raw,</span> <span class="pre">layout=(string)interleaved,</span> <span class="pre">rate=(int)16000,</span> <span class="pre">format=(string)S16LE,</span> <span class="pre">channels=(int)1</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p>but Client needs to do urlencode and then connects to STT server, for example, the url with Content-Type looks like
+<code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=67e44248-b473-11eb-95f1-ba52214202a6&amp;punctuation=True&amp;content-type=audio%2Fx-raw%2C+layout%3D%28string%29interleaved%2C+rate%3D%28int%2916000%2C+format%3D%28string%29S16LE%2C+channels%3D%28int%291</span></code></p>
+</div>
+<div class="section" id="tts-protocols">
+<h1>TTS protocols:<a class="headerlink" href="#tts-protocols" title="Permalink to this headline">¶</a></h1>
+<p>1. Client first calls API <cite>https://suite.seasalt.ai/api/v1/user/login</cite> to login and get <cite>login_token</cite>.
+.. code-block:: JSON</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“account_id”: “username”,
+“password”: “password”,</p>
+</dd>
+</dl>
+<p>}</p>
 </div></blockquote>
 <p>2. Client sends https POST request to API server with <cite>language</cite>, <cite>voice</cite> and <cite>login_token</cite>, for example, ` <a class="reference external" href="https://suite.seasalt.ai/api/v1/speech/text_to_speech">https://suite.seasalt.ai/api/v1/speech/text_to_speech</a>?token=xxxxxxxxxxxxxxxxxxx`.
-{
-“language”: “zh-TW”,
-“voice”: “Lin_Xiaomei”
-}
-please put token in the Headers and put “language” and “voice” in the request body.
-3. API server returns HTTP 200 with json string including the available TTS server’s url and <cite>speech_service_token</cite> to Client, like</p>
+.. code-block:: JSON</p>
 <blockquote>
-<div><p>{</p>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“language”: “zh-TW”,
+“voice”: “Lin_Xiaomei”</p>
+</dd>
+</dl>
+<p>}</p>
 </div></blockquote>
-<p>“account_id”: “test123”,
+<p>please put <cite>token</cite> in the Headers and put <cite>language</cite> and <cite>voice</cite> in the request body.</p>
+<p>3. API server returns HTTP 200 with json string including the available TTS server’s url and <cite>speech_service_token</cite> to Client, like
+.. code-block:: JSON</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>“account_id”: “test123”,
 “server_url”: “wss://&lt;host&gt;:&lt;port&gt;”
 “token”: “xxxxxxxxxxxxxxxxxx(speech_service_token)”</p>
-<blockquote>
-<div><p>}</p>
+</dd>
+</dl>
+<p>}</p>
 </div></blockquote>
-<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.
-4. After got TTS server’s url and <cite>speech_service_token</cite>, Client connects to TTS server as a websocket client.
-5. If successfully connected, Client sends json string to TTS server, for example,
-{</p>
+<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
+<ol class="arabic simple" start="4">
+<li><p>After got TTS server’s url and <cite>speech_service_token</cite>, Client connects to TTS server as a websocket client.</p></li>
+</ol>
+<p>5. If successfully connected, Client sends json string to TTS server, for example,
+.. code-block:: JSON</p>
 <blockquote>
-<div><dl>
+<div><blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><dl class="simple">
 <dt>“business”: {</dt><dd><p>“language”: “zh-TW”,
 “voice”: “Lin_Xiaomei”,
 “token”: “xxxxxxxxxxxxxxxxxx(speech_token)”  },</p>
 </dd>
-<dt>“settings”: {</dt><dd><blockquote>
-<div><blockquote>
-<div><p>“pitch”: 0.0,
-“speed”: 1.0,</p>
-</div></blockquote>
-<p>“sample_rate”:16000},</p>
-</div></blockquote>
-<dl class="simple">
+<dt>“settings”: {</dt><dd><p>“pitch”: 0.0,
+“speed”: 1.0,
+“sample_rate”:16000},</p>
+</dd>
 <dt>“data”: {</dt><dd><p>“text”: “用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)”,
 “ssml”: “False” }</p>
 </dd>
 </dl>
 </dd>
 </dl>
+<p>}</p>
 </div></blockquote>
-<p>}
-Note 1, “language” could be “zh-TW” or “en-US”.
-Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
-Note 3, [“data”][“ssml”] should be True if [“data”][“text”] is a SSML string, i.e. using SSML tab.
-Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.
-Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
-6. After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
-7. TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,
-{</p>
-<blockquote>
-<div><p>“status”: “ok”,</p>
+<ul class="simple">
+<li><p>Note 1, “language” could be “zh-TW” or “en-US”.</p></li>
+<li><p>Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
+<li><p>Note 3, [“data”][“ssml”] should be True if [“data”][“text”] is a SSML string, i.e. using SSML tab.</p></li>
+<li><p>Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
+<li><p>Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
+</ul>
 </div></blockquote>
-<p>“sid”: “seq_id”,
-“progress”: 5</p>
+<ol class="arabic simple" start="6">
+<li><p>After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.</p></li>
+</ol>
+<p>7. TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,
+.. code-block:: JSON</p>
 <blockquote>
+<div><blockquote>
 <div><dl>
-<dt>“data”: {</dt><dd><blockquote>
+<dt>{</dt><dd><p>“status”: “ok”,
+“sid”: “seq_id”,
+“progress”: 5
+“data”: {</p>
+<blockquote>
 <div><p>“audio”: &lt;base64 encoded raw pcm data&gt;,
 “status”: 2</p>
 </div></blockquote>
 <p>}</p>
 </dd>
 </dl>
+<p>}</p>
 </div></blockquote>
-<p>}
-Note 1, if “status” isn’t “ok”, then there will be some error messages.
-Note 2, if [“data”][“status”] is 1, means synthesis is in progress; if [“data”][“status”] is 2, means synthesis is completed.
-Note 3, “progress” means currently which character it’s synthesizing.
-8. Client receives audio data frames.
-9. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p>
+<ul class="simple">
+<li><p>Note 1, if “status” isn’t “ok”, then there will be some error messages.</p></li>
+<li><p>Note 2, if [“data”][“status”] is 1, means synthesis is in progress; if [“data”][“status”] is 2, means synthesis is completed.</p></li>
+<li><p>Note 3, “progress” means currently which character it’s synthesizing.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="8">
+<li><p>Client receives audio data frames.</p></li>
+<li><p>After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p></li>
+</ol>
 </div>
 
 
@@ -336,7 +370,7 @@ Note 3, “progress” means currently which character it’s synthesizing.
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="../report/index.html" class="btn btn-neutral float-right" title="Welcome to ngChat-report’s documentation!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="seavoice_sdk_python_tutorial.html" class="btn btn-neutral float-left" title="SeaVoice SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="seavoice_sdk_python_tutorial.html" class="btn btn-neutral float-left" title="SeaVoice Python SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

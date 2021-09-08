@@ -1,4 +1,4 @@
-.. _nlp_readme:
+.. _speech_readme:
 
 ====================
 SeaWord NLP Overview
