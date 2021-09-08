@@ -195,12 +195,12 @@
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#stt-protocols" id="id1">STT protocols:</a></p></li>
-<li><p><a class="reference internal" href="#tts-protocols" id="id2">TTS protocols:</a></p></li>
+<li><p><a class="reference internal" href="#stt-protocols" id="id1">STT protocols</a></p></li>
+<li><p><a class="reference internal" href="#tts-protocols" id="id2">TTS protocols</a></p></li>
 </ul>
 </div>
 <div class="section" id="stt-protocols">
-<h2><a class="toc-backref" href="#id1">STT protocols:</a><a class="headerlink" href="#stt-protocols" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Client uses API <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login API server and get <code class="docutils literal notranslate"><span class="pre">login_token</span></code>.</p></li>
 </ol>
@@ -210,7 +210,12 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>test account: <code class="docutils literal notranslate"><span class="pre">speechdemo</span></code>, password: <code class="docutils literal notranslate"><span class="pre">12345678</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>test account: <code class="docutils literal notranslate"><span class="pre">speechdemo</span></code>, password: <code class="docutils literal notranslate"><span class="pre">12345678</span></code></p></li>
+</ul>
+</div>
 <ol class="arabic simple" start="2">
 <li><p>Client sends STT API request with <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">login_token</span></code> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx</span></code> (please put <code class="docutils literal notranslate"><span class="pre">token</span></code> in Headers, <code class="docutils literal notranslate"><span class="pre">language</span></code> in the request body)</p></li>
 </ol>
@@ -234,14 +239,33 @@
 <li><p>Client connects to the available STT server by websocket with <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> settings, e.g. <code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&amp;language=zh-tw&amp;punctuation=True</span></code></p></li>
 <li><p>STT server verifies <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> on API server, if something wrong, STT server will reply error message and close websocket connection:</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;Token invalid&quot;</span><span class="p">}</span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;Token invalid&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="6">
 <li><p>After connecting, Client starts to record the microphone and stream audio data to STT server (See below for data format).</p></li>
 <li><p>STT server receives audio data and does recognition, then send recognizing/recognized results to Client, the format is,</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;final&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nt">&quot;hypotheses&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="nt">&quot;transcript&quot;</span><span class="p">:</span> <span class="s2">&quot;你 好&quot;</span><span class="p">,</span> <span class="nt">&quot;likelihood&quot;</span><span class="p">:</span> <span class="mf">377.78</span><span class="p">}]},</span>   <span class="nt">&quot;segment-start&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nt">&quot;segment-length&quot;</span><span class="p">:</span> <span class="mf">2.8</span><span class="p">,</span> <span class="nt">&quot;total-length&quot;</span><span class="p">:</span> <span class="mf">3.75</span><span class="p">}</span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;result&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;final&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;hypotheses&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;transcript&quot;</span><span class="p">:</span> <span class="s2">&quot;你 好&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;likelihood&quot;</span><span class="p">:</span> <span class="mf">377.78</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;segment-start&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="nt">&quot;segment-length&quot;</span><span class="p">:</span> <span class="mf">2.8</span><span class="p">,</span>
+    <span class="nt">&quot;total-length&quot;</span><span class="p">:</span> <span class="mf">3.75</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -266,7 +290,7 @@
 </dl>
 </div>
 <div class="section" id="tts-protocols">
-<h2><a class="toc-backref" href="#id2">TTS protocols:</a><a class="headerlink" href="#tts-protocols" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Client first calls API <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login and get <code class="docutils literal notranslate"><span class="pre">login_token</span></code>.</p></li>
 </ol>
