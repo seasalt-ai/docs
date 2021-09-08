@@ -1,8 +1,8 @@
 .. _speech_readme:
 
-====================
-SeaWord NLP Overview
-====================
+=================
+SeaVoice Overview
+=================
 
 .. contents:: Table of Contents
     :local:
@@ -17,7 +17,7 @@ and to customize your own Speech-To-Text (STT) models and Text-To-Speech (TTS) r
 
 
 SeaVoice SDK (Python)
-==========
+=====================
 
 This tutorial introduces how to use SeaVoice SDK (Python) to do speech recognition and speech synthesis.
 

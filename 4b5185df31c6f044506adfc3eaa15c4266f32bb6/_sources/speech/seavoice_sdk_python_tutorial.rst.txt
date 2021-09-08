@@ -330,39 +330,33 @@ Change Log
 
 [0.2.2] - 2021-8-16
 
-Bugfixes
-^^^^^^^^
+``Bugfixes``
 
 -  Some callbacks were never called
 
 [0.2.1] - 2021-7-25
 
-changed sdk name to seavoice
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``changed sdk name to seavoice``
 
 [0.1.14] - 2021-4-9
 
-Improments
-^^^^^^^^^^
+``Improments``
 
 -  Added output of post-processing result
 
 [0.1.13] - 2021-4-1
 
-Improments
-^^^^^^^^^^
+``Improments``
 
 -  Added output of segment and word alignment information
 
 [0.1.12] - 2020-12-10
 
-Bugfixes
-^^^^^^^^
+``Bugfixes``
 
 -  Remove unused variable
 
-   Improvements
-   ^^^^^^^^^^^^
+``Improvements``
 
 -  Added websocket packages in requirements.txt file
 

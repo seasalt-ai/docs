@@ -244,10 +244,13 @@
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;final&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nt">&quot;hypotheses&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="nt">&quot;transcript&quot;</span><span class="p">:</span> <span class="s2">&quot;你 好&quot;</span><span class="p">,</span> <span class="nt">&quot;likelihood&quot;</span><span class="p">:</span> <span class="mf">377.78</span><span class="p">}]},</span>   <span class="nt">&quot;segment-start&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nt">&quot;segment-length&quot;</span><span class="p">:</span> <span class="mf">2.8</span><span class="p">,</span> <span class="nt">&quot;total-length&quot;</span><span class="p">:</span> <span class="mf">3.75</span><span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>Note 1, if “status” is 0, it means no error happened.</p></li>
 <li><p>Note 2, if “final” is <cite>True</cite>, it means this is a final recognized result; <cite>False</cite> means it’s a recognizing result.</p></li>
 </ul>
+</div>
 <ol class="arabic simple" start="8">
 <li><p>Client receives recognizing/recognized results.</p></li>
 <li><p>Client closes websocket connection when finished recognizing.</p></li>
@@ -257,11 +260,10 @@
 <li><p>If the data is in wav format, which has wav head indicating audio format, then STT server will know the audio format by the wav head. Please just have wav head at the first package, wav head in other packages will be taken as audio data.</p></li>
 <li><p>If the data is in raw format, then when connecting to STT server, Client needs to include Content-Type in wss url. The format looks like
 <code class="docutils literal notranslate"><span class="pre">&amp;content-type=audio/x-raw,</span> <span class="pre">layout=(string)interleaved,</span> <span class="pre">rate=(int)16000,</span> <span class="pre">format=(string)S16LE,</span> <span class="pre">channels=(int)1</span></code></p></li>
+<li><p>but Client needs to do urlencode and then connects to STT server, for example, the url with Content-Type looks like <code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=67e44248-b473-11eb-95f1-ba52214202a6&amp;punctuation=True&amp;content-type=audio%2Fx-raw%2C+layout%3D%28string%29interleaved%2C+rate%3D%28int%2916000%2C+format%3D%28string%29S16LE%2C+channels%3D%28int%291</span></code></p></li>
 </ul>
 </dd>
 </dl>
-<p>but Client needs to do urlencode and then connects to STT server, for example, the url with Content-Type looks like
-<code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=67e44248-b473-11eb-95f1-ba52214202a6&amp;punctuation=True&amp;content-type=audio%2Fx-raw%2C+layout%3D%28string%29interleaved%2C+rate%3D%28int%2916000%2C+format%3D%28string%29S16LE%2C+channels%3D%28int%291</span></code></p>
 </div>
 <div class="section" id="tts-protocols">
 <h2><a class="toc-backref" href="#id2">TTS protocols:</a><a class="headerlink" href="#tts-protocols" title="Permalink to this headline">¶</a></h2>
@@ -299,21 +301,29 @@
 <li><p>After got TTS server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>, Client connects to TTS server as a websocket client.</p></li>
 <li><p>If successfully connected, Client sends json string to TTS server, for example,</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;business&quot;: {
-        &quot;language&quot;: &quot;zh-TW&quot;,
-        &quot;voice&quot;: &quot;Lin_Xiaomei&quot;,
-        &quot;token&quot;: &quot;xxxxxxxxxxxxxxxxxx(speech_token)&quot;  },
-    &quot;settings&quot;: {
-        &quot;pitch&quot;: 0.0,
-        &quot;speed&quot;: 1.0,
-        &quot;sample_rate&quot;:16000},
-    &quot;data&quot;: {
-        &quot;text&quot;: &quot;用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)&quot;,
-        &quot;ssml&quot;: “False” }
-}
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;business&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;voice&quot;</span><span class="p">:</span> <span class="s2">&quot;Lin_Xiaomei&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxx(speech_token)&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;settings&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;pitch&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="nt">&quot;speed&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="mi">16000</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;ssml&quot;</span><span class="p">:</span> <span class="s2">&quot;False&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>Note 1, “language” could be “zh-TW” or “en-US”.</p></li>
 <li><p>Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
@@ -321,26 +331,31 @@
 <li><p>Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
 <li><p>Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
 </ul>
+</div>
 <ol class="arabic simple" start="6">
 <li><p>After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.</p></li>
 <li><p>TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;status&quot;: &quot;ok&quot;,
-    &quot;sid&quot;: &quot;seq_id&quot;,
-    &quot;progress&quot;: 5
-    &quot;data&quot;: {
-        &quot;audio&quot;: &lt;base64 encoded raw pcm data&gt;,
-        &quot;status&quot;: 2
-    }
-}
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;sid&quot;</span><span class="p">:</span> <span class="s2">&quot;seq_id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;progress&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;audio&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;base64 encoded raw pcm data&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">2</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>Note 1, if “status” isn’t “ok”, then there will be some error messages.</p></li>
 <li><p>Note 2, if [“data”][“status”] is 1, means synthesis is in progress; if [“data”][“status”] is 2, means synthesis is completed.</p></li>
 <li><p>Note 3, “progress” means currently which character it’s synthesizing.</p></li>
 </ul>
+</div>
 <ol class="arabic simple" start="8">
 <li><p>Client receives audio data frames.</p></li>
 <li><p>After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p></li>

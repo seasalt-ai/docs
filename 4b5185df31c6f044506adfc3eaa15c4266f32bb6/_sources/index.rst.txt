@@ -41,7 +41,7 @@ Welcome to ngChat's Master Documentation!
    Machine Reading API Tutorial <nlp/mr_tutorial>
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :glob:
    :titlesonly:
    :caption: SeaVoice (Seasalt speech)
