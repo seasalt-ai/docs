@@ -13,45 +13,55 @@ Please contact info@seasalt.ai if you have any questions.
 oSTT protocols:
 ==============
 
-1. Client uses API ``https://suite.seasalt.ai/api/v1/user/login`` to login API server and get `login_token`.
+1. Client uses API ``https://suite.seasalt.ai/api/v1/user/login`` to login API server and get ``login_token``.
+
 .. code-block:: JSON
 
     {
-	"account_id": "username",
+        "account_id": "username",
 	"password": "password"
     }
-test account: speechdemo, password: 12345678
 
-2. Client sends STT API request with `language` and `login_token` to API server: ``https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx`` (please put `token` in Headers, `language` in the request body)
+test account: ``speechdemo``, password: ``12345678``
+
+2. Client sends STT API request with ``language`` and ``login_token`` to API server: ``https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx`` (please put ``token`` in Headers, ``language`` in the request body)
+
 .. code-block:: JSON
 
-   {
-	"language": "zh-tw"
-   }
+    {
+        "language": "zh-tw"
+    }
 
-3. API server returns HTTP 200 with json string including the available STT server's url and `speech_service_token` to the client, like,
+3. API server returns HTTP 200 with json string including the available STT server's url and ``speech_service_token`` to the client, like,
+
 .. code-block:: JSON
 
-   {
-	"account_id": "test123",
-	"server_url": "wss://<host>:<port>/client/ws/speech"
-	"token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
-   }
+    {
+        "account_id": "test123",
+        "server_url": "wss://<host>:<port>/client/ws/speech"
+        "token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
+    }
+
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. Client connects to the available STT server by websocket with `speech_service_token`, `language` and `punctuation` settings, e.g. `wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&language=zh-tw&punctuation=True`
+4. Client connects to the available STT server by websocket with ``speech_service_token``, ``language`` and ``punctuation`` settings, e.g. ``wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&language=zh-tw&punctuation=True``
 
-5. STT server verifies `speech_service_token` on API server, if something wrong, STT server will reply error message and close websocket connection:
+5. STT server verifies ``speech_service_token`` on API server, if something wrong, STT server will reply error message and close websocket connection:
+
 .. code-block:: JSON
-   {"status": 10, "result": "Token invalid"}
+
+    {"status": 10, "result": "Token invalid"}
 
 6. After connecting, Client starts to record the microphone and stream audio data to STT server (See below for data format).
 
 7. STT server receives audio data and does recognition, then send recognizing/recognized results to Client, the format is,
+
 .. code-block:: JSON
+
     {"status": 0, "result": {"final": true, "hypotheses": [{"transcript": "你 好", "likelihood": 377.78}]},   "segment-start": 0.0, "segment-length": 2.8, "total-length": 3.75}
-Note 1, if "status" is 0, it means no error happened.
-Note 2, if "final" is `True`, it means this is a final recognized result; `False` means it's a recognizing result.
+
+ - Note 1, if "status" is 0, it means no error happened.
+ - Note 2, if "final" is `True`, it means this is a final recognized result; `False` means it's a recognizing result.
 
 8. Client receives recognizing/recognized results.
 
@@ -68,50 +78,56 @@ but Client needs to do urlencode and then connects to STT server, for example, t
 TTS protocols:
 ==============
  
-1. Client first calls API `https://suite.seasalt.ai/api/v1/user/login` to login and get `login_token`.
-.. code-block:: JSON
-   {
-	"account_id": "username",
-	"password": "password",
-   }
+1. Client first calls API ``https://suite.seasalt.ai/api/v1/user/login`` to login and get ``login_token``.
 
-2. Client sends https POST request to API server with `language`, `voice` and `login_token`, for example, ` https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx`.
 .. code-block:: JSON
-   
-   {
-	"language": "zh-TW",
-	"voice": "Lin_Xiaomei"
-   }
-please put `token` in the Headers and put `language` and `voice` in the request body.
 
-3. API server returns HTTP 200 with json string including the available TTS server's url and `speech_service_token` to Client, like
+    {
+        "account_id": "username",
+        "password": "password",
+    }
+
+2. Client sends https POST request to API server with ``language``, ``voice`` and ``login_token``, for example, ``https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx``.
+
 .. code-block:: JSON
-   
-   {
-	"account_id": "test123",
-	"server_url": "wss://<host>:<port>"
-	"token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
-   }
+
+    {
+        "language": "zh-TW",
+        "voice": "Lin_Xiaomei"
+    }
+please put ``token`` in the Headers and put ``language`` and ``voice`` in the request body.
+
+3. API server returns HTTP 200 with json string including the available TTS server's url and ``speech_service_token`` to Client, like
+
+.. code-block:: JSON
+
+    {
+        "account_id": "test123",
+        "server_url": "wss://<host>:<port>"
+        "token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
+    }
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. After got TTS server's url and `speech_service_token`, Client connects to TTS server as a websocket client.
+4. After got TTS server's url and ``speech_service_token``, Client connects to TTS server as a websocket client.
 
 5. If successfully connected, Client sends json string to TTS server, for example,
+
 .. code-block:: JSON
-   
-   {
-	"business": {
-		"language": "zh-TW",
-                "voice": "Lin_Xiaomei",
-                "token": "xxxxxxxxxxxxxxxxxx(speech_token)"  },
-	"settings": {
-		"pitch": 0.0,
-                "speed": 1.0,
-		"sample_rate":16000},
-	"data": {
-		"text": "用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)",
-                "ssml": “False” }
-   }
+
+    {
+        "business": {
+            "language": "zh-TW",
+            "voice": "Lin_Xiaomei",
+            "token": "xxxxxxxxxxxxxxxxxx(speech_token)"  },
+        "settings": {
+            "pitch": 0.0,
+            "speed": 1.0,
+            "sample_rate":16000},
+        "data": {
+            "text": "用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)",
+            "ssml": “False” }
+    }
+
  - Note 1, “language” could be “zh-TW” or “en-US”.
  - Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
  - Note 3, ["data"]["ssml"] should be True if ["data"]["text"] is a SSML string, i.e. using SSML tab.
@@ -121,17 +137,19 @@ If something is wrong, API server may return HTTP 404 with a json string includi
 6. After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
 
 7. TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,
+
 .. code-block:: JSON
-   
-   {
-	"status": "ok",
-	"sid": "seq_id",
-	"progress": 5
-	"data": {
-		"audio": <base64 encoded raw pcm data>,
-                "status": 2
+
+    {
+        "status": "ok",
+        "sid": "seq_id",
+        "progress": 5
+        "data": {
+            "audio": <base64 encoded raw pcm data>,
+            "status": 2
         }
-   }
+    }
+
  - Note 1, if "status" isn't "ok", then there will be some error messages.
  - Note 2, if ["data"]["status"] is 1, means synthesis is in progress; if ["data"]["status"] is 2, means synthesis is completed.
  - Note 3, "progress" means currently which character it's synthesizing.
