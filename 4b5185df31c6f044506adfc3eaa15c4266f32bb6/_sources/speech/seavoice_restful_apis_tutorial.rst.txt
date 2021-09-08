@@ -4,6 +4,7 @@ SeaVoice RESTful APIs
 =====================
 
 This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.
+
 Please contact info@seasalt.ai if you have any questions.
 
 .. contents:: Table of Contents
@@ -11,7 +12,7 @@ Please contact info@seasalt.ai if you have any questions.
     :depth: 3
 
 STT protocols:
-==============
+--------------
 
 1. Client uses API ``https://suite.seasalt.ai/api/v1/user/login`` to login API server and get ``login_token``.
 
@@ -60,8 +61,8 @@ If something is wrong, API server may return HTTP 404 with a json string includi
 
     {"status": 0, "result": {"final": true, "hypotheses": [{"transcript": "你 好", "likelihood": 377.78}]},   "segment-start": 0.0, "segment-length": 2.8, "total-length": 3.75}
 
- - Note 1, if "status" is 0, it means no error happened.
- - Note 2, if "final" is `True`, it means this is a final recognized result; `False` means it's a recognizing result.
+- Note 1, if "status" is 0, it means no error happened.
+- Note 2, if "final" is `True`, it means this is a final recognized result; `False` means it's a recognizing result.
 
 8. Client receives recognizing/recognized results.
 
@@ -76,7 +77,7 @@ but Client needs to do urlencode and then connects to STT server, for example, t
 
 
 TTS protocols:
-==============
+--------------
  
 1. Client first calls API ``https://suite.seasalt.ai/api/v1/user/login`` to login and get ``login_token``.
 
@@ -129,11 +130,11 @@ If something is wrong, API server may return HTTP 404 with a json string includi
     }
 
 
- - Note 1, “language” could be “zh-TW” or “en-US”.
- - Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
- - Note 3, ["data"]["ssml"] should be True if ["data"]["text"] is a SSML string, i.e. using SSML tab.
- - Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
- - Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
+- Note 1, “language” could be “zh-TW” or “en-US”.
+- Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
+- Note 3, ["data"]["ssml"] should be True if ["data"]["text"] is a SSML string, i.e. using SSML tab.
+- Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
+- Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
 
 6. After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
 
@@ -152,9 +153,9 @@ If something is wrong, API server may return HTTP 404 with a json string includi
     }
 
 
- - Note 1, if "status" isn't "ok", then there will be some error messages.
- - Note 2, if ["data"]["status"] is 1, means synthesis is in progress; if ["data"]["status"] is 2, means synthesis is completed.
- - Note 3, "progress" means currently which character it's synthesizing.
+- Note 1, if "status" isn't "ok", then there will be some error messages.
+- Note 2, if ["data"]["status"] is 1, means synthesis is in progress; if ["data"]["status"] is 2, means synthesis is completed.
+- Note 3, "progress" means currently which character it's synthesizing.
 
 8. Client receives audio data frames.
 
