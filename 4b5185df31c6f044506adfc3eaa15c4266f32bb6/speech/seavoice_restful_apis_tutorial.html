@@ -117,7 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">SeaVoice README</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SeaVoice RESTful APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#ostt-protocols">oSTT protocols:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#stt-protocols">STT protocols:</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#tts-protocols">TTS protocols:</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">ngChat-report</span></p>
@@ -195,8 +195,8 @@
 <p>This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.
 Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> if you have any questions.</p>
 </div>
-<div class="section" id="ostt-protocols">
-<h1>oSTT protocols:<a class="headerlink" href="#ostt-protocols" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="stt-protocols">
+<h1>STT protocols:<a class="headerlink" href="#stt-protocols" title="Permalink to this headline">¶</a></h1>
 <ol class="arabic simple">
 <li><p>Client uses API <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login API server and get <code class="docutils literal notranslate"><span class="pre">login_token</span></code>.</p></li>
 </ol>
@@ -308,6 +308,7 @@ Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;sea
            &quot;ssml&quot;: “False” }
    }
 
+
 - Note 1, “language” could be “zh-TW” or “en-US”.
 - Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
 - Note 3, [&quot;data&quot;][&quot;ssml&quot;] should be True if [&quot;data&quot;][&quot;text&quot;] is a SSML string, i.e. using SSML tab.
@@ -328,6 +329,7 @@ Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;sea
            &quot;status&quot;: 2
        }
    }
+
 
 - Note 1, if &quot;status&quot; isn&#39;t &quot;ok&quot;, then there will be some error messages.
 - Note 2, if [&quot;data&quot;][&quot;status&quot;] is 1, means synthesis is in progress; if [&quot;data&quot;][&quot;status&quot;] is 2, means synthesis is completed.
