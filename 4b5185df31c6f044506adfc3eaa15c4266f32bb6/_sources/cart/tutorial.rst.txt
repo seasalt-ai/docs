@@ -1,10 +1,10 @@
 .. _cart_tutorial:
 
 =====================
-SeaChat Cart Tutorial
+ngChat Cart Tutorial
 =====================
 
-This tutorial will walk through how to utilize SeaChat Cart for an e-commerce chatbot. 
+This tutorial will walk through how to utilize ngChat Cart for an e-commerce chatbot. 
 
 .. contents:: Table of Contents
     :local:
@@ -12,12 +12,12 @@ This tutorial will walk through how to utilize SeaChat Cart for an e-commerce ch
 
 For this tutorial we will imagine that we are building a new coffee shop bot from the ground up. Take it that the new bot can already handle basic intents, and can extract entities to slots. From there we will walk through adding menu and cart support.
 For more detailed information about why and how the cart is implemented, see the :ref:`readme <cart_readme>` or the
-:ref:`technical documentation <seachat_cart>`.
+:ref:`technical documentation <ngchat_cart>`.
 
 Creating the Menu
 ==================
 
-Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the SeaChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: ``data/menu.json``.
+Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the ngChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: ``data/menu.json``.
 
 .. TIP:: Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encouraged to automate as much of this process as possible to avoid tedious menu construction by hand. 
 
@@ -659,7 +659,7 @@ This script will output a ``lookup_table.yml`` file. This file contains the same
 
 Writing the cart_config.yml File
 =================================
-Now that we have a working menu, we can prepare to integrate SeaChat Cart with our bot. First, we'll need to set up a cart config file so that we can adjust the cart settings and set up our menu path. Create a file called ``cart_config.yml`` in your bot directory. 
+Now that we have a working menu, we can prepare to integrate ngChat Cart with our bot. First, we'll need to set up a cart config file so that we can adjust the cart settings and set up our menu path. Create a file called ``cart_config.yml`` in your bot directory. 
 
 The following is a list of configurable parameters, with their default values listed:
 
@@ -721,7 +721,7 @@ You can find a full example of a ``cart_config.yml`` file :ref:`here <cart_confi
 
 Integrating with Rasa
 ======================
-Once a valid menu is created and the cart setting are configured, SeaChat Cart can be integrated with Rasa. The only point of contact between the bot and the cart system is through ``actions.py``. The bot is in charge of extracting intents & entities from user utterances and deciding which actions to execute next. During action execution, custom actions can call ``cart.py`` methods in order to pass slot data to the cart, manipulate the user's cart, request information from the cart, etc. 
+Once a valid menu is created and the cart setting are configured, ngChat Cart can be integrated with Rasa. The only point of contact between the bot and the cart system is through ``actions.py``. The bot is in charge of extracting intents & entities from user utterances and deciding which actions to execute next. During action execution, custom actions can call ``cart.py`` methods in order to pass slot data to the cart, manipulate the user's cart, request information from the cart, etc. 
 
 Importing, Configuring, and Loading Menus
 ------------------------------------------

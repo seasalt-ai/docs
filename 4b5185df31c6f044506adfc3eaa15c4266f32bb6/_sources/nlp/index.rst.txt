@@ -1,12 +1,12 @@
 
-Welcome to SeaWord
+Welcome to ngChat NLP
 ===========================================
 
 .. toctree::
    :maxdepth: 2
    :glob:
    :titlesonly:
-   :caption: SeaWord
+   :caption: ngChat-nlp
 
    readme
    sum_tutorial

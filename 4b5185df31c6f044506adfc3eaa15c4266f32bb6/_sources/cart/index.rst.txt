@@ -1,13 +1,13 @@
 
-Welcome to SeaChat Cart
+Welcome to ngChat Cart
 ===========================================
 
 .. toctree::
    :maxdepth: 2
    :glob:
    :titlesonly:
-   :caption: SeaChat-cart
+   :caption: ngChat-cart
 
    readme
-   seachat_cart
+   ngchat_cart
 

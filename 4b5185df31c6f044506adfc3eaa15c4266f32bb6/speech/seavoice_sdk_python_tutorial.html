@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SeaVoice Python SDK &mdash; SeaChat 0.0.1 documentation</title>
+  <title>SeaVoice Python SDK &mdash; ngChat 0.0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -28,7 +28,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #2980B9" >
-            <a href="../index.html" class="icon icon-home"> SeaChat
+            <a href="../index.html" class="icon icon-home"> ngChat
             <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
@@ -39,26 +39,21 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+              <p class="caption" role="heading"><span class="caption-text">ngChat</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seax.html">SeaX</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/quickstart.html">ngChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/bot_tutorial.html">ngChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/policy.html">ngChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ngchat/faq.html">ngChat FAQ</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">SeaChat</span></p>
+<p class="caption" role="heading"><span class="caption-text">ngChat-cart</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../seachat/quickstart.html">SeaChat Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../seachat/bot_tutorial.html">SeaChat Bot Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../seachat/policy.html">SeaChat Policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../seachat/faq.html">SeaChat FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">ngChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/ngchat_cart.html">Technical Docs</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">SeaChat-cart</span></p>
+<p class="caption" role="heading"><span class="caption-text">ngChat-nlp</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">SeaChat Cart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cart/seachat_cart.html">Technical Docs</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">SeaWord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">ngChat NLP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Prediction API Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
@@ -71,9 +66,9 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SeaVoice SDK (Python)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seavoice_restful_apis_tutorial.html">SeaVoice RESTful APIs</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">SeaChat-report</span></p>
+<p class="caption" role="heading"><span class="caption-text">ngChat-report</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to SeaChat-report’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
 </ul>
 
         </div>
@@ -82,7 +77,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SeaChat</a>
+          <a href="../index.html">ngChat</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -167,20 +162,21 @@ file. You can also apply recognition to an audio stream.</p>
 <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> for the speech service account):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
     <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">,</span>
+    <span class="n">speech_recognition_language</span><span class="o">=</span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span>
+    <span class="n">speech_recognition_punctuation</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">speech_recognition_language</span></code> could be <cite>zh-TW</cite> or <cite>en-US</cite>.
+<code class="docutils literal notranslate"><span class="pre">speech_recognition_punctuation</span></code> is used to set whether recognition results will have punctuations.</p>
 </section>
 <section id="audio-configuration">
 <h4><a class="toc-backref" href="#id12">Audio Configuration</a><a class="headerlink" href="#audio-configuration" title="Permalink to this headline"></a></h4>
 <p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">AudioConfig</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Code commented out is an example for recognition on an audio stream.</span>
-<span class="c1"># audio_format = speechsdk.audio.AudioStreamFormat(</span>
-<span class="c1">#     samples_per_second=16000, bits_per_sample=16, channels=1)</span>
-<span class="c1"># audio_stream = speechsdk.audio.PushAudioInputStream(stream_format=audio_format)</span>
-<span class="c1"># audio_config = speechsdk.audio.AudioConfig(stream=audio_stream)</span>
-<span class="n">audio_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">AudioConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;test.wav&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">audio_format</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">AudioStreamFormat</span><span class="p">(</span><span class="n">samples_per_second</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">bits_per_sample</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">audio_stream</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">PushAudioInputStream</span><span class="p">(</span><span class="n">audio_format</span><span class="p">)</span>
+<span class="n">audio_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">AudioConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">audio_stream</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -231,56 +227,59 @@ recognition on an audio stream. Recognition results are available
 through callback functions. To stop the continuous recognition, call
 <code class="docutils literal notranslate"><span class="pre">stop_continuous_recognition_async()</span></code>.</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Code commented out is for recognition on an audio stream.</span>
-<span class="c1"># speech_recognizer.start_continuous_recognition_async()</span>
-<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">recognize_once</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_recognizer</span><span class="o">.</span><span class="n">start_continuous_recognition_async</span><span class="p">()</span>
+<span class="c1"># Code commented out is for Single-shot recognition.</span>
+<span class="c1"># speech_recognizer.recognize_once()</span>
 </pre></div>
 </div>
 </section>
 <section id="putting-everything-together">
 <h4><a class="toc-backref" href="#id16">Putting everything together</a><a class="headerlink" href="#putting-everything-together" title="Permalink to this headline"></a></h4>
 <p>Now, put everything together and run the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">speech</span> <span class="k">as</span> <span class="nn">speechsdk</span>
-<span class="kn">import</span> <span class="nn">audio</span> <span class="k">as</span> <span class="nn">audio</span>
-<span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seavoice_sdk.speech</span> <span class="k">as</span> <span class="nn">speechsdk</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># this is an example to show how to use the SeaVoice SDK to recognize once</span>
+<span class="n">SEASALT_ACCOUNT</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxxx&quot;</span>
+<span class="n">SEASALT_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxx&quot;</span>
+<span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
+    <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">SEASALT_PASSWORD</span><span class="p">,</span>
+    <span class="n">speech_recognition_language</span><span class="o">=</span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span>
+    <span class="n">speech_recognition_punctuation</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">audio_format</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">AudioStreamFormat</span><span class="p">(</span><span class="n">samples_per_second</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">bits_per_sample</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">audio_stream</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">PushAudioInputStream</span><span class="p">(</span><span class="n">audio_format</span><span class="p">)</span>
+<span class="n">audio_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">AudioConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">audio_stream</span><span class="p">)</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
-        <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
-        <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span>
-        <span class="p">)</span>
-        <span class="n">audio_config</span> <span class="o">=</span> <span class="n">audio</span><span class="o">.</span><span class="n">AudioConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;test.wav&quot;</span><span class="p">)</span>
-        <span class="n">speech_recognizer</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span>
-            <span class="n">speech_config</span><span class="o">=</span><span class="n">speech_config</span><span class="p">,</span>
-            <span class="n">audio_config</span><span class="o">=</span><span class="n">audio_config</span>
-        <span class="p">)</span>
+<span class="n">speech_recognizer</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span>
+    <span class="n">speech_config</span><span class="o">=</span><span class="n">speech_config</span><span class="p">,</span>
+    <span class="n">audio_config</span><span class="o">=</span><span class="n">audio_config</span>
+<span class="p">)</span>
 
-        <span class="n">speech_recognizer</span><span class="o">.</span><span class="n">recognizing</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recognizing: </span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-        <span class="n">speech_recognizer</span><span class="o">.</span><span class="n">recognized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recognized: </span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
-        <span class="n">speech_recognizer</span><span class="o">.</span><span class="n">canceled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Canceled: </span><span class="si">{</span><span class="n">evt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
-        <span class="n">speech_recognizer</span><span class="o">.</span><span class="n">session_started</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Session_started: </span><span class="si">{</span><span class="n">evt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
-        <span class="n">speech_recognizer</span><span class="o">.</span><span class="n">session_stopped</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Session_stopped: </span><span class="si">{</span><span class="n">evt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">def</span> <span class="nf">stopped_handler</span><span class="p">(</span><span class="n">evt</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">done</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Session_stopped: </span><span class="si">{</span><span class="n">evt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="n">speech_recognizer</span><span class="o">.</span><span class="n">recognize_once</span><span class="p">()</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">recognizing</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recognizing: </span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">recognized</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recognized: </span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">canceled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Canceled: </span><span class="si">{</span><span class="n">evt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">session_started</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">evt</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Session_started: </span><span class="si">{</span><span class="n">evt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">session_stopped</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">stopped_handler</span><span class="p">)</span>
 
-    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Caught keyboard interrupt. Canceling tasks...&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exception: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">start_continuous_recognition_async</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test.wav&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">audio_bytes</span><span class="p">:</span>
+    <span class="n">audio_stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">audio_bytes</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="n">audio_stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;EOS&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">speech_recognizer</span><span class="o">.</span><span class="n">stop_continuous_recognition</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished recognizing&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -310,10 +309,22 @@ audio file. You can also receive synthesis results from an audio stream.</p>
 <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> for the speech service account):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
     <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">,</span>
+    <span class="n">speech_synthesis_language</span><span class="o">=</span><span class="s2">&quot;en-US&quot;</span><span class="p">,</span>
+    <span class="n">speech_synthesis_voice_name</span><span class="o">=</span><span class="s2">&quot;TomHanks&quot;</span><span class="p">,</span>
+    <span class="n">speech_synthesis_output_format_id</span><span class="o">=</span><span class="s2">&quot;riff-22khz-16bit-mono-pcm&quot;</span><span class="p">,</span>
+    <span class="n">speech_synthesis_output_pitch</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">speech_synthesis_output_speed</span><span class="o">=</span><span class="mf">1.0</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>Options for <code class="docutils literal notranslate"><span class="pre">speech_synthesis_language</span></code> could be <cite>zh-TW</cite>, <cite>en-US</cite> or <cite>en-GB</cite>.
+For <cite>zh-TW</cite>, <code class="docutils literal notranslate"><span class="pre">speech_synthesis_voice_name</span></code> could be <cite>Tongtong</cite> or <cite>Vivian</cite>.
+For <cite>en-US</cite>, <code class="docutils literal notranslate"><span class="pre">speech_synthesis_voice_name</span></code> could be <cite>TomHanks</cite>, <cite>ReeseWitherspoon</cite> or <cite>AnneHathaway</cite>.
+For <cite>en-GB</cite>, <code class="docutils literal notranslate"><span class="pre">speech_synthesis_voice_name</span></code> could be <cite>DavidAttenborough</cite>.</p>
+<p>Options for <code class="docutils literal notranslate"><span class="pre">speech_synthesis_output_format_id</span></code> could be <cite>riff-22khz-16bit-mono-pcm</cite>, <cite>riff-16khz-16bit-mono-pcm</cite> or <cite>riff-8khz-16bit-mono-pcm</cite>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">speech_synthesis_output_pitch</span></code> could be a value between <cite>-12.0</cite> and <cite>12.0</cite>, where <cite>0.0</cite> is the default/normal value.
+<code class="docutils literal notranslate"><span class="pre">speech_synthesis_output_speed</span></code> could be a value between <cite>0.5</cite> and <cite>2.0</cite>, where <cite>1.0</cite> is the default/normal value.</p>
 </section>
 <section id="id4">
 <h4><a class="toc-backref" href="#id22">Audio Configuration</a><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
@@ -394,9 +405,16 @@ was completed successfully:</p>
 <span class="kn">from</span> <span class="nn">seavoice_sdk</span> <span class="kn">import</span> <span class="n">audio</span> <span class="k">as</span> <span class="n">audio</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">SEASALT_ACCOUNT</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxxx&quot;</span>
+    <span class="n">SEASALT_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxx&quot;</span>
     <span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
         <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
         <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span>
+        <span class="n">speech_synthesis_language</span><span class="o">=</span><span class="s2">&quot;en-US&quot;</span><span class="p">,</span>
+        <span class="n">speech_synthesis_voice_name</span><span class="o">=</span><span class="s2">&quot;TomHanks&quot;</span><span class="p">,</span>
+        <span class="n">speech_synthesis_output_format_id</span><span class="o">=</span><span class="s2">&quot;riff-22khz-16bit-mono-pcm&quot;</span><span class="p">,</span>
+        <span class="n">speech_synthesis_output_pitch</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">speech_synthesis_output_speed</span><span class="o">=</span><span class="mf">1.0</span>
     <span class="p">)</span>
     <span class="n">audio_config</span> <span class="o">=</span> <span class="n">audio</span><span class="o">.</span><span class="n">AudioOutputConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;output.wav&quot;</span><span class="p">)</span>
     <span class="n">speech_synthesizer</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechSynthesizer</span><span class="p">(</span>

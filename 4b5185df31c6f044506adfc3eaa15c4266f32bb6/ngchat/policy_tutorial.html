@@ -1,77 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>ngChat Policy Tutorial &mdash; ngChat 0.0.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ngChat Cart Tutorial" href="../cart/tutorial.html" />
     <link rel="prev" title="ngChat Bot Tutorial" href="bot_tutorial.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #2980B9" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> ngChat
-          
-
-          
-            
             <img src="../_static/logo.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -79,18 +38,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">ngChat</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">ngChat Quick Start</a></li>
@@ -130,75 +78,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to ngChat-report’s documentation!</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">ngChat</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="bot_tutorial.html">ngChat Bot Tutorial</a> &raquo;</li>
-        
       <li>ngChat Policy Tutorial</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/ngchat/policy_tutorial.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="ngchat-policy-tutorial">
-<span id="policy-tutorial"></span><h1>ngChat Policy Tutorial<a class="headerlink" href="#ngchat-policy-tutorial" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="ngchat-policy-tutorial">
+<span id="policy-tutorial"></span><h1>ngChat Policy Tutorial<a class="headerlink" href="#ngchat-policy-tutorial" title="Permalink to this headline"></a></h1>
 <p>Once the bot is initialized and is provided with intents, entities, and training data, it is time to set up the dialogue manager. For this demonstration, we will be replacing the Rasa policies entirely with ngChat Policy.</p>
 <div class="contents local topic" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
@@ -214,8 +120,8 @@
 <li><p><a class="reference internal" href="#try-it" id="id7">Try It</a></p></li>
 </ul>
 </div>
-<div class="section" id="configuration">
-<h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<section id="configuration">
+<h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
 <p>The Rasa initialized bot will come with a policy configuration like this:</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration for Rasa Core.</span>
 <span class="c1"># https://rasa.com/docs/rasa/core/policies/</span>
@@ -253,15 +159,15 @@
 <p class="admonition-title">Tip</p>
 <p>After removing the TEDPolicy from the configuration file, Rasa will no longer need the <code class="docutils literal notranslate"><span class="pre">stories.md</span></code> file for training. You can keep the <code class="docutils literal notranslate"><span class="pre">stories.md</span></code> file for testing purposes or you can remove most of the content. If you delete the file altogether, you may get an error from Rasa. Instead of removing the file entirely, you can just remove all the stories except one simple one; this way Rasa can still find a correctly-formatted stories file and will not throw an error.</p>
 </div>
-</div>
-<div class="section" id="creating-the-dialogue-file">
-<h2><a class="toc-backref" href="#id3">Creating the Dialogue File</a><a class="headerlink" href="#creating-the-dialogue-file" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creating-the-dialogue-file">
+<h2><a class="toc-backref" href="#id3">Creating the Dialogue File</a><a class="headerlink" href="#creating-the-dialogue-file" title="Permalink to this headline"></a></h2>
 <p>In order to control the flow of dialogue, we will need to create a set of dialogue states.
 Each state contains enter conditions (expressions that must evaluate true, such as the user’s intent, slot status, etc) and a set of bot actions that will be executed if the state is entered.
 At each point that the bot must make a decision, it will evaulate all the states and assign each state with a score; the highest scoring state will have its actions executed by the bot.
 See the <a class="reference internal" href="policy.html#policy"><span class="std std-ref">policy overview</span></a> for more information about the state format. Create a new file in your bot folder called <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code>.</p>
-<div class="section" id="a-simple-state-example">
-<h3><a class="toc-backref" href="#id4">A Simple State Example</a><a class="headerlink" href="#a-simple-state-example" title="Permalink to this headline">¶</a></h3>
+<section id="a-simple-state-example">
+<h3><a class="toc-backref" href="#id4">A Simple State Example</a><a class="headerlink" href="#a-simple-state-example" title="Permalink to this headline"></a></h3>
 <p>We can use the NLU data that Rasa provided at initialization to set up our first state. In our domain and data we have a <code class="docutils literal notranslate"><span class="pre">greet</span></code> intent. If the user provides an utterance with intent <code class="docutils literal notranslate"><span class="pre">greet</span></code>, the bot should respond with a response from the <code class="docutils literal notranslate"><span class="pre">utter_greet</span></code> template provided in the domain. This is the basis of our ‘if/then’ state conditions and actions.</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[greet]</span><span class="p p-Indicator">:</span>
   <span class="nt">conditions</span><span class="p">:</span>
@@ -293,9 +199,9 @@ See the <a class="reference internal" href="policy.html#policy"><span class="std
 <p>At this point, you can train a new model and confirm that your first state is working as expected. You can also try a very different utterance to confirm that the bot will default to the fallback utterance. In order for the fallback to respond with an utterance, you will need to add a <code class="docutils literal notranslate"><span class="pre">utter_default</span></code> template to the <code class="docutils literal notranslate"><span class="pre">domain.yml</span></code> file.</p>
 </div>
 <img alt="../_images/first_policy_test.PNG" src="../_images/first_policy_test.PNG" />
-</div>
-<div class="section" id="a-more-complex-example">
-<h3><a class="toc-backref" href="#id5">A More Complex Example</a><a class="headerlink" href="#a-more-complex-example" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="a-more-complex-example">
+<h3><a class="toc-backref" href="#id5">A More Complex Example</a><a class="headerlink" href="#a-more-complex-example" title="Permalink to this headline"></a></h3>
 <p>For this tutorial, we want our bot to be able to greet the user, display the menu, and add a requested item to the cart. In the cart tutorial, we will go over how to integrate ngChat Cart through custom actions. For now, we just work on controlling to dialogue flow and will use response templates only, until we create the custom actions in the cart tutorial.</p>
 <p>For these two tasks (querying the menu and selecting an item), we will need to break down the possible user utterances into intents and entities. We can create two new intents, <code class="docutils literal notranslate"><span class="pre">display_menu</span></code> and <code class="docutils literal notranslate"><span class="pre">select_item</span></code>, to represent the users desire to execute one of these two events. Add these to the <code class="docutils literal notranslate"><span class="pre">intents</span></code> list on the <code class="docutils literal notranslate"><span class="pre">domain.yml</span></code> file. See <a class="reference external" href="https://rasa.com/docs/rasa/domain#entities">Rasa docs</a> for a review of intents if necessary.</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">intents</span><span class="p">:</span>
@@ -406,10 +312,10 @@ See <a class="reference external" href="https://rasa.com/docs/rasa/domain#slots"
 </div>
 <p>This demonstrates how we can represent multiple diverging paths on the dialogue based on the current state of the tracker. In the cart tutorial we will make this dialogue flow a little more nuanced by adding more actions and more complex dialogue paths.</p>
 <p>You can find a full dialogue.yml file <a class="reference internal" href="tutorial_resources/bot_dialogue.html#bot-dialogue"><span class="std std-ref">here</span></a>.</p>
-</div>
-</div>
-<div class="section" id="visualizing-the-dialogue">
-<h2><a class="toc-backref" href="#id6">Visualizing the Dialogue</a><a class="headerlink" href="#visualizing-the-dialogue" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="visualizing-the-dialogue">
+<h2><a class="toc-backref" href="#id6">Visualizing the Dialogue</a><a class="headerlink" href="#visualizing-the-dialogue" title="Permalink to this headline"></a></h2>
 <p>One last important feature of the dialogue system is the fact that it can produce its own state visualizations.
 The visualization output can be controlled by the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file.
 First we will need to create a visualization directory and add it to the config. Create a new directory called <code class="docutils literal notranslate"><span class="pre">visual</span></code> in your bot directory. To the ngChat policy config add the following parameters:</p>
@@ -431,76 +337,57 @@ First we will need to create a visualization directory and add it to the config.
 <p>In order to output vega format, a file called <code class="docutils literal notranslate"><span class="pre">flow_data.json</span></code> must be present in the visualization directory. An example of this file can be found at <code class="docutils literal notranslate"><span class="pre">/ngchat_plugins/core/policy/visualization</span></code>.</p>
 </div>
 <p>The various flags can be set to true/false to output different types of visualizations. Either the <code class="docutils literal notranslate"><span class="pre">output_vega</span></code> or <code class="docutils literal notranslate"><span class="pre">output_dot</span></code> flag must be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> in order to produce output. The vega version will automatically open a browser window to display the visualization. For viewing the dot version, it is recommended to open the output file in a dot file preview extension for your IDE. The next section shows an example of a vega live update visualization.</p>
-</div>
-<div class="section" id="try-it">
-<h2><a class="toc-backref" href="#id7">Try It</a><a class="headerlink" href="#try-it" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="try-it">
+<h2><a class="toc-backref" href="#id7">Try It</a><a class="headerlink" href="#try-it" title="Permalink to this headline"></a></h2>
 <p>You can now test the dialogue flow and visualization by retraining and running the bot with <code class="docutils literal notranslate"><span class="pre">rasa</span> <span class="pre">shell</span></code>.</p>
 <p><strong>Bot behaviour</strong></p>
 <img alt="../_images/second_policy_test.PNG" src="../_images/second_policy_test.PNG" />
 <p><strong>Visualization</strong></p>
 <img alt="../_images/policy_visualization.png" src="../_images/policy_visualization.png" />
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../cart/tutorial.html" class="btn btn-neutral float-right" title="ngChat Cart Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bot_tutorial.html" class="btn btn-neutral float-left" title="ngChat Bot Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../cart/tutorial.html" class="btn btn-neutral float-right" title="ngChat Cart Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Seasalt.ai.
-
-    </p>
+    <p>&#169; Copyright 2020, Seasalt.ai.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
     <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
     <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-    ga('create', 'UA-10405841-8', 'auto');
-    
-    ga('send', 'pageview');
-    </script>
-
-    
-   
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>
