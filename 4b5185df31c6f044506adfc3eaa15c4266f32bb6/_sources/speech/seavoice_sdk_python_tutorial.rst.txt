@@ -53,6 +53,7 @@ info@seasalt.ai for the speech service account):
         )
 
 ``speech_recognition_language`` could be `zh-TW` or `en-US`.
+
 ``speech_recognition_punctuation`` is used to set whether recognition results will have punctuations.
 
 Audio Configuration
@@ -135,10 +136,10 @@ Now, put everything together and run the example:
     import time
 
     SEASALT_ACCOUNT = "xxxxxxxxx"
-    SEASALT_PASSWORD = "xxxxxxxx"
+    PASSWORD = "xxxxxxxx"
     speech_config = speechsdk.SpeechConfig(
         account_id=SEASALT_ACCOUNT,
-        password=SEASALT_PASSWORD,
+        password=PASSWORD,
         speech_recognition_language="zh-TW",
         speech_recognition_punctuation=True
     )
@@ -323,10 +324,10 @@ Now, put everything together and run the example:
 
     if __name__ == "__main__":
         SEASALT_ACCOUNT = "xxxxxxxxx"
-        SEASALT_PASSWORD = "xxxxxxxx"
+        PASSWORD = "xxxxxxxx"
         speech_config = speechsdk.SpeechConfig(
             account_id=SEASALT_ACCOUNT,
-            password=PASSWORD
+            password=PASSWORD,
             speech_synthesis_language="en-US",
             speech_synthesis_voice_name="TomHanks",
             speech_synthesis_output_format_id="riff-22khz-16bit-mono-pcm",
