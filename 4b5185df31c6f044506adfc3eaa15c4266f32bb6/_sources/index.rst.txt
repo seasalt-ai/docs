@@ -1,39 +1,48 @@
-.. ngChat Document documentation master file, created by
+.. SeaChat Document documentation master file, created by
    sphinx-quickstart on Thu Dec  3 16:28:14 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ngChat's Master Documentation!
+Welcome to SeaChat's Master Documentation!
 ===========================================
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: Product Introductions
+
+   SeaX <product_introduction/seax>
+   SeaVoice <product_introduction/seavoice>
+
 
 .. toctree::
    :maxdepth: 3
    :glob:
    :titlesonly:
-   :caption: ngChat
+   :caption: SeaChat
 
-   ngChat Quick Start <ngchat/quickstart>
-   ngChat Bot Tutorial <ngchat/bot_tutorial>
-   ngChat Policy <ngchat/policy>
-   ngChat FAQ <ngchat/faq>
+   SeaChat Quick Start <seachat/quickstart>
+   SeaChat Bot Tutorial <seachat/bot_tutorial>
+   SeaChat Policy <seachat/policy>
+   SeaChat FAQ <seachat/faq>
 
-
-.. toctree::
-   :maxdepth: 3
-   :glob:
-   :titlesonly:
-   :caption: ngChat-cart
-
-   ngChat Cart <cart/readme>
-   Technical Docs <cart/ngchat_cart>
 
 .. toctree::
    :maxdepth: 3
    :glob:
    :titlesonly:
-   :caption: ngChat-nlp
+   :caption: SeaChat-cart
 
-   ngChat NLP <nlp/readme>
+   SeaChat Cart <cart/readme>
+   Technical Docs <cart/seachat_cart>
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaWord
+
+   SeaWord <nlp/readme>
    Summarization API Tutorial <nlp/sum_tutorial>
    Topic Prediction API Tutorial <nlp/topic_tutorial>
    Action Extraction API Tutorial <nlp/action_tutorial>
@@ -54,7 +63,7 @@ Welcome to ngChat's Master Documentation!
    :maxdepth: 2
    :glob:
    :titlesonly:
-   :caption: ngChat-report
+   :caption: SeaChat-report
 
    report/*
 

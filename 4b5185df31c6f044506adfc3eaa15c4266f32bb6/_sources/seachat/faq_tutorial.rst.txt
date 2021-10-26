@@ -1,0 +1,141 @@
+.. _faq_tutorial:
+
+====================
+SeaChat FAQ Tutorial 
+====================
+
+For additional support to Rasa bots, SeaChat offers a FAQ component that is faster and more accurate the Rasa's ResponseSelector. 
+This tutorial will walk through how to format the data, import the data, and add the FAQ component to the NLU pipeline.
+
+.. contents:: Table of Contents
+    :local:
+    :depth: 3
+
+Creating the Data 
+==================
+In addition to Rasa's native markdown data format, SeaChat FAQ also supports comma-separated-value format. 
+We will use the csv version to demonstrate how the data should be formatted and imported. 
+To start, create a new file in your bot directory: ``data/faq.csv``.
+The file has a *required* header of the following format:
+
+.. code-block::
+
+    ID,Answer,Category,Keywords,From date,To date,Question,Question,More Questions,
+
+.. NOTE:: While there are only 3 columns specified for questions in the header, as many questions as necessary can be added by continuing into new columns. However, the header should not be changed, even if more columns are added.
+
+Copy and paste this header into the top of your faq file.
+For this tutorial, we will only work with the ``ID``, ``Answer``, and ``Question`` fields.
+See :ref:`CSV format <faq_csv_format>` in the FAQ overview for detailed information about 
+Here's our first FAQ question and answer about store hours:
+
++----+-------------------------------+----------+----------+-----------+---------+----------------------+-----------------------+---------------------+
+| ID | Answer                        | Category | Keywords | From date | To date | Question             | Question              | Question            |
++----+-------------------------------+----------+----------+-----------+---------+----------------------+-----------------------+---------------------+
+| 1  | We are open Mon-Fri 7am-5pm   |          |          |           |         | when are you open?   | What are you hours?   | Are you open now?   |
++----+-------------------------------+----------+----------+-----------+---------+----------------------+-----------------------+---------------------+
+
+.. IMPORTANT:: If a column is not used, it should be left blank, but the column itself should not be removed.
+
+See a full example in csv format :ref:`here <bot_faq_example>`.
+
+
+Configuration
+==============
+
+Now that we have some FAQ data, the bot must be configured to import and use the data in the NLU pipeline.
+Open your ``config.yml`` file.
+
+Importing the Data
+-------------------
+
+In the config, we will need to add a new section called ``importers``.
+To add the SeaChat FAQ importer, add the name as the path to the ``FAQImporter`` class.
+Specify the paths to the csv files under ``faq_paths``.
+You can also optionally specify the ``augment_with_synonyms`` and ``timezone`` fields.
+
+.. code-block:: YAML
+
+    importers:
+    - name: seachat_plugins.importers.faq_importer.FAQImporter
+      faq_paths:
+        - data/faq.csv
+      augment_with_synonyms: false
+      timezone: America/Los_Angeles
+    - name: RasaFileImporter
+
+Next, we can specify the regular Rasa importer so that our Rasa formatted files are still imported properly.
+
+.. code-block:: YAML
+
+    importers:
+      - name: RasaFileImporter
+
+For a more detailed explanation of how the importer can be configured, see :ref:`FAQImporter <faq_importer>` in the FAQ overview.
+
+Adding FAQ to the NLU pipeline
+-------------------------------
+
+Finally, we need to add the SeaChat selector component to the NLU pipeline.
+We can simply replace Rasa's ``ResponseSelector`` component with a path to the ElasticSelector class.
+For this tutorial bot we will set up ElasticSearch to use a local service and will skip using BERT word embeddings.
+See :ref:`ElasticSelector <elastic_selector>` in the FAQ overview for detailed information about how the component can be configured.
+For now, the following can be copied and pasted into the ``config.yml`` file in place of Rasa's ResponseSelector.
+
+.. code-block:: YAML
+
+  - name: seachat_plugins.nlu.selectors.elastic_selector.ElasticSelector
+    es_indexing:
+      index_name: tutorial_faq
+      # On the k8s cluster, login/secret will be set automatically.
+      host: localhost # or elastic.seasalt.ai for the cluster
+      port: 9200
+
+These are the minimal configurations required to run the ElasticSelector. For additional configurations, such a re-ranking and BERT embedding integration, see the :ref:`FAQ Overview <SeaChat_faq>`.
+
+.. TIP:: If you are running the bot locally, make sure you have an instance of ElasticSearch running *before* you start to train or test the bot.
+
+Adding FAQ to the Bot 
+----------------------
+Once the FAQ components are integrated in the config, there are a few more steps to make sure that bot accurately responds to the query.
+First, the faq intent and action names must be added to the bot domain.
+To the ``intents`` list in the ``domain.yml`` file, add ``faq``.
+
+.. code-block:: YAML
+
+    intents:
+        - faq
+
+This intent name should match the ``retrieval_intent`` field on the ElasticSelector configuration.
+Also, add ``utter_faq`` to the ``actions`` list. 
+This is the default action name for the ElasticSelectors action.
+
+.. code-block:: YAML
+
+    actions:
+        - utter_faq
+
+
+Finally, we will need to add a new state to the ``dialogue.yml`` file that recognizes the FAQ intent, and returns the ``respond_faq`` action.
+
+.. code-block:: YAML
+
+    $[faq]:
+    rank_score: 100
+    conditions:
+        - INTENT.name == 'faq'
+    actions:
+        - utter_faq
+        - action_listen
+
+Try It 
+========
+
+We can now test that the new FAQ selector is working as expected.
+Retrain your bot, Make sure an ElasticSearch instance is running, and start the bot in the terminal.
+
+.. code-block::
+
+    $ rasa train
+    $ rasa shell -vv
+
