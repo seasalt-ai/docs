@@ -8,7 +8,7 @@ SeaWord NLP Overview
     :local:
     :depth: 3
 
-The purpose of this tutorial is to demonstrate how the ngChat meeting RESTFul APIs can be used to retrieve meeting analytics. In this tutorial we will walk-through:
+The purpose of this tutorial is to demonstrate how the SeaChat meeting RESTFul APIs can be used to retrieve meeting analytics. In this tutorial we will walk-through:
     - How to use the Summarization API to generate short and long summaries from a meeting transcript
     - How to use the Topic Prediction API to predict topics from meeting transcript
     - How to use the Action Extraction API to extract and summarize actionable items from a meeting transcript
