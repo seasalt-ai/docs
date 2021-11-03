@@ -1,7 +1,7 @@
 .. _cart_readme:
 
 =====================
-SeaChat Cart Overview
+NgChat Cart Overview
 =====================
 A set of python classes and methods that provide cart functionality for chat bots.
 
@@ -21,7 +21,7 @@ We believe that chat and voice based e-commerce through conversational AI has a 
 
 Implementation
 ---------------
-The main class is the ``Cart`` class, and most methods can be accessed through this class. A menu must be loaded before the cart can be modified or accessed. View the technical documentation :ref:`here<SeaChat_cart>` for implementation details.
+The main class is the ``Cart`` class, and most methods can be accessed through this class. A menu must be loaded before the cart can be modified or accessed. View the technical documentation :ref:`here<ngchat_cart>` for implementation details.
 
 
 Integration with Rasa
@@ -30,16 +30,16 @@ Custom actions are required to bridge the gap between Rasa and the cart. Use the
 
 Training Data Generation
 -------------------------
-SeaChat Cart provides methods to automatically produce Chatette entity examples and Rasa lookup tables. Chatette templates are used to generate initial training data for bots based on the expansion of templates marked up with entities and intents. The SeaChat Cart includes a method to extract menu-specific entities into a chatette template, which can then be included in a bot's Chatette templates to easily add menu-specific entity data to your Chatette templates. These are intended to be used with the ``cart.chatette`` template file, which includes templates for the intents and entities used by SeaChat Cart. 
+ngChat Cart provides methods to automatically produce Chatette entity examples and Rasa lookup tables. Chatette templates are used to generate initial training data for bots based on the expansion of templates marked up with entities and intents. The ngChat Cart includes a method to extract menu-specific entities into a chatette template, which can then be included in a bot's Chatette templates to easily add menu-specific entity data to your Chatette templates. These are intended to be used with the ``cart.chatette`` template file, which includes templates for the intents and entities used by ngChat Cart. 
 
-Similarly, the SeaChat Cart supports automatic lookup table generation from a menu. Rasa bots can incorporate lookup tables to ensure that specific strings are consistently identified as entities. This method will output separate lookup table files for each relevant entity. These lookup tables must then be referenced in a NLU md file.
+Similarly, the ngChat Cart supports automatic lookup table generation from a menu. Rasa bots can incorporate lookup tables to ensure that specific strings are consistently identified as entities. This method will output separate lookup table files for each relevant entity. These lookup tables must then be referenced in a NLU md file.
 
 There are convenience scripts provided to call these methods. The scripts will generate lookup tables or chatette aliases for ``options``, ``items``, and ``query_topics``. For detailed instructions on how to run these scripts, see the :ref:`tutorial<cart_tutorial>`.
 
 
 CART MENU FORMAT
 -----------------
-SeaChat Cart uses a standardized menu format which is designed to be compatible with the majority of e-commerce products. The menu is composed of different objects: the top level ``menu`` object, ``products``, ``modifiers``, ``modifier_groups``, and ``variants``.
+ngChat Cart uses a standardized menu format which is designed to be compatible with the majority of e-commerce products. The menu is composed of different objects: the top level ``menu`` object, ``products``, ``modifiers``, ``modifier_groups``, and ``variants``.
 
 Menu
 -----
