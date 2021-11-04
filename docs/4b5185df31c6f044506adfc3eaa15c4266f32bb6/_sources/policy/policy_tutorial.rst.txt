@@ -1,5 +1,0 @@
-.. _policy_tutorial:
-
-=======================
-ngChat Policy Tutorial 
-=======================

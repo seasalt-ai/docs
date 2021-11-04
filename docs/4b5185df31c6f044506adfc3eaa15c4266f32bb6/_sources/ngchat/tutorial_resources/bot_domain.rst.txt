@@ -1,8 +1,0 @@
-.. _bot_domain:
-
-=====================
-Domain Example
-=====================
-
-.. literalinclude:: bot_domain.yml
-    :language: YAML 

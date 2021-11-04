@@ -1,8 +1,0 @@
-.. _bot_dialogue:
-
-=====================
-Dialogue.yml Example
-=====================
-
-.. literalinclude:: bot_dialogue.yml
-    :language: YAML

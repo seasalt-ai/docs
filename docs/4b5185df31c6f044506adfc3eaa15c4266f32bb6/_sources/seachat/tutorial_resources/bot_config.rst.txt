@@ -1,8 +1,0 @@
-.. _bot_config:
-
-=====================
-Config Example
-=====================
-
-.. literalinclude:: bot_config.yml
-    :language: YAML

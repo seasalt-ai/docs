@@ -1,8 +1,0 @@
-.. _cart_config:
-
-====================
-Cart Config Example
-====================
-
-.. literalinclude:: example_files/cart_config.yml
-    :language: YAML

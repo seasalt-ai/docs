@@ -1,7 +1,0 @@
-.. _bot_chatette:
-
-=======================
-Chatette Example
-=======================
-
-.. literalinclude:: main.chatette

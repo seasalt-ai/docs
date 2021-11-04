@@ -1,7 +1,0 @@
-.. _bot_faq_example:
-
-================= 
-FAQ Data Example 
-================= 
-
-.. literalinclude:: bot_faq.csv
