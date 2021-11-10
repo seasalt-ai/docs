@@ -52,7 +52,7 @@ For an overview of additional Google Maps features, please see this video below:
 
    <iframe width="560" height="315" src="https://www.youtube.com/embed/xe2Y9kmRR3M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Finall, WhatsApp integration:
+Finally, WhatsApp integration:
 
 .. raw:: html
 
