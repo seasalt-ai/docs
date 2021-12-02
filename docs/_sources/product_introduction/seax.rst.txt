@@ -57,3 +57,14 @@ Finally, WhatsApp integration:
 .. raw:: html
 
    <iframe width="560" height="315" src="https://www.youtube.com/embed/TzToP_Ka4zM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+Use Cases
+-------------------
+SeaX has solutions for many common custmer service use cases.
+
+Here, we see automated inbound and outbound appointment scheduling in SeaX, integrated with the HubSpot CRM.
+
+.. raw:: html
+
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/Bth5rMlFf8s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
