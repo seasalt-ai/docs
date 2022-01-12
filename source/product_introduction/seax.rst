@@ -13,6 +13,8 @@ Introduction
 
 SeaX allows you to integrate a virtual agent into your business's website and social media accounts to automatically handle incoming customer requests. Through the SeaX Collaborative Contact Center, **virtual agents** work hand in hand with your customer service representatives, or **live agents**, to address any and all customer inquiries quickly and efficiently.
 
+.. note::  SeaX stands for Customer eXperience (CX).
+
 SeaX Features
 -------------------
 
@@ -26,6 +28,9 @@ The **SeaX Virtual Agent** can handle a wide range of basic questions about your
 
 For more complex questions that the agent cannot answer, the SeaX interface allows customers to request a **live agent**, or a human customer service representative available within the SeaX Collaborative Contact Center.
 
+Live Agent Handoff
+===================
+
 Here we demonstrate the SeaX Virtual Agent's live handoff capabilities:
 
 .. raw:: html
@@ -33,6 +38,9 @@ Here we demonstrate the SeaX Virtual Agent's live handoff capabilities:
    <iframe width="560" height="315" src="https://www.youtube.com/embed/j75YPzA0GlI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 |
+
+Omni-channel Messaging
+======================================
 
 SeaX customer service agents can handle incoming requests from all of your business's platforms at once. Here we introduce to the omni-channel messaging experience:
 
@@ -49,6 +57,9 @@ SeaChat is available on numerous platforms, including Facebook, SMS, Google Maps
 
 Google Maps integration allows access to many more features, including the ability to automatically gather information about your business's amenities from its Google Maps listing.
 
+Google Business Messages
+======================================
+
 Here is an overview of additional Google Maps features:
 
 .. raw:: html
@@ -56,6 +67,9 @@ Here is an overview of additional Google Maps features:
    <iframe width="560" height="315" src="https://www.youtube.com/embed/xe2Y9kmRR3M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 |
+
+WhatsApp Messaging
+======================================
 
 Finally, here we show the WhatsApp integration:
 
@@ -65,9 +79,12 @@ Finally, here we show the WhatsApp integration:
 
 |
 
-Use Cases
+Integration
 -------------------
 SeaX has solutions for many common custmer service use cases.
+
+HubSpot Integration
+======================================
 
 Here we see automated inbound and outbound appointment scheduling in SeaX, integrated with the HubSpot CRM.
 
@@ -76,6 +93,10 @@ Here we see automated inbound and outbound appointment scheduling in SeaX, integ
    <iframe width="560" height="315" src="https://www.youtube.com/embed/Bth5rMlFf8s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 |
+
+
+Discord Integration
+======================================
 
 Here we provide automated customer support and case tracking in Discord, using SeaX and the HubSpot CRM.
 
