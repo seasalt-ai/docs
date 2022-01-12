@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to Seasalt.ai's Master Documentation!
-===========================================
+===============================================
 .. toctree::
    :maxdepth: 3
    :glob:
