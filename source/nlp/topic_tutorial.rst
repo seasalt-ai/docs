@@ -55,7 +55,7 @@ The no-callback process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/topics/{lang_code}/extract_no_callback?access_code={api-key}
+    POST https://seaword.seasalt.ai/topics/{lang-code}/extract_no_callback?access_code={api-key}
 
 The required request body for no-callback topic extraction is in the following format:
 
@@ -106,7 +106,7 @@ The callback process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/topics/{lang_code}/extract?access_code={api-key}
+    POST https://seaword.seasalt.ai/topics/{lang-code}/extract?access_code={api-key}
 
 The required request body for topic extraction with callback is in the following format:
 

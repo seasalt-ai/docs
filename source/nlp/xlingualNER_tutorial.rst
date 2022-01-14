@@ -350,7 +350,7 @@ Language Support
 ================
 
 The Cross-Lingual Named Entity Recognition API currently supports 9 languages. 
-The input language following a convention of ``{lang_code}-{country-code}`` is specified via a query parameter when calling the demo endpoint.
+The input language following a convention of ``{lang-code}-{country-code}`` is specified via a query parameter when calling the demo endpoint.
 
 While we intent to add more language support in the future, the following language codes are currently supported
 
@@ -380,7 +380,7 @@ Additionally, the language must be specified as a query parameter in the URL.
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/ner/{lang_code}/extract?access_code={api-key}
+    POST https://seaword.seasalt.ai/ner/{lang-code}/extract?access_code={api-key}
 
 The endpoint tags a list of named entities calculates datetime grounding and extracts Email, URL and IP-address from the input sentences.
 The required request body for Named Entity Recognition requires only the following fields:
