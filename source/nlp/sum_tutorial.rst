@@ -51,7 +51,7 @@ This process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/summarization/{lang-code}/short/summarize?access_code={api-key}
+    POST https://seaword.seasalt.ai/summarization/{lang_code}/short/summarize?access_token={api_key}
     
 The required request body for inference contains a single turn from a transcript in the following format:
 
@@ -81,7 +81,7 @@ This process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/summarization/{lang-code}/long/summarize?access_code={api-key}
+    POST https://seaword.seasalt.ai/summarization/{lang_code}/long/summarize?access_token={api_key}
 
 The required request body for inference contains the entire transcript in the following format, with speakers and utterances in the ``data`` list. The ``url`` element is the callback URL where the final summary will be returned.
 

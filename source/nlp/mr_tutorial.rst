@@ -30,7 +30,7 @@ To extract an answer to a given question from a context paragraph, send a POST r
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/machine-reading/marco-answer?access_code={api-key}
+    POST https://seaword.seasalt.ai/machine-reading/marco-answer?access_token={api_key}
 
 The required request body contains a ``question`` and a list of ``context`` segments.
 

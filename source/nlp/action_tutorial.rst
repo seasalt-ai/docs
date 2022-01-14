@@ -57,7 +57,7 @@ The no-callback process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/actions/{lang-code}/extract_no_callback??access_code={api-key}
+    POST https://seaword.seasalt.ai/actions/{lang_code}/extract_no_callback?access_token={api_key}
 
 The required request body for no-callback action extraction is in the following format:
 
@@ -159,7 +159,7 @@ The callback process is called with the following POST request:
 
 .. code-block:: bash
 
-    POST https://seaword.seasalt.ai/actions/{lang-code}/extract?access_code={api-key}
+    POST https://seaword.seasalt.ai/actions/{lang_code}/extract?access_token={api_key}
 
 
 The required request body for action extraction with callback is in the following format:
