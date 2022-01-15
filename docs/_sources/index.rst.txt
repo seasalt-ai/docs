@@ -14,6 +14,19 @@ Welcome to Seasalt.ai's Master Documentation!
    SeaX <product_introduction/seax>
    SeaVoice <product_introduction/seavoice>
 
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaWord API
+
+   SeaWord API Overview <nlp/readme>
+   Summarization API <nlp/sum_tutorial>
+   Topic Extraction API <nlp/topic_tutorial>
+   Action Extraction API <nlp/action_tutorial>
+   Cross Lingual NER API <nlp/xlingualNER_tutorial>
+   Machine Reading API <nlp/mr_tutorial>
+
 
 
 Indices and tables
