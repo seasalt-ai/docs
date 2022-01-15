@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summarization API Tutorial &mdash; Seasalt.ai Documentation 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Topic Extraction API Tutorial" href="topic_tutorial.html" />
+    <link rel="prev" title="SeaWord NLP Overview" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+            <a href="../index.html" class="icon icon-home"> Seasalt.ai Documentation
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seax.html">SeaX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SeaWord API Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Summarization API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topic_tutorial.html">Topic Extraction API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="action_tutorial.html">Action Extraction API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xlingualNER_tutorial.html">Cross Lingual NER API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mr_tutorial.html">Machine Reading API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seasalt.ai Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Summarization API Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/nlp/sum_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="summarization-api-tutorial">
+<span id="sum-tutorial"></span><h1>Summarization API Tutorial<a class="headerlink" href="#summarization-api-tutorial" title="Permalink to this headline"></a></h1>
+<p>This tutorial will walk through how to use the Summarization API for meeting analytics.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#multilingual-support" id="id1">Multilingual Support</a></p></li>
+<li><p><a class="reference internal" href="#callback-urls" id="id2">Callback URLs</a></p></li>
+<li><p><a class="reference internal" href="#api-usage" id="id3">API Usage</a></p>
+<ul>
+<li><p><a class="reference internal" href="#post-short-summarize" id="id4">POST /short/summarize</a></p></li>
+<li><p><a class="reference internal" href="#post-long-summarize" id="id5">POST /long/summarize</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The endpoint for the Summarization API is <code class="docutils literal notranslate"><span class="pre">https://seaword.seasalt.ai/summarization</span></code>.</p>
+<section id="multilingual-support">
+<h2><a class="toc-backref" href="#id1">Multilingual Support</a><a class="headerlink" href="#multilingual-support" title="Permalink to this headline"></a></h2>
+<p>The Summarization API currently supports four languages, English, Traditional Chinese, Simplified Chinese, and Indonesian. All API calls for each language include a language code in the URL.</p>
+<p>The language codes for supported languages are the following:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 80%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Language</p></th>
+<th class="head"><p>Code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>English</p></td>
+<td><p>en-XX</p></td>
+</tr>
+<tr class="row-odd"><td><p>Traditional Chinese</p></td>
+<td><p>zh-TW</p></td>
+</tr>
+<tr class="row-even"><td><p>Simplified Chinese</p></td>
+<td><p>zh-CN</p></td>
+</tr>
+<tr class="row-odd"><td><p>Indonesian</p></td>
+<td><p>id-XX</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="callback-urls">
+<h2><a class="toc-backref" href="#id2">Callback URLs</a><a class="headerlink" href="#callback-urls" title="Permalink to this headline"></a></h2>
+<p>The Summarization API uses callback URLs in some of its endpoints. These endpoints can take longer to execute, and the callback URL allows the process to run in the background and return the answer to you when it is finished.</p>
+<p>For testing these endpoints, two resources that are available to provide testing URLs as your callback URL are <a class="reference external" href="https://webhook.site/">webhook.site</a> and <a class="reference external" href="https://ngrok.com/">ngrok</a>.</p>
+<p>In this tutorial, we will use a webhook.site URL in the examples.</p>
+</section>
+<section id="api-usage">
+<h2><a class="toc-backref" href="#id3">API Usage</a><a class="headerlink" href="#api-usage" title="Permalink to this headline"></a></h2>
+<p>The Summarization API supports two types of transcript summarization, short and long. The short summary method is intended to summarize a single utterance from a transcript, to provide fine-grained summarization of the transcript. The long summary method is intended to summarize the entire transcript in large chunks, to provide an overall summary of the transcript.</p>
+<section id="post-short-summarize">
+<h3><a class="toc-backref" href="#id4">POST /short/summarize</a><a class="headerlink" href="#post-short-summarize" title="Permalink to this headline"></a></h3>
+<p>The short summary model produces a summary of a single turn of a transcript.</p>
+<p>This process is called with the following POST request:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seaword.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/short/summarize?access_token<span class="o">={</span>api_key<span class="o">}</span>
+</pre></div>
+</div>
+<p>The required request body for inference contains a single turn from a transcript in the following format:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+     <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>A successful response returns the summary of the transcription in the following JSON format.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;You know that there are many meetings with the Taiwan team and I get started on the MDA proposal.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As summaries of extremely short utterances are not informative, if the utterances is shorter than 5 words, the summarizer will return an empty summary. To avoid going over the model’s character limit, the summarizer will also truncate any utterance longer than 700 words.</p>
+</div>
+</section>
+<section id="post-long-summarize">
+<h3><a class="toc-backref" href="#id5">POST /long/summarize</a><a class="headerlink" href="#post-long-summarize" title="Permalink to this headline"></a></h3>
+<p>The long summary model produces a summary of the largest possible segment of a transcript.</p>
+<p>This process is called with the following POST request:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>POST https://seaword.seasalt.ai/summarization/<span class="o">{</span>lang_code<span class="o">}</span>/long/summarize?access_token<span class="o">={</span>api_key<span class="o">}</span>
+</pre></div>
+</div>
+<p>The required request body for inference contains the entire transcript in the following format, with speakers and utterances in the <code class="docutils literal notranslate"><span class="pre">data</span></code> list. The <code class="docutils literal notranslate"><span class="pre">url</span></code> element is the callback URL where the final summary will be returned.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://webhook.site/3c95b604-4243-4d15-b5ce-a79e18dec3e7&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Yesterday was pretty smooth day.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Many spent the time in the.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;Speaker&quot;</span>
+                <span class="p">],</span>
+            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Then you chat about a proposal on the Air Force Recruitment Center and today I continue to work on the proposal.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>As it takes a comparatively long time to summarize a long segment, this is implemented as a callback. A successful response will return a success message of the process starting, not a summary directly.</p>
+</div>
+<p>The transcript will be automatically segmented into the largest chunks possible under 300 words. The callback function will then start producing summaries. When the summarization is complete, a PUT request will be sent with the generated summary to the callback url provided in the original request body.</p>
+<p>The final summaries will appear in the following JSON format:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;Yesterday was a busy day for Speaker. He had many meetings with the Taiwan team and he worked on the MDA proposal. Today he continues to work on the proposal.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The long summarization processing time will vary depending on the length of the transcript, as it depends on how many &lt;300 word segments there are in the transcript.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="readme.html" class="btn btn-neutral float-left" title="SeaWord NLP Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="topic_tutorial.html" class="btn btn-neutral float-right" title="Topic Extraction API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2021, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
