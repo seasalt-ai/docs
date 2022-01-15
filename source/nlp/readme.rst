@@ -15,7 +15,8 @@ The purpose of this tutorial is to demonstrate how the SeaWord APIs can be used 
     - How to use the Cross Lingual NER API to extract entities from a given sentence
     - How to use the Machine Reading API to answer questions from a given text
 
-The endpoints of the SeaWord API call for an API key. For these endpoints, please use ``6kx8koGGsGJXfarD``.
+| These APIs are protected by an access token. Please send an email to info@seasalt.ai to get yours!
+| For these endpoints, please use ``access_token={token}`` either in the request webhook or the request header.
 
 Summarization API
 =================
