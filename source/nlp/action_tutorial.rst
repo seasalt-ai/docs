@@ -270,16 +270,11 @@ Instead of an entire meeting transcript, this endpoint accepts a single transcri
 .. code-block:: JSON
 
     {
-        "command": Text,
         "meeting_id": Text,
         "sequence": int,
         "account_id": Text,
-        "timestamp": Text,
         "speaker": Text,
         "transcription": Text,
-        "voice_start_time": float,
-        "voice_duration": float,
-        "type": Text,
         "callback_url": HttpUrl
     }
 
