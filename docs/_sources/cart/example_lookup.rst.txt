@@ -1,0 +1,8 @@
+.. _lookup_example:
+
+=====================
+Lookup Table Example
+=====================
+
+.. literalinclude:: ./example_files/lookup_table.yml
+    :language: YAML

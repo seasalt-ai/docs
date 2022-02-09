@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeaChat Cart Tutorial &mdash; Seasalt.ai Developers 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SeaChat FAQ Tutorial" href="../seachat/faq_tutorial.html" />
+    <link rel="prev" title="SeaChat Policy Tutorial" href="../seachat/policy_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+            <a href="../index.html" class="icon icon-home"> Seasalt.ai Developers
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seax.html">SeaX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../seachat/quickstart.html">SeaChat Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../seachat/bot_tutorial.html">SeaChat Bot Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../seachat/policy_tutorial.html">SeaChat Policy Tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SeaChat Cart Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seachat/faq_tutorial.html">SeaChat FAQ Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seachat/deployment_tutorial.html">SeaChat Deployment Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../seachat/example_files.html">Bot Tutorial Example Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/policy.html">SeaChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/faq.html">SeaChat FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SeaChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seachat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">SeaWord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/redaction_tutorial.html">Redaction Service Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../speech/readme.html">SeaVoice README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../speech/seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../speech/seavoice_restful_apis_tutorial.html">SeaVoice RESTful APIs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NearMe</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nearme/readme.html">NearMe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nearme/data_analytics_tutorial.html">NearMe Data Analytics Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to SeaChat-report’s documentation!</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seasalt.ai Developers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../seachat/bot_tutorial.html">SeaChat Bot Tutorial</a> &raquo;</li>
+      <li>SeaChat Cart Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/cart/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="seachat-cart-tutorial">
+<span id="cart-tutorial"></span><h1>SeaChat Cart Tutorial<a class="headerlink" href="#seachat-cart-tutorial" title="Permalink to this headline"></a></h1>
+<p>This tutorial will walk through how to utilize SeaChat Cart for an e-commerce chatbot.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#creating-the-menu" id="id1">Creating the Menu</a></p>
+<ul>
+<li><p><a class="reference internal" href="#main-components" id="id2">Main Components</a></p></li>
+<li><p><a class="reference internal" href="#the-product-list" id="id3">The Product list</a></p></li>
+<li><p><a class="reference internal" href="#basic-item-example" id="id4">Basic Item Example</a></p></li>
+<li><p><a class="reference internal" href="#combo-item-example" id="id5">Combo Item Example</a></p></li>
+<li><p><a class="reference internal" href="#virtual-item-example" id="id6">Virtual Item Example</a></p></li>
+<li><p><a class="reference internal" href="#the-modifier-list" id="id7">The Modifier list</a></p></li>
+<li><p><a class="reference internal" href="#a-complete-menu-example" id="id8">A Complete Menu Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#generating-lookup-tables-chatette-templates" id="id9">Generating Lookup Tables &amp; Chatette Templates</a></p></li>
+<li><p><a class="reference internal" href="#writing-the-cart-config-yml-file" id="id10">Writing the cart_config.yml File</a></p></li>
+<li><p><a class="reference internal" href="#integrating-with-rasa" id="id11">Integrating with Rasa</a></p>
+<ul>
+<li><p><a class="reference internal" href="#importing-configuring-and-loading-menus" id="id12">Importing, Configuring, and Loading Menus</a></p></li>
+<li><p><a class="reference internal" href="#session-start" id="id13">Session Start</a></p></li>
+<li><p><a class="reference internal" href="#calling-cart-methods-from-actions" id="id14">Calling Cart Methods from Actions</a></p></li>
+<li><p><a class="reference internal" href="#action-examples" id="id15">Action Examples</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#try-it" id="id16">Try It</a></p></li>
+<li><p><a class="reference internal" href="#notes-on-best-practices" id="id17">Notes on Best Practices</a></p></li>
+</ul>
+</div>
+<p>For this tutorial we will imagine that we are building a new coffee shop bot from the ground up. Take it that the new bot can already handle basic intents, and can extract entities to slots. From there we will walk through adding menu and cart support.
+For more detailed information about why and how the cart is implemented, see the <a class="reference internal" href="readme.html#cart-readme"><span class="std std-ref">readme</span></a> or the
+<a class="reference internal" href="seachat_cart.html#seachat-cart"><span class="std std-ref">technical documentation</span></a>.</p>
+<section id="creating-the-menu">
+<h2><a class="toc-backref" href="#id1">Creating the Menu</a><a class="headerlink" href="#creating-the-menu" title="Permalink to this headline"></a></h2>
+<p>Creating the menu can be approached a few different ways; if a virtual copy of the menu already exists, using a script to convert it to the SeaChat Cart format may be the quickest. It is also possible to scrape the menu from a website, or write it by hand. Create a new file in your bot folder: <code class="docutils literal notranslate"><span class="pre">data/menu.json</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Menus can become quite large (Starbucks is over 100,000 lines), so it is highly encouraged to automate as much of this process as possible to avoid tedious menu construction by hand.</p>
+</div>
+<section id="main-components">
+<h3><a class="toc-backref" href="#id2">Main Components</a><a class="headerlink" href="#main-components" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">menu</span></code> consists of four top-level components: <code class="docutils literal notranslate"><span class="pre">store_name</span></code>, <code class="docutils literal notranslate"><span class="pre">currency</span></code>, <code class="docutils literal notranslate"><span class="pre">products</span></code>, and <code class="docutils literal notranslate"><span class="pre">modifiers</span></code>. The first two are quite simple to fill out:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;store_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coffee Shop&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;USD&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">store_name</span></code> and <code class="docutils literal notranslate"><span class="pre">currency</span></code> should both be strings, and the <code class="docutils literal notranslate"><span class="pre">currency</span></code> should be represented as the standard three-letter abbreviation for that currency. The <code class="docutils literal notranslate"><span class="pre">products</span></code> and <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> fields of the menu are lists containing information about all the items available for purchase and how they can be modified. <code class="docutils literal notranslate"><span class="pre">products</span></code> are items that can be purchased on their own, while <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> can only be added to a user’s cart if they’re attached to a product.</p>
+</section>
+<section id="the-product-list">
+<h3><a class="toc-backref" href="#id3">The Product list</a><a class="headerlink" href="#the-product-list" title="Permalink to this headline"></a></h3>
+<p>For our basic item example, we’ll consider an <code class="docutils literal notranslate"><span class="pre">Americano</span></code>. For this item, the customer must specify if they want room or not. Additionally, they can ask for sweetener packets. To add this product to the menu, we will add a new entry to the product list:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;store_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coffee Shop&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;USD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;products&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="basic-item-example">
+<h3><a class="toc-backref" href="#id4">Basic Item Example</a><a class="headerlink" href="#basic-item-example" title="Permalink to this headline"></a></h3>
+<p><strong>Basic Item attributes</strong></p>
+<p>The item also needs the required information of <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>. The <code class="docutils literal notranslate"><span class="pre">id</span></code> is a unique string which will be used to reference the correct item if there are multiple of the same name. The <code class="docutils literal notranslate"><span class="pre">type</span></code> gives information to the cart system about how the product should be manipulated and displayed. The type for a basic item is simply <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we can add <code class="docutils literal notranslate"><span class="pre">price</span></code> and <code class="docutils literal notranslate"><span class="pre">calories</span></code> information. <code class="docutils literal notranslate"><span class="pre">price</span></code> should be represented as a float, while <code class="docutils literal notranslate"><span class="pre">calories</span></code> can be represented as a single integer or a list of two integers, indicating a calorie range. Modifiers can include their own information about how many calories they add/remove from the item, so the base calories here should represent the calories of the product when it has no modifications.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.35</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Additionally, we can add information to help the system categorize and query the item. This includes the fields: <code class="docutils literal notranslate"><span class="pre">aliases</span></code>, <code class="docutils literal notranslate"><span class="pre">categories</span></code>, and <code class="docutils literal notranslate"><span class="pre">tags</span></code>. All three of these fields are represented as lists of strings. <code class="docutils literal notranslate"><span class="pre">aliases</span></code> are list synonyms for item names, and help assist with finding the correct item for the user if they don’t use the exact name on the menu. <code class="docutils literal notranslate"><span class="pre">tags</span></code> carry semantic information and can help with extracting queries like “I want something sweet with coffee”. Finally, <code class="docutils literal notranslate"><span class="pre">categories</span></code> represent which menu categories the item belongs to, and helps present items when the user is viewing the menu.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.35</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;hot americano&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;beverage&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Hot Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Espresso&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Supplementary information such as <code class="docutils literal notranslate"><span class="pre">description</span></code>, <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">ingredients</span></code>, and <code class="docutils literal notranslate"><span class="pre">recommendation_score</span></code> can be included. <code class="docutils literal notranslate"><span class="pre">description</span></code> and <code class="docutils literal notranslate"><span class="pre">image</span></code> are both strings, a description of the item and a url to an image. <code class="docutils literal notranslate"><span class="pre">ingredients</span></code> can be represented as a list of strings, and is useful if a user has some restrictions on what food/materials they will purchase. Lastly, the <code class="docutils literal notranslate"><span class="pre">recommendation_score</span></code> is an integer that is used to sort recommendations so that users are presented with the most popular or most promoted item.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.35</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;hot americano&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;beverage&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Hot Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Espresso&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Espresso shots with hot water&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;ingredients&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Water&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://coffee.americano.jpeg&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Modifier Groups</strong></p>
+<p>We’ve finished adding all of the basic attributes of the item; now we need to include information about how the item can be modified. For this item, the user must specify if they want room or not, and can optionally ask for a packet of sweetener. We will represent these different modifications as modifier groups. Each item contains a list called <code class="docutils literal notranslate"><span class="pre">modifier_groups</span></code>, and each group within the list gives information about what options are available, how many at minimum/maximum may be selected, and whether or not the bot should ask the user about those specific options. First, we will add a <code class="docutils literal notranslate"><span class="pre">modifier_group</span></code> field to our item, and fill it with the name of our first group.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.35</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;hot americano&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;beverage&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Hot Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Espresso&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Espresso shots with hot water&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;ingredients&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Water&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://coffee.americano.jpeg&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;modifier_groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Room&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We we also add a <code class="docutils literal notranslate"><span class="pre">category</span></code> field (to assist when users query about what type of options are available), <code class="docutils literal notranslate"><span class="pre">minimum</span></code>/<code class="docutils literal notranslate"><span class="pre">maximum</span></code> fields (integers that state the min and max number of modifiers that must be selected), and a <code class="docutils literal notranslate"><span class="pre">query_users_for_modifiers</span></code> field (that tells the bot whether or not it must ask the user about this group).</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fill Options&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Modifiers</strong></p>
+<p>Here is also included a <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> list. This list contains the information about which modifiers are available, and how they influence the total price and calories of the item. For room, we will have two modifiers: <code class="docutils literal notranslate"><span class="pre">room</span></code> and <code class="docutils literal notranslate"><span class="pre">no</span> <span class="pre">room</span></code>. Because this modifier just specifies how much water the customer wants, neither option changes to the total price or calories. We will construct a modifier object containing the <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">id</span></code> (its unique id that references a standalone modifier specification in the menu’s top-level modifiers list), whether the item comes as a <code class="docutils literal notranslate"><span class="pre">default</span></code>, and the <code class="docutils literal notranslate"><span class="pre">price_change</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">calorie_change</span></code>.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fill Options&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000001&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000002&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this case, our users must select at least one option from this group. However, <code class="docutils literal notranslate"><span class="pre">Room</span></code> is applied as a default so if the group is already satisfied. But, because <code class="docutils literal notranslate"><span class="pre">query_users_for_modifiers</span></code> is set to true, the bot will still ask the user for their choice.</p>
+<p>We can use this first example to construct a modifier group for sweetener packets. For this group, no modifier is required, and the user can select as many of the options as they want.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweetener Packets&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweeteners&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sugar&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000003&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Splenda&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000004&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Raw Sugar&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000005&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this example, we set the <code class="docutils literal notranslate"><span class="pre">maximum</span></code> to -1 to indicated that there is no limit to how many options can be selected from the group. Additionally, in this case <code class="docutils literal notranslate"><span class="pre">query_users_for_modifiers</span></code> is set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, and there are no default options, so sweetener packets will only be added to the item if the user specifically asks for it. As a final note, we can see that the <code class="docutils literal notranslate"><span class="pre">calorie_change</span></code> fields are being used. While the packets come complimentary, adding sugar to the item will cause the total calories to increase by 5-10.</p>
+<p><strong>Variants</strong>
+There is one other field that can be included on modifiers: a variant list. Variants are slight variations of a modifier. <code class="docutils literal notranslate"><span class="pre">Extra</span> <span class="pre">Cream</span></code> might be a variant for a <code class="docutils literal notranslate"><span class="pre">Cream</span></code> modifier on the Americano. By definition only one <code class="docutils literal notranslate"><span class="pre">variant</span></code> of a modifier can be selected at once. So, if the user has already added cream, but then corrects themselves and specifies <code class="docutils literal notranslate"><span class="pre">Extra</span> <span class="pre">Cream</span></code>, the <code class="docutils literal notranslate"><span class="pre">Cream</span></code> modifier will be removed, and the extra cream added. Here’s an example of a modifier with variants:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cream&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000006&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;variants&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Extra Cream&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Light Cream&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Full Basic Item Json Example</strong></p>
+<p>Now let’s put all of this together to show our full menu with one complete item example:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;store_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coffee Shop&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;USD&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;products&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;item&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.35</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;americano&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;hot americano&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;beverage&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Hot Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Espresso&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Espresso shots with hot water&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ingredients&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Espresso&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Water&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://coffee.americano.jpeg&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;modifier_groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fill Options&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;query_users_for_modifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000001&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No Room&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000002&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">]</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweetener Packets&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweeteners&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;query_users_for_modifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sugar&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000003&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Splenda&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000004&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Raw Sugar&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000005&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">]</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Creamer&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add-ins&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;query_users_for_modifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cream&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000006&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;variants&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Extra Cream&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="w"></span>
+<span class="w">                                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Light Cream&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="w"></span>
+<span class="w">                                </span><span class="p">}</span><span class="w"></span>
+<span class="w">                            </span><span class="p">]</span><span class="w"></span>
+<span class="w">                        </span><span class="p">},</span><span class="w"></span>
+<span class="w">                        </span><span class="p">{</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Non-dairy Creamer&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000007&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="w">                        </span><span class="p">}</span><span class="w"></span>
+<span class="w">                    </span><span class="p">]</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>So we have completed our first basic <code class="docutils literal notranslate"><span class="pre">product</span></code> entry in the menu.</p>
+</section>
+<section id="combo-item-example">
+<h3><a class="toc-backref" href="#id5">Combo Item Example</a><a class="headerlink" href="#combo-item-example" title="Permalink to this headline"></a></h3>
+<p>Next we’ll look at a slightly more complex type of product: the <code class="docutils literal notranslate"><span class="pre">combo</span></code>. A combo item has the same basic structure as a basic item, but is of type <code class="docutils literal notranslate"><span class="pre">combo</span></code>. The main difference between the two is that, while regular items can only be modified by modifiers, the combo’s modifier groups can contain modifiers or <em>other products</em>. Take for example a coffee and pastry combo. Customers may have the choice between regular or decaf coffee, and their choice of muffin, croissant, or bagel. Let’s construct an example.</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Breakfast Pastry Combo&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000008&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;combo&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.00</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">280</span><span class="p">,</span><span class="w"> </span><span class="mi">450</span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;coffee and pastry combo&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;breakfast combo&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;pastry combo&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;breakfast&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;food&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;beverage&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;combo&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Breakfast&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Combos&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;House coffee with your choice of pastry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ingredients&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Flour&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Butter&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Egg&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://coffee.pastry.combo.jpeg&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;modifier_groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coffee Choice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coffee Type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                    </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;House Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000009&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Decaf Coffee&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000010&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Pastry Choice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Combo Choice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                    </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Muffin&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000011&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;calorie_override&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">290</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Croissant&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">280</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bagel&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000013&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">440</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bagel&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000013&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this case, all of the objects in the modifier groups are referring to items on the <code class="docutils literal notranslate"><span class="pre">product</span></code> list. Additionally, because these are products, they can have their own modifier groups and can be customized by the user. It is essential that the <code class="docutils literal notranslate"><span class="pre">id</span></code> field points back to its stand-alone product on the product list. For example, if the user selects bagel, the cart can find item <code class="docutils literal notranslate"><span class="pre">000013</span></code> on the product list, and see that <code class="docutils literal notranslate"><span class="pre">bagel</span></code> has the option to be toasted.</p>
+<p>The combo item can also have modifier groups containing modifier (rather than product) objects. A good example of this is if the combo item is ‘here’ or ‘to-go’. The use of a <code class="docutils literal notranslate"><span class="pre">modifier</span></code> in this case is affecting the whole combo item.</p>
+</section>
+<section id="virtual-item-example">
+<h3><a class="toc-backref" href="#id6">Virtual Item Example</a><a class="headerlink" href="#virtual-item-example" title="Permalink to this headline"></a></h3>
+<p>The last type of product is of type <code class="docutils literal notranslate"><span class="pre">virtual</span></code>. A virtual product is similar to a combo, but always contains an item in one of its modifier groups whose details and own modifier groups the bot should treat as if they were those of the main item. For example, rather than selecting a panini sandwich, then choosing between ham and turkey as modifiers, a user would select the virtual Panini item, then select either <code class="docutils literal notranslate"><span class="pre">Ham</span> <span class="pre">Panini</span></code> or <code class="docutils literal notranslate"><span class="pre">Turkey</span> <span class="pre">Panini</span></code> as a modifier. The bot should then treat this selection as it were the actual cart item when displaying information. The menu implementation is nearly identical to a combo, but the cart treats these two types slightly differently. Here’s an example:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Panini&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0000014&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;virtual&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">7.50</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">350</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;panini sandwich&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;pressed sandwich&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;lunch&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;food&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;savory&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;categories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Lunch&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;Sandwiches&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A pressed Italian sandwich.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://panini.jpeg&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;modifier_groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Panini Type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Panini Type&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;minimum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;maximum&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;query_users_for_modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;modifiers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Turkey Bacon Panini&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000015&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ham Panini&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000010&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;price_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;calorie_change&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Once the user has selected either ham or turkey panini, going forward the cart will always display <code class="docutils literal notranslate"><span class="pre">Turkey</span> <span class="pre">Bacon</span> <span class="pre">Panini</span></code> or <code class="docutils literal notranslate"><span class="pre">Ham</span> <span class="pre">Panini</span></code> as the item name, and the virtual item will inherit all of the customization available for either the turkey or ham item.</p>
+</section>
+<section id="the-modifier-list">
+<h3><a class="toc-backref" href="#id7">The Modifier list</a><a class="headerlink" href="#the-modifier-list" title="Permalink to this headline"></a></h3>
+<p>Now that we have completed examples for each of the types of products available in the <code class="docutils literal notranslate"><span class="pre">products</span></code> list, there is one more menu attribute to complete: the <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> list. This list, similar to the <code class="docutils literal notranslate"><span class="pre">products</span></code> list, contains objects for each <code class="docutils literal notranslate"><span class="pre">modifier</span></code> available on the menu. We looked at how modifiers are instantiated when they are applied to an item, but each unique modifier also has a stand-alone representation in the <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> list. This object is very similar to our basic product object, including many of the same top-level attributes. Here’s an example using the ‘sugar packet’ example from before:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sugar&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000003&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;modifier&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A packet of white sugar.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://sugar.packet.jpg&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;recommendation_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;white packet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;white sugar&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;sweetener&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;packet&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Here we have the sugar modifier object with all many of the fields we already saw in the <code class="docutils literal notranslate"><span class="pre">product</span></code> objects. Modifiers do have some unique attributes including <code class="docutils literal notranslate"><span class="pre">countable</span></code>, <code class="docutils literal notranslate"><span class="pre">quantity</span></code>, and <code class="docutils literal notranslate"><span class="pre">unit_of_measure</span></code>, which help define how modifiers can be quantified. Additionally, the modifier also has a <code class="docutils literal notranslate"><span class="pre">variants</span></code> field, which should contain all the possible variants for that modifier, in the same format as they appeared when attached to an item. Here is a full example with the new fields:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sugar&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;000003&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;modifier&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;calories&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A packet of white sugar.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://sugar.packet.jpg&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;recommendation_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;aliases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;white packet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;white sugar&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;sweetener&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;packet&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;countable&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;quantity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;unit_of_measure&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;packet(s)&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;variants&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All modifiers that are found within a product’s <code class="docutils literal notranslate"><span class="pre">modifier_groups</span></code> must have a matching <code class="docutils literal notranslate"><span class="pre">id</span></code> with the stand-alone modifier object in the <code class="docutils literal notranslate"><span class="pre">modifiers</span></code> list. The modifier attached to the item may reference the stand-alone modifier to get immutable information such as <code class="docutils literal notranslate"><span class="pre">aliases</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>, and <code class="docutils literal notranslate"><span class="pre">image</span></code>.</p>
+</div>
+</section>
+<section id="a-complete-menu-example">
+<h3><a class="toc-backref" href="#id8">A Complete Menu Example</a><a class="headerlink" href="#a-complete-menu-example" title="Permalink to this headline"></a></h3>
+<p>Now that we have completed an example of each element on the menu, we can put it all together to create a full example menu. View the full example <a class="reference internal" href="example_menu.html"><span class="doc">here</span></a>.</p>
+</section>
+</section>
+<section id="generating-lookup-tables-chatette-templates">
+<h2><a class="toc-backref" href="#id9">Generating Lookup Tables &amp; Chatette Templates</a><a class="headerlink" href="#generating-lookup-tables-chatette-templates" title="Permalink to this headline"></a></h2>
+<p><strong>Chatette</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cart.py</span></code> file has two methods to assist with exporting NLU training data from the menu. Additionally, there are two convenience scripts available to call these methods. The first script is <code class="docutils literal notranslate"><span class="pre">generate_chatette.py</span></code>. We can run the script with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">generate_chatette</span><span class="o">.</span><span class="n">py</span> <span class="p">{</span><span class="n">menu</span> <span class="n">path</span><span class="p">}</span> <span class="p">{</span><span class="n">output</span> <span class="n">directory</span> <span class="n">path</span><span class="p">}</span><span class="o">/</span><span class="n">menu</span><span class="o">.</span><span class="n">chatette</span>
+</pre></div>
+</div>
+<p>This outputs a <a class="reference external" href="https://github.com/SimGus/Chatette">chatette</a> formatted file that contains entity examples for <code class="docutils literal notranslate"><span class="pre">items</span></code>, <code class="docutils literal notranslate"><span class="pre">modifiers</span></code>, <code class="docutils literal notranslate"><span class="pre">query_topics</span></code>. The item and modifier examples will include a set of the names of all of <code class="docutils literal notranslate"><span class="pre">products</span></code>, <code class="docutils literal notranslate"><span class="pre">modifiers</span></code>, and <code class="docutils literal notranslate"><span class="pre">aliases</span></code> present in the menu. The query topic examples include a set of all menu <code class="docutils literal notranslate"><span class="pre">categories</span></code> and <code class="docutils literal notranslate"><span class="pre">tags</span></code>, helpful for when the user queries the menu. You can see an the full extracted file from our example menu <a class="reference internal" href="example_chatette.html#example-chatette"><span class="std std-ref">here</span></a>.</p>
+<p>To load this file into a common Chatette file, make sure all your chatette files are in the same directory and then include the following in your main chatette file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="n">menu</span><span class="o">.</span><span class="n">chatette</span> <span class="o">//</span> <span class="n">The</span> <span class="n">file</span> <span class="n">name</span> <span class="n">of</span> <span class="n">your</span> <span class="n">Menu</span><span class="o">-</span><span class="n">specific</span> <span class="n">templates</span>
+</pre></div>
+</div>
+<p><strong>Lookup Tables</strong></p>
+<p>You can generate <a class="reference external" href="https://rasa.com/docs/rasa/nlu-training-data/#lookup-tables">Rasa lookup tables</a> with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">generate_lookup_tables</span><span class="o">.</span><span class="n">py</span> <span class="p">{</span><span class="n">menu</span> <span class="n">path</span><span class="p">}</span> <span class="p">{</span><span class="n">output</span> <span class="n">directory</span> <span class="n">path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This script will output a <code class="docutils literal notranslate"><span class="pre">lookup_table.yml</span></code> file. This file contains the same information as the chatette file, but just in a different format. You can see the result from our example menu <a class="reference internal" href="example_lookup.html#lookup-example"><span class="std std-ref">here</span></a>. Lookup tables will be automatically included during the bot’s training as long as they are in the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>While lookup table specifications and chatette generated examples can go in any NLU data file used by the bot, we suggest keeping three separate files: <code class="docutils literal notranslate"><span class="pre">anno_nlu.md</span></code> for annotate user utterances, <code class="docutils literal notranslate"><span class="pre">chatette_nlu.md</span></code> for generated examples, and <code class="docutils literal notranslate"><span class="pre">extra_nlu.md</span></code>, which includes bot-specific NLU data not generated from templates or real users (such as lookup tables, dummy intents used for buttons, etc).</p>
+</div>
+</section>
+<section id="writing-the-cart-config-yml-file">
+<h2><a class="toc-backref" href="#id10">Writing the cart_config.yml File</a><a class="headerlink" href="#writing-the-cart-config-yml-file" title="Permalink to this headline"></a></h2>
+<p>Now that we have a working menu, we can prepare to integrate SeaChat Cart with our bot. First, we’ll need to set up a cart config file so that we can adjust the cart settings and set up our menu path. Create a file called <code class="docutils literal notranslate"><span class="pre">cart_config.yml</span></code> in your bot directory.</p>
+<p>The following is a list of configurable parameters, with their default values listed:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 12%" />
+<col style="width: 37%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>NAME</p></th>
+<th class="head"><p>TYPE</p></th>
+<th class="head"><p>DESCRIPTION</p></th>
+<th class="head"><p>DEFAULT VALUE</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MENU_PATHS</p></td>
+<td><p>List[Text]</p></td>
+<td><p>A list of paths to menu files that
+will be loaded by the cart</p></td>
+<td><p>[]</p></td>
+</tr>
+<tr class="row-odd"><td><p>ES_HOST</p></td>
+<td><p>Text</p></td>
+<td><p>The host name for the ElasticSearch
+client (this value is set
+automatically if deployed to the
+cluster)</p></td>
+<td><p>‘localhost’</p></td>
+</tr>
+<tr class="row-even"><td><p>ES_PORT</p></td>
+<td><p>int</p></td>
+<td><p>The port name for the ElasticSearch
+client (set automatically if deployed
+to the cluster)</p></td>
+<td><p>9200</p></td>
+</tr>
+<tr class="row-odd"><td><p>ES_TRY_LOCAL_FIRST</p></td>
+<td><p>bool</p></td>
+<td><p>Whether or not the cart should try
+to connect to a local ElasticSearch
+instance before trying whatever is
+specified in ES_HOST</p></td>
+<td><p>True</p></td>
+</tr>
+<tr class="row-even"><td><p>FUZZY_MATCH_THRESH</p></td>
+<td><p>int</p></td>
+<td><p>A threshold for an string match
+(highly confident) when matching
+user requests to menu information.
+Between [0, 100]</p></td>
+<td><p>85</p></td>
+</tr>
+<tr class="row-odd"><td><p>FUZZY_SUGGEST_THRESH</p></td>
+<td><p>int</p></td>
+<td><p>A threshold for less-confident fuzzy
+matching. If a fuzzy match score is
+below FUZZY_MATCH_THRESH but higher
+than FUZZY_SUGGEST_THRESH, the bot
+should confirm with the user or offer
+suggestions</p></td>
+<td><p>70</p></td>
+</tr>
+<tr class="row-even"><td><p>ES_MATCH_THRESH</p></td>
+<td><p>float</p></td>
+<td><p>A threshold for confident matching
+when using ElasticSearch</p></td>
+<td><p>3.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>ES_SUGGEST_THRESH</p></td>
+<td><p>float</p></td>
+<td><p>A threshold for returning item
+suggestions</p></td>
+<td><p>1.8</p></td>
+</tr>
+<tr class="row-even"><td><p>ES_UNIQUE_THRESH</p></td>
+<td><p>float</p></td>
+<td><p>A threshold for determining unique
+matches with ElasticSearch. If ES is
+asked to return one highly-confident
+match, the second best match must be
+lower in confidence by at least
+ES_UNIQUE_THRESH from the top match.</p></td>
+<td><p>.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>ES_MULTI_MATCH_TYPE</p></td>
+<td><p>Text</p></td>
+<td><p>Multi match type parameter for
+ElasticSearch. Can be either
+‘best_fields’ or ‘cross_fields’</p></td>
+<td><p>‘best_fields’</p></td>
+</tr>
+<tr class="row-even"><td><p>ES_MULTI_MATCH_FIELDS</p></td>
+<td><p>List[Text]</p></td>
+<td><p>Which fields to consult with multi
+match when querying for an item
+with ES.</p></td>
+<td><p>[‘modifier_names’, ‘tags’,
+‘categories’]</p></td>
+</tr>
+</tbody>
+</table>
+<p>You can find a full example of a <code class="docutils literal notranslate"><span class="pre">cart_config.yml</span></code> file <a class="reference internal" href="example_cart_config.html#cart-config"><span class="std std-ref">here</span></a>.</p>
+</section>
+<section id="integrating-with-rasa">
+<h2><a class="toc-backref" href="#id11">Integrating with Rasa</a><a class="headerlink" href="#integrating-with-rasa" title="Permalink to this headline"></a></h2>
+<p>Once a valid menu is created and the cart setting are configured, SeaChat Cart can be integrated with Rasa. The only point of contact between the bot and the cart system is through <code class="docutils literal notranslate"><span class="pre">actions.py</span></code>. The bot is in charge of extracting intents &amp; entities from user utterances and deciding which actions to execute next. During action execution, custom actions can call <code class="docutils literal notranslate"><span class="pre">cart.py</span></code> methods in order to pass slot data to the cart, manipulate the user’s cart, request information from the cart, etc.</p>
+<section id="importing-configuring-and-loading-menus">
+<h3><a class="toc-backref" href="#id12">Importing, Configuring, and Loading Menus</a><a class="headerlink" href="#importing-configuring-and-loading-menus" title="Permalink to this headline"></a></h3>
+<p>Before calling methods from <code class="docutils literal notranslate"><span class="pre">cart.py</span></code>, however, there is a bit more configuration that must be done in the actions file itself. First, upon bot startup, the cart should be configured and the menus loaded. This can be accomplished with the follow code heading the actions file:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ngchat_cart</span> <span class="kn">import</span> <span class="n">cart</span>
+<span class="n">cart</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;./cart_config.yml&#39;</span><span class="p">)</span>
+<span class="n">cart</span><span class="o">.</span><span class="n">load_menus</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will initialize an instance of <code class="docutils literal notranslate"><span class="pre">cart.py</span></code> that has the appropriate menus and configurations for the bot.</p>
+</section>
+<section id="session-start">
+<h3><a class="toc-backref" href="#id13">Session Start</a><a class="headerlink" href="#session-start" title="Permalink to this headline"></a></h3>
+<p>Next, upon session start the bot will need to initialize a <code class="docutils literal notranslate"><span class="pre">Cart</span></code> object for the specific user. Here it is recommended to override Rasa’s built in <code class="docutils literal notranslate"><span class="pre">ActionSessionStart</span></code> action. Add the action to your <code class="docutils literal notranslate"><span class="pre">actions.py</span></code> file, as is shown in the following example:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">ActionSessionStart</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+<span class="linenos"> 2</span>    <span class="sd">&quot;&quot;&quot;Perform actions when user begins a session with the bot.&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="sd">&quot;&quot;&quot;Set action name to action_session_start.&quot;&quot;&quot;</span>
+<span class="linenos"> 6</span>        <span class="k">return</span> <span class="s2">&quot;action_session_start&quot;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+<span class="linenos"> 9</span>        <span class="bp">self</span><span class="p">,</span>
+<span class="linenos">10</span>        <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+<span class="linenos">11</span>        <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span>
+<span class="linenos">12</span>        <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="linenos">13</span>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">EventType</span><span class="p">]:</span>
+<span class="linenos">14</span>        <span class="sd">&quot;&quot;&quot;Initialize a user&#39;s cart and menu at session start.</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="sd">        Return:</span>
+<span class="linenos">17</span><span class="sd">            SessionStarted action(required)</span>
+<span class="linenos">18</span><span class="sd">            Carry over slot sets</span>
+<span class="linenos">19</span><span class="sd">            Execute action_listen</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="sd">        &quot;&quot;&quot;</span>
+<span class="linenos">22</span>        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+<span class="linenos">23</span>        <span class="c1"># if the bot only uses one menu, simply load pre-load the menu</span>
+<span class="linenos">24</span>        <span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">get_matching_menu</span><span class="p">(</span><span class="n">store_name</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="linenos">25</span>        <span class="k">if</span> <span class="ow">not</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="p">:</span>
+<span class="linenos">26</span>            <span class="ne">Warning</span><span class="p">(</span><span class="s2">&quot;There was an error loading the menu&quot;</span><span class="p">)</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>        <span class="k">return</span> <span class="p">[</span><span class="n">SessionStarted</span><span class="p">(),</span>
+<span class="linenos">29</span>                <span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;cart_dump&#39;</span><span class="p">,</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">cart_dump</span><span class="p">()),</span>
+<span class="linenos">30</span>                <span class="n">ActionExecuted</span><span class="p">(</span><span class="s1">&#39;action_listen&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In order for this override to work, you will also need to add <code class="docutils literal notranslate"><span class="pre">action_session_start</span></code> to the actions list in your domain file.</p>
+</div>
+<p>This action is accomplishing several things. First, it is grabbing the user’s existing cart, or creating a new cart object via the lru cache in the <code class="docutils literal notranslate"><span class="pre">get_user_cart</span></code> method. It is essential that cart objects are accessed via the user’s <code class="docutils literal notranslate"><span class="pre">sender_id</span></code>, otherwise users would all share one cart object, or the objects would get mixed up between users. Whenever accessing or manipulating the user cart, it must first be retrieved with the <code class="docutils literal notranslate"><span class="pre">get_user_cart</span></code> method.</p>
+<p>Second, if the bot only uses one menu, or there is a default menu, the bot should automatically load the menu at session start. If some information is needed prior to loading the menu, line 24 can be excluded.</p>
+<p>Next, the action returns the <code class="docutils literal notranslate"><span class="pre">SessionStarted</span></code> event. This event <em>must</em> be returned first in the event list of this action. From there, you can also set any slots that the bot should have pre-filled at session start. In this case, the example uses the <code class="docutils literal notranslate"><span class="pre">cart_dump</span></code> method to fill the bot’s <code class="docutils literal notranslate"><span class="pre">cart_dump</span></code> slot. The cart dump is essentially a dictionary representation of useful information extracted from the current cart status. This can be used by the dialogue manager to check the status of the cart and have the bot execute certain actions accordingly. This is optional for our simple tutorial bot, but becomes useful for more complex tasks.</p>
+<p>Lastly, the bot must also return an <code class="docutils literal notranslate"><span class="pre">ActionExecuted('action_listen')</span></code> event. This will ensure that after the session start action has finished, the next action to be executed will always be <code class="docutils literal notranslate"><span class="pre">action_listen</span></code>.</p>
+</section>
+<section id="calling-cart-methods-from-actions">
+<h3><a class="toc-backref" href="#id14">Calling Cart Methods from Actions</a><a class="headerlink" href="#calling-cart-methods-from-actions" title="Permalink to this headline"></a></h3>
+<p>Once the actions file is configured, all custom actions in the file can access the user cart and call methods from <code class="docutils literal notranslate"><span class="pre">cart.py</span></code>. There are some actions that can be called on their own, and do not need to work together with other actions. These can be tasks like: showing the menu, giving suggestions, and checking the contents of the cart.</p>
+<p>Other tasks, like adding an item to the cart, require a more complex navigation of dialogue &amp; actions. For example, when a user requests an item to be added to the cart, the <code class="docutils literal notranslate"><span class="pre">item</span></code> and <code class="docutils literal notranslate"><span class="pre">modifier</span></code> slots should first be validated with the menu to make sure the user has requested a legitimate item. Next, a new <code class="docutils literal notranslate"><span class="pre">CartItem</span></code> object should be created and any user-specified modifiers added. The bot should then ask the user if they want to customize it any more, and if not finally confirm if the user wants to add it, then add the item to the cart. This flow will require several actions that work together, calling methods and passing slots back and forth.</p>
+</section>
+<section id="action-examples">
+<h3><a class="toc-backref" href="#id15">Action Examples</a><a class="headerlink" href="#action-examples" title="Permalink to this headline"></a></h3>
+<p><strong>Displaying the Menu</strong></p>
+<p>In the dialogue tutorial, we set up a framework to execute two tasks: displaying the menu and adding an item to the cart. First, add <code class="docutils literal notranslate"><span class="pre">action_display_menu</span></code> to the actions list in your <code class="docutils literal notranslate"><span class="pre">domain.yml</span></code> file. Next, add the following action to your <code class="docutils literal notranslate"><span class="pre">actions.py</span></code> file.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">DisplayMenu</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+<span class="linenos"> 4</span>        <span class="k">return</span> <span class="s2">&quot;action_display_menu&quot;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+<span class="linenos"> 7</span>            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">Domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="linenos"> 8</span>            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="linenos"> 9</span>        <span class="sd">&quot;&quot;&quot;Describe menu in general terms, such as categories.&quot;&quot;&quot;</span>
+<span class="linenos">10</span>        <span class="c1"># ALWAYS get the user cart with the sender id first</span>
+<span class="linenos">11</span>        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>        <span class="k">if</span> <span class="n">user_cart</span> <span class="ow">and</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="p">:</span>
+<span class="linenos">14</span>            <span class="c1"># dispatch the menu description directly to the user</span>
+<span class="linenos">15</span>            <span class="n">dispatcher</span><span class="o">.</span><span class="n">utter_message</span><span class="p">(</span><span class="n">user_cart</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">describe_menu</span><span class="p">())</span>
+<span class="linenos">16</span>        <span class="k">return</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>In this case, the cart method is returning a string that can be directly presented to the user via the Rasa dispatcher. To have the bot execute this action, go back to the <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code> file and replace <code class="docutils literal notranslate"><span class="pre">utter_display_menu</span></code> with <code class="docutils literal notranslate"><span class="pre">action_display_menu</span></code>. This will result in the bot executing the custom action instead of just the utterance template when the user provides the <code class="docutils literal notranslate"><span class="pre">display_menu</span></code> intent.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[display menu]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;display_menu&#39;</span><span class="w"></span>
+<span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_display_menu</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Validating an Item</strong></p>
+<p>The bot should also be able to validate a user’s requested item and add it to the cart. When the user gives the <code class="docutils literal notranslate"><span class="pre">select_item</span></code> intent, and the <code class="docutils literal notranslate"><span class="pre">item</span></code> slot is filled, the item should be validated by the cart. Add <code class="docutils literal notranslate"><span class="pre">action_validate_item</span></code> to you domain and the following action code to your actions file.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">ValidateItem</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+<span class="linenos"> 4</span>        <span class="k">return</span> <span class="s1">&#39;action_validate_item&#39;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+<span class="linenos"> 7</span>            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="linenos"> 8</span>            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="linenos"> 9</span>        <span class="sd">&quot;&quot;&quot;Check that the requested item is in the menu.&quot;&quot;&quot;</span>
+<span class="linenos">10</span>        <span class="c1"># Get user cart</span>
+<span class="linenos">11</span>        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>        <span class="c1"># query the menu for a matching item</span>
+<span class="linenos">14</span>        <span class="n">item</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_slot</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">)</span>
+<span class="linenos">15</span>        <span class="k">if</span> <span class="n">item</span><span class="p">:</span>
+<span class="linenos">16</span>            <span class="n">match</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">get_matching_menu_item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">[])</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>            <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+<span class="linenos">19</span>                <span class="k">return</span> <span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
+<span class="linenos">20</span>            <span class="k">elif</span> <span class="n">match</span><span class="p">:</span>
+<span class="linenos">21</span>                <span class="n">user_cart</span><span class="o">.</span><span class="n">active_item</span> <span class="o">=</span> <span class="n">CartItem</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+<span class="linenos">22</span>                <span class="k">return</span> <span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+<span class="linenos">23</span>        <span class="k">else</span><span class="p">:</span>
+<span class="linenos">24</span>            <span class="k">return</span><span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This action queries the menu for a matching item name. If it finds an exact match, it will set the <code class="docutils literal notranslate"><span class="pre">item</span></code> slot to the normalized item name from the menu. This will allow the dialogue policy to see the updated item and move forward with dialogue flow. It will also set the cart’s <code class="docutils literal notranslate"><span class="pre">active_item</span></code> field with the validated item. This will allow other actions to directly access the object. If there is no matching item, the action will set the <code class="docutils literal notranslate"><span class="pre">item</span></code> slot to None. At this point, the action could also query the menu for similar items and offer the user some suggestions. Returning <code class="docutils literal notranslate"><span class="pre">None</span></code>, in this case, tells the bot that the item was not successfully validated.</p>
+<p>Now we can go back to our dialogue state and replace <code class="docutils literal notranslate"><span class="pre">utter_select_item</span></code> with <code class="docutils literal notranslate"><span class="pre">action_validate_item</span></code>. Now, <code class="docutils literal notranslate"><span class="pre">action_validate_item</span></code> will control which state is entered next, based how it sets the <code class="docutils literal notranslate"><span class="pre">item</span></code> slot.</p>
+<p><strong>Adding an Item to the Cart</strong></p>
+<p>Once an item is validated and converted to a <code class="docutils literal notranslate"><span class="pre">CartItem</span></code>, it can be added to the user’s cart.
+Add <code class="docutils literal notranslate"><span class="pre">action_add_item</span></code> to you domain and the following action to your actions file.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">AddItem</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+<span class="linenos"> 2</span>    <span class="sd">&quot;&quot;&quot;Class to add item to cart.&quot;&quot;&quot;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="sd">&quot;&quot;&quot;Set action name to action_add_to_cart.&quot;&quot;&quot;</span>
+<span class="linenos"> 6</span>        <span class="k">return</span> <span class="s2">&quot;action_add_item&quot;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+<span class="linenos"> 9</span>            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="linenos">10</span>            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="linenos">11</span>        <span class="sd">&quot;&quot;&quot;Add item to cart.&quot;&quot;&quot;</span>
+<span class="linenos">12</span>        <span class="c1"># Get user cart</span>
+<span class="linenos">13</span>        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>        <span class="c1"># Add the active item to the cart</span>
+<span class="linenos">16</span>        <span class="n">user_cart</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">user_cart</span><span class="o">.</span><span class="n">active_item</span><span class="p">,</span> <span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+<span class="linenos">17</span>        <span class="c1"># affirm that the action is complete, and reset the active item</span>
+<span class="linenos">18</span>        <span class="n">dispatcher</span><span class="o">.</span><span class="n">utter_message</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;utter_added_item&#39;</span><span class="p">)</span>
+<span class="linenos">19</span>        <span class="n">user_cart</span><span class="o">.</span><span class="n">active_item</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>        <span class="c1"># Reset all slots that may have been carrying information about the active item.</span>
+<span class="linenos">22</span>        <span class="k">return</span> <span class="p">[</span><span class="n">SlotSet</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Once the active item is fully customized (this could include adjusting size, quantity, or modifiers), the process of adding it to the cart is a matter of just calling one function. The most important part of this action is wiping the bot clean of any lingering information about the added item. Now that the item is in the cart, we don’t want any of the information that we used when adding it to get mixed up with whatever the user asks next. If the user wants to access the added item, they will now need to request to modify or remove the item from the cart.</p>
+<p><strong>Display the Cart</strong></p>
+<p>The last thing we will implement is a method to display the current cart status to the user. Add <code class="docutils literal notranslate"><span class="pre">action_display_cart</span></code> to you domain and the following action to your actions file.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">DisplayCart</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Text</span><span class="p">:</span>
+<span class="linenos"> 4</span>        <span class="k">return</span> <span class="s2">&quot;action_display_cart&quot;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">:</span> <span class="n">CollectingDispatcher</span><span class="p">,</span>
+<span class="linenos"> 7</span>            <span class="n">tracker</span><span class="p">:</span> <span class="n">Tracker</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="linenos"> 8</span>            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="linenos"> 9</span>        <span class="sd">&quot;&quot;&quot;Display the contents of the user&#39;s cart.&quot;&quot;&quot;</span>
+<span class="linenos">10</span>        <span class="c1"># Get the user cart</span>
+<span class="linenos">11</span>        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">get_user_cart</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">sender_id</span><span class="p">)</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>        <span class="n">items</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">get_item_names</span><span class="p">()</span>
+<span class="linenos">14</span>        <span class="n">total</span> <span class="o">=</span> <span class="n">user_cart</span><span class="o">.</span><span class="n">sum_price</span><span class="p">()</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>        <span class="n">dispatcher</span><span class="o">.</span><span class="n">utter_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You have the following items in your cart: </span><span class="si">{</span><span class="n">items</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">Your total is $</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="linenos">17</span>        <span class="k">return</span><span class="p">[]</span>
+</pre></div>
+</div>
+<p>This action simply grabs the user cart, extracts the item names and total cost, and dispatches the information to the user. We will add this action to our dialogue state so that the cart information is displayed to the user after each item is added. Here is our full dialogue state for adding an item:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[select item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;select_item&#39;</span><span class="w"></span>
+<span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_validate_item</span><span class="w"></span>
+<span class="nt">connections</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$[add item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">direct_connection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLOTS.item is not None</span><span class="w"></span>
+<span class="w">        </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_add_item</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_display_cart</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$[add item no item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">direct_connection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLOTS.item is None</span><span class="w"></span>
+<span class="w">        </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_no_item_selected</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_display_menu</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+</pre></div>
+</div>
+<p>See the full dialogue example <a class="reference internal" href="../seachat/tutorial_resources/bot_dialogue.html#bot-dialogue"><span class="std std-ref">here</span></a> and the full actions example <a class="reference internal" href="example_actions.html#bot-actions"><span class="std std-ref">here</span></a>.</p>
+</section>
+</section>
+<section id="try-it">
+<h2><a class="toc-backref" href="#id16">Try It</a><a class="headerlink" href="#try-it" title="Permalink to this headline"></a></h2>
+<p>We can now test our bot with full cart support. Now that we are using actions, we must start the Rasa actions server and the ElasticSearch instance before running.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Before running actions for the first time, the endpoint to the action server must be set up. Check the <code class="docutils literal notranslate"><span class="pre">endpoints.yml</span></code> file and un-comment the actions server url.</p>
+</div>
+<img alt="../_images/finished_bot.PNG" src="../_images/finished_bot.PNG" />
+</section>
+<section id="notes-on-best-practices">
+<h2><a class="toc-backref" href="#id17">Notes on Best Practices</a><a class="headerlink" href="#notes-on-best-practices" title="Permalink to this headline"></a></h2>
+<p>The following are some quick notes concerning best practices, to keep in mind while developing.</p>
+<p><strong>Pass by Reference</strong></p>
+<p>Pass by Reference when possible to reduce string matching &amp; <code class="docutils literal notranslate"><span class="pre">ElasticSearch</span></code> calls. While this isn’t always possible (for example if you have to confirm something with the user or store a value as a string in a slot) it is worth keeping in mind as it can improve performance. Within actions, if calling multiple methods from <code class="docutils literal notranslate"><span class="pre">cart.py</span></code>, do try to pass objects by reference whenever possible.</p>
+<p><strong>Updating the Menu</strong></p>
+<p>It is highly suggested when creating the menu to keep a master copy of the menu, and a secondary menu file containing only values that may change or be updated over time. This way, you always have a master copy of the menu they will never be changed or overwritten. The variable file will also be smaller and easier to update by hand. If you write a simple script to merge the two and produce and updated menu file, it can greatly simplify the process of updating the menu.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../seachat/policy_tutorial.html" class="btn btn-neutral float-left" title="SeaChat Policy Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../seachat/faq_tutorial.html" class="btn btn-neutral float-right" title="SeaChat FAQ Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2021, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

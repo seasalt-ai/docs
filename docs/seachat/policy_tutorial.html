@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeaChat Policy Tutorial &mdash; Seasalt.ai Developers 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SeaChat Cart Tutorial" href="../cart/tutorial.html" />
+    <link rel="prev" title="SeaChat Bot Tutorial" href="bot_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+            <a href="../index.html" class="icon icon-home"> Seasalt.ai Developers
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seax.html">SeaX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">SeaChat Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="bot_tutorial.html">SeaChat Bot Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SeaChat Policy Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cart/tutorial.html">SeaChat Cart Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq_tutorial.html">SeaChat FAQ Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment_tutorial.html">SeaChat Deployment Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_files.html">Bot Tutorial Example Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="policy.html">SeaChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">SeaChat FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">SeaChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/seachat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">SeaWord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/redaction_tutorial.html">Redaction Service Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../speech/readme.html">SeaVoice README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../speech/seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../speech/seavoice_restful_apis_tutorial.html">SeaVoice RESTful APIs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NearMe</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nearme/readme.html">NearMe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nearme/data_analytics_tutorial.html">NearMe Data Analytics Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to SeaChat-report’s documentation!</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seasalt.ai Developers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="bot_tutorial.html">SeaChat Bot Tutorial</a> &raquo;</li>
+      <li>SeaChat Policy Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/seachat/policy_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="seachat-policy-tutorial">
+<span id="policy-tutorial"></span><h1>SeaChat Policy Tutorial<a class="headerlink" href="#seachat-policy-tutorial" title="Permalink to this headline"></a></h1>
+<p>Once the bot is initialized and is provided with intents, entities, and training data, it is time to set up the dialogue manager. For this demonstration, we will be replacing the Rasa policies entirely with SeaChat Policy.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#configuration" id="id2">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#creating-the-dialogue-file" id="id3">Creating the Dialogue File</a></p>
+<ul>
+<li><p><a class="reference internal" href="#a-simple-state-example" id="id4">A Simple State Example</a></p></li>
+<li><p><a class="reference internal" href="#a-more-complex-example" id="id5">A More Complex Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#visualizing-the-dialogue" id="id6">Visualizing the Dialogue</a></p></li>
+<li><p><a class="reference internal" href="#try-it" id="id7">Try It</a></p></li>
+</ul>
+</div>
+<section id="configuration">
+<h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<p>The Rasa initialized bot will come with a policy configuration like this:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration for Rasa Core.</span><span class="w"></span>
+<span class="c1"># https://rasa.com/docs/rasa/core/policies/</span><span class="w"></span>
+<span class="nt">policies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TEDPolicy</span><span class="w"></span>
+<span class="w">    </span><span class="nt">max_history</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
+<span class="w">    </span><span class="nt">epochs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RulePolicy</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> we will remove all of the policies, and add the SeaChat Policy.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">policies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">seachat_plugins.core.policy.ngchat.ngChatPolicy</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nlu_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.20</span><span class="w"></span>
+<span class="w">    </span><span class="nt">use_mr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">mr_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.40</span><span class="w"></span>
+<span class="w">    </span><span class="nt">mr_text_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/gm_reviews.txt</span><span class="w"></span>
+<span class="w">    </span><span class="nt">dialogue_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./dialogue.yml</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> paramater should be a path to the ngChatPolicy <em>class</em></p>
+</div>
+<p>In this configuration you can also specify the <code class="docutils literal notranslate"><span class="pre">nlu_threshold</span></code>, which controls when the bot will default to the fallback action dependent on the NLU confidence, and the <code class="docutils literal notranslate"><span class="pre">dialogue_path</span></code> which should point to a file in your bot directory called <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code>. If the bot uses the machine reading reviews system, you need to set <code class="docutils literal notranslate"><span class="pre">use_mr</span></code> to true. You can then specify the <code class="docutils literal notranslate"><span class="pre">mr_threshold</span></code>, which controls when the bot will default to the machine reading response, and the <code class="docutils literal notranslate"><span class="pre">mr_text_path</span></code>, which points to the file in your bot directory that contains the data for the machine reading system. As a note, the machine reading reviews system only works with Rasa 2x+.</p>
+<dl>
+<dt>Defaults:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">nlu_threshold</span></code>: <code class="docutils literal notranslate"><span class="pre">.4</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">use_mr</span></code>: <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">mr_threshold</span></code>: <code class="docutils literal notranslate"><span class="pre">.4</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">mr_text_path</span></code>: <code class="docutils literal notranslate"><span class="pre">./data/gm_reviews.txt</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">dialogue_path</span></code>: <code class="docutils literal notranslate"><span class="pre">./dialogue.yml</span></code></p>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>After removing the TEDPolicy from the configuration file, Rasa will no longer need the <code class="docutils literal notranslate"><span class="pre">stories.md</span></code> file for training. You can keep the <code class="docutils literal notranslate"><span class="pre">stories.md</span></code> file for testing purposes or you can remove most of the content. If you delete the file altogether, you may get an error from Rasa. Instead of removing the file entirely, you can just remove all the stories except one simple one; this way Rasa can still find a correctly-formatted stories file and will not throw an error.</p>
+</div>
+</section>
+<section id="creating-the-dialogue-file">
+<h2><a class="toc-backref" href="#id3">Creating the Dialogue File</a><a class="headerlink" href="#creating-the-dialogue-file" title="Permalink to this headline"></a></h2>
+<p>In order to control the flow of dialogue, we will need to create a set of dialogue states.
+Each state contains enter conditions (expressions that must evaluate true, such as the user’s intent, slot status, etc) and a set of bot actions that will be executed if the state is entered.
+At each point that the bot must make a decision, it will evaulate all the states and assign each state with a score; the highest scoring state will have its actions executed by the bot.
+See the <a class="reference internal" href="policy.html#policy"><span class="std std-ref">policy overview</span></a> for more information about the state format. Create a new file in your bot folder called <code class="docutils literal notranslate"><span class="pre">dialogue.yml</span></code>.</p>
+<section id="a-simple-state-example">
+<h3><a class="toc-backref" href="#id4">A Simple State Example</a><a class="headerlink" href="#a-simple-state-example" title="Permalink to this headline"></a></h3>
+<p>We can use the NLU data that Rasa provided at initialization to set up our first state. In our domain and data we have a <code class="docutils literal notranslate"><span class="pre">greet</span></code> intent. If the user provides an utterance with intent <code class="docutils literal notranslate"><span class="pre">greet</span></code>, the bot should respond with a response from the <code class="docutils literal notranslate"><span class="pre">utter_greet</span></code> template provided in the domain. This is the basis of our ‘if/then’ state conditions and actions.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[greet]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;greet&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_greet</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>At the end of our actions list, we must also include an <code class="docutils literal notranslate"><span class="pre">action_listen</span></code> event, or else the bot will not stop to recieve user input, and could end up in an endless loop.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">$[]</span></code> notation to mark state names. The format is not required, but suggested as it helps the unique state names stand out in the dialogue file.</p>
+</div>
+<p>Additionally, since the bot should always respond with <code class="docutils literal notranslate"><span class="pre">utter_greet</span></code>, we can include a high rank score to make sure this state is chosen if there are several enterable states.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[greet]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">rank_score</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;greet&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_greet</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At this point, you can train a new model and confirm that your first state is working as expected. You can also try a very different utterance to confirm that the bot will default to the fallback utterance. In order for the fallback to respond with an utterance, you will need to add a <code class="docutils literal notranslate"><span class="pre">utter_default</span></code> template to the <code class="docutils literal notranslate"><span class="pre">domain.yml</span></code> file.</p>
+</div>
+<img alt="../_images/first_policy_test.PNG" src="../_images/first_policy_test.PNG" />
+</section>
+<section id="a-more-complex-example">
+<h3><a class="toc-backref" href="#id5">A More Complex Example</a><a class="headerlink" href="#a-more-complex-example" title="Permalink to this headline"></a></h3>
+<p>For this tutorial, we want our bot to be able to greet the user, display the menu, and add a requested item to the cart. In the cart tutorial, we will go over how to integrate SeaChat Cart through custom actions. For now, we just work on controlling to dialogue flow and will use response templates only, until we create the custom actions in the cart tutorial.</p>
+<p>For these two tasks (querying the menu and selecting an item), we will need to break down the possible user utterances into intents and entities. We can create two new intents, <code class="docutils literal notranslate"><span class="pre">display_menu</span></code> and <code class="docutils literal notranslate"><span class="pre">select_item</span></code>, to represent the users desire to execute one of these two events. Add these to the <code class="docutils literal notranslate"><span class="pre">intents</span></code> list on the <code class="docutils literal notranslate"><span class="pre">domain.yml</span></code> file. See <a class="reference external" href="https://rasa.com/docs/rasa/domain#entities">Rasa docs</a> for a review of intents if necessary.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">intents</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_menu</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">select_item</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For the <code class="docutils literal notranslate"><span class="pre">select_item</span></code> intent, we can also expect the user to specify which item they want. We will want to extract this with as an entity, and store it as a slot so that the bot can work with it in the actions. Add <code class="docutils literal notranslate"><span class="pre">item</span></code> as both and entity and a slot to the domain.
+See <a class="reference external" href="https://rasa.com/docs/rasa/domain#slots">Rasa docs</a> for a review of slots if necessary. Note that the <code class="docutils literal notranslate"><span class="pre">influence_conversation</span></code> attribute of on a slot will not influence the behavior of the bot if you are not using Rasa’s <code class="docutils literal notranslate"><span class="pre">TEDPolicy</span></code>.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">item</span><span class="w"></span>
+
+<span class="nt">slots</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">item</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now that we have identified what can be extracted, we will need to add some training data for these intents. Add some Rasa training examples to the <code class="docutils literal notranslate"><span class="pre">data/nlu.md</span></code> file.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">nlu</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_menu</span><span class="w"></span>
+<span class="w">    </span><span class="nt">examples</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">- show me the menu</span><span class="w"></span>
+<span class="w">      </span><span class="no">- what&#39;s on the menu?</span><span class="w"></span>
+<span class="w">      </span><span class="no">- can I see the menu?</span><span class="w"></span>
+<span class="w">      </span><span class="no">- Show me what&#39;s on the menu?</span><span class="w"></span>
+<span class="w">      </span><span class="no">- display the menu please</span><span class="w"></span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">select_item</span><span class="w"></span>
+<span class="w">    </span><span class="nt">examples</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"></span>
+<span class="w">      </span><span class="no">- I want an [Americano](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- give me a [breakfast pastry combo](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- I&#39;ll have a [panini](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- i&#39;d like a [house coffee](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- get me a [decaf coffee](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- i also want a [muffin](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- gimme a [croissant](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- i&#39;d also like a [bagel](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- i&#39;ll order a [turkey bacon panini](item)</span><span class="w"></span>
+<span class="w">      </span><span class="no">- i want to order a [ham panini](item)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For now, while we don’t have the actions set up, let’s create some response templates that the bot can display for these intents. In the domain add the following the to responses:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">utter_display_menu</span><span class="p">:</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Here&#39;s what&#39;s on the menu; Americano, House Coffee, Decaf Coffee, Breakfast Combo, Muffin, Croissant, Bagel, and Panini.</span><span class="w"></span>
+
+<span class="nt">utter_select_item</span><span class="p">:</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Okay, I&#39;ll add a {item} to you cart.</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now we have all the pieces to create the new dialogue states. Let’s create a dialogue state for <code class="docutils literal notranslate"><span class="pre">display_menu</span></code>, which will respond with <code class="docutils literal notranslate"><span class="pre">utter_display_menu</span></code> if the user gives the intent <code class="docutils literal notranslate"><span class="pre">display_menu</span></code>.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[display menu]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;display_menu&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_display_menu</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And, we can create a state for <code class="docutils literal notranslate"><span class="pre">select_item</span></code>, which will respond with <code class="docutils literal notranslate"><span class="pre">utter_select_item</span></code>.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[select item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;select_item&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_select_item</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+</pre></div>
+</div>
+<p>However, we may want to handle a case where the user says they want to select an item, but they either don’t provide an item name or the item isn’t present on the menu. In this case, we want to confirm that they want to select and item, and then provide a specific response based on whether or not there is a valid item.</p>
+<p>Let’s first fix our response utterances:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">responses</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">utter_select_item</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Okay, you want to select an item.</span><span class="w"></span>
+
+<span class="w">  </span><span class="nt">utter_added_item</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Okay, I&#39;ll add a {item} to you cart.</span><span class="w"></span>
+
+<span class="w">  </span><span class="nt">utter_no_item_selected</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">You didn&#39;t specify what item you want.</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we can add two connections to our dialogue state to handle the two dialogue path choices.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$[select item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INTENT.name == &#39;select_item&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_select_item</span><span class="w"></span>
+<span class="w">  </span><span class="nt">connections</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$[add item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">direct_connection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLOTS.item is not None</span><span class="w"></span>
+<span class="w">        </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_added_item</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$[add item no item]</span><span class="p p-Indicator">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">direct_connection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">conditions</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SLOTS.item is None</span><span class="w"></span>
+<span class="w">        </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_no_item_selected</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utter_display_menu</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">action_listen</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note how in this case the first state <code class="docutils literal notranslate"><span class="pre">$[select</span> <span class="pre">item]</span></code> does not end with an <code class="docutils literal notranslate"><span class="pre">action_listen</span></code> event. This is because we want the bot to continue executing more actions before consulting the user. In this case, both <code class="docutils literal notranslate"><span class="pre">$[add</span> <span class="pre">item]</span></code> and <code class="docutils literal notranslate"><span class="pre">$[add</span> <span class="pre">item</span> <span class="pre">no</span> <span class="pre">item]</span></code> are direct connections. This means they are given a very high rank score if <code class="docutils literal notranslate"><span class="pre">$[select</span> <span class="pre">item]</span></code> was the previously entered state.</p>
+</div>
+<p>This demonstrates how we can represent multiple diverging paths on the dialogue based on the current state of the tracker. In the cart tutorial we will make this dialogue flow a little more nuanced by adding more actions and more complex dialogue paths.</p>
+<p>You can find a full dialogue.yml file <a class="reference internal" href="tutorial_resources/bot_dialogue.html#bot-dialogue"><span class="std std-ref">here</span></a>.</p>
+</section>
+</section>
+<section id="visualizing-the-dialogue">
+<h2><a class="toc-backref" href="#id6">Visualizing the Dialogue</a><a class="headerlink" href="#visualizing-the-dialogue" title="Permalink to this headline"></a></h2>
+<p>One last important feature of the dialogue system is the fact that it can produce its own state visualizations.
+The visualization output can be controlled by the <code class="docutils literal notranslate"><span class="pre">config.yml</span></code> file.
+First we will need to create a visualization directory and add it to the config. Create a new directory called <code class="docutils literal notranslate"><span class="pre">visual</span></code> in your bot directory. To the SeaChat policy config add the following parameters:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">policies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">seachat_plugins.core.policy.ngchat.ngChatPolicy</span><span class="w"></span>
+<span class="w">    </span><span class="nt">nlu_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.20</span><span class="w"></span>
+<span class="w">    </span><span class="nt">visual</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">visualization_directory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./visual</span><span class="w"></span>
+<span class="w">      </span><span class="nt">output_static_visualization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">vega_spec_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./visual/flow_data.json</span><span class="w"></span>
+<span class="w">      </span><span class="nt">output_at_each_turn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">output_live_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">output_vega</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">      </span><span class="nt">output_dot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to output vega format, a file called <code class="docutils literal notranslate"><span class="pre">flow_data.json</span></code> must be present in the visualization directory. An example of this file can be found at <code class="docutils literal notranslate"><span class="pre">/seachat_plugins/core/policy/visualization</span></code>.</p>
+</div>
+<p>The various flags can be set to true/false to output different types of visualizations. Either the <code class="docutils literal notranslate"><span class="pre">output_vega</span></code> or <code class="docutils literal notranslate"><span class="pre">output_dot</span></code> flag must be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> in order to produce output. The vega version will automatically open a browser window to display the visualization. For viewing the dot version, it is recommended to open the output file in a dot file preview extension for your IDE. The next section shows an example of a vega live update visualization.</p>
+</section>
+<section id="try-it">
+<h2><a class="toc-backref" href="#id7">Try It</a><a class="headerlink" href="#try-it" title="Permalink to this headline"></a></h2>
+<p>You can now test the dialogue flow and visualization by retraining and running the bot with <code class="docutils literal notranslate"><span class="pre">rasa</span> <span class="pre">shell</span></code>.</p>
+<p><strong>Bot behaviour</strong></p>
+<img alt="../_images/second_policy_test.PNG" src="../_images/second_policy_test.PNG" />
+<p><strong>Visualization</strong></p>
+<img alt="../_images/policy_visualization.png" src="../_images/policy_visualization.png" />
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bot_tutorial.html" class="btn btn-neutral float-left" title="SeaChat Bot Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../cart/tutorial.html" class="btn btn-neutral float-right" title="SeaChat Cart Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2021, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

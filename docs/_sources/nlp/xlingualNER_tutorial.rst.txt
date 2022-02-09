@@ -19,18 +19,11 @@ In the future, we hope this system will support more languages and also have inc
 
 The current endpoint for the xlingualNER is ``https://seaword.seasalt.ai/ner/``.
 
-See technical documentation and try out the API with the ``Swagger docs <https://seaword.seasalt.ai/ner/docs>``.
-
-Current models for xlingualNER can be found in the Azure fileshare at ``/mnt/models/nlp/xlingual-ner/``. 
-model_final is our final model, and the model_baseline is trained on all English and Chinese Ontonotes.
-
 Implementation
 --------------
-The xlingualNER pipeline consists of three parts: NERtagger, a datetime, misc outputs (ip, email address, url).
-The input is a sentence of any supported language, and an output example is listed further below. 
-Our model uses NLTK's word tokenizer by default, and uses Jieba for ZH. 
+The input of the xlingualNER pipeline is a sentence of any supported language, and the output example is listed further below. 
 
-The labels are as follows (copied from annotation instructions document):
+The labels are as follows:
 
 PERSON
     Identifies the first names, last names, family names, unique nicknames of people and fictional characters. Generational markers (Jr., IV) are included in the extent, while personal and occupational titles such as Ms., Dr., President, Secretary are NOT included.
@@ -213,12 +206,6 @@ CRIMINAL_CHARGE
     - Example: He was charged with manslaughter[CRIMINAL_CHARGE] last week[TIME]
 
 
-The last 3 tags were confusing so we removed them from our Label Studio annotations. They are no longer in the gold data, only the silver data that we trained on.
-
-- CAUSE_OF_DEATH
-- HANDLE
-- IDEOLOGY
-
 
 Example 
 -------
@@ -342,9 +329,6 @@ The system outputs three key elements which are a list of named entity tags at a
         }
     }
 
-The final tagging result from the system is the tags field. The datetime field shows the datetime grounding with start date and end date 
-as well as the corresponding span of the input sentence. The misc field shows information about Email, URL and IP-address.
-
 
 Language Support
 ================
@@ -382,8 +366,7 @@ Additionally, the language must be specified as a query parameter in the URL.
 
     POST https://seaword.seasalt.ai/ner/{lang_code}/extract?access_token={api_key}
 
-The endpoint tags a list of named entities calculates datetime grounding and extracts Email, URL and IP-address from the input sentences.
-The required request body for Named Entity Recognition requires only the following fields:
+The endpoint tags a list of named entities from the input sentences. The required request body for Named Entity Recognition requires only the following fields:
 
 .. code-block:: JSON
 

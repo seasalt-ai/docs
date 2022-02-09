@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Analytics with Google Data Studio Tutorial &mdash; Seasalt.ai Developers 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Welcome to SeaChat-report’s documentation!" href="../report/index.html" />
+    <link rel="prev" title="NearMe Overview" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+            <a href="../index.html" class="icon icon-home"> Seasalt.ai Developers
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seax.html">SeaX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/quickstart.html">SeaChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/bot_tutorial.html">SeaChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/policy.html">SeaChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/faq.html">SeaChat FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">SeaChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/seachat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">SeaWord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/redaction_tutorial.html">Redaction Service Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../speech/readme.html">SeaVoice README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../speech/seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../speech/seavoice_restful_apis_tutorial.html">SeaVoice RESTful APIs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NearMe</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">NearMe</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">NearMe Data Analytics Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to SeaChat-report’s documentation!</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seasalt.ai Developers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Data Analytics with Google Data Studio Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/nearme/data_analytics_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-analytics-with-google-data-studio-tutorial">
+<span id="data-analytics-tutorial"></span><h1>Data Analytics with Google Data Studio Tutorial<a class="headerlink" href="#data-analytics-with-google-data-studio-tutorial" title="Permalink to this headline"></a></h1>
+<p>This tutorial will walk through how to use Data Studio to present key insights for businesses and how to easily customize the report based on different data.</p>
+<p>The data for <a class="reference external" href="https://drive.google.com/file/d/1-RvHSU0JnEZNHSoRMqQts_LvFRZ7tEZk/view?usp=sharing">Seattle businesses</a> , <a class="reference external" href="https://drive.google.com/file/d/146ojdCZiVLVTxoVjvL7vPfhNaxpQ_fSt/view?usp=sharing">Vancouver businesses</a> and Singapore businesses <a class="reference external" href="https://drive.google.com/file/d/11xeEXY2hPO5noDUbTpni0aseIGrYYILP/view?usp=sharing">other categories</a> and <a class="reference external" href="https://drive.google.com/file/d/1uDIWakdEHobIjm_TevZWuenMWF3u_CWb/view?usp=sharing">restaurant category</a> are in the drive.</p>
+<p>Here are the Data Analytics report for <a class="reference external" href="https://datastudio.google.com/reporting/72ec276d-f15a-4976-8a99-ed1183868453">Seattle</a> , <a class="reference external" href="https://datastudio.google.com/reporting/3e6f3fa8-2aa6-4e03-9651-ca6391124d12">Vancouver</a> , and <a class="reference external" href="https://datastudio.google.com/u/1/reporting/af8cd60b-21f8-4c6c-985f-059362a4e101/page/p_4ft2tl1mpc">Singapore</a> .</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p>
+<ul>
+<li><p><a class="reference internal" href="#implementation" id="id2">Implementation</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<p>The purpose of this data analytics pipeline with Google Data Studio is to be able to generate insights from any big JSON file for the sales team. The current JSON files that we have consist of information about businesses in Seattle, Vancouver, and Singapore. This information includes names of businesses, latitude, longitude, website, ratings, reviews, attributes, and more.</p>
+<section id="implementation">
+<h3><a class="toc-backref" href="#id2">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h3>
+<p>This data analytics pipeline include two steps:</p>
+<p>Step 1. Preprocess JSON file</p>
+<p>Firstly, we have to preprocess the JSON file and generate csv files. You can download the JSON files from the Google Drive. Then, we use the <cite>generate_csv_files.py</cite> script in the <cite>data-studio-analytics</cite> folder of NearMe repo. To run the script, please follow the steps below.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ chmod +x generate_csv_files.py
+$ ./generate_csv_files.py <span class="o">[</span>path to input file<span class="o">]</span> <span class="o">[</span>path to output file <span class="k">for</span> map and attributes<span class="o">]</span> <span class="o">[</span>path to output file <span class="k">for</span> <span class="nb">time</span> series<span class="o">]</span>
+</pre></div>
+</div>
+<p>This script will generate two csv files: 1) one csv file that consists of information for data studio map and attributes graph 2) one csv file specifically for time series graph. The CSV files are divided into two files due to file size limit of 100 MB on Data Studio.</p>
+<p>Step 2. Upload the CSV files to the Google Data Studio</p>
+<p>Once we have the CSV files, we can go to the <a class="reference external" href="https://datastudio.google.com/reporting/72ec276d-f15a-4976-8a99-ed1183868453">Data Studio report</a>. There, we should change the data source by clickling the graph and hover to the right upper corner of the report. You will see a data source of the graph (shown below). Change the data source to your newly generated CSV files. You should do so for all the graphs on the report.</p>
+<a class="reference internal image-reference" href="../_images/data_source.png"><img alt="../_images/data_source.png" src="../_images/data_source.png" style="width: 600px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You should only use the time series csv file on the two time series graphs and use the other csv file for all the other filters and graphs.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the map does not show the businesses properly, make sure to check the field type for <cite>coordinates</cite> field. The format has to be <cite>geo/latitude, longitude</cite></p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="readme.html" class="btn btn-neutral float-left" title="NearMe Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../report/index.html" class="btn btn-neutral float-right" title="Welcome to SeaChat-report’s documentation!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2021, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

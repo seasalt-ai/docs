@@ -1,0 +1,12 @@
+
+Welcome to NearMe
+===========================================
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: NearMe
+
+   readme
+   data_analytics_tutorial

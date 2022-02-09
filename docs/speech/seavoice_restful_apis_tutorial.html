@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeaVoice RESTful APIs &mdash; Seasalt.ai Developers 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NearMe Overview" href="../nearme/readme.html" />
+    <link rel="prev" title="SeaVoice Python SDK" href="seavoice_sdk_python_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+            <a href="../index.html" class="icon icon-home"> Seasalt.ai Developers
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seax.html">SeaX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/quickstart.html">SeaChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/bot_tutorial.html">SeaChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/policy.html">SeaChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../seachat/faq.html">SeaChat FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cart/readme.html">SeaChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cart/seachat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">SeaWord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/redaction_tutorial.html">Redaction Service Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">SeaVoice README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SeaVoice RESTful APIs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NearMe</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nearme/readme.html">NearMe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nearme/data_analytics_tutorial.html">NearMe Data Analytics Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../report/index.html">Welcome to SeaChat-report’s documentation!</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seasalt.ai Developers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>SeaVoice RESTful APIs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/speech/seavoice_restful_apis_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="seavoice-restful-apis">
+<span id="seavoice-restful-apis-tutorial"></span><h1>SeaVoice RESTful APIs<a class="headerlink" href="#seavoice-restful-apis" title="Permalink to this headline"></a></h1>
+<p>This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.</p>
+<p>Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> if you have any questions.</p>
+<div class="contents local topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#stt-protocols" id="id1">STT protocols</a></p></li>
+<li><p><a class="reference internal" href="#tts-protocols" id="id2">TTS protocols</a></p></li>
+</ul>
+</div>
+<section id="stt-protocols">
+<h2><a class="toc-backref" href="#id1">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Login <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/stt/signin</span></code> to get <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>.</p></li>
+<li><p>Client sends STT API request with <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx</span></code>, put <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> in Headers:</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;speech_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;APIKEY&gt;&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>API server returns HTTP 200 with json string including the available STT server’s url to the client, like,</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;/client/ws/speech&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
+<ol class="arabic simple" start="4">
+<li><p>Client connects to the available STT server by websocket with <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> settings, e.g. <code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=&lt;APIKEY&gt;&amp;language=zh-tw&amp;punctuation=True</span></code></p></li>
+<li><p>STT server verifies <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> on API server, if something wrong, STT server will reply error message and close websocket connection:</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Token invalid&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>After connecting, Client starts to record the microphone and stream audio data to STT server (See below for data format).</p></li>
+<li><p>STT server receives audio data and does recognition, then send recognizing/recognized results to Client, the format is,</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;final&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;hypotheses&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;transcript&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;你 好&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;likelihood&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">377.78</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;segment-start&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;segment-length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.8</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;total-length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.75</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Note 1, if “status” is 0, it means no error happened.</p></li>
+<li><p>Note 2, if “final” is <cite>True</cite>, it means this is a final recognized result; <cite>False</cite> means it’s a recognizing result.</p></li>
+</ul>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Client receives recognizing/recognized results.</p></li>
+<li><p>Client closes websocket connection when finished recognizing.</p></li>
+</ol>
+<dl class="simple">
+<dt>Audio data format to send to STT server:</dt><dd><ul class="simple">
+<li><p>If the data is in wav format, which has wav head indicating audio format, then STT server will know the audio format by the wav head. Please just have wav head at the first package, wav head in other packages will be taken as audio data.</p></li>
+<li><p>If the data is in raw format, then when connecting to STT server, Client needs to include Content-Type in wss url. The format looks like
+<code class="docutils literal notranslate"><span class="pre">&amp;content-type=audio/x-raw,</span> <span class="pre">layout=(string)interleaved,</span> <span class="pre">rate=(int)16000,</span> <span class="pre">format=(string)S16LE,</span> <span class="pre">channels=(int)1</span></code></p></li>
+<li><p>but Client needs to do urlencode and then connects to STT server, for example, the url with Content-Type looks like <code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=67e44248-b473-11eb-95f1-ba52214202a6&amp;punctuation=True&amp;content-type=audio%2Fx-raw%2C+layout%3D%28string%29interleaved%2C+rate%3D%28int%2916000%2C+format%3D%28string%29S16LE%2C+channels%3D%28int%291</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="tts-protocols">
+<h2><a class="toc-backref" href="#id2">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Client first calls API <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login and get <code class="docutils literal notranslate"><span class="pre">login_token</span></code>.</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;username&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;password&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Client sends https POST request to API server with <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">login_token</span></code>, for example, <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx</span></code>.</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lin_Xiaomei&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>please put <code class="docutils literal notranslate"><span class="pre">token</span></code> in the Headers and put <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code> in the request body.</p>
+<ol class="arabic simple" start="3">
+<li><p>API server returns HTTP 200 with json string including the available TTS server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> to Client, like</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test123&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="nt">&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xxxxxxxxxxxxxxxxxx(speech_service_token)&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
+<ol class="arabic simple" start="4">
+<li><p>After got TTS server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>, Client connects to TTS server as a websocket client.</p></li>
+<li><p>If successfully connected, Client sends json string to TTS server, for example,</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;business&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lin_Xiaomei&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xxxxxxxxxxxxxxxxxx(speech_token)&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="mi">16000</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ssml&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;False&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Note 1, “language” could be “zh-TW” or “en-US”.</p></li>
+<li><p>Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
+<li><p>Note 3, [“data”][“ssml”] should be True if [“data”][“text”] is a SSML string, i.e. using SSML tab.</p></li>
+<li><p>Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
+<li><p>Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
+</ul>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.</p></li>
+<li><p>TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seq_id&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;audio&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;base64 encoded raw pcm data&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Note 1, if “status” isn’t “ok”, then there will be some error messages.</p></li>
+<li><p>Note 2, if [“data”][“status”] is 1, means synthesis is in progress; if [“data”][“status”] is 2, means synthesis is completed.</p></li>
+<li><p>Note 3, “progress” means currently which character it’s synthesizing.</p></li>
+</ul>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Client receives audio data frames.</p></li>
+<li><p>After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="seavoice_sdk_python_tutorial.html" class="btn btn-neutral float-left" title="SeaVoice Python SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../nearme/readme.html" class="btn btn-neutral float-right" title="NearMe Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2021, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

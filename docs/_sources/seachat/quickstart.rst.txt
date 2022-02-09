@@ -1,0 +1,47 @@
+.. _quickstart:
+
+===================
+SeaChat Quick Start
+===================
+
+.. Bootstrap specific class labels
+
+.. role:: text-success
+.. role:: text-primary
+.. role:: text-info
+.. role:: text-warning
+.. role:: text-danger
+
+.. role:: bg-success
+.. role:: bg-primary
+.. role:: bg-info
+.. role:: bg-warning
+.. role:: bg-danger
+
+.. _SEASALT.AI: https://seasalt.ai
+.. _SeaChat: https://ngchat.kitt.ai/
+.. _SeaChat-stt: https://ngchat.kitt.ai/stt
+.. _SeaChat-tts: https://ngchat.kitt.ai/tts
+
+.. contents:: Table of Contents
+   :depth: 4
+
+Introduction
+============
+
+This SeaChat tutorial provides a quick overview on how to access and navigate
+SEASALT.AI_'s SeaChat_ platform.
+
+By the end of this tutorial, you will be able to:
+  * Access SeaChat
+  * Create a Project
+  * Orient yourself in the VSCode Editor
+
+Accessing SeaChat
+=================
+
+SeaChat is hosted by SEASALT.AI and can be accessed using any web browser.
+
+**To Access:**
+
+1. Go to `<https://seachat.seasalt.ai>`_

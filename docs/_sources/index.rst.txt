@@ -1,10 +1,10 @@
-.. Seasalt.ai Document documentation master file, created by
+.. SeaChat Document documentation master file, created by
    sphinx-quickstart on Thu Dec  3 16:28:14 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Seasalt.ai's Master Documentation!
-===============================================
+Welcome to SeaChat's Master Documentation!
+===========================================
 .. toctree::
    :maxdepth: 3
    :glob:
@@ -14,18 +14,69 @@ Welcome to Seasalt.ai's Master Documentation!
    SeaX <product_introduction/seax>
    SeaVoice <product_introduction/seavoice>
 
+
 .. toctree::
    :maxdepth: 3
    :glob:
    :titlesonly:
-   :caption: SeaWord API
+   :caption: SeaChat
 
-   SeaWord API Overview <nlp/readme>
-   Summarization API <nlp/sum_tutorial>
-   Topic Extraction API <nlp/topic_tutorial>
-   Action Extraction API <nlp/action_tutorial>
-   Cross Lingual NER API <nlp/xlingualNER_tutorial>
-   Machine Reading API <nlp/mr_tutorial>
+   SeaChat Quick Start <seachat/quickstart>
+   SeaChat Bot Tutorial <seachat/bot_tutorial>
+   SeaChat Policy <seachat/policy>
+   SeaChat FAQ <seachat/faq>
+
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaChat-cart
+
+   SeaChat Cart <cart/readme>
+   Technical Docs <cart/seachat_cart>
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaWord
+
+   SeaWord <nlp/readme>
+   Summarization API Tutorial <nlp/sum_tutorial>
+   Topic Extraction API Tutorial <nlp/topic_tutorial>
+   Action Extraction API Tutorial <nlp/action_tutorial>
+   Cross Lingual NER API Tutorial <nlp/xlingualNER_tutorial>
+   Machine Reading API Tutorial <nlp/mr_tutorial>
+   Redaction Service Tutorial <nlp/redaction_tutorial>
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaVoice (Seasalt speech)
+
+   SeaVoice README <speech/readme>
+   SeaVoice SDK (Python) <speech/seavoice_sdk_python_tutorial>
+   SeaVoice RESTful APIs <speech/seavoice_restful_apis_tutorial>
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: NearMe
+
+   NearMe <nearme/readme>
+   NearMe Data Analytics Tutorial <nearme/data_analytics_tutorial>
+
+ 
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: SeaChat-report
+
+   report/*
 
 
 

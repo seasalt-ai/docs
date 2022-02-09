@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NLU File Examples &mdash; Seasalt.ai Developers 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+            <a href="../../index.html" class="icon icon-home"> Seasalt.ai Developers
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product_introduction/seax.html">SeaX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">SeaChat Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bot_tutorial.html">SeaChat Bot Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../policy.html">SeaChat Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">SeaChat FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-cart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cart/readme.html">SeaChat Cart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cart/seachat_cart.html">Technical Docs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/readme.html">SeaWord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/sum_tutorial.html">Summarization API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/topic_tutorial.html">Topic Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/action_tutorial.html">Action Extraction API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/xlingualNER_tutorial.html">Cross Lingual NER API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/mr_tutorial.html">Machine Reading API Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nlp/redaction_tutorial.html">Redaction Service Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/readme.html">SeaVoice README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/seavoice_restful_apis_tutorial.html">SeaVoice RESTful APIs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">NearMe</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../nearme/readme.html">NearMe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nearme/data_analytics_tutorial.html">NearMe Data Analytics Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaChat-report</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../report/index.html">Welcome to SeaChat-report’s documentation!</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Seasalt.ai Developers</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>NLU File Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/seachat/tutorial_resources/bot_nlu.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nlu-file-examples">
+<span id="bot-nlu"></span><h1>NLU File Examples<a class="headerlink" href="#nlu-file-examples" title="Permalink to this headline"></a></h1>
+<p>The NLU files can be condensed into one <code class="docutils literal notranslate"><span class="pre">nlu.md</span></code> file or can be organized into multiple files, as will be shown here.</p>
+<section id="chatette-nlu">
+<h2>Chatette NLU<a class="headerlink" href="#chatette-nlu" title="Permalink to this headline"></a></h2>
+<p>NLU training examples produced by chatette.</p>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span>version: &quot;2.0&quot;
+nlu:
+<span class="k">-</span> intent: greet
+  examples: |
+    <span class="k">-</span> Good morning!
+    <span class="k">-</span> Heya
+    <span class="k">-</span> Hi folks!
+    <span class="k">-</span> Hiya!
+    <span class="k">-</span> Howdy
+    <span class="k">-</span> hello
+    <span class="k">-</span> hello!
+    <span class="k">-</span> hi folks
+    <span class="k">-</span> hi!
+    <span class="k">-</span> howdy
+<span class="k">-</span> intent: display_menu
+  examples: |
+    <span class="k">-</span> Describe the CoffeeShop menu please
+    <span class="k">-</span> Select more information about Coffee Shop menu please
+    <span class="k">-</span> Select more information about the Coffee Shop menu please
+    <span class="k">-</span> Show me more information about menu please
+    <span class="k">-</span> We want to hear info about the Coffee Shop menu
+    <span class="k">-</span> What are the menu groups
+    <span class="k">-</span> describe the menu
+    <span class="k">-</span> explain more about the CoffeeShop menu please
+    <span class="k">-</span> explain more about the menu
+    <span class="k">-</span> give me more information about the Coffee Shop menu please
+    <span class="k">-</span> i&#39;d like to hear more info about the menu
+    <span class="k">-</span> i&#39;d like to hear more information about the menu
+    <span class="k">-</span> list the menu sections
+    <span class="k">-</span> open more information about the menu please
+    <span class="k">-</span> select more information about Coffee Shop menu
+    <span class="k">-</span> select the categories in the menu
+    <span class="k">-</span> show me the sections on menu
+    <span class="k">-</span> tell me more about the menu please
+    <span class="k">-</span> what are the menu categories
+    <span class="k">-</span> what are the menu sections
+<span class="k">-</span> intent: select_item
+  examples: |
+    <span class="k">-</span> Can we also order [<span class="nt">House Coffee</span>](<span class="na">item</span>) please
+    <span class="k">-</span> Could we please order [<span class="nt">hot americano</span>](<span class="na">item</span>)
+    <span class="k">-</span> Give me [<span class="nt">panini sandwich</span>](<span class="na">item</span>)
+    <span class="k">-</span> Give us [<span class="nt">Panini</span>](<span class="na">item</span>) please
+    <span class="k">-</span> I would like to also have [<span class="nt">Breakfast Pastry Combo</span>](<span class="na">item</span>)
+    <span class="k">-</span> I&#39;d like to also have [<span class="nt">Muffin</span>](<span class="na">item</span>) please
+    <span class="k">-</span> Might we also have [<span class="nt">House Coffee</span>](<span class="na">item</span>)
+    <span class="k">-</span> Put [<span class="nt">Americano</span>](<span class="na">item</span>) in my basket please
+    <span class="k">-</span> Put [<span class="nt">Croissant</span>](<span class="na">item</span>) in my basket
+    <span class="k">-</span> Put [<span class="nt">Decaf Coffee</span>](<span class="na">item</span>) in my cart
+    <span class="k">-</span> Put [<span class="nt">House Coffee</span>](<span class="na">item</span>) in my order
+    <span class="k">-</span> Put [<span class="nt">pressed ham sandwich</span>](<span class="na">item</span>) in my order please
+    <span class="k">-</span> Put [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) in my basket
+    <span class="k">-</span> Put [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) in my cart please
+    <span class="k">-</span> Put [<span class="nt">turkey sandwich</span>](<span class="na">item</span>) in my purchase please
+    <span class="k">-</span> Select [<span class="nt">pastry combo</span>](<span class="na">item</span>)
+    <span class="k">-</span> [<span class="nt">Turkey Bacon Panini</span>](<span class="na">item</span>) seems good
+    <span class="k">-</span> We desire to also add [<span class="nt">pressed turkey sandwich</span>](<span class="na">item</span>)
+    <span class="k">-</span> add [<span class="nt">House Coffee</span>](<span class="na">item</span>)
+    <span class="k">-</span> add [<span class="nt">decaf</span>](<span class="na">item</span>) please
+    <span class="k">-</span> add [<span class="nt">decaf</span>](<span class="na">item</span>) to my cart please
+    <span class="k">-</span> [<span class="nt">americano</span>](<span class="na">item</span>) seems good
+    <span class="k">-</span> i require [<span class="nt">Decaf Coffee</span>](<span class="na">item</span>) please
+    <span class="k">-</span> [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) seems good
+    <span class="k">-</span> [<span class="nt">pressed sandwich</span>](<span class="na">item</span>) sounds good to me
+    <span class="k">-</span> put [<span class="nt">ham sandwich</span>](<span class="na">item</span>) in my basket please
+    <span class="k">-</span> select [<span class="nt">Decaf Coffee</span>](<span class="na">item</span>)
+    <span class="k">-</span> select [<span class="nt">panini sandwich</span>](<span class="na">item</span>) please
+    <span class="k">-</span> we need [<span class="nt">decaf</span>](<span class="na">item</span>)
+    <span class="k">-</span> we would like to also order [<span class="nt">Americano</span>](<span class="na">item</span>)
+</pre></div>
+</div>
+</section>
+<section id="annotated-nlu">
+<h2>Annotated NLU<a class="headerlink" href="#annotated-nlu" title="Permalink to this headline"></a></h2>
+<p>Annotated training examples from real users.</p>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span>version: &quot;2.0&quot;
+nlu:
+<span class="k">-</span> intent: greet
+  examples: |
+    <span class="k">-</span> hey
+    <span class="k">-</span> hello
+    <span class="k">-</span> hi
+    <span class="k">-</span> good morning
+    <span class="k">-</span> good evening
+    <span class="k">-</span> hey there
+<span class="k">-</span> intent: display_menu
+  examples: |
+    <span class="k">-</span> show me the menu
+    <span class="k">-</span> what&#39;s on the menu?
+    <span class="k">-</span> can I see the menu?
+    <span class="k">-</span> Show me what&#39;s on the menu?
+    <span class="k">-</span> display the menu please
+<span class="k">-</span> intent: select_item
+  examples: |
+    <span class="k">-</span> I want an [<span class="nt">Americano</span>](<span class="na">item</span>)
+    <span class="k">-</span> give me a [<span class="nt">breakfast pastry combo</span>](<span class="na">item</span>)
+    <span class="k">-</span> I&#39;ll have a [<span class="nt">panini</span>](<span class="na">item</span>)
+    <span class="k">-</span> i&#39;d like a [<span class="nt">house coffee</span>](<span class="na">item</span>)
+    <span class="k">-</span> get me a [<span class="nt">decaf coffee</span>](<span class="na">item</span>)
+    <span class="k">-</span> i also want a [<span class="nt">muffin</span>](<span class="na">item</span>)
+    <span class="k">-</span> gimme a [<span class="nt">croissant</span>](<span class="na">item</span>)
+    <span class="k">-</span> i&#39;d also like a [<span class="nt">bagel</span>](<span class="na">item</span>)
+    <span class="k">-</span> i&#39;ll order a [<span class="nt">turkey bacon panini</span>](<span class="na">item</span>)
+    <span class="k">-</span> i want to order a [<span class="nt">ham panini</span>](<span class="na">item</span>)
+</pre></div>
+</div>
+</section>
+<section id="extra-nlu">
+<h2>Extra NLU<a class="headerlink" href="#extra-nlu" title="Permalink to this headline"></a></h2>
+<p>Purely utility features such as lookup table sepecifications, synonym mapping, dummy intents for buttons, etc.</p>
+<div class="highlight-MD notranslate"><div class="highlight"><pre><span></span>version: &quot;2.0&quot;
+nlu:
+<span class="k">-</span> synonym: &#39; House Coffee&#39;
+  examples: |
+    <span class="k">-</span> hot coffee
+    <span class="k">-</span> coffee
+    <span class="k">-</span> regular coffee
+    <span class="k">-</span> drip coffee
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-2021, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

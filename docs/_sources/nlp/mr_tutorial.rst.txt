@@ -25,7 +25,7 @@ API Usage
 =========
 
 POST /marco-answer
--------------------
+------------
 To extract an answer to a given question from a context paragraph, send a POST request to the ``/marco-answer`` endpoint.
 
 .. code-block:: bash

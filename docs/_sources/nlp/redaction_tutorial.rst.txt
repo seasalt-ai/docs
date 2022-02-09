@@ -1,0 +1,67 @@
+.. _redaction_tutorial:
+
+=====================================
+Redaction Tutorial
+=====================================
+
+This tutorial will walk through how to use the Redaction service at Seasalt.ai.
+
+.. contents:: Table of Contents
+    :local:
+    :depth: 3
+
+
+Introduction
+============
+
+The purpose of the Redaction is to create a self-serve interface that helps you protect all private or sensitive information in text data.
+The result of running the redaction over text input(s) are redacted texts with clear labels of personally identifiable or sensitive information.
+
+The URL for Redaction service is ``https://seaword.seasalt.ai/redact``.
+
+
+Multilingual Support
+====================
+
+The Redaction Service currently supports two languages, English and Traditional Chinese. One can switch language from the selection menu on the left.
+
+
+Usage
+==========
+
+The following is the redaction UI interface. 
+
+.. image:: images/redaction_ui.png
+   :height: 600
+
+1. Upload Documents
+
+The first step is to upload your text data. You can either copy and paste your text data directly in the text box. Or, upload a csv, excel, or json file with a list of text data entries.
+
+2. Choose Redaction Items
+
+Next, you can now choose the redaction items. Currently, we support classification and masking of the following personally identifiable and sensitive information:
+    
+    - Name
+    - Social Security Number
+    - Address
+    - Email
+    - Phone Number
+    - Passport
+    - Credit Card Number
+    - Dates
+    - Bank Account Number (Traditional Chinese only)
+    - Resident Permit Number (Traditional Chinese only)
+
+3. Choose Redaction Format
+
+Currently, we support the following redaction format. The redacted texts will be labeled and highlighted in the respective format in the final Review section.
+    
+    - No mask (Label the text, and show original text)
+    - Full mask (Label the text, and replace original text with `x`)
+    - Tail mask (Label the text, and replace first letter with `x`)
+    - Mirror mask (Label the text, and replace the second half of text with the first half)
+
+4. Review Results
+
+Review the redacted text in this section.

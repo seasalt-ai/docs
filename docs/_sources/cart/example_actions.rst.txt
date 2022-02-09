@@ -1,0 +1,8 @@
+.. _bot_actions:
+
+=======================
+Actions Example
+=======================
+
+.. literalinclude:: ./example_files/actions.py
+    :language: Python
