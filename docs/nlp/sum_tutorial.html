@@ -142,15 +142,15 @@
 </pre></div>
 </div>
 <p>The required request body for inference contains a single turn from a transcript in the following format:</p>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-     <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span>
- <span class="p">}</span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="nt">&quot;transcription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>A successful response returns the summary of the transcription in the following JSON format.</p>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;You know that there are many meetings with the Taiwan team and I get started on the MDA proposal.&quot;</span>
-<span class="p">}</span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;summarization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;You know that there are many meetings with the Taiwan team and I get started on the MDA proposal.&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -166,35 +166,35 @@
 </pre></div>
 </div>
 <p>The required request body for inference contains the entire transcript in the following format, with speakers and utterances in the <code class="docutils literal notranslate"><span class="pre">data</span></code> list. The <code class="docutils literal notranslate"><span class="pre">url</span></code> element is the callback URL where the final summary will be returned.</p>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://webhook.site/3c95b604-4243-4d15-b5ce-a79e18dec3e7&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;Speaker&quot;</span>
-                <span class="p">],</span>
-            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Yesterday was pretty smooth day.&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;Speaker&quot;</span>
-                <span class="p">],</span>
-            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Many spent the time in the.&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;Speaker&quot;</span>
-                <span class="p">],</span>
-            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;speaker&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;Speaker&quot;</span>
-                <span class="p">],</span>
-            <span class="nt">&quot;transcription&quot;</span><span class="p">:</span> <span class="s2">&quot;Then you chat about a proposal on the Air Force Recruitment Center and today I continue to work on the proposal.&quot;</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://webhook.site/3c95b604-4243-4d15-b5ce-a79e18dec3e7&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;speaker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Speaker&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;transcription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yesterday was pretty smooth day.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;speaker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Speaker&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;transcription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Many spent the time in the.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;speaker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Speaker&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;transcription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;speaker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Speaker&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;transcription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Then you chat about a proposal on the Air Force Recruitment Center and today I continue to work on the proposal.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -203,9 +203,9 @@
 </div>
 <p>The transcript will be automatically segmented into the largest chunks possible under 300 words. The callback function will then start producing summaries. When the summarization is complete, a PUT request will be sent with the generated summary to the callback url provided in the original request body.</p>
 <p>The final summaries will appear in the following JSON format:</p>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;summarization&quot;</span><span class="p">:</span> <span class="s2">&quot;Yesterday was a busy day for Speaker. He had many meetings with the Taiwan team and he worked on the MDA proposal. Today he continues to work on the proposal.&quot;</span>
-<span class="p">}</span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;summarization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yesterday was a busy day for Speaker. He had many meetings with the Taiwan team and he worked on the MDA proposal. Today he continues to work on the proposal.&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The long summarization processing time will vary depending on the length of the transcript, as it depends on how many &lt;300 word segments there are in the transcript.</p>
