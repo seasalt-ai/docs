@@ -340,16 +340,11 @@ The format of the final result is as follows:</p>
 <p>In cases where we want to get live results and process a transcript piece by piece, we can use the <code class="docutils literal notranslate"><span class="pre">/extract_live</span></code> endpoint.
 Instead of an entire meeting transcript, this endpoint accepts a single transcription segment in the following format:</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;command&quot;: Text,
     &quot;meeting_id&quot;: Text,
     &quot;sequence&quot;: int,
     &quot;account_id&quot;: Text,
-    &quot;timestamp&quot;: Text,
     &quot;speaker&quot;: Text,
     &quot;transcription&quot;: Text,
-    &quot;voice_start_time&quot;: float,
-    &quot;voice_duration&quot;: float,
-    &quot;type&quot;: Text,
     &quot;callback_url&quot;: HttpUrl
 }
 </pre></div>
