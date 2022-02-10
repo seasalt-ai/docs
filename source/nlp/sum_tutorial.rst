@@ -92,26 +92,38 @@ The required request body for inference contains the entire transcript in the fo
         "data": [
             {
                 "speaker": [
-                    "Speaker"
-                    ],
+                    {
+                        "id": "1",
+                        "name": "Speaker"
+                    }
+                ],
                 "transcription": "Yesterday was pretty smooth day."
             },
             {
                 "speaker": [
-                    "Speaker"
-                    ],
+                    {
+                        "id": "1",
+                        "name": "Speaker"
+                    }
+                ],
                 "transcription": "Many spent the time in the."
             },
             {
                 "speaker": [
-                    "Speaker"
-                    ],
+                    {
+                        "id": "1",
+                        "name": "Speaker"
+                    }
+                ],
                 "transcription": "You know, in planning and all kinds of different meetings with the Taiwan team, and I get I got started on the MDA proposal."
             },
             {
                 "speaker": [
-                    "Speaker"
-                    ],
+                    {
+                        "id": "1",
+                        "name": "Speaker"
+                    }
+                ],
                 "transcription": "Then you chat about a proposal on the Air Force Recruitment Center and today I continue to work on the proposal."
             }
         ]
