@@ -38,13 +38,12 @@ In the example below, we show how to recognize speech from an audio file. You ca
 Speech Configuration
 ^^^^^^^^^^^^^^^^^^^^
 
-Use the following code to create ``SpeechConfig`` (contact info@seasalt.ai for the speech service account):
+Use the following code to create ``SpeechConfig`` (contact info@seasalt.ai for the speech service APIKEY):
 
 ::
 
         speech_config = speechsdk.SpeechConfig(
-            account_id=SEASALT_ACCOUNT,
-            password=PASSWORD,
+            apikey=SEASALT_APIKEY,
             speech_recognition_language="zh-TW",
             speech_recognition_punctuation=True
         )
@@ -132,11 +131,9 @@ Now, put everything together and run the example:
     import seavoice_sdk.speech as speechsdk
     import time
 
-    SEASALT_ACCOUNT = "xxxxxxxxx"
-    PASSWORD = "xxxxxxxx"
+    SEASALT_APIKEY = "xxxxxxxxx"
     speech_config = speechsdk.SpeechConfig(
-        account_id=SEASALT_ACCOUNT,
-        password=PASSWORD,
+        apikey=SEASALT_APIKEY,
         speech_recognition_language="zh-TW",
         speech_recognition_punctuation=True
     )
