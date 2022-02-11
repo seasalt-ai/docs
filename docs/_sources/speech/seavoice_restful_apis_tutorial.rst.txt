@@ -14,43 +14,29 @@ Please contact info@seasalt.ai if you have any questions.
 STT protocols
 -------------
 
-1. Client uses API ``POST https://suite.seasalt.ai/api/v1/user/login`` to login API server and get ``login_token``.
+1. Login ``https://suite.seasalt.ai/stt/signin`` to get ``APIKEY``.
+
+2. Client sends STT API request with ``language`` and ``APIKEY`` to API server: ``https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx``, put ``language`` in query string and ``APIKEY`` in Headers:
 
 .. code-block:: JSON
 
     {
-        "account_id": "username",
-        "password": "password"
+        "speech_token": "<APIKEY>"
     }
 
-.. NOTE::
-
-You will need a SeaVoice speech service account to run this example.
-Please contact info@seasalt.ai and apply for it.
-
-2. Client sends STT API request with ``language`` and ``login_token`` to API server: ``https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx`` (please put ``token`` in Headers, ``language`` in the request body)
+3. API server returns HTTP 200 with json string including the available STT server's url to the client, like,
 
 .. code-block:: JSON
 
     {
-        "language": "zh-TW"
-    }
-
-3. API server returns HTTP 200 with json string including the available STT server's url and ``speech_service_token`` to the client, like,
-
-.. code-block:: JSON
-
-    {
-        "account_id": "test123",
         "server_url": "wss://<host>:<port>/client/ws/speech"
-        "token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
     }
 
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. Client connects to the available STT server by websocket with ``speech_service_token``, ``language`` and ``punctuation`` settings, e.g. ``wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&language=zh-tw&punctuation=True``
+4. Client connects to the available STT server by websocket with ``APIKEY``, ``language`` and ``punctuation`` settings, e.g. ``wss://speech.seasalt.ai:5019/client/ws/speech?token=<APIKEY>&language=zh-tw&punctuation=True``
 
-5. STT server verifies ``speech_service_token`` on API server, if something wrong, STT server will reply error message and close websocket connection:
+5. STT server verifies ``APIKEY`` on API server, if something wrong, STT server will reply error message and close websocket connection:
 
 .. code-block:: JSON
 
@@ -100,7 +86,7 @@ Audio data format to send to STT server:
 
 TTS protocols
 -------------
- 
+
 1. Client first calls API ``https://suite.seasalt.ai/api/v1/user/login`` to login and get ``login_token``.
 
 .. code-block:: JSON

@@ -142,10 +142,9 @@
 <p>In the example below, we show how to recognize speech from an audio file. You can also apply recognition to an audio stream.</p>
 <div class="section" id="speech-configuration">
 <h4><a class="toc-backref" href="#id11">Speech Configuration</a><a class="headerlink" href="#speech-configuration" title="Permalink to this headline"></a></h4>
-<p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">SpeechConfig</span></code> (contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> for the speech service account):</p>
+<p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">SpeechConfig</span></code> (contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> for the speech service APIKEY):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
-    <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">,</span>
+    <span class="n">apikey</span><span class="o">=</span><span class="n">SEASALT_APIKEY</span><span class="p">,</span>
     <span class="n">speech_recognition_language</span><span class="o">=</span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span>
     <span class="n">speech_recognition_punctuation</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
@@ -222,11 +221,9 @@ through callback functions. To stop the continuous recognition, call
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seavoice_sdk.speech</span> <span class="k">as</span> <span class="nn">speechsdk</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">SEASALT_ACCOUNT</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxxx&quot;</span>
-<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxx&quot;</span>
+<span class="n">SEASALT_APIKEY</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxxx&quot;</span>
 <span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
-    <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">,</span>
+    <span class="n">apikey</span><span class="o">=</span><span class="n">SEASALT_APIKEY</span><span class="p">,</span>
     <span class="n">speech_recognition_language</span><span class="o">=</span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span>
     <span class="n">speech_recognition_punctuation</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>

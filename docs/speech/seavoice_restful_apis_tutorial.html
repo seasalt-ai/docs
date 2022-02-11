@@ -94,38 +94,26 @@
 <div class="section" id="stt-protocols">
 <h2><a class="toc-backref" href="#id1">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
-<li><p>Client uses API <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login API server and get <code class="docutils literal notranslate"><span class="pre">login_token</span></code>.</p></li>
+<li><p>Login <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/stt/signin</span></code> to get <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>.</p></li>
+<li><p>Client sends STT API request with <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx</span></code>, put <code class="docutils literal notranslate"><span class="pre">language</span></code> in query string and <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> in Headers:</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;account_id&quot;</span><span class="p">:</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;password&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>You will need a SeaVoice speech service account to run this example.
-Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> and apply for it.</p>
-<ol class="arabic simple" start="2">
-<li><p>Client sends STT API request with <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">login_token</span></code> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/speech_to_text?token=xxxxxx</span></code> (please put <code class="docutils literal notranslate"><span class="pre">token</span></code> in Headers, <code class="docutils literal notranslate"><span class="pre">language</span></code> in the request body)</p></li>
-</ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;zh-TW&quot;</span>
+    <span class="nt">&quot;speech_token&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;APIKEY&gt;&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p>API server returns HTTP 200 with json string including the available STT server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> to the client, like,</p></li>
+<li><p>API server returns HTTP 200 with json string including the available STT server’s url to the client, like,</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;account_id&quot;</span><span class="p">:</span> <span class="s2">&quot;test123&quot;</span><span class="p">,</span>
     <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;/client/ws/speech&quot;</span>
-    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxx(speech_service_token)&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
 <ol class="arabic simple" start="4">
-<li><p>Client connects to the available STT server by websocket with <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> settings, e.g. <code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=abcde&amp;language=zh-tw&amp;punctuation=True</span></code></p></li>
-<li><p>STT server verifies <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> on API server, if something wrong, STT server will reply error message and close websocket connection:</p></li>
+<li><p>Client connects to the available STT server by websocket with <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> settings, e.g. <code class="docutils literal notranslate"><span class="pre">wss://speech.seasalt.ai:5019/client/ws/speech?token=&lt;APIKEY&gt;&amp;language=zh-tw&amp;punctuation=True</span></code></p></li>
+<li><p>STT server verifies <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> on API server, if something wrong, STT server will reply error message and close websocket connection:</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
