@@ -27,6 +27,16 @@ Welcome to Seasalt.ai's Master Documentation!
    Cross Lingual NER API <nlp/xlingualNER_tutorial>
    Machine Reading API <nlp/mr_tutorial>
 
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaVoice (Seasalt speech)
+
+   SeaVoice README <speech/readme>
+   SeaVoice SDK (Python) <speech/seavoice_sdk_python_tutorial>
+   SeaVoice RESTful APIs <speech/seavoice_restful_apis_tutorial>
+
 
 
 Indices and tables
