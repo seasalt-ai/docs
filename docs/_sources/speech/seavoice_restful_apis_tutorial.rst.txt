@@ -16,13 +16,24 @@ STT protocols
 
 1. Login ``https://suite.seasalt.ai/stt/signin`` to get ``APIKEY``.
 
-2. Client sends STT API request with ``language`` and ``APIKEY`` to API server: ``https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx``, put ``language`` in query string and ``APIKEY`` in Headers:
+2. Client sends STT API request with ``language`` and ``APIKEY`` to API server: ``https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx``, put ``language`` in query string and ``APIKEY`` in headers. ``language`` currently supports ``en-US`` and ``zh-TW``.
 
-.. code-block:: JSON
+    - CLI example:
 
-    {
-        "speech_token": "<APIKEY>"
-    }
+    .. code-block:: bash
+
+        curl -H "speech_token: <APIKEY>" https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=zh-TW
+
+    - Python example:
+
+    .. code-block:: Python
+
+        import requests
+        headers = {'speech_token': 'ae988bc0-8b70-11ec-a0c3-be6fdf6e6b7e'}
+        params = (('language', 'zh-TW'))
+        response = requests.get('https://suite.seasalt.ai/api/v1/speech/stt_server_url',
+                                headers=headers,
+                                params=params)
 
 3. API server returns HTTP 200 with json string including the available STT server's url to the client, like,
 
@@ -34,7 +45,7 @@ STT protocols
 
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. Client connects to the available STT server by websocket with ``APIKEY``, ``language`` and ``punctuation`` settings, e.g. ``wss://speech.seasalt.ai:5019/client/ws/speech?token=<APIKEY>&language=zh-tw&punctuation=True``
+4. Client connects to the available STT server by websocket with ``APIKEY``, ``language`` and ``punctuation`` settings, e.g. ``wss://stt-servers.seasalt.ai:5019/client/ws/speech?token=<APIKEY>&language=zh-tw&punctuation=True``
 
 5. STT server verifies ``APIKEY`` on API server, if something wrong, STT server will reply error message and close websocket connection:
 
