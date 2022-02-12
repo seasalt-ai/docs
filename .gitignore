@@ -2,6 +2,7 @@ _build
 
 *.swp
 build
+venv/
 
 # Compiled source #
 ###################
