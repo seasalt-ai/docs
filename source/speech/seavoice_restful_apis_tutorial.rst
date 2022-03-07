@@ -113,7 +113,7 @@ TTS protocols
 
     {
         "language": "zh-TW",
-        "voice": "Lin_Xiaomei"
+        "voice": "Tongtong"
     }
 
 please put ``token`` in the Headers and put ``language`` and ``voice`` in the request body.
