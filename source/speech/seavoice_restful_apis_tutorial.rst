@@ -104,16 +104,16 @@ TTS protocols
 
     {
         "account_id": "username",
-        "password": "password",
+        "password": "password"
     }
 
-2. Client sends https POST request to API server with ``language``, ``voice`` and ``login_token``, for example, ``https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx``.
+2. Client sends https POST request to API server with ``language``, ``voice`` and ``login_token``, for example, ``https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx``. The voice list can be found from ``https://suite.seasalt.ai/api/v1/speech/tts_options``
 
 .. code-block:: JSON
 
     {
         "language": "zh-TW",
-        "voice": "Lin_Xiaomei"
+        "voice": "Tongtong"
     }
 
 please put ``token`` in the Headers and put ``language`` and ``voice`` in the request body.
@@ -124,7 +124,7 @@ please put ``token`` in the Headers and put ``language`` and ``voice`` in the re
 
     {
         "account_id": "test123",
-        "server_url": "wss://<host>:<port>"
+        "server_url": "wss://<host>:<port>",
         "token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
     }
 
