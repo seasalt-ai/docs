@@ -50,7 +50,7 @@ The Customer Review Insights section shows you the most common topics that appea
 Conversations
 ==============
 
-ADD SCREENSHOT WITH CONVERSATIONS SHOWING
+.. image:: images/conversations.png
 
 The Conversations Page provides you with a very close look at what is going on with your virtual agent. Here you can directly view the entire chat history with a customer, and see exactly what happened in a conversation with your virtual agent and how it responded to a customer’s questions.
 
