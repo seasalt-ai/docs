@@ -46,6 +46,7 @@ Welcome to Seasalt.ai's Master Documentation!
    Set Up Your Agent <nearme/set_up>
    Observe Your Agent <nearme/observe>
    Improve Your Agent <nearme/improve>
+   Near Me Demo Videos <nearme/videos>
 
 
 

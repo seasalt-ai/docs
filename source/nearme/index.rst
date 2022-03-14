@@ -11,3 +11,4 @@ Welcome to Near Me Messaging
    set_up
    observe
    improve
+   videos

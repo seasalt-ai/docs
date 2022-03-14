@@ -8,10 +8,7 @@ Observe Your Agent's Performance
     :local:
     :depth: 3
 
-Demo Video
-===========
-
-ADD DEMO VIDEO
+For a video walkthrough of this content, please take a look at our :ref:`videos`.
 
 Agent Overview
 ===============
