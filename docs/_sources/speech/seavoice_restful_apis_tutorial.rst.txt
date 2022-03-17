@@ -98,16 +98,33 @@ Audio data format to send to STT server:
 TTS protocols
 -------------
 
-1. Client first calls API ``https://suite.seasalt.ai/api/v1/user/login`` to login and get ``login_token``.
+1. Client sends https POST request to API: ``https://suite.seasalt.ai/api/v1/user/login`` to login and get ``api_token``.
 
 .. code-block:: JSON
 
     {
-        "account_id": "username",
-        "password": "password"
+        "account_id": <username>,
+        "password": <password>
     }
 
-2. Client sends https POST request to API server with ``language``, ``voice`` and ``login_token``, for example, ``https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx``. The voice list can be found from ``https://suite.seasalt.ai/api/v1/speech/tts_options``
+- CLI example:
+
+    .. code-block:: bash
+
+        curl -X 'POST' -d '{"account_id": <username>, "password": <password>}' 'https://suite.seasalt.ai/api/v1/user/login'
+        # return example: {"user_id":<username>,"timestamp":"2022-03-17T16:43:40","token":<api_token>,"role_id":2}
+
+[OPTIONAL] Find available voices by sending a GET request to API: https://suite.seasalt.ai/api/v1/speech/tts_options.
+Find the voice you want and use, and get the value of ``model`` and ``language`` to insert as ``voice`` and ``language`` respectively in step 2.
+
+- CLI example:
+
+    .. code-block:: bash
+
+        curl -X GET "https://suite.seasalt.ai/api/v1/speech/tts_options" -H "token: <api_token>"
+        # return example: [{"model_name":"彤彤","language_name":"國語  (台灣)","service_type":"Text-to-Speech","description":null,"model":"Tongtong","language":"zh-TW","id":2}
+
+2. Client sends https POST request to API: ``https://suite.seasalt.ai/api/v1/speech/text_to_speech`` with ``language``, ``voice`` and ``api_token``.
 
 .. code-block:: JSON
 
@@ -116,21 +133,28 @@ TTS protocols
         "voice": "Tongtong"
     }
 
-please put ``token`` in the Headers and put ``language`` and ``voice`` in the request body.
+- CLI example:
+
+    .. code-block:: bash
+
+        curl -X POST "https://suite.seasalt.ai/api/v1/speech/text_to_speech" -H "token: <api_token>" -d '{"language": "zh-TW", "voice": "Tongtong"}'
+        # return example: {"token":<speech_service_token>,"server_url":"wss://<host>:<port>","account_id":<username>}
+
+please put ``api_token`` in the Headers and put ``language`` and ``voice`` in the request body.
 
 3. API server returns HTTP 200 with json string including the available TTS server's url and ``speech_service_token`` to Client, like
 
 .. code-block:: JSON
 
     {
-        "account_id": "test123",
+        "account_id": <username>,
         "server_url": "wss://<host>:<port>",
-        "token": "xxxxxxxxxxxxxxxxxx(speech_service_token)"
+        "token": <speech_service_token>
     }
 
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. After got TTS server's url and ``speech_service_token``, Client connects to TTS server as a websocket client.
+4. Using the returned TTS ``server_url`` and ``speech_service_token`` from step 3, Client connects to TTS server as a websocket client.
 
 5. If successfully connected, Client sends json string to TTS server, for example,
 
@@ -140,18 +164,18 @@ If something is wrong, API server may return HTTP 404 with a json string includi
         "business":
         {
             "language": "zh-TW",
-            "voice": "Lin_Xiaomei",
-            "token": "xxxxxxxxxxxxxxxxxx(speech_token)"
+            "voice": "Tongtong",
+            "token": <speech_service_token>
         },
         "settings":
         {
             "pitch": 0.0,
             "speed": 1.0,
-            "sample_rate":16000
+            "sample_rate": 22050
         },
         "data":
         {
-            "text": "用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)",
+            "text": "text to be synthesized" (must be in utf-8 encoding and base64 encoded),
             "ssml": "False"
         }
     }
@@ -159,10 +183,11 @@ If something is wrong, API server may return HTTP 404 with a json string includi
 .. NOTE::
 
  - Note 1, “language” could be “zh-TW” or “en-US”.
- - Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
+ - Note 2, “voice” for “zh-TW” can be Tongtong or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
  - Note 3, ["data"]["ssml"] should be True if ["data"]["text"] is a SSML string, i.e. using SSML tab.
- - Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
- - Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
+ - Note 4, ["data"]["text"] should be in utf-8 encoding and base64 encoded.
+ - Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
+ - Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
 
 6. After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
 
