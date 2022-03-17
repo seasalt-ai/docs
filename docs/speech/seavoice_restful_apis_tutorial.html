@@ -184,16 +184,38 @@
 <section id="tts-protocols">
 <h2><a class="toc-backref" href="#id2">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
-<li><p>Client first calls API <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login and get <code class="docutils literal notranslate"><span class="pre">login_token</span></code>.</p></li>
+<li><p>Client sends https POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login and get <code class="docutils literal notranslate"><span class="pre">api_token</span></code>.</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;username&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;password&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;account_id&quot;: &lt;username&gt;,
+    &quot;password&quot;: &lt;password&gt;
+}
 </pre></div>
 </div>
+<ul>
+<li><p>CLI example:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X <span class="s1">&#39;POST&#39;</span> -d <span class="s1">&#39;{&quot;account_id&quot;: &lt;username&gt;, &quot;password&quot;: &lt;password&gt;}&#39;</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
+<span class="c1"># return example: {&quot;user_id&quot;:&lt;username&gt;,&quot;timestamp&quot;:&quot;2022-03-17T16:43:40&quot;,&quot;token&quot;:&lt;api_token&gt;,&quot;role_id&quot;:2}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>[OPTIONAL] Find available voices by sending a GET request to API: <a class="reference external" href="https://suite.seasalt.ai/api/v1/speech/tts_options">https://suite.seasalt.ai/api/v1/speech/tts_options</a>.
+Find the voice you want and use, and get the value of <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">language</span></code> to insert as <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">language</span></code> respectively in step 2.</p>
+<ul>
+<li><p>CLI example:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X GET <span class="s2">&quot;https://suite.seasalt.ai/api/v1/speech/tts_options&quot;</span> -H <span class="s2">&quot;token: &lt;api_token&gt;&quot;</span>
+<span class="c1"># return example: [{&quot;model_name&quot;:&quot;彤彤&quot;,&quot;language_name&quot;:&quot;國語  (台灣)&quot;,&quot;service_type&quot;:&quot;Text-to-Speech&quot;,&quot;description&quot;:null,&quot;model&quot;:&quot;Tongtong&quot;,&quot;language&quot;:&quot;zh-TW&quot;,&quot;id&quot;:2}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
 <ol class="arabic simple" start="2">
-<li><p>Client sends https POST request to API server with <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">login_token</span></code>, for example, <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/text_to_speech?token=xxxxxxxxxxxxxxxxxxx</span></code>. The voice list can be found from <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/tts_options</span></code></p></li>
+<li><p>Client sends https POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/text_to_speech</span></code> with <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">api_token</span></code>.</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
@@ -201,51 +223,62 @@
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>please put <code class="docutils literal notranslate"><span class="pre">token</span></code> in the Headers and put <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code> in the request body.</p>
+<ul>
+<li><p>CLI example:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST <span class="s2">&quot;https://suite.seasalt.ai/api/v1/speech/text_to_speech&quot;</span> -H <span class="s2">&quot;token: &lt;api_token&gt;&quot;</span> -d <span class="s1">&#39;{&quot;language&quot;: &quot;zh-TW&quot;, &quot;voice&quot;: &quot;Tongtong&quot;}&#39;</span>
+<span class="c1"># return example: {&quot;token&quot;:&lt;speech_service_token&gt;,&quot;server_url&quot;:&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;,&quot;account_id&quot;:&lt;username&gt;}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>please put <code class="docutils literal notranslate"><span class="pre">api_token</span></code> in the Headers and put <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code> in the request body.</p>
 <ol class="arabic simple" start="3">
 <li><p>API server returns HTTP 200 with json string including the available TTS server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> to Client, like</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test123&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xxxxxxxxxxxxxxxxxx(speech_service_token)&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;account_id&quot;: &lt;username&gt;,
+    &quot;server_url&quot;: &quot;wss://&lt;host&gt;:&lt;port&gt;&quot;,
+    &quot;token&quot;: &lt;speech_service_token&gt;
+}
 </pre></div>
 </div>
 <p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
 <ol class="arabic simple" start="4">
-<li><p>After got TTS server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>, Client connects to TTS server as a websocket client.</p></li>
+<li><p>Using the returned TTS <code class="docutils literal notranslate"><span class="pre">server_url</span></code> and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> from step 3, Client connects to TTS server as a websocket client.</p></li>
 <li><p>If successfully connected, Client sends json string to TTS server, for example,</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;business&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lin_Xiaomei&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xxxxxxxxxxxxxxxxxx(speech_token)&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="mi">16000</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;用户输入TEXT或SSML string (需要UTF-8格式并进行base64编码)&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;ssml&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;False&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;business&quot;:
+    {
+        &quot;language&quot;: &quot;zh-TW&quot;,
+        &quot;voice&quot;: &quot;Tongtong&quot;,
+        &quot;token&quot;: &lt;speech_service_token&gt;
+    },
+    &quot;settings&quot;:
+    {
+        &quot;pitch&quot;: 0.0,
+        &quot;speed&quot;: 1.0,
+        &quot;sample_rate&quot;: 22050
+    },
+    &quot;data&quot;:
+    {
+        &quot;text&quot;: &quot;text to be synthesized&quot; (must be in utf-8 encoding and base64 encoded),
+        &quot;ssml&quot;: &quot;False&quot;
+    }
+}
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
 <li><p>Note 1, “language” could be “zh-TW” or “en-US”.</p></li>
-<li><p>Note 2, “voice” for “zh-TW” can be “Lin_Xiaomei” or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
+<li><p>Note 2, “voice” for “zh-TW” can be Tongtong or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
 <li><p>Note 3, [“data”][“ssml”] should be True if [“data”][“text”] is a SSML string, i.e. using SSML tab.</p></li>
-<li><p>Note 4, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
-<li><p>Note 5, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
+<li><p>Note 4, [“data”][“text”] should be in utf-8 encoding and base64 encoded.</p></li>
+<li><p>Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
+<li><p>Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
 </ul>
 </div>
 <ol class="arabic simple" start="6">
