@@ -4,7 +4,7 @@ on:
   page_build
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
