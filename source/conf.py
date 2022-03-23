@@ -21,7 +21,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'Seasalt.ai Documentation'
-copyright = '2020-2021, Seasalt.ai'
+copyright = '2020-Today, Seasalt.ai'
 author = 'Seasalt.ai'
 
 # The full version, including alpha/beta/rc tags
