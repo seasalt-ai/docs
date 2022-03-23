@@ -20,6 +20,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install dependency
+      run: pip install sphinx_rtd_theme
     - name: Build and Commit
       uses: sphinx-notes/pages@master
       with:
