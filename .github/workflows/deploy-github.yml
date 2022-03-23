@@ -1,6 +1,7 @@
 name: Pages
 
 on:
+  page_build:
   push:
     branches:
       - master
