@@ -1,4 +1,4 @@
-name: Update Documentation
+name: build docs and publish to gh-pages branch
 
 on:
   push:
