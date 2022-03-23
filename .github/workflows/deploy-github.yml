@@ -1,9 +1,10 @@
 name: Pages
+
 on:
-  workflow_dispatch:
   push:
     branches:
-    - master
+      - master
+
 jobs:
   build:
     runs-on: ubuntu-latest

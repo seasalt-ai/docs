@@ -42,7 +42,7 @@ It is hosted at https://docs.seasalt.ai
 
 ## Publish
 
-Running `./publish.sh` will automatically write to `./docs`, which serves https://docs.seasalt.ai
+To publish your changes, make a PR to merge changes to `master` branch as usual. When your code is merged to `master` branch, Github Actions for deployment (see `.github/workflows/deploy-github.yml`) will be triggered to rebuild and publish static files to `gh-pages` branch. The webpage, [docs.seasalt.ai](https://docs.seasalt.ai), serves the static files that are pushed to `gh-pages` directly.
 
 ## Writing protocols
 
