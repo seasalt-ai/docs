@@ -11,7 +11,6 @@ Welcome to Seasalt.ai's Master Documentation!
    :titlesonly:
    :caption: Product Introductions
 
-   SeaX <product_introduction/seax>
    SeaVoice <product_introduction/seavoice>
 
 .. toctree::
