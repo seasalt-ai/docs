@@ -26,11 +26,6 @@ jobs:
       uses: sphinx-notes/pages@master
       with:
         documentation_path: source
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages
     - name: Add CNAME
       run: |
         echo "docs.seasalt.ai" >> CNAME
@@ -39,5 +34,5 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
         git add -A
-        git commit -m "Update test.txt"
+        git commit -m "Update docs"
         git push origin gh-pages
