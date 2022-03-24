@@ -3,7 +3,7 @@
 SeaVoice Python SDK
 ===================
 
-This is the tutorial about how to use SeaVoice Python SDK to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.
+This is the tutorial about how to use SeaVoice Python SDK to try Seasalt.ai Speech-To-Text (STT) and Text-To-Speech (TTS) services.
 
 Please contact info@seasalt.ai if you have any questions.
 
@@ -382,5 +382,3 @@ Change Log
 ``Improvements``
 
 -  Added websocket packages in requirements.txt file
-
-
