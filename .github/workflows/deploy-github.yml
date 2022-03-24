@@ -26,9 +26,18 @@ jobs:
       uses: sphinx-notes/pages@master
       with:
         documentation_path: source
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/html
-        cname: docs.seasalt.ai
+        branch: gh-pages
+    - name: Add CNAME
+        run: |
+          echo "docs.seasalt.ai" >> CNAME
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          git commit -m "Update test.txt"
+          git push origin gh-pages
