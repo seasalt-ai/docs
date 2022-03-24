@@ -6,7 +6,7 @@
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
-BUILDDIR      = build
+BUILDDIR      = docs
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees  $(SPHINXOPTS) $(SOURCEDIR)
 
 
