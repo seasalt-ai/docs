@@ -32,12 +32,12 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
     - name: Add CNAME
-        run: |
-          echo "docs.seasalt.ai" >> CNAME
+      run: |
+        echo "docs.seasalt.ai" >> CNAME
 
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add -A
-          git commit -m "Update test.txt"
-          git push origin gh-pages
+        git add -A
+        git commit -m "Update test.txt"
+        git push origin gh-pages
