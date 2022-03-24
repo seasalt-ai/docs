@@ -1,0 +1,16 @@
+
+Welcome to SeaWord
+===========================================
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: SeaWord
+
+   readme
+   sum_tutorial
+   topic_tutorial
+   action_tutorial
+   xlingualNER_tutorial
+   mr_tutorial
