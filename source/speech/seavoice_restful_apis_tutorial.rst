@@ -172,6 +172,7 @@ If something is wrong, API server may return HTTP 404 with a json string includi
             "pitch": 0.0,
             "speed": 1.0,
             "sample_rate": 22050
+            "rules":"TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5"
         },
         "data":
         {
@@ -188,6 +189,7 @@ If something is wrong, API server may return HTTP 404 with a json string includi
  - Note 4, ["data"]["text"] should be in utf-8 encoding and base64 encoded.
  - Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
  - Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
+ - Note 7, “rules” are pronunciation rules of the form "original_word \| replacement". A set of rules are written as "word1\|alias1\\nword2\|alias2\\nword3|alias3..."
 
 6. After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
 
