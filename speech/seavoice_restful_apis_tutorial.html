@@ -260,6 +260,7 @@ Find the voice you want and use, and get the value of <code class="docutils lite
         &quot;pitch&quot;: 0.0,
         &quot;speed&quot;: 1.0,
         &quot;sample_rate&quot;: 22050
+        &quot;rules&quot;:&quot;TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5&quot;
     },
     &quot;data&quot;:
     {
@@ -278,6 +279,7 @@ Find the voice you want and use, and get the value of <code class="docutils lite
 <li><p>Note 4, [“data”][“text”] should be in utf-8 encoding and base64 encoded.</p></li>
 <li><p>Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
 <li><p>Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
+<li><p>Note 7, “rules” are pronunciation rules of the form “original_word | replacement”. A set of rules are written as “word1|alias1\nword2|alias2\nword3|alias3…”</p></li>
 </ul>
 </div>
 <ol class="arabic simple" start="6">
