@@ -172,7 +172,7 @@ If something is wrong, API server may return HTTP 404 with a json string includi
             "pitch": 0.0,
             "speed": 1.0,
             "sample_rate": 22050
-            "rules":"你好 | ㄘㄜˋ ㄕˋ\n西雅圖 | 台灣\n拼音 | zhu4 yin1"
+            "rules":"TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5"
         },
         "data":
         {
