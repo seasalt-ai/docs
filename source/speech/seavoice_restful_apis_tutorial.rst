@@ -14,40 +14,64 @@ Please contact info@seasalt.ai if you have any questions.
 STT protocols
 -------------
 
-1. Login ``https://suite.seasalt.ai/stt/signin`` to get ``APIKEY``.
+1. Get ``speech_service_token``: send POST request to API: ``https://suite.seasalt.ai/api/v1/user/login``
 
-2. Client sends STT API request with ``language`` and ``APIKEY`` to API server: ``https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx``, put ``language`` in query string and ``APIKEY`` in headers. ``language`` currently supports ``en-US`` and ``zh-TW``.
+    .. code-block:: JSON
+
+        {
+            "account_id": "<username>",
+            "password": "<password>"
+        }
 
     - CLI example:
 
-    .. code-block:: bash
+        .. code-block:: bash
 
-        curl -H "speech_token: <APIKEY>" https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=zh-TW
+            curl -X 'POST' -d '{"account_id": <username>, "password": <password>}' 'https://suite.seasalt.ai/api/v1/user/login'
+            # return example: {"user_id": <username>, "timestamp":"2022-03-17T16:43:40", "token": <speech_service_token>, "role_id":2}
 
     - Python example:
 
-    .. code-block:: Python
+        .. code-block:: python
 
-        import requests
-        headers = {'speech_token': 'ae988bc0-8b70-11ec-a0c3-be6fdf6e6b7e'}
-        params = (('language', 'zh-TW'))
-        response = requests.get('https://suite.seasalt.ai/api/v1/speech/stt_server_url',
-                                headers=headers,
-                                params=params)
+            import requests
+            data = {
+                "account_id": <username>,
+                "password": <password>,
+                "entry": "not_userboard",
+            }
+            url = 'https://suite.seasalt.ai/api/v1/user/login'
+            res = requests.post(url, json=data)
+            assert res.status_code == 200, res.status_code
+            print(res.json()["token"]) # this is the speech_service_token
 
-3. API server returns HTTP 200 with json string including the available STT server's url to the client, like,
+2. Get ``api_key`` and STT ``server_url``: send POST request with ``language`` and ``speech_service_token`` to API server: ``https://suite.seasalt.ai/api/v1/speech/speech_to_text``. ``language`` currently supports ``en-US`` and ``zh-TW``.
+
+    - Python example:
+
+        .. code-block:: python
+            import requests
+            headers = {'token': speech_service_token}
+            data = {"language": "zh-TW"}
+            response = requests.post("https://suite.seasalt.ai/api/v1/speech/speech_to_text",
+                                    headers=headers, json=data)
+            print(response.json()) # return example: {'token': <api_key>, 'server_url': 'wss://<host>:<port>/client/ws/speech', 'account_id': <username>}
+
+3. API server returns HTTP 200 with json string including the available TTS server's url and ``api_key`` to Client, like
 
 .. code-block:: JSON
 
     {
-        "server_url": "wss://<host>:<port>/client/ws/speech"
+        "account_id": "<username>",
+        "server_url": "wss://<host>:<port>/client/ws/speech",
+        "token": "<api_key>"
     }
 
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. Client connects to the available STT server by websocket with ``APIKEY``, ``language`` and ``punctuation`` settings, e.g. ``wss://stt-servers.seasalt.ai:5019/client/ws/speech?token=<APIKEY>&language=zh-tw&punctuation=True``
+4. Client connects to the available STT server by websocket with ``api_key``, ``language`` and ``punctuation`` settings, e.g. ``wss://<host>:<port>/client/ws/speech?token=<api_key>&language=zh-tw&punctuation=True``
 
-5. STT server verifies ``APIKEY`` on API server, if something wrong, STT server will reply error message and close websocket connection:
+5. STT server verifies ``api_key`` on API server, and if something is wrong, STT server will reply error message and close websocket connection:
 
 .. code-block:: JSON
 
@@ -98,21 +122,36 @@ Audio data format to send to STT server:
 TTS protocols
 -------------
 
-1. Client sends https POST request to API: ``https://suite.seasalt.ai/api/v1/user/login`` to login and get ``api_token``.
+1. Get ``speech_service_token``: send POST request to API: ``https://suite.seasalt.ai/api/v1/user/login``
 
-.. code-block:: JSON
+    .. code-block:: JSON
 
-    {
-        "account_id": <username>,
-        "password": <password>
-    }
+        {
+            "account_id": "<username>",
+            "password": "<password>"
+        }
 
-- CLI example:
+    - CLI example:
 
-    .. code-block:: bash
+        .. code-block:: bash
 
-        curl -X 'POST' -d '{"account_id": <username>, "password": <password>}' 'https://suite.seasalt.ai/api/v1/user/login'
-        # return example: {"user_id":<username>,"timestamp":"2022-03-17T16:43:40","token":<api_token>,"role_id":2}
+            curl -X 'POST' -d '{"account_id": <username>, "password": <password>}' 'https://suite.seasalt.ai/api/v1/user/login'
+            # return example: {"user_id":<username>, "timestamp": "2022-03-17T16:43:40", "token": <speech_service_token>, "role_id": 2}
+
+    - Python example:
+
+        .. code-block:: python
+
+            import requests
+            data = {
+                "account_id": <username>,
+                "password": <password>,
+                "entry": "not_userboard",
+            }
+            url = 'https://suite.seasalt.ai/api/v1/user/login'
+            res = requests.post(url, json=data)
+            assert res.status_code == 200, res.status_code
+            print(res.json()["token"]) # this is the speech_service_token2}
 
 [OPTIONAL] Find available voices by sending a GET request to API: https://suite.seasalt.ai/api/v1/speech/tts_options.
 Find the voice you want and use, and get the value of ``model`` and ``language`` to insert as ``voice`` and ``language`` respectively in step 2.
@@ -124,7 +163,7 @@ Find the voice you want and use, and get the value of ``model`` and ``language``
         curl -X GET "https://suite.seasalt.ai/api/v1/speech/tts_options" -H "token: <api_token>"
         # return example: [{"model_name":"彤彤","language_name":"國語  (台灣)","service_type":"Text-to-Speech","description":null,"model":"Tongtong","language":"zh-TW","id":2}
 
-2. Client sends https POST request to API: ``https://suite.seasalt.ai/api/v1/speech/text_to_speech`` with ``language``, ``voice`` and ``api_token``.
+2. Get ``api_key`` and STT ``server_url``: send POST request to API: ``https://suite.seasalt.ai/api/v1/speech/text_to_speech`` with ``language``, ``voice`` and ``speech_service_token`` from step 1.
 
 .. code-block:: JSON
 
@@ -137,24 +176,24 @@ Find the voice you want and use, and get the value of ``model`` and ``language``
 
     .. code-block:: bash
 
-        curl -X POST "https://suite.seasalt.ai/api/v1/speech/text_to_speech" -H "token: <api_token>" -d '{"language": "zh-TW", "voice": "Tongtong"}'
-        # return example: {"token":<speech_service_token>,"server_url":"wss://<host>:<port>","account_id":<username>}
+        curl -X POST "https://suite.seasalt.ai/api/v1/speech/text_to_speech" -H "token: <speech_service_token>" -d '{"language": "zh-TW", "voice": "Tongtong"}'
+        # return example: {"token": <api_key>, "server_url":"wss://<host>:<port>", "account_id":<username>}
 
-please put ``api_token`` in the Headers and put ``language`` and ``voice`` in the request body.
+please put ``speech_service_token`` in the Headers and put ``language`` and ``voice`` in the request body.
 
-3. API server returns HTTP 200 with json string including the available TTS server's url and ``speech_service_token`` to Client, like
+3. API server returns HTTP 200 with json string including the available TTS server's url and ``api_key`` to Client, like
 
 .. code-block:: JSON
 
     {
-        "account_id": <username>,
+        "account_id": "<username>",
         "server_url": "wss://<host>:<port>",
-        "token": <speech_service_token>
+        "token": "<api_key>"
     }
 
 If something is wrong, API server may return HTTP 404 with a json string including an error message.
 
-4. Using the returned TTS ``server_url`` and ``speech_service_token`` from step 3, Client connects to TTS server as a websocket client.
+4. Using the returned TTS ``server_url`` and ``api_key`` from step 3, Client connects to TTS server as a websocket client.
 
 5. If successfully connected, Client sends json string to TTS server, for example,
 
@@ -165,7 +204,7 @@ If something is wrong, API server may return HTTP 404 with a json string includi
         {
             "language": "zh-TW",
             "voice": "Tongtong",
-            "token": <speech_service_token>
+            "token": "<api_key>"
         },
         "settings":
         {
@@ -176,7 +215,7 @@ If something is wrong, API server may return HTTP 404 with a json string includi
         },
         "data":
         {
-            "text": "text to be synthesized" (must be in utf-8 encoding and base64 encoded),
+            "text": "text to be synthesized"
             "ssml": "False"
         }
     }
@@ -186,7 +225,7 @@ If something is wrong, API server may return HTTP 404 with a json string includi
  - Note 1, “language” could be “zh-TW” or “en-US”.
  - Note 2, “voice” for “zh-TW” can be Tongtong or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
  - Note 3, ["data"]["ssml"] should be True if ["data"]["text"] is a SSML string, i.e. using SSML tab.
- - Note 4, ["data"]["text"] should be in utf-8 encoding and base64 encoded.
+ - Note 4, ["data"]["text"] **MUST** be in utf-8 encoding and base64 encoded.
  - Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
  - Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
  - Note 7, “rules” are pronunciation rules of the form "original_word \| replacement". A set of rules are written as "word1\|alias1\\nword2\|alias2\\nword3|alias3..."
