@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -84,7 +85,7 @@
            <div itemprop="articleBody">
              
   <section id="seavoice-python-sdk">
-<span id="seavoice-sdk-python-tutorial"></span><h1>SeaVoice Python SDK<a class="headerlink" href="#seavoice-python-sdk" title="Permalink to this headline"></a></h1>
+<span id="seavoice-sdk-python-tutorial"></span><h1>SeaVoice Python SDK<a class="headerlink" href="#seavoice-python-sdk" title="Permalink to this heading"></a></h1>
 <p>This is the tutorial about how to use SeaVoice Python SDK to try Seasalt.ai Speech-To-Text (STT) and Text-To-Speech (TTS) services.</p>
 <p>Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> if you have any questions.</p>
 <div class="contents local topic" id="table-of-contents">
@@ -127,23 +128,23 @@
 </ul>
 </div>
 <section id="speech-to-text-example">
-<h2><a class="toc-backref" href="#id7">Speech-to-Text Example:</a><a class="headerlink" href="#speech-to-text-example" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Speech-to-Text Example:</a><a class="headerlink" href="#speech-to-text-example" title="Permalink to this heading"></a></h2>
 <section id="prerequisites">
-<h3><a class="toc-backref" href="#id8">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h3>
 <p>You will need a SeaVoice speech service account to run this example. Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> and apply for it.</p>
 </section>
 <section id="install-and-import">
-<h3><a class="toc-backref" href="#id9">Install and import</a><a class="headerlink" href="#install-and-import" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Install and import</a><a class="headerlink" href="#install-and-import" title="Permalink to this heading"></a></h3>
 <p>To install SeaVoice SDK:</p>
 <p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">seavoice-sdk</span></code></p>
 <p>To import SeaVoice SDK:</p>
 <p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">seavoice_sdk.speech</span> <span class="pre">as</span> <span class="pre">speechsdk</span></code></p>
 </section>
 <section id="recognition">
-<h3><a class="toc-backref" href="#id10">Recognition</a><a class="headerlink" href="#recognition" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Recognition</a><a class="headerlink" href="#recognition" title="Permalink to this heading"></a></h3>
 <p>In the example below, we show how to recognize speech from an audio file. You can also apply recognition to an audio stream.</p>
 <section id="speech-configuration">
-<h4><a class="toc-backref" href="#id11">Speech Configuration</a><a class="headerlink" href="#speech-configuration" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id11">Speech Configuration</a><a class="headerlink" href="#speech-configuration" title="Permalink to this heading"></a></h4>
 <p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">SpeechConfig</span></code> (contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> for the speech service APIKEY):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
     <span class="n">apikey</span><span class="o">=</span><span class="n">SEASALT_APIKEY</span><span class="p">,</span>
@@ -156,7 +157,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">speech_recognition_punctuation</span></code> is used to set whether recognition results will have punctuations.</p>
 </section>
 <section id="audio-configuration">
-<h4><a class="toc-backref" href="#id12">Audio Configuration</a><a class="headerlink" href="#audio-configuration" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id12">Audio Configuration</a><a class="headerlink" href="#audio-configuration" title="Permalink to this heading"></a></h4>
 <p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">AudioConfig</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">audio_format</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">AudioStreamFormat</span><span class="p">(</span><span class="n">samples_per_second</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">bits_per_sample</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">audio_stream</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">audio</span><span class="o">.</span><span class="n">PushAudioInputStream</span><span class="p">(</span><span class="n">audio_format</span><span class="p">)</span>
@@ -165,7 +166,7 @@
 </div>
 </section>
 <section id="recognizer-initialization">
-<h4><a class="toc-backref" href="#id13">Recognizer initialization</a><a class="headerlink" href="#recognizer-initialization" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id13">Recognizer initialization</a><a class="headerlink" href="#recognizer-initialization" title="Permalink to this heading"></a></h4>
 <p>SpeechRecognizer can be initialzed as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_recognizer</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span>
     <span class="n">speech_config</span><span class="o">=</span><span class="n">speech_config</span><span class="p">,</span>
@@ -175,7 +176,7 @@
 </div>
 </section>
 <section id="callbacks-connection">
-<h4><a class="toc-backref" href="#id14">Callbacks connection</a><a class="headerlink" href="#callbacks-connection" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id14">Callbacks connection</a><a class="headerlink" href="#callbacks-connection" title="Permalink to this heading"></a></h4>
 <p>SpeechRecognizer has 5 kinds of callbacks:</p>
 <ul class="simple">
 <li><p>Recognizing - called when recognition is in progress.</p></li>
@@ -199,7 +200,7 @@
 </div>
 </section>
 <section id="recognizing-speech">
-<h4><a class="toc-backref" href="#id15">Recognizing speech</a><a class="headerlink" href="#recognizing-speech" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id15">Recognizing speech</a><a class="headerlink" href="#recognizing-speech" title="Permalink to this heading"></a></h4>
 <p>Now it is ready to run SpeechRecognizer. SpeechRecognizer has two ways
 for speech recognition:</p>
 <ul class="simple">
@@ -218,7 +219,7 @@ through callback functions. To stop the continuous recognition, call
 </div>
 </section>
 <section id="putting-everything-together">
-<h4><a class="toc-backref" href="#id16">Putting everything together</a><a class="headerlink" href="#putting-everything-together" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id16">Putting everything together</a><a class="headerlink" href="#putting-everything-together" title="Permalink to this heading"></a></h4>
 <p>Now, put everything together and run the example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seavoice_sdk.speech</span> <span class="k">as</span> <span class="nn">speechsdk</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -268,24 +269,24 @@ through callback functions. To stop the continuous recognition, call
 </section>
 </section>
 <section id="text-to-speech-example">
-<h2><a class="toc-backref" href="#id17">Text-to-Speech Example:</a><a class="headerlink" href="#text-to-speech-example" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Text-to-Speech Example:</a><a class="headerlink" href="#text-to-speech-example" title="Permalink to this heading"></a></h2>
 <section id="id1">
-<h3><a class="toc-backref" href="#id18">Prerequisites</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Prerequisites</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <p>You will need a SeaVoice speech service account to run this example. Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> and apply for it.</p>
 </section>
 <section id="id2">
-<h3><a class="toc-backref" href="#id19">Install and import</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Install and import</a><a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>To install SeaVoice SDK:</p>
 <p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">seavoice-sdk</span></code></p>
 <p>To import SeaVoice SDK:</p>
 <p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">seavoice_sdk.speech</span> <span class="pre">as</span> <span class="pre">speechsdk</span></code></p>
 </section>
 <section id="synthesis">
-<h3><a class="toc-backref" href="#id20">Synthesis</a><a class="headerlink" href="#synthesis" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">Synthesis</a><a class="headerlink" href="#synthesis" title="Permalink to this heading"></a></h3>
 <p>In the example below, we show how to synthesize text to generate an
 audio file. You can also receive synthesis results from an audio stream.</p>
 <section id="id3">
-<h4><a class="toc-backref" href="#id21">Speech Configuration</a><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id21">Speech Configuration</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
 <p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">SpeechConfig</span></code> (contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> for the speech service account):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_config</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechConfig</span><span class="p">(</span>
     <span class="n">account_id</span><span class="o">=</span><span class="n">SEASALT_ACCOUNT</span><span class="p">,</span>
@@ -307,7 +308,7 @@ For <code class="docutils literal notranslate"><span class="pre">en-GB</span></c
 <p><code class="docutils literal notranslate"><span class="pre">speech_synthesis_output_speed</span></code> could be a value between <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">2.0</span></code>, where <code class="docutils literal notranslate"><span class="pre">1.0</span></code> is the default/normal value.</p>
 </section>
 <section id="id4">
-<h4><a class="toc-backref" href="#id22">Audio Configuration</a><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id22">Audio Configuration</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
 <p>Use the following code to create <code class="docutils literal notranslate"><span class="pre">AudioOutputConfig</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seavoice_sdk.audio</span> <span class="k">as</span> <span class="nn">audio</span>
 <span class="c1"># Code commented out is an example for receiving synthesis results from an audio stream.</span>
@@ -318,7 +319,7 @@ For <code class="docutils literal notranslate"><span class="pre">en-GB</span></c
 </div>
 </section>
 <section id="synthesizer-initialization">
-<h4><a class="toc-backref" href="#id23">Synthesizer initialization</a><a class="headerlink" href="#synthesizer-initialization" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id23">Synthesizer initialization</a><a class="headerlink" href="#synthesizer-initialization" title="Permalink to this heading"></a></h4>
 <p>Synthesizer can be initialzed as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_synthesizer</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechSynthesizer</span><span class="p">(</span>
     <span class="n">speech_config</span><span class="o">=</span><span class="n">speech_config</span><span class="p">,</span>
@@ -328,7 +329,7 @@ For <code class="docutils literal notranslate"><span class="pre">en-GB</span></c
 </div>
 </section>
 <section id="id5">
-<h4><a class="toc-backref" href="#id24">Callbacks connection</a><a class="headerlink" href="#id5" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id24">Callbacks connection</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
 <p>SpeechSynthesizer has 4 kinds of callbacks:</p>
 <ul class="simple">
 <li><p>Synthesis_started - called when synthesis is started.</p></li>
@@ -349,7 +350,7 @@ For <code class="docutils literal notranslate"><span class="pre">en-GB</span></c
 </div>
 </section>
 <section id="synthesizing-text">
-<h4><a class="toc-backref" href="#id25">Synthesizing text</a><a class="headerlink" href="#synthesizing-text" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id25">Synthesizing text</a><a class="headerlink" href="#synthesizing-text" title="Permalink to this heading"></a></h4>
 <p>Now it is ready to run SpeechSynthesizer. There are two ways to run
 SpeechSynthesizer:</p>
 <ul>
@@ -368,7 +369,7 @@ function to wait and get synthesis result.</p>
 </ul>
 </section>
 <section id="judge-result-reason-check-result">
-<h4><a class="toc-backref" href="#id26">Judge result reason –&gt; Check result</a><a class="headerlink" href="#judge-result-reason-check-result" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id26">Judge result reason –&gt; Check result</a><a class="headerlink" href="#judge-result-reason-check-result" title="Permalink to this heading"></a></h4>
 <p>Both the synchronized and asynchronized methods return a
 <code class="docutils literal notranslate"><span class="pre">speechsdk.SpeechSynthesisResult</span></code> object, which indicates if synthesis
 was completed successfully:</p>
@@ -378,7 +379,7 @@ was completed successfully:</p>
 </div>
 </section>
 <section id="id6">
-<h4><a class="toc-backref" href="#id27">Putting everything together</a><a class="headerlink" href="#id6" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id27">Putting everything together</a><a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
 <p>Now, put everything together and run the example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">seavoice_sdk</span> <span class="kn">import</span> <span class="n">speech</span> <span class="k">as</span> <span class="n">speechsdk</span>
 <span class="kn">from</span> <span class="nn">seavoice_sdk</span> <span class="kn">import</span> <span class="n">audio</span> <span class="k">as</span> <span class="n">audio</span>
@@ -420,7 +421,7 @@ was completed successfully:</p>
 </section>
 </section>
 <section id="change-log">
-<h2><a class="toc-backref" href="#id28">Change Log</a><a class="headerlink" href="#change-log" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id28">Change Log</a><a class="headerlink" href="#change-log" title="Permalink to this heading"></a></h2>
 <p>[0.2.2] - 2021-8-16</p>
 <p><code class="docutils literal notranslate"><span class="pre">Bugfixes</span></code></p>
 <ul class="simple">

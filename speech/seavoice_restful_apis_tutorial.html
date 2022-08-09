@@ -15,6 +15,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -83,7 +84,7 @@
            <div itemprop="articleBody">
              
   <section id="seavoice-restful-apis">
-<span id="seavoice-restful-apis-tutorial"></span><h1>SeaVoice RESTful APIs<a class="headerlink" href="#seavoice-restful-apis" title="Permalink to this headline"></a></h1>
+<span id="seavoice-restful-apis-tutorial"></span><h1>SeaVoice RESTful APIs<a class="headerlink" href="#seavoice-restful-apis" title="Permalink to this heading"></a></h1>
 <p>This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.</p>
 <p>Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> if you have any questions.</p>
 <div class="contents local topic" id="table-of-contents">
@@ -94,41 +95,67 @@
 </ul>
 </div>
 <section id="stt-protocols">
-<h2><a class="toc-backref" href="#id1">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Login <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/stt/signin</span></code> to get <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>.</p></li>
-<li><p>Client sends STT API request with <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/stt_server_url?language=xxxxx</span></code>, put <code class="docutils literal notranslate"><span class="pre">language</span></code> in query string and <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> in headers. <code class="docutils literal notranslate"><span class="pre">language</span></code> currently supports <code class="docutils literal notranslate"><span class="pre">en-US</span></code> and <code class="docutils literal notranslate"><span class="pre">zh-TW</span></code>.</p>
+<li><p>Get <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>: send POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code></p>
 <blockquote>
-<div><ul class="simple">
-<li><p>CLI example:</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -H <span class="s2">&quot;speech_token: &lt;APIKEY&gt;&quot;</span> https://suite.seasalt.ai/api/v1/speech/stt_server_url?language<span class="o">=</span>zh-TW
+<div><div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;password&gt;&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>Python example:</p></li>
-</ul>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;speech_token&#39;</span><span class="p">:</span> <span class="s1">&#39;ae988bc0-8b70-11ec-a0c3-be6fdf6e6b7e&#39;</span><span class="p">}</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;zh-TW&#39;</span><span class="p">))</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://suite.seasalt.ai/api/v1/speech/stt_server_url&#39;</span><span class="p">,</span>
-                        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-                        <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+<ul>
+<li><p>CLI example:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X <span class="s1">&#39;POST&#39;</span> -d <span class="s1">&#39;{&quot;account_id&quot;: &lt;username&gt;, &quot;password&quot;: &lt;password&gt;}&#39;</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
+<span class="c1"># return example: {&quot;user_id&quot;: &lt;username&gt;, &quot;timestamp&quot;:&quot;2022-03-17T16:43:40&quot;, &quot;token&quot;: &lt;speech_service_token&gt;, &quot;role_id&quot;:2}</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>API server returns HTTP 200 with json string including the available STT server’s url to the client, like,</p></li>
+<li><p>Python example:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;account_id&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;entry&quot;</span><span class="p">:</span> <span class="s2">&quot;not_userboard&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;token&quot;</span><span class="p">])</span> <span class="c1"># this is the speech_service_token</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Get <code class="docutils literal notranslate"><span class="pre">api_key</span></code> and STT <code class="docutils literal notranslate"><span class="pre">server_url</span></code>: send POST request with <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> to API server: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/speech_to_text</span></code>. <code class="docutils literal notranslate"><span class="pre">language</span></code> currently supports <code class="docutils literal notranslate"><span class="pre">en-US</span></code> and <code class="docutils literal notranslate"><span class="pre">zh-TW</span></code>.</p>
+<blockquote>
+<div><ul>
+<li><p>Python example:</p>
+<blockquote>
+<div></div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>API server returns HTTP 200 with json string including the available TTS server’s url and <code class="docutils literal notranslate"><span class="pre">api_key</span></code> to Client, like</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;/client/ws/speech&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;/client/ws/speech&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
 <ol class="arabic simple" start="4">
-<li><p>Client connects to the available STT server by websocket with <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> settings, e.g. <code class="docutils literal notranslate"><span class="pre">wss://stt-servers.seasalt.ai:5019/client/ws/speech?token=&lt;APIKEY&gt;&amp;language=zh-tw&amp;punctuation=True</span></code></p></li>
-<li><p>STT server verifies <code class="docutils literal notranslate"><span class="pre">APIKEY</span></code> on API server, if something wrong, STT server will reply error message and close websocket connection:</p></li>
+<li><p>Client connects to the available STT server by websocket with <code class="docutils literal notranslate"><span class="pre">api_key</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> settings, e.g. <code class="docutils literal notranslate"><span class="pre">wss://&lt;host&gt;:&lt;port&gt;/client/ws/speech?token=&lt;api_key&gt;&amp;language=zh-tw&amp;punctuation=True</span></code></p></li>
+<li><p>STT server verifies <code class="docutils literal notranslate"><span class="pre">api_key</span></code> on API server, and if something is wrong, STT server will reply error message and close websocket connection:</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
@@ -181,26 +208,45 @@
 </dl>
 </section>
 <section id="tts-protocols">
-<h2><a class="toc-backref" href="#id2">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this headline"></a></h2>
-<ol class="arabic simple">
-<li><p>Client sends https POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code> to login and get <code class="docutils literal notranslate"><span class="pre">api_token</span></code>.</p></li>
-</ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;account_id&quot;: &lt;username&gt;,
-    &quot;password&quot;: &lt;password&gt;
-}
+<h2><a class="toc-backref" href="#id2">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Get <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>: send POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code></p>
+<blockquote>
+<div><div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;password&gt;&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <ul>
 <li><p>CLI example:</p>
 <blockquote>
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X <span class="s1">&#39;POST&#39;</span> -d <span class="s1">&#39;{&quot;account_id&quot;: &lt;username&gt;, &quot;password&quot;: &lt;password&gt;}&#39;</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
-<span class="c1"># return example: {&quot;user_id&quot;:&lt;username&gt;,&quot;timestamp&quot;:&quot;2022-03-17T16:43:40&quot;,&quot;token&quot;:&lt;api_token&gt;,&quot;role_id&quot;:2}</span>
+<span class="c1"># return example: {&quot;user_id&quot;:&lt;username&gt;, &quot;timestamp&quot;: &quot;2022-03-17T16:43:40&quot;, &quot;token&quot;: &lt;speech_service_token&gt;, &quot;role_id&quot;: 2}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Python example:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;account_id&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;entry&quot;</span><span class="p">:</span> <span class="s2">&quot;not_userboard&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;token&quot;</span><span class="p">])</span> <span class="c1"># this is the speech_service_token2}</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 </ul>
+</div></blockquote>
+</li>
+</ol>
 <p>[OPTIONAL] Find available voices by sending a GET request to API: <a class="reference external" href="https://suite.seasalt.ai/api/v1/speech/tts_options">https://suite.seasalt.ai/api/v1/speech/tts_options</a>.
 Find the voice you want and use, and get the value of <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">language</span></code> to insert as <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">language</span></code> respectively in step 2.</p>
 <ul>
@@ -214,7 +260,7 @@ Find the voice you want and use, and get the value of <code class="docutils lite
 </li>
 </ul>
 <ol class="arabic simple" start="2">
-<li><p>Client sends https POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/text_to_speech</span></code> with <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">api_token</span></code>.</p></li>
+<li><p>Get <code class="docutils literal notranslate"><span class="pre">api_key</span></code> and STT <code class="docutils literal notranslate"><span class="pre">server_url</span></code>: send POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/text_to_speech</span></code> with <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> from step 1.</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
@@ -225,49 +271,49 @@ Find the voice you want and use, and get the value of <code class="docutils lite
 <ul>
 <li><p>CLI example:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST <span class="s2">&quot;https://suite.seasalt.ai/api/v1/speech/text_to_speech&quot;</span> -H <span class="s2">&quot;token: &lt;api_token&gt;&quot;</span> -d <span class="s1">&#39;{&quot;language&quot;: &quot;zh-TW&quot;, &quot;voice&quot;: &quot;Tongtong&quot;}&#39;</span>
-<span class="c1"># return example: {&quot;token&quot;:&lt;speech_service_token&gt;,&quot;server_url&quot;:&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;,&quot;account_id&quot;:&lt;username&gt;}</span>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST <span class="s2">&quot;https://suite.seasalt.ai/api/v1/speech/text_to_speech&quot;</span> -H <span class="s2">&quot;token: &lt;speech_service_token&gt;&quot;</span> -d <span class="s1">&#39;{&quot;language&quot;: &quot;zh-TW&quot;, &quot;voice&quot;: &quot;Tongtong&quot;}&#39;</span>
+<span class="c1"># return example: {&quot;token&quot;: &lt;api_key&gt;, &quot;server_url&quot;:&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;, &quot;account_id&quot;:&lt;username&gt;}</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 </ul>
-<p>please put <code class="docutils literal notranslate"><span class="pre">api_token</span></code> in the Headers and put <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code> in the request body.</p>
+<p>please put <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> in the Headers and put <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code> in the request body.</p>
 <ol class="arabic simple" start="3">
-<li><p>API server returns HTTP 200 with json string including the available TTS server’s url and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> to Client, like</p></li>
+<li><p>API server returns HTTP 200 with json string including the available TTS server’s url and <code class="docutils literal notranslate"><span class="pre">api_key</span></code> to Client, like</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;account_id&quot;: &lt;username&gt;,
-    &quot;server_url&quot;: &quot;wss://&lt;host&gt;:&lt;port&gt;&quot;,
-    &quot;token&quot;: &lt;speech_service_token&gt;
-}
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
 <ol class="arabic simple" start="4">
-<li><p>Using the returned TTS <code class="docutils literal notranslate"><span class="pre">server_url</span></code> and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> from step 3, Client connects to TTS server as a websocket client.</p></li>
+<li><p>Using the returned TTS <code class="docutils literal notranslate"><span class="pre">server_url</span></code> and <code class="docutils literal notranslate"><span class="pre">api_key</span></code> from step 3, Client connects to TTS server as a websocket client.</p></li>
 <li><p>If successfully connected, Client sends json string to TTS server, for example,</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;business&quot;:
-    {
-        &quot;language&quot;: &quot;zh-TW&quot;,
-        &quot;voice&quot;: &quot;Tongtong&quot;,
-        &quot;token&quot;: &lt;speech_service_token&gt;
-    },
-    &quot;settings&quot;:
-    {
-        &quot;pitch&quot;: 0.0,
-        &quot;speed&quot;: 1.0,
-        &quot;sample_rate&quot;: 22050
-        &quot;rules&quot;:&quot;TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5&quot;
-    },
-    &quot;data&quot;:
-    {
-        &quot;text&quot;: &quot;text to be synthesized&quot; (must be in utf-8 encoding and base64 encoded),
-        &quot;ssml&quot;: &quot;False&quot;
-    }
-}
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;business&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tongtong&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">22050</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="s2">&quot;TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="nt">&quot;text to be synthesized&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;ssml&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;False&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -276,7 +322,7 @@ Find the voice you want and use, and get the value of <code class="docutils lite
 <li><p>Note 1, “language” could be “zh-TW” or “en-US”.</p></li>
 <li><p>Note 2, “voice” for “zh-TW” can be Tongtong or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
 <li><p>Note 3, [“data”][“ssml”] should be True if [“data”][“text”] is a SSML string, i.e. using SSML tab.</p></li>
-<li><p>Note 4, [“data”][“text”] should be in utf-8 encoding and base64 encoded.</p></li>
+<li><p>Note 4, [“data”][“text”] <strong>MUST</strong> be in utf-8 encoding and base64 encoded.</p></li>
 <li><p>Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
 <li><p>Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
 <li><p>Note 7, “rules” are pronunciation rules of the form “original_word | replacement”. A set of rules are written as “word1|alias1\nword2|alias2\nword3|alias3…”</p></li>
