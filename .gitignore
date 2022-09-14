@@ -44,3 +44,5 @@ Thumbs.db
 # Editor backup files #
 #######################
 *~
+
+.env

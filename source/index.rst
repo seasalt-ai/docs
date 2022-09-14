@@ -36,7 +36,13 @@ Welcome to Seasalt.ai's Master Documentation!
    SeaVoice SDK (Python) <speech/seavoice_sdk_python_tutorial>
    SeaVoice RESTful APIs <speech/seavoice_restful_apis_tutorial>
 
-
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaChat (SeaChat)
+   
+   SeaChat DashBoard <chat/dashboard>
 
 Indices and tables
 ==================
