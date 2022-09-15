@@ -40,9 +40,10 @@ Welcome to Seasalt.ai's Master Documentation!
    :maxdepth: 3
    :glob:
    :titlesonly:
-   :caption: SeaChat (SeaChat)
+   :caption: SeaChat
    
    SeaChat DashBoard <chat/dashboard>
+   SeaCode <chat/seacode>
 
 Indices and tables
 ==================
