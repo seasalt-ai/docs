@@ -329,7 +329,7 @@ Sample Client Script
         """Login with SeaAuth.
         Example of response:
             {
-            "account": "seax-case-management-admin",
+            "account": "test",
             "access_token": "eyJ0eXAiOi*****",
             "token_type": "Bearer",
             "refresh_token": "71bbffd5368*****"
