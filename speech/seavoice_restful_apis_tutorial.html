@@ -419,6 +419,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">wave</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
@@ -429,9 +430,26 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="n">VOICE_CHANNELS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">VOICE_SAMPLE_WIDTH</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="n">VOICES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;zh-TW&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Tongtong&quot;</span><span class="p">,</span> <span class="s2">&quot;Vivian&quot;</span><span class="p">},</span>
-    <span class="s2">&quot;en-US&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;MikeNorgaard&quot;</span><span class="p">,</span> <span class="s2">&quot;MoxieLabouche&quot;</span><span class="p">,</span> <span class="s2">&quot;LissaHenige&quot;</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Voices</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+    <span class="n">TONGTONG</span> <span class="o">=</span> <span class="s2">&quot;Tongtong&quot;</span>
+    <span class="n">VIVIAN</span> <span class="o">=</span> <span class="s2">&quot;Vivian&quot;</span>
+    <span class="n">MIKE_NORGAARD</span> <span class="o">=</span> <span class="s2">&quot;MikeNorgaard&quot;</span>
+    <span class="n">MOXIE_LABOUCHE</span> <span class="o">=</span> <span class="s2">&quot;MoxieLabouche&quot;</span>
+    <span class="n">LISSA_HENIGE</span> <span class="o">=</span> <span class="s2">&quot;LissaHenige&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+    <span class="n">EN_US</span> <span class="o">=</span> <span class="s2">&quot;en-US&quot;</span>
+    <span class="n">ZH_TW</span> <span class="o">=</span> <span class="s2">&quot;zh-TW&quot;</span>
+
+
+<span class="n">VOICES_LANGUAGES_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">TONGTONG</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">ZH_TW</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">VIVIAN</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">ZH_TW</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">MIKE_NORGAARD</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">MOXIE_LABOUCHE</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">LISSA_HENIGE</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
 <span class="p">}</span>
 
 
@@ -479,6 +497,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
         <span class="n">f</span><span class="o">.</span><span class="n">setnchannels</span><span class="p">(</span><span class="n">VOICE_CHANNELS</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">setsampwidth</span><span class="p">(</span><span class="n">VOICE_SAMPLE_WIDTH</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">setframerate</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
@@ -538,18 +557,11 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">command_str</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_determine_voice</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">voice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VOICES</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Voice selected doesn&#39;t match the language. Check supported list of lang/voices.&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;zh-TW&quot;</span><span class="p">:</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="s2">&quot;Tongtong&quot;</span>
-    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;en-US&quot;</span><span class="p">:</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="s2">&quot;MikeNorgaard&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only supports &#39;zh-TW&#39; or &#39;en-US&#39; for the &#39;--lang&#39; option.&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_check_voice</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VOICES_LANGUAGES_MAPPING</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="si">}</span><span class="s2"> only supports </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">VOICES_LANGUAGES_MAPPING</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">])</span><span class="si">}</span><span class="s2">, but the input is </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -560,11 +572,14 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="s2">&quot;--lang&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">)</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">lang</span> <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">Language</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must be in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--voice&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">voice</span> <span class="k">for</span> <span class="n">voice</span> <span class="ow">in</span> <span class="n">Voices</span><span class="p">],</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Voice of the synthesized speech.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -610,23 +625,23 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="s2">&quot;--pitch&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.0&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--speed&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust speed of synthesized speech, [0.0, 2.0] default is 1.0&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust speed of synthesized speech, [0, 2] default is 1.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--volume&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0.0, 100.0] default is 50.0&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0, 100] default is 50.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">_determine_voice</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">_check_voice</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 </pre></div>
 </div>

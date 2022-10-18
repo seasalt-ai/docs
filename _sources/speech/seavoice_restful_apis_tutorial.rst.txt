@@ -286,6 +286,7 @@ Sample Client Script
     import base64
     import json
     import wave
+    from enum import Enum
     from urllib.parse import urljoin
 
     import aiohttp
@@ -296,9 +297,26 @@ Sample Client Script
     VOICE_CHANNELS: int = 1
     VOICE_SAMPLE_WIDTH: int = 2
 
-    VOICES = {
-        "zh-TW": {"Tongtong", "Vivian"},
-        "en-US": {"MikeNorgaard", "MoxieLabouche", "LissaHenige"}
+
+    class Voices(str, Enum):
+        TONGTONG = "Tongtong"
+        VIVIAN = "Vivian"
+        MIKE_NORGAARD = "MikeNorgaard"
+        MOXIE_LABOUCHE = "MoxieLabouche"
+        LISSA_HENIGE = "LissaHenige"
+
+
+    class Language(str, Enum):
+        EN_US = "en-US"
+        ZH_TW = "zh-TW"
+
+
+    VOICES_LANGUAGES_MAPPING = {
+        Voices.TONGTONG: [Language.ZH_TW],
+        Voices.VIVIAN: [Language.ZH_TW],
+        Voices.MIKE_NORGAARD: [Language.EN_US],
+        Voices.MOXIE_LABOUCHE: [Language.EN_US],
+        Voices.LISSA_HENIGE: [Language.EN_US],
     }
 
 
@@ -346,6 +364,7 @@ Sample Client Script
 
     async def _receive_events(websocket, is_begin: asyncio.Event, is_sythesized: asyncio.Event):
         with wave.open(args.output, "w") as f:
+
             f.setnchannels(VOICE_CHANNELS)
             f.setsampwidth(VOICE_SAMPLE_WIDTH)
             f.setframerate(args.sample_rate)
@@ -405,18 +424,11 @@ Sample Client Script
         await websocket.send(command_str)
 
 
-    def _determine_voice(args: argparse.Namespace):
-        if args.voice:
-            if args.voice not in VOICES[args.lang]:
-                raise Exception("Voice selected doesn't match the language. Check supported list of lang/voices.")
-            return
-
-        if args.lang == "zh-TW":
-            args.voice = "Tongtong"
-        elif args.lang == "en-US":
-            args.voice = "MikeNorgaard"
-        else:
-            raise Exception("Only supports 'zh-TW' or 'en-US' for the '--lang' option.")
+    def _check_voice(args: argparse.Namespace):
+        if args.lang not in VOICES_LANGUAGES_MAPPING[args.voice]:
+            raise Exception(
+                f"{args.voice} only supports {','.join(VOICES_LANGUAGES_MAPPING[args.voice])}, but the input is {args.lang}."
+            )
 
 
     if __name__ == "__main__":
@@ -427,11 +439,14 @@ Sample Client Script
             "--lang",
             type=str,
             required=True,
-            help='Language of TTS server, must in ["zh-TW", "en-US"]')
+            choices=[lang for lang in Language],
+            help='Language of TTS server, must be in ["zh-TW", "en-US"]',
+        )
         parser.add_argument(
             "--voice",
             type=str,
-            default="",
+            required=True,
+            choices=[voice for voice in Voices],
             help="Voice of the synthesized speech.",
         )
         parser.add_argument(
@@ -477,25 +492,24 @@ Sample Client Script
             "--pitch",
             type=float,
             default=0.0,
-            help="Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.0",
+            help="Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.",
         )
         parser.add_argument(
             "--speed",
             type=float,
             default=1.0,
-            help="Optional, adjust speed of synthesized speech, [0.0, 2.0] default is 1.0",
+            help="Optional, adjust speed of synthesized speech, [0, 2] default is 1.",
         )
         parser.add_argument(
             "--volume",
             type=float,
             default=50.0,
-            help="Optional, adjust volume of synthesize speech, [0.0, 100.0] default is 50.0",
+            help="Optional, adjust volume of synthesize speech, [0, 100] default is 50.",
         )
 
         args = parser.parse_args()
-        _determine_voice(args)
+        _check_voice(args)
         asyncio.run(main(args))
-
 
 
 Supported SSML Tags
