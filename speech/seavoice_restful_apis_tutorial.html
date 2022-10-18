@@ -239,25 +239,32 @@
 <ol class="arabic simple" start="3">
 <li><p>Connect to SeaVoice TTS websocket server: <code class="docutils literal notranslate"><span class="pre">wss://seavoice.seasalt.ai/api/v1/tts/ws</span></code></p></li>
 </ol>
-<p>If successfully connected, Client sends json package to TTS server, for example (settings and data are shown with default values),</p>
+<p>If successfully connected, Client sends json packages to TTS server, for example (settings and data are shown with default values),</p>
+<p>authentication command</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;authentication&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{access_token}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en-US&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LissaHenige&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>synthesis command</p>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
-    &quot;business&quot;:
-    {
-        &quot;language&quot;: &quot;zh_tw,
-        &quot;voice&quot;: &quot;Tongtong&quot;,
-    },
-    &quot;settings&quot;:
-    {
-        &quot;pitch&quot;: 0.0,
-        &quot;speed&quot;: 1.0,
-        &quot;volume&quot;: 50.0,
-        &quot;sample_rate&quot;: 22050
-        &quot;rules&quot;: &quot;&quot;
-    },
-    &quot;data&quot;:
-    {
-        &quot;text&quot;: &quot;this is a test&quot;
-        &quot;ssml&quot;: True
+    &quot;command&quot;: &quot;synthesis&quot;,
+    &quot;payload&quot;: {
+        &quot;settings&quot;: {
+            &quot;pitch&quot;: 0,
+            &quot;speed&quot;: 0,
+            &quot;volume&quot;: 50,
+            &quot;rules&quot;: &quot;&quot;,
+            &quot;sample_rate&quot;: 8000,
+        },
+        &quot;data&quot;: {&quot;text&quot;: &quot;test&quot;, &quot;ssml&quot;: True},
     }
 }
 </pre></div>
