@@ -215,6 +215,140 @@ If successfully connected, Client sends json package to TTS server, for example 
 9. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
 
 
+Sample Client Script
+**********
+
+.. code-block:: python
+
+    import os
+    import wave
+    import argparse
+    import json
+    import base64
+    from pathlib import Path
+    import asyncio
+
+    import websockets
+
+    PACKAGE = {
+        "business": {
+            "language": "",
+            "voice": "",
+        },
+        "settings": {
+            "pitch": 0, 
+            "speed": 1.0, 
+            "volume": 50.0, 
+            "sample_rate": 22050, 
+            "rules": ""},
+        "data": {
+            "text": "", 
+            "ssml": True},
+    }
+
+
+    async def tts(
+        url: str,
+        text: str,
+        rules: str,
+        output: str,
+        sample_rate: int = 22050,
+        pitch: float = 0.0,
+        speed: float = 1.0,
+        volume: float = 50.0,
+    ):
+        PACKAGE["settings"]["rules"] = rules
+        PACKAGE["settings"]["sample_rate"] = sample_rate
+        PACKAGE["settings"]["pitch"] = pitch
+        PACKAGE["settings"]["speed"] = speed
+        PACKAGE["settings"]["volume"] = volume
+        async with websockets.connect(url) as websocket:
+            PACKAGE["data"]["text"] = text
+            is_ending = 1
+            decode_string = b""
+            await websocket.send(json.dumps(PACKAGE))
+            while is_ending == 1:
+                try:
+                    results = json.loads(await websocket.recv())
+                    is_ending = int(results["data"]["status"])
+                    assert results["status"] == "ok"
+                    decode_string += base64.b64decode(results["data"]["audio"])
+                except websockets.exceptions.ConnectionClosedOK:
+                    break
+        os.makedirs(Path(output).parent, exist_ok=True)
+        with wave.open(output, "w") as f:
+            f.setnchannels(1)
+            f.setsampwidth(2)
+            f.setframerate(sample_rate)
+            f.writeframes(decode_string)
+
+
+    if __name__ == "__main__":
+        parser = argparse.ArgumentParser()
+        parser.add_argument(
+            "--url",
+            type=str,
+            required=True,
+            help="TTS server url"
+        )
+        parser.add_argument(
+            "--port",
+            type=int,
+            required=True,
+            help="TTS server port"
+        )
+        parser.add_argument(
+            "--text",
+            type=str,
+            required=True,
+            help="Text to synthesize. Supports SSML text.",
+        )
+        parser.add_argument(
+            "--rules",
+            type=str,
+            required=False,
+            help="Global pronunciation rules."
+        )
+        parser.add_argument(
+            "--output",
+            type=str,
+            default="exp/test_audio.wav",
+            help="Path to output audio file.",
+        )
+        parser.add_argument(
+            "--sample-rate",
+            type=int,
+            default=22050,
+            help="Output audio sample rate",
+        )
+        parser.add_argument(
+            "--pitch",
+            type=float,
+            default=0.0,
+            help="Synthesised audio pitch",
+        )
+        parser.add_argument(
+            "--speed",
+            type=float,
+            default=1.0,
+            help="Synthesised audio speed",
+        )
+        parser.add_argument(
+            "--volume",
+            type=float,
+            default=50.0,
+            help="Synthesised audio volume",
+        )
+        args = parser.parse_args()
+
+        asyncio.run(
+            tts(
+                f"{args.url}:{args.port}", args.text, args.rules, args.output, args.sample_rate,
+                args.pitch, args.speed, args.volume
+            )
+        )
+
+
 Supported SSML Tags
 -------------
 Break
