@@ -291,7 +291,6 @@ Sample Client Script
     import aiohttp
     import websockets
 
-    ENDING_SLEEP: int = 5
     SEAAUTH_SCOPE_NAME: str = "seavoice"
 
     VOICE_CHANNELS: int = 1
@@ -333,18 +332,19 @@ Sample Client Script
         tts_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/tts/ws")
         async with websockets.connect(tts_endpoint_url) as websocket:
             is_begin = asyncio.Event()
-            asyncio.create_task(_receive_events(websocket, is_begin))
+            is_sythesized = asyncio.Event()
+            asyncio.create_task(_receive_events(websocket, is_begin, is_sythesized))
             await _send_authentication_command(websocket, auth_result)
             # wait until received the begin event from server
             await is_begin.wait()
             await _send_synthesis_commands(websocket, args)
 
             # wait for audio synthsized
-            await asyncio.sleep(ENDING_SLEEP)
+            await is_sythesized.wait()
             print("tts finished")
 
 
-    async def _receive_events(websocket, is_begin: asyncio.Event):
+    async def _receive_events(websocket, is_begin: asyncio.Event, is_sythesized: asyncio.Event):
         with wave.open(args.output, "w") as f:
             f.setnchannels(VOICE_CHANNELS)
             f.setsampwidth(VOICE_SAMPLE_WIDTH)
@@ -361,9 +361,12 @@ Sample Client Script
                     elif event_payload.get("status") == "error":
                         print(f"received an error event: {event_payload}")
                 elif event_name == "audio_data":
-                    print("received an audio_data event")
+                    synthesis_status = event_payload["status"]
+                    print(f"received an audio_data event, staus:{synthesis_status}")
                     # warning: it's a IO blocking operation.
                     f.writeframes(base64.b64decode(event_payload["audio"]))
+                    if synthesis_status == "synthesized":
+                        is_sythesized.set()
                 else:
                     print(f"received an unknown event: {event}")
 
