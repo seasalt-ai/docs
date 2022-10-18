@@ -122,7 +122,29 @@ Audio data format to send to STT server:
 TTS protocols
 -------------
 
-TODO: SeaAuth
+1. Log into SeaAuth: ``https://seaauth.seasalt.ai/api/v1/users/login``
+
+.. code-block:: JSON
+
+    {
+        "username": "test",
+        "password": "test",
+        "scope": "seavoice"
+    }
+
+
+2. Obtain access token in the response
+
+.. code-block:: JSON
+    
+    {
+        "account": "test",
+        "access_token": "eyJ0eXAiOi*****",
+        "token_type": "Bearer",
+        "refresh_token": "71bbffd5368*****"
+    }
+
+3. Connect to SeaVoice TTS websocket server: ``wss://seavoice.seasalt.ai/api/v1/tts/ws``
 
 If successfully connected, Client sends json package to TTS server, for example (settings and data are shown with default values),
 
@@ -148,6 +170,7 @@ If successfully connected, Client sends json package to TTS server, for example 
             "ssml": True
         }
     }
+
 .. NOTE::
 
   - <language> / <voice>: Choose from the following options
@@ -220,82 +243,183 @@ Sample Client Script
 
 .. code-block:: python
 
-    import os
-    import wave
-    import argparse
-    import json
-    import base64
-    from pathlib import Path
-    import asyncio
+    #!/usr/bin/env python3
+    # -*- coding: utf-8 -*-
 
+    # Copyright 2022  Seasalt AI, Inc
+
+    """Client script for tts endpoint
+    prerequisite:
+    python 3.8
+    python package:
+    - aiohttp==3.8.1
+    - websockets==10.3
+
+    Usage:
+    python tts_client.py \
+      --account test \
+      --password test \
+      --lang en-US \
+      --voice MikeNorgaard \
+      --text "hello this is a test"
+
+    `--account`: seavoice account
+    `--password`: seavoice password
+    `--text`: input text to synthesize, supports SSML format
+    `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
+    `--pitch`: optional, adjust pitch of synthesized speech, [-5, 5] default 0.0
+    `--speed`: optional, adjust speed of synthesized speech, [0, 2] default 1.0
+    `--volume`: optional, adjust volume of synthesize speech, [0, 100] default 50.0
+    `--sample-rate`: optional, set the sample rate of synthesized speech, default 22050
+    """
+
+    import argparse
+    import asyncio
+    import base64
+    import json
+    import wave
+    from urllib.parse import urljoin
+
+    import aiohttp
     import websockets
 
-    PACKAGE = {
-        "business": {
-            "language": "",
-            "voice": "",
-        },
-        "settings": {
-            "pitch": 0, 
-            "speed": 1.0, 
-            "volume": 50.0, 
-            "sample_rate": 22050, 
-            "rules": ""},
-        "data": {
-            "text": "", 
-            "ssml": True},
+    ENDING_SLEEP: int = 5
+    SEAAUTH_SCOPE_NAME: str = "seavoice"
+
+    VOICE_CHANNELS: int = 1
+    VOICE_SAMPLE_WIDTH: int = 2
+
+    VOICES = {
+        "zh-TW": {"Tongtong", "Vivian"}
+        "en-US": {"MikeNorgaard", "MoxieLabouche", "LissaHenige"}
     }
 
 
-    async def tts(
-        url: str,
-        text: str,
-        rules: str,
-        output: str,
-        sample_rate: int = 22050,
-        pitch: float = 0.0,
-        speed: float = 1.0,
-        volume: float = 50.0,
-    ):
-        PACKAGE["settings"]["rules"] = rules
-        PACKAGE["settings"]["sample_rate"] = sample_rate
-        PACKAGE["settings"]["pitch"] = pitch
-        PACKAGE["settings"]["speed"] = speed
-        PACKAGE["settings"]["volume"] = volume
-        async with websockets.connect(url) as websocket:
-            PACKAGE["data"]["text"] = text
-            is_ending = 1
-            decode_string = b""
-            await websocket.send(json.dumps(PACKAGE))
-            while is_ending == 1:
-                try:
-                    results = json.loads(await websocket.recv())
-                    is_ending = int(results["data"]["status"])
-                    assert results["status"] == "ok"
-                    decode_string += base64.b64decode(results["data"]["audio"])
-                except websockets.exceptions.ConnectionClosedOK:
-                    break
-        os.makedirs(Path(output).parent, exist_ok=True)
-        with wave.open(output, "w") as f:
-            f.setnchannels(1)
-            f.setsampwidth(2)
-            f.setframerate(sample_rate)
-            f.writeframes(decode_string)
+    async def main(args: argparse.Namespace):
+        auth_result = await _login_seaauth(args)
+        await _do_tts(args, auth_result)
+
+
+    async def _login_seaauth(args: argparse.Namespace) -> dict:
+        """Login with SeaAuth.
+        Example of response:
+            {
+            "account": "test",
+            "access_token": "eyJ0eXAiOi*****",
+            "token_type": "Bearer",
+            "refresh_token": "71bbffd5368*****"
+            }
+        """
+        payload = {"username": args.account, "password": args.password, "scope": SEAAUTH_SCOPE_NAME}
+        data = aiohttp.FormData()
+        data.add_fields(*payload.items())
+        async with aiohttp.ClientSession() as session:
+            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
+                if response.status >= 400:
+                    raise Exception(await response.text())
+                data = await response.json()
+                return data
+
+
+    async def _do_tts(args: argparse.Namespace, auth_result: dict):
+        tts_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/tts/ws")
+        async with websockets.connect(tts_endpoint_url) as websocket:
+            is_begin = asyncio.Event()
+            asyncio.create_task(_receive_events(websocket, is_begin))
+            await _send_authentication_command(websocket, auth_result)
+            # wait until received the begin event from server
+            await is_begin.wait()
+            await _send_synthesis_commands(websocket, args)
+
+            # wait for audio synthsized
+            await asyncio.sleep(ENDING_SLEEP)
+            print("tts finished")
+
+
+    async def _receive_events(websocket, is_begin: asyncio.Event):
+        with wave.open(args.output, "w") as f:
+            f.setnchannels(VOICE_CHANNELS)
+            f.setsampwidth(VOICE_SAMPLE_WIDTH)
+            f.setframerate(args.sample_rate)
+
+            async for message in websocket:
+                event = json.loads(message)
+                event_name = event.get("event", "")
+                event_payload = event.get("payload", {})
+                if event_name == "info":
+                    if event_payload.get("status") == "begin":
+                        print(f"received an info event: {event_payload}")
+                        is_begin.set()
+                    elif event_payload.get("status") == "error":
+                        print(f"received an error event: {event_payload}")
+                elif event_name == "audio_data":
+                    print("received an audio_data event")
+                    # warning: it's a IO blocking operation.
+                    f.writeframes(base64.b64decode(event_payload["audio"]))
+                else:
+                    print(f"received an unknown event: {event}")
+
+
+    async def _send_authentication_command(websocket, auth_result: dict):
+        authentication_command = {
+            "command": "authentication",
+            "payload": {
+                "token": auth_result["access_token"],
+                "settings": {
+                    "language": args.lang,
+                    "voice": args.voice,
+                },
+            },
+        }
+        command_str = json.dumps(authentication_command)
+        await websocket.send(command_str)
+
+
+    async def _send_synthesis_commands(websocket, args: argparse.Namespace):
+        synthesis_command = {
+            "command": "synthesis",
+            "payload": {
+                "settings": {
+                    "pitch": args.pitch,
+                    "speed": args.speed,
+                    "volume": args.volume,
+                    "rules": args.rules,
+                },
+                "data": {"text": args.text, "ssml": True},
+            },
+        }
+        command_str = json.dumps(synthesis_command)
+        await websocket.send(command_str)
+
+
+    def _determine_voice(args: argparse.Namespace):
+        if args.voice:
+            if args.voice not in VOICES[args.lang]:
+                raise Exception("Voice selected doesn't match the language. Check supported list of lang/voices.")
+            return
+
+        if args.lang == "zh-TW":
+            args.voice = "Tongtong"
+        elif args.lang == "en-US":
+            args.voice = "MikeNorgaard"
+        else:
+            raise Exception("Only supports 'zh-TW' or 'en-US' for the '--lang' option.")
 
 
     if __name__ == "__main__":
         parser = argparse.ArgumentParser()
+        parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
+        parser.add_argument("--password", type=str, required=True, help="password of a SeaAuth account.")
         parser.add_argument(
-            "--url",
+            "--lang",
             type=str,
             required=True,
-            help="TTS server url"
-        )
+            help='Language of TTS server, must in ["zh-TW", "en-US"]')
         parser.add_argument(
-            "--port",
-            type=int,
-            required=True,
-            help="TTS server port"
+            "--voice",
+            type=str,
+            default="",
+            help="Voice of the synthesized speech.",
         )
         parser.add_argument(
             "--text",
@@ -304,55 +428,68 @@ Sample Client Script
             help="Text to synthesize. Supports SSML text.",
         )
         parser.add_argument(
+            "--seaauth_url",
+            type=str,
+            required=False,
+            default="https://seaauth.seasalt.ai",
+            help="Url of SeaAuth.",
+        )
+        parser.add_argument(
+            "--seavoice_ws_url",
+            type=str,
+            required=False,
+            default="wss://seavoice.seasalt.ai",
+            help="Url of SeaVoice.",
+        )
+        parser.add_argument(
             "--rules",
             type=str,
             required=False,
-            help="Global pronunciation rules."
+            default="",
+            help="Global pronunciation rules.",
         )
         parser.add_argument(
             "--output",
             type=str,
-            default="exp/test_audio.wav",
+            default="test_audio.wav",
             help="Path to output audio file.",
         )
         parser.add_argument(
             "--sample-rate",
             type=int,
             default=22050,
-            help="Output audio sample rate",
+            help="Optional, set the sample rate of synthesized speech, default 22050.",
         )
         parser.add_argument(
             "--pitch",
             type=float,
             default=0.0,
-            help="Synthesised audio pitch",
+            help="Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.0",
         )
         parser.add_argument(
             "--speed",
             type=float,
             default=1.0,
-            help="Synthesised audio speed",
+            help="Optional, adjust speed of synthesized speech, [0.0, 2.0] default is 1.0",
         )
         parser.add_argument(
             "--volume",
             type=float,
             default=50.0,
-            help="Synthesised audio volume",
+            help="Optional, adjust volume of synthesize speech, [0.0, 100.0] default is 50.0",
         )
-        args = parser.parse_args()
 
-        asyncio.run(
-            tts(
-                f"{args.url}:{args.port}", args.text, args.rules, args.output, args.sample_rate,
-                args.pitch, args.speed, args.volume
-            )
-        )
+        args = parser.parse_args()
+        _determine_voice(args)
+        asyncio.run(main(args))
+
 
 
 Supported SSML Tags
--------------
-Break
 **********
+
+1. Break
+
 Description: Add pauses to the synthesized speech, measured in milliseconds.
 
 Format: ``<break time="100ms"/>``
@@ -362,8 +499,7 @@ Examples:
 - ``今天<break time="100ms"/>的日期是3/22/2022``
 - ``Today <break time="100ms"/> the date is 3/22/2022``
 
-Alias
-**********
+2. Alias
 Description: Specify pronunciation.
 
 Format:  ``<alias alphabet=”{sub|arpabet|zhuyin|pinyin}” ph='...'>...</alias>``
@@ -376,8 +512,7 @@ Examples:
 - ``代碼<alias alphabet='zhuyin' ph='ㄨㄟˊ'>為</alias>``
 - ``代碼<alias alphabet='pinyin' ph='wei2'>為</alias>``
 
-Say-as
-**********
+3. Say-as
 
 Description: Specify how to interpret ambiguous text like numbers and dates.
 
