@@ -360,6 +360,7 @@ Sample Client Script
                         is_begin.set()
                     elif event_payload.get("status") == "error":
                         print(f"received an error event: {event_payload}")
+                        raise (Exception(f"received an error event: {event_payload}"))
                 elif event_name == "audio_data":
                     synthesis_status = event_payload["status"]
                     print(f"received an audio_data event, staus:{synthesis_status}")
