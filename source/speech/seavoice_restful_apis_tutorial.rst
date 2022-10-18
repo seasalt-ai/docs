@@ -241,6 +241,19 @@ If successfully connected, Client sends json package to TTS server, for example 
 Sample Client Script
 **********
 
+1. Setup
+
+.. code-block:: bash
+
+    # Python venv setup (recommends using Python 3.8.10)
+    python3 -m venv venv/seavoice
+    source venv/seavoice/bin/activate
+    pip install --upgrade pip
+    pip install websockets==10.3
+    pip install aiohttp==3.8.1
+
+2. Run client script
+
 .. code-block:: python
 
     #!/usr/bin/env python3
@@ -248,12 +261,7 @@ Sample Client Script
 
     # Copyright 2022  Seasalt AI, Inc
 
-    """Client script for tts endpoint
-    prerequisite:
-    python 3.8
-    python package:
-    - aiohttp==3.8.1
-    - websockets==10.3
+    """TTS client script
 
     Usage:
     python tts_client.py \
