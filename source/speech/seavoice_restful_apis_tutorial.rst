@@ -146,28 +146,38 @@ TTS protocols
 
 3. Connect to SeaVoice TTS websocket server: ``wss://seavoice.seasalt.ai/api/v1/tts/ws``
 
-If successfully connected, Client sends json package to TTS server, for example (settings and data are shown with default values),
+If successfully connected, Client sends json packages to TTS server, for example (settings and data are shown with default values),
+
+authentication command
 
 .. code-block:: JSON
-
+    
     {
-        "business":
-        {
-            "language": "zh_tw,
-            "voice": "Tongtong",
-        },
-        "settings":
-        {
-            "pitch": 0.0,
-            "speed": 1.0,
-            "volume": 50.0,
-            "sample_rate": 22050
-            "rules": ""
-        },
-        "data":
-        {
-            "text": "this is a test"
-            "ssml": True
+        "command": "authentication",
+        "payload": {
+            "token": "{access_token}",
+            "settings": {
+                "language": "en-US",
+                "voice": "LissaHenige",
+            },
+        }
+    }
+
+synthesis command
+
+.. code-block:: JSON
+    
+    {
+        "command": "synthesis",
+        "payload": {
+            "settings": {
+                "pitch": 0,
+                "speed": 0,
+                "volume": 50,
+                "rules": "",
+                "sample_rate": 8000,
+            },
+            "data": {"text": "test", "ssml": True},
         }
     }
 
