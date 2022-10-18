@@ -180,7 +180,7 @@ If successfully connected, Client sends json package to TTS server, for example 
       - en-US
           - MikeNorgaard
           - MoxieLabouche
-          - LisaHenige
+          - LissaHenige
       
   - <pitch>
       - default: 0.0
