@@ -122,137 +122,139 @@ Audio data format to send to STT server:
 TTS protocols
 -------------
 
-1. Get ``speech_service_token``: send POST request to API: ``https://suite.seasalt.ai/api/v1/user/login``
+TODO: SeaAuth
 
-    .. code-block:: JSON
-
-        {
-            "account_id": "<username>",
-            "password": "<password>"
-        }
-
-    - CLI example:
-
-        .. code-block:: bash
-
-            curl -X 'POST' -d '{"account_id": <username>, "password": <password>}' 'https://suite.seasalt.ai/api/v1/user/login'
-            # return example: {"user_id":<username>, "timestamp": "2022-03-17T16:43:40", "token": <speech_service_token>, "role_id": 2}
-
-    - Python example:
-
-        .. code-block:: python
-
-            import requests
-            data = {
-                "account_id": <username>,
-                "password": <password>,
-                "entry": "not_userboard",
-            }
-            url = 'https://suite.seasalt.ai/api/v1/user/login'
-            res = requests.post(url, json=data)
-            assert res.status_code == 200, res.status_code
-            print(res.json()["token"]) # this is the speech_service_token2}
-
-[OPTIONAL] Find available voices by sending a GET request to API: https://suite.seasalt.ai/api/v1/speech/tts_options.
-Find the voice you want and use, and get the value of ``model`` and ``language`` to insert as ``voice`` and ``language`` respectively in step 2.
-
-- CLI example:
-
-    .. code-block:: bash
-
-        curl -X GET "https://suite.seasalt.ai/api/v1/speech/tts_options" -H "token: <api_token>"
-        # return example: [{"model_name":"彤彤","language_name":"國語  (台灣)","service_type":"Text-to-Speech","description":null,"model":"Tongtong","language":"zh-TW","id":2}
-
-2. Get ``api_key`` and STT ``server_url``: send POST request to API: ``https://suite.seasalt.ai/api/v1/speech/text_to_speech`` with ``language``, ``voice`` and ``speech_service_token`` from step 1.
-
-.. code-block:: JSON
-
-    {
-        "language": "zh-TW",
-        "voice": "Tongtong"
-    }
-
-- CLI example:
-
-    .. code-block:: bash
-
-        curl -X POST "https://suite.seasalt.ai/api/v1/speech/text_to_speech" -H "token: <speech_service_token>" -d '{"language": "zh-TW", "voice": "Tongtong"}'
-        # return example: {"token": <api_key>, "server_url":"wss://<host>:<port>", "account_id":<username>}
-
-please put ``speech_service_token`` in the Headers and put ``language`` and ``voice`` in the request body.
-
-3. API server returns HTTP 200 with json string including the available TTS server's url and ``api_key`` to Client, like
-
-.. code-block:: JSON
-
-    {
-        "account_id": "<username>",
-        "server_url": "wss://<host>:<port>",
-        "token": "<api_key>"
-    }
-
-If something is wrong, API server may return HTTP 404 with a json string including an error message.
-
-4. Using the returned TTS ``server_url`` and ``api_key`` from step 3, Client connects to TTS server as a websocket client.
-
-5. If successfully connected, Client sends json string to TTS server, for example,
+If successfully connected, Client sends json package to TTS server, for example (settings and data are shown with default values),
 
 .. code-block:: JSON
 
     {
         "business":
         {
-            "language": "zh-TW",
+            "language": "zh_tw,
             "voice": "Tongtong",
-            "token": "<api_key>"
         },
         "settings":
         {
             "pitch": 0.0,
             "speed": 1.0,
+            "volume": 50.0,
             "sample_rate": 22050
-            "rules":"TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5"
+            "rules": ""
         },
         "data":
         {
-            "text": "text to be synthesized"
-            "ssml": "False"
+            "text": "this is a test"
+            "ssml": True
         }
     }
-
 .. NOTE::
 
- - Note 1, “language” could be “zh-TW” or “en-US”.
- - Note 2, “voice” for “zh-TW” can be Tongtong or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.
- - Note 3, ["data"]["ssml"] should be True if ["data"]["text"] is a SSML string, i.e. using SSML tab.
- - Note 4, ["data"]["text"] **MUST** be in utf-8 encoding and base64 encoded.
- - Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like `100%` to a decimal like `12.0`. It's a linear conversion, `0%` corresponds to `0.0`, `100%` corresponds to `12.0`, `-100%` corresponds to `-12.0`.
- - Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.
- - Note 7, “rules” are pronunciation rules of the form "original_word \| replacement". A set of rules are written as "word1\|alias1\\nword2\|alias2\\nword3|alias3..."
+  - <language> / <voice>: Choose from the following options
+      - zh-TW
+          - Tongtong
+          - Vivian
+      - en-US
+          - MikeNorgaard
+          - MoxieLabouche
+          - LisaHenige
+      
+  - <pitch>
+      - default: 0.0
+      - range: [-5.0, 5.0] 
+      - description: adjust the pitch of the synthesized voice, where positive values raise the pitch and negative values lower the pitch.
+  - <speed>
+      - default = 1.0
+      - range: [0.0, 3.0]
+      - description: adjust the speed of the synthesized voice, where values > 1.0 speed up the speech and values < 1.0 slows down the speech.
+  - <volume>
+      - default: 50.0
+      - range: [0.0, 100.0]
+      - description: adjust the volume of the synthesized voice, where values > 50.0 increases the volume and values < 50.0 decreases the volume.
+  - <sample_rate>
+      - default: 22050
+      - range: [8000, 48000]
+      - description: set the output audio sample rate
+  - <rules>
+      - default: (empty string)
+      - description: pronunciation rules as a string in the following format "<WORD1> | <PRONUNCIATION1>\n<WORD2> | <PRONUNCIATION2>"
+      - for "zh-TW", pronunciation can be specified in zhuyin, pinyin, or Chinese characters, e.g. "TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5"
+      - for "en-US", pronunciation can be specified with English words, e.g. "XÆA12 | ex ash ay twelve\nSideræl|psydeereal"
+  - <ssml>
+      - default: false
+      - description: should be True if <text> is an SSML string, i.e. using SSML tags. See :ref:`Supported SSML Tags` for more info.
 
-6. After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
 
-7. TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,
+6. After sending the package, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
+
+7. TTS server performs synthesis and keeps sending streaming audio data to Client. The audio package format is as follows:
 
 .. code-block:: JSON
 
     {
-        "status": "ok",
-        "sid": "seq_id",
-        "progress": 5,
+        "status": <SEQ_STATUS>,
+        "message": <MESSAGE>,
+        "sid": <SEQ_ID>,
         "data":
         {
-            "audio": "<base64 encoded raw pcm data>",
-            "status": 2
+            "audio": <AUDIO_DATA>,
+            "status": <STATUS>
         }
     }
 
 .. NOTE::
 
- - Note 1, if "status" isn't "ok", then there will be some error messages.
- - Note 2, if ["data"]["status"] is 1, means synthesis is in progress; if ["data"]["status"] is 2, means synthesis is completed.
- - Note 3, "progress" means currently which character it's synthesizing.
+    - <SEQ_STATUS>: Either "ok" or an error message
+    - <MESSAGE>: Additional information based on the status
+    - <SEQ_ID>: audio sequence id
+    - <STATUS>: if status is 1 it means streaming synthesis is still in progress; if status is 2, it means synthesis is complete.
+
 
 8. Client receives audio data frames.
 
 9. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
+
+
+Supported SSML Tags
+-------------
+Break
+**********
+Description: Add pauses to the synthesized speech, measured in milliseconds.
+
+Format: ``<break time="100ms"/>``
+
+Examples:
+
+- ``今天<break time="100ms"/>的日期是3/22/2022``
+- ``Today <break time="100ms"/> the date is 3/22/2022``
+
+Alias
+**********
+Description: Specify pronunciation.
+
+Format:  ``<alias alphabet=”{sub|arpabet|zhuyin|pinyin}” ph='...'>...</alias>``
+
+Examples:
+
+- ``<alias alphabet='sub' ph='see salt dot ay eye'>Seasalt.ai</alias>``
+- ``代碼<alias alphabet='sub' ph='維'>為</sub>``
+- ``<alias alphabet='arpabet' ph='HH AH0 L OW1'>hello</alias>``
+- ``代碼<alias alphabet='zhuyin' ph='ㄨㄟˊ'>為</alias>``
+- ``代碼<alias alphabet='pinyin' ph='wei2'>為</alias>``
+
+Say-as
+**********
+
+Description: Specify how to interpret ambiguous text like numbers and dates.
+
+Format: ``<say-as interpret-as='{digits|cardinal|spell-out|date}' format='{phone|social|m/d/Y|...}'>...</say-as>``
+
+Examples:
+
+- ``Today is <say-as interpret-as='date' format='m/d/Y'>2/11/2022</say-as>``
+- ``my phone number is <say-as interpret-as='digits' format='phone'>7145262155</say-as>``
+- ``the word diarization is spelled <say-as interpret-as='spell-out'>diarization</say-as>``
+- ``今天的日期是<say-as interpret-as='date' format='m/d/Y'>3/15/2022</say-as>``
+- ``我的電話號碼是<say-as interpret-as='digits' format='mobile'>1234567890</say-as>``
+- ``訂位代碼為<say-as interpret-as='spell-out'>5VOPXT</say-as>``
+- ``訂位代碼為<say-as interpret-as='spell-out' time='600ms'=>5VOPXT</say-as>``
