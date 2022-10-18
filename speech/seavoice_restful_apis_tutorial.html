@@ -92,7 +92,12 @@
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#stt-protocols" id="id1">STT protocols</a></p></li>
-<li><p><a class="reference internal" href="#tts-protocols" id="id2">TTS protocols</a></p></li>
+<li><p><a class="reference internal" href="#tts-protocols" id="id2">TTS protocols</a></p>
+<ul>
+<li><p><a class="reference internal" href="#sample-client-script" id="id3">Sample Client Script</a></p></li>
+<li><p><a class="reference internal" href="#supported-ssml-tags" id="id4">Supported SSML Tags</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="stt-protocols">
@@ -210,153 +215,461 @@
 </section>
 <section id="tts-protocols">
 <h2><a class="toc-backref" href="#id2">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this heading"></a></h2>
-<ol class="arabic">
-<li><p>Get <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code>: send POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/user/login</span></code></p>
-<blockquote>
-<div><div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;password&gt;&quot;</span><span class="w"></span>
+<ol class="arabic simple">
+<li><p>Log into SeaAuth: <code class="docutils literal notranslate"><span class="pre">https://seaauth.seasalt.ai/api/v1/users/login</span></code></p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seavoice&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<ul>
-<li><p>CLI example:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X <span class="s1">&#39;POST&#39;</span> -d <span class="s1">&#39;{&quot;account_id&quot;: &lt;username&gt;, &quot;password&quot;: &lt;password&gt;}&#39;</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
-<span class="c1"># return example: {&quot;user_id&quot;:&lt;username&gt;, &quot;timestamp&quot;: &quot;2022-03-17T16:43:40&quot;, &quot;token&quot;: &lt;speech_service_token&gt;, &quot;role_id&quot;: 2}</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>Python example:</p>
-<blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;account_id&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="s2">&quot;entry&quot;</span><span class="p">:</span> <span class="s2">&quot;not_userboard&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://suite.seasalt.ai/api/v1/user/login&#39;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;token&quot;</span><span class="p">])</span> <span class="c1"># this is the speech_service_token2}</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ul>
-</div></blockquote>
-</li>
-</ol>
-<p>[OPTIONAL] Find available voices by sending a GET request to API: <a class="reference external" href="https://suite.seasalt.ai/api/v1/speech/tts_options">https://suite.seasalt.ai/api/v1/speech/tts_options</a>.
-Find the voice you want and use, and get the value of <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">language</span></code> to insert as <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">language</span></code> respectively in step 2.</p>
-<ul>
-<li><p>CLI example:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X GET <span class="s2">&quot;https://suite.seasalt.ai/api/v1/speech/tts_options&quot;</span> -H <span class="s2">&quot;token: &lt;api_token&gt;&quot;</span>
-<span class="c1"># return example: [{&quot;model_name&quot;:&quot;彤彤&quot;,&quot;language_name&quot;:&quot;國語  (台灣)&quot;,&quot;service_type&quot;:&quot;Text-to-Speech&quot;,&quot;description&quot;:null,&quot;model&quot;:&quot;Tongtong&quot;,&quot;language&quot;:&quot;zh-TW&quot;,&quot;id&quot;:2}</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ul>
 <ol class="arabic simple" start="2">
-<li><p>Get <code class="docutils literal notranslate"><span class="pre">api_key</span></code> and STT <code class="docutils literal notranslate"><span class="pre">server_url</span></code>: send POST request to API: <code class="docutils literal notranslate"><span class="pre">https://suite.seasalt.ai/api/v1/speech/text_to_speech</span></code> with <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">voice</span></code> and <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> from step 1.</p></li>
+<li><p>Obtain access token in the response</p></li>
 </ol>
 <div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tongtong&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;account&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;access_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJ0eXAiOi*****&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;token_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bearer&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;refresh_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;71bbffd5368*****&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<ul>
-<li><p>CLI example:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -X POST <span class="s2">&quot;https://suite.seasalt.ai/api/v1/speech/text_to_speech&quot;</span> -H <span class="s2">&quot;token: &lt;speech_service_token&gt;&quot;</span> -d <span class="s1">&#39;{&quot;language&quot;: &quot;zh-TW&quot;, &quot;voice&quot;: &quot;Tongtong&quot;}&#39;</span>
-<span class="c1"># return example: {&quot;token&quot;: &lt;api_key&gt;, &quot;server_url&quot;:&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;, &quot;account_id&quot;:&lt;username&gt;}</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ul>
-<p>please put <code class="docutils literal notranslate"><span class="pre">speech_service_token</span></code> in the Headers and put <code class="docutils literal notranslate"><span class="pre">language</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code> in the request body.</p>
 <ol class="arabic simple" start="3">
-<li><p>API server returns HTTP 200 with json string including the available TTS server’s url and <code class="docutils literal notranslate"><span class="pre">api_key</span></code> to Client, like</p></li>
+<li><p>Connect to SeaVoice TTS websocket server: <code class="docutils literal notranslate"><span class="pre">wss://seavoice.seasalt.ai/api/v1/tts/ws</span></code></p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;account_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;server_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wss://&lt;host&gt;:&lt;port&gt;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-<p>If something is wrong, API server may return HTTP 404 with a json string including an error message.</p>
-<ol class="arabic simple" start="4">
-<li><p>Using the returned TTS <code class="docutils literal notranslate"><span class="pre">server_url</span></code> and <code class="docutils literal notranslate"><span class="pre">api_key</span></code> from step 3, Client connects to TTS server as a websocket client.</p></li>
-<li><p>If successfully connected, Client sends json string to TTS server, for example,</p></li>
-</ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;business&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tongtong&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">22050</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="s2">&quot;TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="nt">&quot;text to be synthesized&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;ssml&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;False&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<p>If successfully connected, Client sends json package to TTS server, for example (settings and data are shown with default values),</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;business&quot;:
+    {
+        &quot;language&quot;: &quot;zh_tw,
+        &quot;voice&quot;: &quot;Tongtong&quot;,
+    },
+    &quot;settings&quot;:
+    {
+        &quot;pitch&quot;: 0.0,
+        &quot;speed&quot;: 1.0,
+        &quot;volume&quot;: 50.0,
+        &quot;sample_rate&quot;: 22050
+        &quot;rules&quot;: &quot;&quot;
+    },
+    &quot;data&quot;:
+    {
+        &quot;text&quot;: &quot;this is a test&quot;
+        &quot;ssml&quot;: True
+    }
+}
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>Note 1, “language” could be “zh-TW” or “en-US”.</p></li>
-<li><p>Note 2, “voice” for “zh-TW” can be Tongtong or “Vivian”; “voice” for “en-US” could be “TomHanks”, “ReeseWitherspoon” or “AnneHathaway”.</p></li>
-<li><p>Note 3, [“data”][“ssml”] should be True if [“data”][“text”] is a SSML string, i.e. using SSML tab.</p></li>
-<li><p>Note 4, [“data”][“text”] <strong>MUST</strong> be in utf-8 encoding and base64 encoded.</p></li>
-<li><p>Note 5, “pitch” could be a value between -12.0 to 12.0, 0.0 is normal pitch,  needs to convert pitch from a percentage number like <cite>100%</cite> to a decimal like <cite>12.0</cite>. It’s a linear conversion, <cite>0%</cite> corresponds to <cite>0.0</cite>, <cite>100%</cite> corresponds to <cite>12.0</cite>, <cite>-100%</cite> corresponds to <cite>-12.0</cite>.</p></li>
-<li><p>Note 6, “speed” could be a value from 0.5 to 2.0, 1.0 is normal speed.</p></li>
-<li><p>Note 7, “rules” are pronunciation rules of the form “original_word | replacement”. A set of rules are written as “word1|alias1\nword2|alias2\nword3|alias3…”</p></li>
+<li><dl class="simple">
+<dt>&lt;language&gt; / &lt;voice&gt;: Choose from the following options</dt><dd><ul>
+<li><dl class="simple">
+<dt>zh-TW</dt><dd><ul>
+<li><p>Tongtong</p></li>
+<li><p>Vivian</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>en-US</dt><dd><ul>
+<li><p>MikeNorgaard</p></li>
+<li><p>MoxieLabouche</p></li>
+<li><p>LissaHenige</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>&lt;pitch&gt;</dt><dd><ul>
+<li><p>default: 0.0</p></li>
+<li><p>range: [-5.0, 5.0]</p></li>
+<li><p>description: adjust the pitch of the synthesized voice, where positive values raise the pitch and negative values lower the pitch.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>&lt;speed&gt;</dt><dd><ul>
+<li><p>default = 1.0</p></li>
+<li><p>range: [0.0, 3.0]</p></li>
+<li><p>description: adjust the speed of the synthesized voice, where values &gt; 1.0 speed up the speech and values &lt; 1.0 slows down the speech.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>&lt;volume&gt;</dt><dd><ul>
+<li><p>default: 50.0</p></li>
+<li><p>range: [0.0, 100.0]</p></li>
+<li><p>description: adjust the volume of the synthesized voice, where values &gt; 50.0 increases the volume and values &lt; 50.0 decreases the volume.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>&lt;sample_rate&gt;</dt><dd><ul>
+<li><p>default: 22050</p></li>
+<li><p>range: [8000, 48000]</p></li>
+<li><p>description: set the output audio sample rate</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>&lt;rules&gt;</dt><dd><ul>
+<li><p>default: (empty string)</p></li>
+<li><p>description: pronunciation rules as a string in the following format “&lt;WORD1&gt; | &lt;PRONUNCIATION1&gt;n&lt;WORD2&gt; | &lt;PRONUNCIATION2&gt;”</p></li>
+<li><p>for “zh-TW”, pronunciation can be specified in zhuyin, pinyin, or Chinese characters, e.g. “TSMC | 台積電n你好 | ㄋㄧˇ ㄏㄠˇn為了 | wei4 le5”</p></li>
+<li><p>for “en-US”, pronunciation can be specified with English words, e.g. “XÆA12 | ex ash ay twelvenSideræl|psydeereal”</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>&lt;ssml&gt;</dt><dd><ul>
+<li><p>default: false</p></li>
+<li><p>description: should be True if &lt;text&gt; is an SSML string, i.e. using SSML tags. See <a class="reference internal" href="#supported-ssml-tags"><span class="std std-ref">Supported SSML Tags</span></a> for more info.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
 <ol class="arabic simple" start="6">
-<li><p>After sending the TEXT/SSML string, Client calls ws.recv() to wait for TTS server to send the streaming audio data.</p></li>
-<li><p>TTS server performs synthesis and keeps sending streaming audio data to Client. The format is,</p></li>
+<li><p>After sending the package, Client calls ws.recv() to wait for TTS server to send the streaming audio data.</p></li>
+<li><p>TTS server performs synthesis and keeps sending streaming audio data to Client. The audio package format is as follows:</p></li>
 </ol>
-<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seq_id&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;audio&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;base64 encoded raw pcm data&gt;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>{
+    &quot;status&quot;: &lt;SEQ_STATUS&gt;,
+    &quot;message&quot;: &lt;MESSAGE&gt;,
+    &quot;sid&quot;: &lt;SEQ_ID&gt;,
+    &quot;data&quot;:
+    {
+        &quot;audio&quot;: &lt;AUDIO_DATA&gt;,
+        &quot;status&quot;: &lt;STATUS&gt;
+    }
+}
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>Note 1, if “status” isn’t “ok”, then there will be some error messages.</p></li>
-<li><p>Note 2, if [“data”][“status”] is 1, means synthesis is in progress; if [“data”][“status”] is 2, means synthesis is completed.</p></li>
-<li><p>Note 3, “progress” means currently which character it’s synthesizing.</p></li>
+<li><p>&lt;SEQ_STATUS&gt;: Either “ok” or an error message</p></li>
+<li><p>&lt;MESSAGE&gt;: Additional information based on the status</p></li>
+<li><p>&lt;SEQ_ID&gt;: audio sequence id</p></li>
+<li><p>&lt;STATUS&gt;: if status is 1 it means streaming synthesis is still in progress; if status is 2, it means synthesis is complete.</p></li>
 </ul>
 </div>
 <ol class="arabic simple" start="8">
 <li><p>Client receives audio data frames.</p></li>
 <li><p>After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p></li>
 </ol>
+<section id="sample-client-script">
+<h3><a class="toc-backref" href="#id3">Sample Client Script</a><a class="headerlink" href="#sample-client-script" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Setup</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python venv setup (recommends using Python 3.8.10)</span>
+python3 -m venv venv/seavoice
+<span class="nb">source</span> venv/seavoice/bin/activate
+pip install --upgrade pip
+pip install <span class="nv">websockets</span><span class="o">==</span><span class="m">10</span>.3
+pip install <span class="nv">aiohttp</span><span class="o">==</span><span class="m">3</span>.8.1
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Run client script</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1"># Copyright 2022  Seasalt AI, Inc</span>
+
+<span class="sd">&quot;&quot;&quot;TTS client script</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">python tts_client.py \</span>
+<span class="sd">  --account test \</span>
+<span class="sd">  --password test \</span>
+<span class="sd">  --lang en-US \</span>
+<span class="sd">  --voice MikeNorgaard \</span>
+<span class="sd">  --text &quot;hello this is a test&quot;</span>
+
+<span class="sd">`--account`: seavoice account</span>
+<span class="sd">`--password`: seavoice password</span>
+<span class="sd">`--text`: input text to synthesize, supports SSML format</span>
+<span class="sd">`--rules`: optional, globally applied pronunciation rules in the format of `&lt;word&gt; | &lt;pronunciation&gt;\n`</span>
+<span class="sd">`--pitch`: optional, adjust pitch of synthesized speech, [-5, 5] default 0.0</span>
+<span class="sd">`--speed`: optional, adjust speed of synthesized speech, [0, 2] default 1.0</span>
+<span class="sd">`--volume`: optional, adjust volume of synthesize speech, [0, 100] default 50.0</span>
+<span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech, default 22050</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">wave</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">websockets</span>
+
+<span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
+
+<span class="n">VOICE_CHANNELS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VOICE_SAMPLE_WIDTH</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">VOICES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;zh-TW&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Tongtong&quot;</span><span class="p">,</span> <span class="s2">&quot;Vivian&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;en-US&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;MikeNorgaard&quot;</span><span class="p">,</span> <span class="s2">&quot;MoxieLabouche&quot;</span><span class="p">,</span> <span class="s2">&quot;LissaHenige&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="n">auth_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Login with SeaAuth.</span>
+<span class="sd">    Example of response:</span>
+<span class="sd">        {</span>
+<span class="sd">        &quot;account&quot;: &quot;test&quot;,</span>
+<span class="sd">        &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
+<span class="sd">        &quot;token_type&quot;: &quot;Bearer&quot;,</span>
+<span class="sd">        &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
+<span class="sd">        }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span><span class="o">*</span><span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/login&quot;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="n">tts_endpoint_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seavoice_ws_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/tts/ws&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tts_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
+        <span class="n">is_begin</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="n">is_sythesized</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">))</span>
+        <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+        <span class="c1"># wait until received the begin event from server</span>
+        <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+        <span class="c1"># wait for audio synthsized</span>
+        <span class="k">await</span> <span class="n">is_sythesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tts finished&quot;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">setnchannels</span><span class="p">(</span><span class="n">VOICE_CHANNELS</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">setsampwidth</span><span class="p">(</span><span class="n">VOICE_SAMPLE_WIDTH</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">setframerate</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
+
+        <span class="k">async</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">websocket</span><span class="p">:</span>
+            <span class="n">event</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">event_name</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">event_payload</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;payload&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="k">if</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;begin&quot;</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">is_begin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;audio_data&quot;</span><span class="p">:</span>
+                <span class="n">synthesis_status</span> <span class="o">=</span> <span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an audio_data event, staus:</span><span class="si">{</span><span class="n">synthesis_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="c1"># warning: it&#39;s a IO blocking operation.</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">writeframes</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">synthesis_status</span> <span class="o">==</span> <span class="s2">&quot;synthesized&quot;</span><span class="p">:</span>
+                    <span class="n">is_sythesized</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="n">authentication_command</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;authentication&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">auth_result</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span>
+                <span class="s2">&quot;voice&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">command_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">authentication_command</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">command_str</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="n">synthesis_command</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;synthesis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;pitch&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">pitch</span><span class="p">,</span>
+                <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">speed</span><span class="p">,</span>
+                <span class="s2">&quot;volume&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span>
+                <span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">rules</span><span class="p">,</span>
+                <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;ssml&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">command_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">synthesis_command</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">command_str</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_determine_voice</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">voice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VOICES</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Voice selected doesn&#39;t match the language. Check supported list of lang/voices.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;zh-TW&quot;</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="s2">&quot;Tongtong&quot;</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;en-US&quot;</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="s2">&quot;MikeNorgaard&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only supports &#39;zh-TW&#39; or &#39;en-US&#39; for the &#39;--lang&#39; option.&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--account&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;account of a SeaAuth account.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--password&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;password of a SeaAuth account.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--lang&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--voice&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Voice of the synthesized speech.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--text&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Text to synthesize. Supports SSML text.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--seaauth_url&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://seaauth.seasalt.ai&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaAuth.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--seavoice_ws_url&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wss://seavoice.seasalt.ai&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaVoice.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--rules&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Global pronunciation rules.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;test_audio.wav&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to output audio file.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--sample-rate&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, set the sample rate of synthesized speech, default 22050.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--pitch&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.0&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--speed&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust speed of synthesized speech, [0.0, 2.0] default is 1.0&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--volume&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0.0, 100.0] default is 50.0&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">_determine_voice</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="supported-ssml-tags">
+<h3><a class="toc-backref" href="#id4">Supported SSML Tags</a><a class="headerlink" href="#supported-ssml-tags" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Break</p></li>
+</ol>
+<p>Description: Add pauses to the synthesized speech, measured in milliseconds.</p>
+<p>Format: <code class="docutils literal notranslate"><span class="pre">&lt;break</span> <span class="pre">time=&quot;100ms&quot;/&gt;</span></code></p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">今天&lt;break</span> <span class="pre">time=&quot;100ms&quot;/&gt;的日期是3/22/2022</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Today</span> <span class="pre">&lt;break</span> <span class="pre">time=&quot;100ms&quot;/&gt;</span> <span class="pre">the</span> <span class="pre">date</span> <span class="pre">is</span> <span class="pre">3/22/2022</span></code></p></li>
+</ul>
+<p>2. Alias
+Description: Specify pronunciation.</p>
+<p>Format:  <code class="docutils literal notranslate"><span class="pre">&lt;alias</span> <span class="pre">alphabet=”{sub|arpabet|zhuyin|pinyin}”</span> <span class="pre">ph='...'&gt;...&lt;/alias&gt;</span></code></p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;alias</span> <span class="pre">alphabet='sub'</span> <span class="pre">ph='see</span> <span class="pre">salt</span> <span class="pre">dot</span> <span class="pre">ay</span> <span class="pre">eye'&gt;Seasalt.ai&lt;/alias&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">代碼&lt;alias</span> <span class="pre">alphabet='sub'</span> <span class="pre">ph='維'&gt;為&lt;/sub&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;alias</span> <span class="pre">alphabet='arpabet'</span> <span class="pre">ph='HH</span> <span class="pre">AH0</span> <span class="pre">L</span> <span class="pre">OW1'&gt;hello&lt;/alias&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">代碼&lt;alias</span> <span class="pre">alphabet='zhuyin'</span> <span class="pre">ph='ㄨㄟˊ'&gt;為&lt;/alias&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">代碼&lt;alias</span> <span class="pre">alphabet='pinyin'</span> <span class="pre">ph='wei2'&gt;為&lt;/alias&gt;</span></code></p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Say-as</p></li>
+</ol>
+<p>Description: Specify how to interpret ambiguous text like numbers and dates.</p>
+<p>Format: <code class="docutils literal notranslate"><span class="pre">&lt;say-as</span> <span class="pre">interpret-as='{digits|cardinal|spell-out|date}'</span> <span class="pre">format='{phone|social|m/d/Y|...}'&gt;...&lt;/say-as&gt;</span></code></p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Today</span> <span class="pre">is</span> <span class="pre">&lt;say-as</span> <span class="pre">interpret-as='date'</span> <span class="pre">format='m/d/Y'&gt;2/11/2022&lt;/say-as&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">my</span> <span class="pre">phone</span> <span class="pre">number</span> <span class="pre">is</span> <span class="pre">&lt;say-as</span> <span class="pre">interpret-as='digits'</span> <span class="pre">format='phone'&gt;7145262155&lt;/say-as&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">word</span> <span class="pre">diarization</span> <span class="pre">is</span> <span class="pre">spelled</span> <span class="pre">&lt;say-as</span> <span class="pre">interpret-as='spell-out'&gt;diarization&lt;/say-as&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">今天的日期是&lt;say-as</span> <span class="pre">interpret-as='date'</span> <span class="pre">format='m/d/Y'&gt;3/15/2022&lt;/say-as&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">我的電話號碼是&lt;say-as</span> <span class="pre">interpret-as='digits'</span> <span class="pre">format='mobile'&gt;1234567890&lt;/say-as&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">訂位代碼為&lt;say-as</span> <span class="pre">interpret-as='spell-out'&gt;5VOPXT&lt;/say-as&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">訂位代碼為&lt;say-as</span> <span class="pre">interpret-as='spell-out'</span> <span class="pre">time='600ms'=&gt;5VOPXT&lt;/say-as&gt;</span></code></p></li>
+</ul>
+</section>
 </section>
 </section>
 
