@@ -297,7 +297,7 @@ Sample Client Script
     VOICE_SAMPLE_WIDTH: int = 2
 
     VOICES = {
-        "zh-TW": {"Tongtong", "Vivian"}
+        "zh-TW": {"Tongtong", "Vivian"},
         "en-US": {"MikeNorgaard", "MoxieLabouche", "LissaHenige"}
     }
 
