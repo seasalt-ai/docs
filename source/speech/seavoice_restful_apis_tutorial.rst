@@ -395,6 +395,7 @@ Sample Client Script
                     "speed": args.speed,
                     "volume": args.volume,
                     "rules": args.rules,
+                    "sample_rate": args.sample_rate,
                 },
                 "data": {"text": args.text, "ssml": True},
             },
