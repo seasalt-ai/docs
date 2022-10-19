@@ -266,14 +266,14 @@ Sample Client Script
 
 .. code-block:: python
 
-    #!/usr/bin/env python3
-    # -*- coding: utf-8 -*-
+	#!/usr/bin/env python3
+	# -*- coding: utf-8 -*-
 
-    # Copyright 2022  Seasalt AI, Inc
+	# Copyright 2022  Seasalt AI, Inc
 
-    """TTS client script
+	"""TTS client script
 
-    Usage:
+	Usage:
 
 	python tts_client.py \
 	  --account test \
