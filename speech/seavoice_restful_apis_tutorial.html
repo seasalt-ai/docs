@@ -404,21 +404,21 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">&quot;&quot;&quot;TTS client script</span>
 
 <span class="sd">Usage:</span>
+
 <span class="sd">python tts_client.py \</span>
 <span class="sd">  --account test \</span>
 <span class="sd">  --password test \</span>
-<span class="sd">  --lang en-US \</span>
-<span class="sd">  --voice MikeNorgaard \</span>
-<span class="sd">  --text &quot;hello this is a test&quot;</span>
+<span class="sd">  --lang zh-TW \</span>
+<span class="sd">  --voice Tongtong \</span>
+<span class="sd">  --text &quot;你好這裡是nxcloud，今天的日期是&lt;say-as interpret-as=&#39;date&#39; format=&#39;m/d/Y&#39;&gt;10/11/2022&lt;/say-as&gt;&quot; \</span>
+<span class="sd">  --rules &quot;nxcloud | 牛信雲\n&quot;</span>
 
-<span class="sd">`--account`: seavoice account</span>
-<span class="sd">`--password`: seavoice password</span>
+<span class="sd">`--lang`: supports `zh-tw`, `en-us`, `en-gb`</span>
 <span class="sd">`--text`: input text to synthesize, supports SSML format</span>
 <span class="sd">`--rules`: optional, globally applied pronunciation rules in the format of `&lt;word&gt; | &lt;pronunciation&gt;\n`</span>
-<span class="sd">`--pitch`: optional, adjust pitch of synthesized speech, [-5, 5] default 0.0</span>
-<span class="sd">`--speed`: optional, adjust speed of synthesized speech, [0, 2] default 1.0</span>
-<span class="sd">`--volume`: optional, adjust volume of synthesize speech, [0, 100] default 50.0</span>
-<span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech, default 22050</span>
+<span class="sd">`--pitch`: optional, adjust pitch of synthesized speech, must be &gt; 0.01 or &lt; -0.01</span>
+<span class="sd">`--speed`: optional, adjust speed of synthesized speech, must be &gt; 1.01 or &lt; 0.99</span>
+<span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -469,10 +469,10 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="sd">&quot;&quot;&quot;Login with SeaAuth.</span>
 <span class="sd">    Example of response:</span>
 <span class="sd">        {</span>
-<span class="sd">        &quot;account&quot;: &quot;test&quot;,</span>
-<span class="sd">        &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
-<span class="sd">        &quot;token_type&quot;: &quot;Bearer&quot;,</span>
-<span class="sd">        &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
+<span class="sd">          &quot;account&quot;: &quot;test&quot;,</span>
+<span class="sd">          &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
+<span class="sd">          &quot;token_type&quot;: &quot;Bearer&quot;,</span>
+<span class="sd">          &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
 <span class="sd">        }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
@@ -491,15 +491,28 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tts_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
         <span class="n">is_begin</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="n">is_sythesized</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-        <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">))</span>
-        <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
-        <span class="c1"># wait until received the begin event from server</span>
-        <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-        <span class="k">await</span> <span class="n">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
-
-        <span class="c1"># wait for audio synthsized</span>
-        <span class="k">await</span> <span class="n">is_sythesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">),</span>
+            <span class="n">_send_commands</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tts finished&quot;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_commands</span><span class="p">(</span>
+    <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span>
+    <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">websocket</span><span class="p">,</span>
+    <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
+    <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+    <span class="c1"># wait until received the begin event from server</span>
+    <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+    <span class="c1"># wait for audio synthsized</span>
+    <span class="k">await</span> <span class="n">is_sythesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">):</span>
@@ -519,7 +532,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
                     <span class="n">is_begin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
                 <span class="k">elif</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="k">raise</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;audio_data&quot;</span><span class="p">:</span>
                 <span class="n">synthesis_status</span> <span class="o">=</span> <span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an audio_data event, staus:</span><span class="si">{</span><span class="n">synthesis_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -567,7 +580,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="k">def</span> <span class="nf">_check_voice</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VOICES_LANGUAGES_MAPPING</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="si">}</span><span class="s2"> only supports </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">VOICES_LANGUAGES_MAPPING</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">])</span><span class="si">}</span><span class="s2">, but the input is </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="si">}</span><span class="s2"> only support </span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">VOICES_LANGUAGES_MAPPING</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">])</span><span class="si">}</span><span class="s2">, the input is </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="si">}</span><span class="s2">.&quot;</span>
         <span class="p">)</span>
 
 
@@ -580,14 +593,14 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">lang</span> <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">Language</span><span class="p">],</span>
-        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must be in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--voice&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">voice</span> <span class="k">for</span> <span class="n">voice</span> <span class="ow">in</span> <span class="n">Voices</span><span class="p">],</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Voice of the synthesized speech.&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Voice of the synthesized.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--text&quot;</span><span class="p">,</span>
