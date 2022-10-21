@@ -14,110 +14,352 @@ Please contact info@seasalt.ai if you have any questions.
 STT protocols
 -------------
 
-1. Get ``speech_service_token``: send POST request to API: ``https://suite.seasalt.ai/api/v1/user/login``
+1. Log into SeaAuth: ``https://seaauth.seasalt.ai/api/v1/users/login``
 
-    .. code-block:: JSON
+.. code-block:: JSON
 
-        {
-            "account_id": "<username>",
-            "password": "<password>"
+    {
+        "username": "test",
+        "password": "test",
+        "scope": "seavoice"
+    }
+
+
+2. Obtain access token in the response
+
+.. code-block:: JSON
+    
+    {
+        "account": "test",
+        "access_token": "eyJ0eXAiOi*****",
+        "token_type": "Bearer",
+        "refresh_token": "71bbffd5368*****"
+    }
+
+3. Connect to SeaVoice STT websocket server: ``wss://seavoice.seasalt.ai/api/v1/stt/ws``
+
+If successfully connected, Client sends json packages to stt server, for example:
+
+- authentication command
+
+.. code-block:: JSON
+    
+    {
+        "command": "authentication",
+        "payload": {
+            "token": "<ACCESS_TOKEN>",
+            "settings": {
+                "language": "zh-TW",
+                "sample_rate": 16000,
+            },
         }
+    }
 
-    - CLI example:
 
-        .. code-block:: bash
+- start recognition command: sending audio data for recognition
 
-            curl -X 'POST' -d '{"account_id": <username>, "password": <password>}' 'https://suite.seasalt.ai/api/v1/user/login'
-            # return example: {"user_id": <username>, "timestamp":"2022-03-17T16:43:40", "token": <speech_service_token>, "role_id":2}
+.. code-block:: JSON
+    
+    {
+        "command": "audio_data",
+        "payload": {
+            "audio": "<BASE64_ENCODED_AUDIO_DATA>"
+        }
+    }
 
-    - Python example:
 
-        .. code-block:: python
+- stop recognition command
 
-            import requests
-            data = {
-                "account_id": <username>,
-                "password": <password>,
-                "entry": "not_userboard",
+.. code-block:: JSON
+
+    {
+        "command": "stop"
+    }
+
+4. STT server receives audio data, performs recognition, and sends recognizing/recognized events to Client
+
+- info event (begin)
+
+.. code-block:: JSON
+
+    {
+        "event": "info",
+        "payload": {
+            "status": "begin"
+        }
+    }
+
+- info event (error)
+
+.. code-block:: JSON
+
+    {
+        "event": "info",
+        "payload": {
+            "status": "error",
+            "error": {
+                "message": "<ERROR_MESSAGE>",
+                "code": "<ERROR_CODE>"
             }
-            url = 'https://suite.seasalt.ai/api/v1/user/login'
-            res = requests.post(url, json=data)
-            assert res.status_code == 200, res.status_code
-            print(res.json()["token"]) # this is the speech_service_token
+        }
+    }
 
-2. Get ``api_key`` and STT ``server_url``: send POST request with ``language`` and ``speech_service_token`` to API server: ``https://suite.seasalt.ai/api/v1/speech/speech_to_text``. ``language`` currently supports ``en-US`` and ``zh-TW``.
-
-    - Python example:
-
-        .. code-block:: python
-            import requests
-            headers = {'token': speech_service_token}
-            data = {"language": "zh-TW"}
-            response = requests.post("https://suite.seasalt.ai/api/v1/speech/speech_to_text",
-                                    headers=headers, json=data)
-            print(response.json()) # return example: {'token': <api_key>, 'server_url': 'wss://<host>:<port>/client/ws/speech', 'account_id': <username>}
-
-3. API server returns HTTP 200 with json string including the available TTS server's url and ``api_key`` to Client, like
+- recognizing event: intermediate streaming ASR results
 
 .. code-block:: JSON
 
     {
-        "account_id": "<username>",
-        "server_url": "wss://<host>:<port>/client/ws/speech",
-        "token": "<api_key>"
+        "event": "recognizing"
+        "payload": {
+            "segment_id": "<SEG_ID>",
+            "text": "<PARTIAL_RESULTS>",
+            "voice_start_time": 0.1
+        }
     }
 
-If something is wrong, API server may return HTTP 404 with a json string including an error message.
-
-4. Client connects to the available STT server by websocket with ``api_key``, ``language`` and ``punctuation`` settings, e.g. ``wss://<host>:<port>/client/ws/speech?token=<api_key>&language=zh-tw&punctuation=True``
-
-5. STT server verifies ``api_key`` on API server, and if something is wrong, STT server will reply error message and close websocket connection:
+- recognized event: final ASR results
 
 .. code-block:: JSON
 
     {
-        "status": 10,
-        "result": "Token invalid"
+        "event": "recognized"
+        "payload": {
+            "segment_id": "<SEG_ID>",
+            "text": "<FINAL_RESULTS>",
+            "voice_start_time": 0.1,
+            "duration": 2.5
+        }
     }
 
-6. After connecting, Client starts to record the microphone and stream audio data to STT server (See below for data format).
-
-7. STT server receives audio data and does recognition, then send recognizing/recognized results to Client, the format is,
-
-.. code-block:: JSON
-
-    {
-        "status": 0,
-	"result":
-	{
-	    "final": true,
-	    "hypotheses":
-	    [
-	        {
-		    "transcript": "你 好",
-		    "likelihood": 377.78
-		}
-	    ]
-	},
-	"segment-start": 0.0,
-	"segment-length": 2.8,
-	"total-length": 3.75
-    }
 
 .. NOTE::
 
- - Note 1, if "status" is 0, it means no error happened.
- - Note 2, if "final" is `True`, it means this is a final recognized result; `False` means it's a recognizing result.
+    - ``"voice_start_time"``: timestamp in seconds of that segment relative to the start of the audio.
+    - ``"duration"``: duration of that segment.
 
-8. Client receives recognizing/recognized results.
 
-9. Client closes websocket connection when finished recognizing.
+Sample Client Script
+**********
 
-Audio data format to send to STT server:
- - If the data is in wav format, which has wav head indicating audio format, then STT server will know the audio format by the wav head. Please just have wav head at the first package, wav head in other packages will be taken as audio data.
- - If the data is in raw format, then when connecting to STT server, Client needs to include Content-Type in wss url. The format looks like
-   ``&content-type=audio/x-raw, layout=(string)interleaved, rate=(int)16000, format=(string)S16LE, channels=(int)1``
- - but Client needs to do urlencode and then connects to STT server, for example, the url with Content-Type looks like ``wss://speech.seasalt.ai:5019/client/ws/speech?token=67e44248-b473-11eb-95f1-ba52214202a6&punctuation=True&content-type=audio%2Fx-raw%2C+layout%3D%28string%29interleaved%2C+rate%3D%28int%2916000%2C+format%3D%28string%29S16LE%2C+channels%3D%28int%291``
+1. Setup
+
+.. code-block:: bash
+
+    # Python venv setup (recommends using Python 3.8.10)
+    python3 -m venv venv/seavoice
+    source venv/seavoice/bin/activate
+    pip install --upgrade pip
+    pip install websockets==10.3
+    pip install aiohttp==3.8.1
+
+2. Run client script
+
+.. code-block:: python
+
+    #!/usr/bin/env python3
+    # -*- coding: utf-8 -*-
+
+    # Copyright 2022  Seasalt AI, Inc
+
+    """Client script for stt endpoint
+    Usage:
+    python stt_client.py \
+      --account test \
+      --password test \
+      --lang zh-TW \
+      --audio-path test_audio.wav \
+      --sample-rate 8000
+    
+    `--lang`: supports `zh-tw`, `en-us`
+    `--sample-rate`: optional, set the sample rate of synthesized speech
+    """
+
+    import argparse
+    import asyncio
+    import base64
+    import json
+    from enum import Enum
+    from pathlib import Path
+    from urllib.parse import urljoin
+
+    import aiohttp
+    import websockets
+
+    SEAAUTH_SCOPE_NAME: str = "seavoice"
+    CHUNK_SIZE: int = 5000
+
+
+    class Language(str, Enum):
+        EN_US = "en-US"
+        ZH_TW = "zh-TW"
+
+
+    async def main(args: argparse.Namespace):
+        auth_result = await _login_seaauth(args.account, args.password)
+        await _do_stt(args, auth_result)
+
+
+    async def _login_seaauth(account: str, password: str) -> dict:
+        """Login with SeaAuth.
+        Example of response:
+            {
+            "account": "test",
+            "access_token": "eyJ0eXAiOi*****",
+            "token_type": "Bearer",
+            "refresh_token": "71bbffd5368*****"
+            }
+        """
+        payload = {"username": account, "password": password, "scope": SEAAUTH_SCOPE_NAME}
+        data = aiohttp.FormData()
+        data.add_fields(*payload.items())
+        async with aiohttp.ClientSession() as session:
+            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
+                if response.status >= 400:
+                    raise Exception(await response.text())
+                data = await response.json()
+                return data
+
+
+    async def _do_stt(args: argparse.Namespace, auth_result: dict):
+        stt_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/stt/ws")
+        async with websockets.connect(stt_endpoint_url) as websocket:
+            is_begin, is_end = asyncio.Event(), asyncio.Event()
+
+            await asyncio.gather(
+                _receive_events(websocket, is_begin, is_end),
+                _send_commands(args, auth_result, websocket, is_begin, is_end),
+            )
+
+            # wait for audio synthesized
+            print("stt finished")
+
+
+    async def _send_commands(
+        args: argparse.Namespace,
+        auth_result: dict,
+        websocket,
+        is_begin: asyncio.Event,
+        is_end: asyncio.Event,
+    ):
+        await _send_authentication_command(websocket, auth_result)
+
+        # wait until received the begin event from server
+        await is_begin.wait()
+        await _send_audio_data_chunkily(websocket, args.audio_path)
+        await _send_stop_command(websocket)
+        await is_end.wait()
+
+
+    async def _receive_events(websocket, is_begin: asyncio.Event, is_end: asyncio.Event):
+        async for message in websocket:
+            event = json.loads(message)
+            event_name = event.get("event", "")
+            event_payload = event.get("payload", {})
+
+            if event_name == "info":
+                if event_payload.get("status") == "begin":
+                    print(f"received an info begin event: {event_payload}")
+                    is_begin.set()
+                elif event_payload.get("status") == "error":
+                    print(f"received an info error event: {event_payload}")
+                    raise Exception(f"received an info error event: {event_payload}")
+                elif event_payload.get("status") == "end":
+                    print("received an info end event")
+                    is_end.set()
+                else:
+                    print(f"received an unknown info event: {event}")
+
+            elif event_name == "recognizing" or event_name == "recognized":
+                print(f"received an {event_name} event: {event_payload}")
+
+            else:
+                print(f"received an unknown event: {event}")
+
+
+    async def _send_stop_command(websocket):
+        command_str = json.dumps({"command": "stop"})
+        await websocket.send(command_str)
+
+
+    async def _send_authentication_command(websocket, auth_result: dict):
+        authentication_command = {
+            "command": "authentication",
+            "payload": {
+                "token": auth_result["access_token"],
+                "settings": {
+                    "language": args.lang,
+                    "sample_rate": args.sample_rate,
+                },
+            },
+        }
+        command_str = json.dumps(authentication_command)
+        await websocket.send(command_str)
+
+
+    async def _send_audio_data_chunkily(websocket, audio_path: str):
+        with open(audio_path, "rb") as f:
+            while True:
+                audio = f.read(CHUNK_SIZE)
+                if audio == b"":
+                    break
+                await _send_one_audio_data_command(websocket, audio)
+
+
+    async def _send_one_audio_data_command(websocket, audio: bytes):
+        audio_data_command = {"command": "audio_data", "payload": base64.b64encode(audio).decode()}
+        await websocket.send(json.dumps(audio_data_command))
+
+
+    def _check_file_path_exists(audio_path: str):
+        if not Path(audio_path).exists():
+            raise Exception(f"No file exists at {audio_path}.")
+
+
+    if __name__ == "__main__":
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
+        parser.add_argument("--password", type=str, required=True, help="password of a SeaAuth account.")
+        parser.add_argument(
+            "--lang",
+            type=str,
+            required=True,
+            choices=[lang for lang in Language],
+            help='Language of TTS server, must in ["zh-TW", "en-US"]',
+        )
+        parser.add_argument(
+            "--sample-rate",
+            dest="sample_rate",
+            type=int,
+            required=True,
+            help="Set the sample rate of speech.",
+        )
+        parser.add_argument(
+            "--audio-path",
+            dest="audio_path",
+            type=str,
+            required=True,
+            help="The path of wav file for speech to text.",
+        )
+        parser.add_argument(
+            "--seaauth-url",
+            dest="seaauth_url",
+            type=str,
+            required=False,
+            default="https://seaauth.seasalt.ai",
+            help="Url of SeaAuth.",
+        )
+        parser.add_argument(
+            "--seavoice-ws-url",
+            dest="seavoice_ws_url",
+            type=str,
+            required=False,
+            default="wss://seavoice.seasalt.ai",
+            help="Url of SeaVoice.",
+        )
+        args = parser.parse_args()
+        _check_file_path_exists(args.audio_path)
+        asyncio.run(main(args))
+
 
 TTS protocols
 -------------
@@ -148,7 +390,7 @@ TTS protocols
 
 If successfully connected, Client sends json packages to TTS server, for example (settings and data are shown with default values),
 
-authentication command
+- authentication command
 
 .. code-block:: JSON
     
@@ -163,7 +405,8 @@ authentication command
         }
     }
 
-synthesis command
+
+- synthesis command
 
 .. code-block:: JSON
     
@@ -177,9 +420,13 @@ synthesis command
                 "rules": "",
                 "sample_rate": 8000,
             },
-            "data": {"text": "test", "ssml": True},
+            "data": {
+                "text": "test",
+                "ssml": true
+            }
         }
     }
+
 
 .. NOTE::
 
@@ -459,75 +706,77 @@ Sample Client Script
 	    parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
 	    parser.add_argument("--password", type=str, required=True, help="password of a SeaAuth account.")
 	    parser.add_argument(
-		"--lang",
-		type=str,
-		required=True,
-		choices=[lang for lang in Language],
-		help='Language of TTS server, must in ["zh-TW", "en-US"]',
+            "--lang",
+            type=str,
+            required=True,
+            choices=[lang for lang in Language],
+            help='Language of TTS server, must in ["zh-TW", "en-US"]',
 	    )
 	    parser.add_argument(
-		"--voice",
-		type=str,
-		required=True,
-		choices=[voice for voice in Voices],
-		help="Voice of the synthesized.",
+            "--voice",
+            type=str,
+            required=True,
+            choices=[voice for voice in Voices],
+            help="Voice of the synthesized.",
 	    )
 	    parser.add_argument(
-		"--text",
-		type=str,
-		required=True,
-		help="Text to synthesize. Supports SSML text.",
+            "--text",
+            type=str,
+            required=True,
+            help="Text to synthesize. Supports SSML text.",
+	    )
+        parser.add_argument(
+            "--seaauth-url",
+            dest="seaauth_url",
+            type=str,
+            required=False,
+            default="https://seaauth.seasalt.ai",
+            help="Url of SeaAuth.",
+        )
+        parser.add_argument(
+            "--seavoice-ws-url",
+            dest="seavoice_ws_url",
+            type=str,
+            required=False,
+            default="wss://seavoice.seasalt.ai",
+            help="Url of SeaVoice.",
+        )
+	    parser.add_argument(
+            "--rules",
+            type=str,
+            required=False,
+            default="",
+            help="Global pronunciation rules.",
 	    )
 	    parser.add_argument(
-		"--seaauth_url",
-		type=str,
-		required=False,
-		default="https://seaauth.seasalt.ai",
-		help="Url of SeaAuth.",
+            "--output",
+            type=str,
+            default="test_audio.wav",
+            help="Path to output audio file.",
 	    )
 	    parser.add_argument(
-		"--seavoice_ws_url",
-		type=str,
-		required=False,
-		default="wss://seavoice.seasalt.ai",
-		help="Url of SeaVoice.",
+            "--sample-rate",
+            type=int,
+            default=22050,
+            help="Optional, set the sample rate of synthesized speech, default 22050.",
 	    )
 	    parser.add_argument(
-		"--rules",
-		type=str,
-		required=False,
-		default="",
-		help="Global pronunciation rules.",
+            "--pitch",
+            type=float,
+            default=0.0,
+            help="Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.",
 	    )
 	    parser.add_argument(
-		"--output",
-		type=str,
-		default="test_audio.wav",
-		help="Path to output audio file.",
+            "--speed",
+            type=float,
+            default=1.0,
+            help="Optional, adjust speed of synthesized speech, [0, 2] default is 1.",
 	    )
 	    parser.add_argument(
-		"--sample-rate",
-		type=int,
-		default=22050,
-		help="Optional, set the sample rate of synthesized speech, default 22050.",
-	    )
-	    parser.add_argument(
-		"--pitch",
-		type=float,
-		default=0.0,
-		help="Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.",
-	    )
-	    parser.add_argument(
-		"--speed",
-		type=float,
-		default=1.0,
-		help="Optional, adjust speed of synthesized speech, [0, 2] default is 1.",
-	    )
-	    parser.add_argument(
-		"--volume",
-		type=float,
-		default=50.0,
-		help="Optional, adjust volume of synthesize speech, [0, 100] default is 50.",
+            "--volume",
+            type=float,
+            default=50.0,
+            help="Optional, adjust volume of synthesize speech, [0, 100] default is 50.",
 	    )
 
 	    args = parser.parse_args()
