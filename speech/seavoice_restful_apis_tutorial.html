@@ -141,6 +141,8 @@
 <span class="w">        </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">            </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">            </span><span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16000</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;itn&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;punctuation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
 <span class="w">        </span><span class="p">},</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -255,10 +257,14 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">  --account test \</span>
 <span class="sd">  --password test \</span>
 <span class="sd">  --lang zh-TW \</span>
+<span class="sd">  --enable-itn false \</span>
+<span class="sd">  --enable-punctuation false \</span>
 <span class="sd">  --audio-path test_audio.wav \</span>
 <span class="sd">  --sample-rate 8000</span>
 
 <span class="sd">`--lang`: supports `zh-tw`, `en-us`</span>
+<span class="sd">`--enable-itn`: true to enable inverse text normalisation</span>
+<span class="sd">`--enable-punctuation`: true to enable punctuation</span>
 <span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -291,10 +297,10 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="sd">&quot;&quot;&quot;Login with SeaAuth.</span>
 <span class="sd">    Example of response:</span>
 <span class="sd">        {</span>
-<span class="sd">        &quot;account&quot;: &quot;test&quot;,</span>
-<span class="sd">        &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
-<span class="sd">        &quot;token_type&quot;: &quot;Bearer&quot;,</span>
-<span class="sd">        &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
+<span class="sd">            &quot;account&quot;: &quot;test&quot;,</span>
+<span class="sd">            &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
+<span class="sd">            &quot;token_type&quot;: &quot;Bearer&quot;,</span>
+<span class="sd">            &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
 <span class="sd">        }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
@@ -329,7 +335,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
     <span class="n">is_end</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
 
     <span class="c1"># wait until received the begin event from server</span>
     <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
@@ -369,7 +375,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">command_str</span><span class="p">)</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="n">authentication_command</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;authentication&quot;</span><span class="p">,</span>
         <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -377,6 +383,8 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
             <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span>
                 <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
+                <span class="s2">&quot;itn&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="p">,</span>
+                <span class="s2">&quot;punctuation&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
     <span class="p">}</span>
@@ -420,6 +428,22 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set the sample rate of speech.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--enable-itn&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_itn&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the ITN feature.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--enable-punctuation&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_punctuation&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the punctuation feature.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--audio-path&quot;</span><span class="p">,</span>
@@ -713,21 +737,21 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Login with SeaAuth.</span>
 <span class="sd">    Example of response:</span>
-<span class="sd">        {</span>
-<span class="sd">          &quot;account&quot;: &quot;test&quot;,</span>
-<span class="sd">          &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
-<span class="sd">          &quot;token_type&quot;: &quot;Bearer&quot;,</span>
-<span class="sd">          &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
-<span class="sd">        }</span>
+<span class="sd">    {</span>
+<span class="sd">      &quot;account&quot;: &quot;test&quot;,</span>
+<span class="sd">      &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
+<span class="sd">      &quot;token_type&quot;: &quot;Bearer&quot;,</span>
+<span class="sd">      &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
+<span class="sd">    }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
     <span class="n">data</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span><span class="o">*</span><span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/login&quot;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/login&quot;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">data</span>
 
 
@@ -834,77 +858,77 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--account&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;account of a SeaAuth account.&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--password&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;password of a SeaAuth account.&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--lang&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">lang</span> <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">Language</span><span class="p">],</span>
-    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;--lang&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">lang</span> <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">Language</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Language of TTS server, must in [&quot;zh-TW&quot;, &quot;en-US&quot;]&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--voice&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">voice</span> <span class="k">for</span> <span class="n">voice</span> <span class="ow">in</span> <span class="n">Voices</span><span class="p">],</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Voice of the synthesized.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--voice&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">voice</span> <span class="k">for</span> <span class="n">voice</span> <span class="ow">in</span> <span class="n">Voices</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Voice of the synthesized.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--text&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Text to synthesize. Supports SSML text.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--seaauth-url&quot;</span><span class="p">,</span>
-    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_url&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://seaauth.seasalt.ai&quot;</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaAuth.&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--seavoice-ws-url&quot;</span><span class="p">,</span>
-    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seavoice_ws_url&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wss://seavoice.seasalt.ai&quot;</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaVoice.&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--rules&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Global pronunciation rules.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--text&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Text to synthesize. Supports SSML text.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="s2">&quot;test_audio.wav&quot;</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to output audio file.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--seaauth-url&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_url&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://seaauth.seasalt.ai&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaAuth.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--sample-rate&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, set the sample rate of synthesized speech, default 22050.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--seavoice-ws-url&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seavoice_ws_url&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wss://seavoice.seasalt.ai&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaVoice.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--pitch&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--rules&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Global pronunciation rules.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--speed&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust speed of synthesized speech, [0, 2] default is 1.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;test_audio.wav&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to output audio file.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-    <span class="s2">&quot;--volume&quot;</span><span class="p">,</span>
-    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0, 100] default is 50.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--sample-rate&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, set the sample rate of synthesized speech, default 22050.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--pitch&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust pitch of synthesized speech, [-5, 5] default is 0.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--speed&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust speed of synthesized speech, [0, 2] default is 1.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--volume&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0, 100] default is 50.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
