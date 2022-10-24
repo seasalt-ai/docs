@@ -157,243 +157,242 @@ Sample Client Script
 2. Run client script
 
 .. code-block:: python
-	#!/usr/bin/env python3
-	# -*- coding: utf-8 -*-
+    #!/usr/bin/env python3
+    # -*- coding: utf-8 -*-
 
-	# Copyright 2022  Seasalt AI, Inc
+    # Copyright 2022  Seasalt AI, Inc
 
-	"""Client script for stt endpoint
+    """Client script for stt endpoint
 
-	prerequisite:
-	python 3.8
-	python package:
-	- aiohttp==3.8.1
-	- websockets==10.3
+    prerequisite:
+    python 3.8
+    python package:
+    - aiohttp==3.8.1
+    - websockets==10.3
 
-	Usage:
+    Usage:
 
-	python stt_client.py \
-	  --account test \
-	  --password test \
-	  --lang zh-TW \
-	  --audio-path test_audio.wav \
-	  --sample-rate 8000
+    python stt_client.py \
+    --account test \
+    --password test \
+    --lang zh-TW \
+    --audio-path test_audio.wav \
+    --sample-rate 8000
 
-	`--lang`: supports `zh-tw`, `en-us`
-	`--sample_rate`: optional, set the sample rate of synthesized speech
-	"""
+    `--lang`: supports `zh-tw`, `en-us`
+    `--sample_rate`: optional, set the sample rate of synthesized speech
+    """
 
-	import argparse
-	import asyncio
-	import base64
-	import json
-	from enum import Enum
-	from pathlib import Path
-	from urllib.parse import urljoin
+    import argparse
+    import asyncio
+    import base64
+    import json
+    from enum import Enum
+    from pathlib import Path
+    from urllib.parse import urljoin
 
-	import aiohttp
-	import websockets
+    import aiohttp
+    import websockets
 
-	SEAAUTH_SCOPE_NAME: str = "seavoice"
-	CHUNK_SIZE: int = 5000
-
-
-	class Language(str, Enum):
-		EN_US = "en-US"
-		ZH_TW = "zh-TW"
+    SEAAUTH_SCOPE_NAME: str = "seavoice"
+    CHUNK_SIZE: int = 5000
 
 
-	async def main(args: argparse.Namespace):
-		auth_result = await _login_seaauth(args.account, args.password)
-		await _do_stt(args, auth_result)
+    class Language(str, Enum):
+    EN_US = "en-US"
+    ZH_TW = "zh-TW"
 
 
-	async def _login_seaauth(account: str, password: str) -> dict:
-		"""Login with SeaAuth.
-		Example of response:
-			{
-			  "account": "test",
-			  "access_token": "eyJ0eXAiOi*****",
-			  "token_type": "Bearer",
-			  "refresh_token": "71bbffd5368*****"
-			}
-		"""
-		payload = {"username": account, "password": password, "scope": SEAAUTH_SCOPE_NAME}
-		data = aiohttp.FormData()
-		data.add_fields(*payload.items())
-		async with aiohttp.ClientSession() as session:
-			async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
-				if response.status >= 400:
-					raise Exception(await response.text())
-				data = await response.json()
-				return data
+    async def main(args: argparse.Namespace):
+    auth_result = await _login_seaauth(args.account, args.password)
+    await _do_stt(args, auth_result)
 
 
-	async def _do_stt(args: argparse.Namespace, auth_result: dict):
-		stt_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/stt/ws")
-		async with websockets.connect(stt_endpoint_url) as websocket:
-			is_begin, is_end = asyncio.Event(), asyncio.Event()
-
-			await asyncio.gather(
-				_receive_events(websocket, is_begin, is_end),
-				_send_commands(args, auth_result, websocket, is_begin, is_end),
-			)
-
-			# wait for audio synthesized
-			print("stt finished")
-
-
-	async def _send_commands(
-		args: argparse.Namespace,
-		auth_result: dict,
-		websocket,
-		is_begin: asyncio.Event,
-		is_end: asyncio.Event,
-	):
-		await _send_authentication_command(args, websocket, auth_result)
-
-		# wait until received the begin event from server
-		await is_begin.wait()
-		await _send_audio_data_chunkily(websocket, args.audio_path)
-		await _send_stop_command(websocket)
-		await is_end.wait()
+    async def _login_seaauth(account: str, password: str) -> dict:
+    """Login with SeaAuth.
+    Example of response:
+        {
+            "account": "test",
+            "access_token": "eyJ0eXAiOi*****",
+            "token_type": "Bearer",
+            "refresh_token": "71bbffd5368*****"
+        }
+    """
+    payload = {"username": account, "password": password, "scope": SEAAUTH_SCOPE_NAME}
+    data = aiohttp.FormData()
+    data.add_fields(*payload.items())
+    async with aiohttp.ClientSession() as session:
+        async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
+            if response.status >= 400:
+                raise Exception(await response.text())
+            data = await response.json()
+            return data
 
 
-	async def _receive_events(websocket, is_begin: asyncio.Event, is_end: asyncio.Event):
-		async for message in websocket:
-			event = json.loads(message)
-			event_name = event.get("event", "")
-			event_payload = event.get("payload", {})
+    async def _do_stt(args: argparse.Namespace, auth_result: dict):
+    stt_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/stt/ws")
+    async with websockets.connect(stt_endpoint_url) as websocket:
+        is_begin, is_end = asyncio.Event(), asyncio.Event()
 
-			if event_name == "info":
-				if event_payload.get("status") == "begin":
-					print(f"received an info begin event: {event_payload}")
-					is_begin.set()
-				elif event_payload.get("status") == "error":
-					print(f"received an info error event: {event_payload}")
-					raise Exception(f"received an info error event: {event_payload}")
-				elif event_payload.get("status") == "end":
-					print("received an info end event")
-					is_end.set()
-				else:
-					print(f"received an unknown info event: {event}")
+        await asyncio.gather(
+            _receive_events(websocket, is_begin, is_end),
+            _send_commands(args, auth_result, websocket, is_begin, is_end),
+        )
 
-			elif event_name == "recognizing" or event_name == "recognized":
-				print(f"received an {event_name} event: {event_payload}")
-
-			else:
-				print(f"received an unknown event: {event}")
+        # wait for audio synthesized
+        print("stt finished")
 
 
-	async def _send_stop_command(websocket):
-		command_str = json.dumps({"command": "stop"})
-		await websocket.send(command_str)
+    async def _send_commands(
+    args: argparse.Namespace,
+    auth_result: dict,
+    websocket,
+    is_begin: asyncio.Event,
+    is_end: asyncio.Event,
+    ):
+    await _send_authentication_command(args, websocket, auth_result)
+
+    # wait until received the begin event from server
+    await is_begin.wait()
+    await _send_audio_data_chunkily(websocket, args.audio_path)
+    await _send_stop_command(websocket)
+    await is_end.wait()
 
 
-	async def _send_authentication_command(args: argparse.Namespace, websocket, auth_result: dict):
-		authentication_command = {
-			"command": "authentication",
-			"payload": {
-				"token": auth_result["access_token"],
-				"settings": {
-					"language": args.lang,
-					"sample_rate": args.sample_rate,
-					"itn": args.enable_itn,
-					"punctuation": args.enable_punctuation,
-				},
-			},
-		}
-		command_str = json.dumps(authentication_command)
-		await websocket.send(command_str)
+    async def _receive_events(websocket, is_begin: asyncio.Event, is_end: asyncio.Event):
+    async for message in websocket:
+        event = json.loads(message)
+        event_name = event.get("event", "")
+        event_payload = event.get("payload", {})
+
+        if event_name == "info":
+            if event_payload.get("status") == "begin":
+                print(f"received an info begin event: {event_payload}")
+                is_begin.set()
+            elif event_payload.get("status") == "error":
+                print(f"received an info error event: {event_payload}")
+                raise Exception(f"received an info error event: {event_payload}")
+            elif event_payload.get("status") == "end":
+                print("received an info end event")
+                is_end.set()
+            else:
+                print(f"received an unknown info event: {event}")
+
+        elif event_name == "recognizing" or event_name == "recognized":
+            print(f"received an {event_name} event: {event_payload}")
+
+        else:
+            print(f"received an unknown event: {event}")
 
 
-	async def _send_audio_data_chunkily(websocket, audio_path: str):
-		with open(audio_path, "rb") as f:
-			while True:
-				audio = f.read(CHUNK_SIZE)
-				if audio == b"":
-					break
-				await _send_one_audio_data_command(websocket, audio)
+    async def _send_stop_command(websocket):
+    command_str = json.dumps({"command": "stop"})
+    await websocket.send(command_str)
 
 
-	async def _send_one_audio_data_command(websocket, audio: bytes):
-		audio_data_command = {"command": "audio_data", "payload": base64.b64encode(audio).decode()}
-		await websocket.send(json.dumps(audio_data_command))
+    async def _send_authentication_command(args: argparse.Namespace, websocket, auth_result: dict):
+    authentication_command = {
+        "command": "authentication",
+        "payload": {
+            "token": auth_result["access_token"],
+            "settings": {
+                "language": args.lang,
+                "sample_rate": args.sample_rate,
+                "itn": args.enable_itn,
+                "punctuation": args.enable_punctuation,
+            },
+        },
+    }
+    command_str = json.dumps(authentication_command)
+    await websocket.send(command_str)
 
 
-	def _check_file_path_exists(audio_path: str):
-		if not Path(audio_path).exists():
-			raise Exception(f"No file exists at {audio_path}.")
+    async def _send_audio_data_chunkily(websocket, audio_path: str):
+    with open(audio_path, "rb") as f:
+        while True:
+            audio = f.read(CHUNK_SIZE)
+            if audio == b"":
+                break
+            await _send_one_audio_data_command(websocket, audio)
 
 
-	def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
-		args.enable_itn = args.enable_itn.lower() == "true"
-		args.enable_punctuation = args.enable_punctuation.lower() == "true"
-		return args
+    async def _send_one_audio_data_command(websocket, audio: bytes):
+    audio_data_command = {"command": "audio_data", "payload": base64.b64encode(audio).decode()}
+    await websocket.send(json.dumps(audio_data_command))
 
 
-	if __name__ == "__main__":
-		parser = argparse.ArgumentParser()
-		parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
-		parser.add_argument("--password", type=str, required=True, help="password of a SeaAuth account.")
-		parser.add_argument(
-			"--lang",
-			type=str,
-			required=True,
-			choices=[lang for lang in Language],
-			help='Language of TTS server, must in ["zh-TW", "en-US"]',
-		)
-		parser.add_argument(
-			"--sample-rate",
-			dest="sample_rate",
-			type=int,
-			required=True,
-			help="Set the sample rate of speech.",
-		)
-		parser.add_argument(
-			"--audio-path",
-			dest="audio_path",
-			type=str,
-			required=True,
-			help="The path of wav file for speech to text.",
-		)
-		parser.add_argument(
-			"--seaauth-url",
-			dest="seaauth_url",
-			type=str,
-			required=False,
-			default="https://seaauth.seasalt.ai",
-			help="Url of SeaAuth.",
-		)
-		parser.add_argument(
-			"--seavoice-ws-url",
-			dest="seavoice_ws_url",
-			type=str,
-			required=False,
-			default="wss://seavoice.seasalt.ai",
-			help="Url of SeaVoice.",
-		)
-		parser.add_argument(
-			"--enable-itn",
-			dest="enable_itn",
-			type=str,
-			required=False,
-			default="true",
-			help="Enable the ITN feature(true or false), default is true.",
-		)
-		parser.add_argument(
-			"--enable-punctuation",
-			dest="enable_punctuation",
-			type=str,
-			required=False,
-			default="true",
-			help="Enable the punctuation feature(true or false), default is true.",
-		)
-		args = parser.parse_args()
-		_check_file_path_exists(args.audio_path)
-		args = _convert_argument_str_to_bool(args)
-		asyncio.run(main(args))
+    def _check_file_path_exists(audio_path: str):
+    if not Path(audio_path).exists():
+        raise Exception(f"No file exists at {audio_path}.")
 
+
+    def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
+    args.enable_itn = args.enable_itn.lower() == "true"
+    args.enable_punctuation = args.enable_punctuation.lower() == "true"
+    return args
+
+
+    if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
+    parser.add_argument("--password", type=str, required=True, help="password of a SeaAuth account.")
+    parser.add_argument(
+        "--lang",
+        type=str,
+        required=True,
+        choices=[lang for lang in Language],
+        help='Language of TTS server, must in ["zh-TW", "en-US"]',
+    )
+    parser.add_argument(
+        "--sample-rate",
+        dest="sample_rate",
+        type=int,
+        required=True,
+        help="Set the sample rate of speech.",
+    )
+    parser.add_argument(
+        "--audio-path",
+        dest="audio_path",
+        type=str,
+        required=True,
+        help="The path of wav file for speech to text.",
+    )
+    parser.add_argument(
+        "--seaauth-url",
+        dest="seaauth_url",
+        type=str,
+        required=False,
+        default="https://seaauth.seasalt.ai",
+        help="Url of SeaAuth.",
+    )
+    parser.add_argument(
+        "--seavoice-ws-url",
+        dest="seavoice_ws_url",
+        type=str,
+        required=False,
+        default="wss://seavoice.seasalt.ai",
+        help="Url of SeaVoice.",
+    )
+    parser.add_argument(
+        "--enable-itn",
+        dest="enable_itn",
+        type=str,
+        required=False,
+        default="true",
+        help="Enable the ITN feature(true or false), default is true.",
+    )
+    parser.add_argument(
+        "--enable-punctuation",
+        dest="enable_punctuation",
+        type=str,
+        required=False,
+        default="true",
+        help="Enable the punctuation feature(true or false), default is true.",
+    )
+    args = parser.parse_args()
+    _check_file_path_exists(args.audio_path)
+    args = _convert_argument_str_to_bool(args)
+    asyncio.run(main(args))
 
 
 TTS protocols
