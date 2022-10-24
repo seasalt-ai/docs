@@ -148,6 +148,7 @@
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
+<p>accept language: <cite>zh-TW</cite>, <cite>en-US</cite></p>
 <ul class="simple">
 <li><p>start recognition command: sending audio data for recognition</p></li>
 </ul>
@@ -252,15 +253,23 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="c1"># Copyright 2022  Seasalt AI, Inc</span>
 
 <span class="sd">&quot;&quot;&quot;Client script for stt endpoint</span>
+
+<span class="sd">prerequisite:</span>
+<span class="sd">python 3.8</span>
+<span class="sd">python package:</span>
+<span class="sd">- aiohttp==3.8.1</span>
+<span class="sd">- websockets==10.3</span>
+
 <span class="sd">Usage:</span>
+
 <span class="sd">python stt_client.py \</span>
-<span class="sd">  --account test \</span>
-<span class="sd">  --password test \</span>
-<span class="sd">  --lang zh-TW \</span>
-<span class="sd">  --enable-itn false \</span>
-<span class="sd">  --enable-punctuation false \</span>
-<span class="sd">  --audio-path test_audio.wav \</span>
-<span class="sd">  --sample-rate 8000</span>
+<span class="sd">    --account test \</span>
+<span class="sd">    --password test \</span>
+<span class="sd">    --lang zh-TW \</span>
+<span class="sd">    --enable-itn false \</span>
+<span class="sd">    --enable-punctuation false \</span>
+<span class="sd">    --audio-path test_audio.wav \</span>
+<span class="sd">    --sample-rate 8000</span>
 
 <span class="sd">`--lang`: supports `zh-tw`, `en-us`</span>
 <span class="sd">`--enable-itn`: true to enable inverse text normalisation</span>
@@ -411,6 +420,12 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No file exists at </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
 
+<span class="k">def</span> <span class="nf">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
+    <span class="k">return</span> <span class="n">args</span>
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--account&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;account of a SeaAuth account.&quot;</span><span class="p">)</span>
@@ -428,22 +443,6 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set the sample rate of speech.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--enable-itn&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_itn&quot;</span><span class="p">,</span>
-        <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the ITN feature.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--enable-punctuation&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_punctuation&quot;</span><span class="p">,</span>
-        <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the punctuation feature.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--audio-path&quot;</span><span class="p">,</span>
@@ -468,8 +467,25 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wss://seavoice.seasalt.ai&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaVoice.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--enable-itn&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_itn&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the ITN feature(true or false), default is true.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--enable-punctuation&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_punctuation&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the punctuation feature(true or false), default is true.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">_check_file_path_exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 </pre></div>
 </div>
