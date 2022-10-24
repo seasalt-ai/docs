@@ -185,7 +185,7 @@ Sample Client Script
     `--lang`: supports `zh-tw`, `en-us`
     `--enable-itn`: true to enable inverse text normalisation
     `--enable-punctuation`: true to enable punctuation
-    `--sample_rate`: optional, set the sample rate of synthesized speech
+    `--sample-rate`: optional, set the sample rate of synthesized speech
     """
 
     import argparse
