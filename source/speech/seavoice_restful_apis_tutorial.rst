@@ -57,6 +57,7 @@ If successfully connected, Client sends json packages to stt server, for example
         }
     }
 
+accept language: `zh-TW`, `en-US`
 
 - start recognition command: sending audio data for recognition
 
