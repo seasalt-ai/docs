@@ -57,6 +57,7 @@ If successfully connected, Client sends json packages to stt server, for example
         }
     }
 
+accept language: `zh-TW`, `en-US`
 
 - start recognition command: sending audio data for recognition
 
@@ -164,16 +165,24 @@ Sample Client Script
     # Copyright 2022  Seasalt AI, Inc
 
     """Client script for stt endpoint
+
+    prerequisite:
+    python 3.8
+    python package:
+    - aiohttp==3.8.1
+    - websockets==10.3
+
     Usage:
+
     python stt_client.py \
-      --account test \
-      --password test \
-      --lang zh-TW \
-      --enable-itn false \
-      --enable-punctuation false \
-      --audio-path test_audio.wav \
-      --sample-rate 8000
-    
+        --account test \
+        --password test \
+        --lang zh-TW \
+        --enable-itn false \
+        --enable-punctuation false \
+        --audio-path test_audio.wav \
+        --sample-rate 8000
+
     `--lang`: supports `zh-tw`, `en-us`
     `--enable-itn`: true to enable inverse text normalisation
     `--enable-punctuation`: true to enable punctuation
@@ -323,6 +332,12 @@ Sample Client Script
             raise Exception(f"No file exists at {audio_path}.")
 
 
+    def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
+        args.enable_itn = args.enable_itn.lower() == "true"
+        args.enable_punctuation = args.enable_punctuation.lower() == "true"
+        return args
+
+
     if __name__ == "__main__":
         parser = argparse.ArgumentParser()
         parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
@@ -340,22 +355,6 @@ Sample Client Script
             type=int,
             required=True,
             help="Set the sample rate of speech.",
-        )
-        parser.add_argument(
-            "--enable-itn",
-            dest="enable_itn",
-            type=bool,
-            required=False,
-            default=True,
-            help="Enable the ITN feature.",
-        )
-        parser.add_argument(
-            "--enable-punctuation",
-            dest="enable_punctuation",
-            type=bool,
-            required=False,
-            default=True,
-            help="Enable the punctuation feature.",
         )
         parser.add_argument(
             "--audio-path",
@@ -380,8 +379,25 @@ Sample Client Script
             default="wss://seavoice.seasalt.ai",
             help="Url of SeaVoice.",
         )
+        parser.add_argument(
+            "--enable-itn",
+            dest="enable_itn",
+            type=str,
+            required=False,
+            default="true",
+            help="Enable the ITN feature(true or false), default is true.",
+        )
+        parser.add_argument(
+            "--enable-punctuation",
+            dest="enable_punctuation",
+            type=str,
+            required=False,
+            default="true",
+            help="Enable the punctuation feature(true or false), default is true.",
+        )
         args = parser.parse_args()
         _check_file_path_exists(args.audio_path)
+        args = _convert_argument_str_to_bool(args)
         asyncio.run(main(args))
 
 
