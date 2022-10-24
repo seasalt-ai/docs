@@ -157,6 +157,7 @@ Sample Client Script
 2. Run client script
 
 .. code-block:: python
+
     #!/usr/bin/env python3
     # -*- coding: utf-8 -*-
 
