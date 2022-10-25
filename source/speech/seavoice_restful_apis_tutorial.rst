@@ -193,12 +193,19 @@ Sample Client Script
     import asyncio
     import base64
     import json
+    import logging
     from enum import Enum
     from pathlib import Path
     from urllib.parse import urljoin
 
     import aiohttp
     import websockets
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.StreamHandler()],
+    )
 
     SEAAUTH_SCOPE_NAME: str = "seavoice"
     CHUNK_SIZE: int = 5000
@@ -210,7 +217,9 @@ Sample Client Script
 
 
     async def main(args: argparse.Namespace):
+        logging.info("loggin in...")
         auth_result = await _login_seaauth(args.account, args.password)
+        logging.info(f"logged in, auth_result: {auth_result}")
         await _do_stt(args, auth_result)
 
 
@@ -237,7 +246,9 @@ Sample Client Script
 
     async def _do_stt(args: argparse.Namespace, auth_result: dict):
         stt_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/stt/ws")
+        logging.info("establishing ws connection...")
         async with websockets.connect(stt_endpoint_url) as websocket:
+            logging.info("established ws connection")
             is_begin, is_end = asyncio.Event(), asyncio.Event()
 
             await asyncio.gather(
@@ -246,7 +257,8 @@ Sample Client Script
             )
 
             # wait for audio synthesized
-            print("stt finished")
+            logging.info("stt finished")
+        logging.info("disconnected ws connection...")
 
 
     async def _send_commands(
@@ -256,12 +268,16 @@ Sample Client Script
         is_begin: asyncio.Event,
         is_end: asyncio.Event,
     ):
+        logging.info("sending authentication command...")
         await _send_authentication_command(args, websocket, auth_result)
 
         # wait until received the begin event from server
         await is_begin.wait()
+        logging.info("sending audio_data commands...")
         await _send_audio_data_chunkily(websocket, args.audio_path)
+        logging.info("sending stop commands...")
         await _send_stop_command(websocket)
+        logging.info("waiting for end event...")
         await is_end.wait()
 
 
@@ -273,22 +289,22 @@ Sample Client Script
 
             if event_name == "info":
                 if event_payload.get("status") == "begin":
-                    print(f"received an info begin event: {event_payload}")
+                    logging.info(f"received an info begin event: {event_payload}")
                     is_begin.set()
                 elif event_payload.get("status") == "error":
-                    print(f"received an info error event: {event_payload}")
+                    logging.info(f"received an info error event: {event_payload}")
                     raise Exception(f"received an info error event: {event_payload}")
                 elif event_payload.get("status") == "end":
-                    print("received an info end event")
+                    logging.info("received an info end event")
                     is_end.set()
                 else:
-                    print(f"received an unknown info event: {event}")
+                    logging.info(f"received an unknown info event: {event}")
 
             elif event_name == "recognizing" or event_name == "recognized":
-                print(f"received an {event_name} event: {event_payload}")
+                logging.info(f"received an {event_name} event: {event_payload}")
 
             else:
-                print(f"received an unknown event: {event}")
+                logging.info(f"received an unknown event: {event}")
 
 
     async def _send_stop_command(websocket):
@@ -558,17 +574,23 @@ Sample Client Script
 
     # Copyright 2022  Seasalt AI, Inc
 
-    """TTS client script
+    """Client script for tts endpoint
+
+    prerequisite:
+    python 3.8
+    python package:
+    - aiohttp==3.8.1
+    - websockets==10.3
 
     Usage:
 
     python tts_client.py \
-      --account test \
-      --password test \
-      --lang zh-TW \
-      --voice Tongtong \
-      --text "你好這裡是nxcloud，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
-      --rules "nxcloud | 牛信雲\n"
+    --account test \
+    --password test \
+    --lang zh-TW \
+    --voice Tongtong \
+    --text "你好這裡是nxcloud，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
+    --rules "nxcloud | 牛信雲\n"
 
     `--lang`: supports `zh-tw`, `en-us`, `en-gb`
     `--text`: input text to synthesize, supports SSML format
@@ -582,12 +604,19 @@ Sample Client Script
     import asyncio
     import base64
     import json
+    import logging
     import wave
     from enum import Enum
     from urllib.parse import urljoin
 
     import aiohttp
     import websockets
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.StreamHandler()],
+    )
 
     SEAAUTH_SCOPE_NAME: str = "seavoice"
 
@@ -618,41 +647,45 @@ Sample Client Script
 
 
     async def main(args: argparse.Namespace):
+        logging.info("loggin in...")
         auth_result = await _login_seaauth(args)
+        logging.info(f"logged in, auth_result: {auth_result}")
         await _do_tts(args, auth_result)
 
 
     async def _login_seaauth(args: argparse.Namespace) -> dict:
         """Login with SeaAuth.
         Example of response:
-        {
-          "account": "test",
-          "access_token": "eyJ0eXAiOi*****",
-          "token_type": "Bearer",
-          "refresh_token": "71bbffd5368*****"
-        }
+            {
+            "account": "test",
+            "access_token": "eyJ0eXAiOi*****",
+            "token_type": "Bearer",
+            "refresh_token": "71bbffd5368*****"
+            }
         """
         payload = {"username": args.account, "password": args.password, "scope": SEAAUTH_SCOPE_NAME}
         data = aiohttp.FormData()
         data.add_fields(*payload.items())
         async with aiohttp.ClientSession() as session:
-        async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
-            if response.status >= 400:
-                raise Exception(await response.text())
-            data = await response.json()
+            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
+                if response.status >= 400:
+                    raise Exception(await response.text())
+                data = await response.json()
                 return data
 
 
     async def _do_tts(args: argparse.Namespace, auth_result: dict):
         tts_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/tts/ws")
+        logging.info("establishing ws connection...")
         async with websockets.connect(tts_endpoint_url) as websocket:
+            logging.info("established ws connection")
             is_begin = asyncio.Event()
             is_sythesized = asyncio.Event()
             await asyncio.gather(
                 _receive_events(websocket, is_begin, is_sythesized),
                 _send_commands(args, auth_result, websocket, is_begin, is_sythesized),
             )
-            print("tts finished")
+        logging.info("tts finished")
 
 
     async def _send_commands(
@@ -662,12 +695,15 @@ Sample Client Script
         is_begin: asyncio.Event,
         is_sythesized: asyncio.Event,
     ):
+        logging.info("sending authentication command...")
         await _send_authentication_command(websocket, auth_result)
         # wait until received the begin event from server
         await is_begin.wait()
+        logging.info("sending synthesis commands...")
         await _send_synthesis_commands(websocket, args)
 
         # wait for audio synthsized
+        logging.info("waiting is_sythesized event...")
         await is_sythesized.wait()
         await websocket.close()
 
@@ -685,20 +721,20 @@ Sample Client Script
                 event_payload = event.get("payload", {})
                 if event_name == "info":
                     if event_payload.get("status") == "begin":
-                        print(f"received an info event: {event_payload}")
+                        logging.info(f"received an info event: {event_payload}")
                         is_begin.set()
                     elif event_payload.get("status") == "error":
-                        print(f"received an error event: {event_payload}")
+                        logging.info(f"received an error event: {event_payload}")
                         raise Exception(f"received an error event: {event_payload}")
                 elif event_name == "audio_data":
                     synthesis_status = event_payload["status"]
-                    print(f"received an audio_data event, staus:{synthesis_status}")
+                    logging.info(f"received an audio_data event, staus:{synthesis_status}")
                     # warning: it's a IO blocking operation.
                     f.writeframes(base64.b64decode(event_payload["audio"]))
                     if synthesis_status == "synthesized":
                         is_sythesized.set()
                 else:
-                    print(f"received an unknown event: {event}")
+                    logging.info(f"received an unknown event: {event}")
 
 
     async def _send_authentication_command(websocket, auth_result: dict):
@@ -767,16 +803,16 @@ Sample Client Script
         )
         parser.add_argument(
             "--seaauth-url",
-            dest="seaauth_url",
             type=str,
+            dest="seaauth_url",
             required=False,
             default="https://seaauth.seasalt.ai",
             help="Url of SeaAuth.",
         )
         parser.add_argument(
             "--seavoice-ws-url",
-            dest="seavoice_ws_url",
             type=str,
+            dest="seavoice_ws_url",
             required=False,
             default="wss://seavoice.seasalt.ai",
             help="Url of SeaVoice.",
@@ -796,6 +832,7 @@ Sample Client Script
         )
         parser.add_argument(
             "--sample-rate",
+            dest="sample_rate",
             type=int,
             default=22050,
             help="Optional, set the sample rate of synthesized speech, default 22050.",
