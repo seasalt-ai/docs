@@ -281,12 +281,19 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
 <span class="kn">import</span> <span class="nn">websockets</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">handlers</span><span class="o">=</span><span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()],</span>
+<span class="p">)</span>
 
 <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
 <span class="n">CHUNK_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span>
@@ -298,7 +305,9 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loggin in...&quot;</span><span class="p">)</span>
     <span class="n">auth_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;logged in, auth_result: </span><span class="si">{</span><span class="n">auth_result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
 
 
@@ -325,7 +334,9 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="n">stt_endpoint_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seavoice_ws_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/stt/ws&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;establishing ws connection...&quot;</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">stt_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;established ws connection&quot;</span><span class="p">)</span>
         <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_end</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">(),</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
 
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
@@ -334,7 +345,8 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="p">)</span>
 
         <span class="c1"># wait for audio synthesized</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;stt finished&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;stt finished&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;disconnected ws connection...&quot;</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_commands</span><span class="p">(</span>
@@ -344,12 +356,16 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
     <span class="n">is_end</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
 <span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending authentication command...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
 
     <span class="c1"># wait until received the begin event from server</span>
     <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending audio_data commands...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_audio_data_chunkily</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending stop commands...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_stop_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting for end event...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">is_end</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
 
 
@@ -361,22 +377,22 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
         <span class="k">if</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;begin&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info begin event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info begin event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">is_begin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="k">elif</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;received an info end event&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;received an info end event&quot;</span><span class="p">)</span>
                 <span class="n">is_end</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown info event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown info event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;recognizing&quot;</span> <span class="ow">or</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;recognized&quot;</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an </span><span class="si">{</span><span class="n">event_name</span><span class="si">}</span><span class="s2"> event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an </span><span class="si">{</span><span class="n">event_name</span><span class="si">}</span><span class="s2"> event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_stop_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">):</span>
@@ -686,17 +702,23 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 <span class="c1"># Copyright 2022  Seasalt AI, Inc</span>
 
-<span class="sd">&quot;&quot;&quot;TTS client script</span>
+<span class="sd">&quot;&quot;&quot;Client script for tts endpoint</span>
+
+<span class="sd">prerequisite:</span>
+<span class="sd">python 3.8</span>
+<span class="sd">python package:</span>
+<span class="sd">- aiohttp==3.8.1</span>
+<span class="sd">- websockets==10.3</span>
 
 <span class="sd">Usage:</span>
 
 <span class="sd">python tts_client.py \</span>
-<span class="sd">  --account test \</span>
-<span class="sd">  --password test \</span>
-<span class="sd">  --lang zh-TW \</span>
-<span class="sd">  --voice Tongtong \</span>
-<span class="sd">  --text &quot;你好這裡是nxcloud，今天的日期是&lt;say-as interpret-as=&#39;date&#39; format=&#39;m/d/Y&#39;&gt;10/11/2022&lt;/say-as&gt;&quot; \</span>
-<span class="sd">  --rules &quot;nxcloud | 牛信雲\n&quot;</span>
+<span class="sd">--account test \</span>
+<span class="sd">--password test \</span>
+<span class="sd">--lang zh-TW \</span>
+<span class="sd">--voice Tongtong \</span>
+<span class="sd">--text &quot;你好這裡是nxcloud，今天的日期是&lt;say-as interpret-as=&#39;date&#39; format=&#39;m/d/Y&#39;&gt;10/11/2022&lt;/say-as&gt;&quot; \</span>
+<span class="sd">--rules &quot;nxcloud | 牛信雲\n&quot;</span>
 
 <span class="sd">`--lang`: supports `zh-tw`, `en-us`, `en-gb`</span>
 <span class="sd">`--text`: input text to synthesize, supports SSML format</span>
@@ -710,12 +732,19 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">wave</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
 <span class="kn">import</span> <span class="nn">websockets</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">handlers</span><span class="o">=</span><span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()],</span>
+<span class="p">)</span>
 
 <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
 
@@ -746,41 +775,45 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loggin in...&quot;</span><span class="p">)</span>
     <span class="n">auth_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;logged in, auth_result: </span><span class="si">{</span><span class="n">auth_result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Login with SeaAuth.</span>
 <span class="sd">    Example of response:</span>
-<span class="sd">    {</span>
-<span class="sd">      &quot;account&quot;: &quot;test&quot;,</span>
-<span class="sd">      &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
-<span class="sd">      &quot;token_type&quot;: &quot;Bearer&quot;,</span>
-<span class="sd">      &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
-<span class="sd">    }</span>
+<span class="sd">        {</span>
+<span class="sd">        &quot;account&quot;: &quot;test&quot;,</span>
+<span class="sd">        &quot;access_token&quot;: &quot;eyJ0eXAiOi*****&quot;,</span>
+<span class="sd">        &quot;token_type&quot;: &quot;Bearer&quot;,</span>
+<span class="sd">        &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
+<span class="sd">        }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
     <span class="n">data</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span><span class="o">*</span><span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/login&quot;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/login&quot;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">data</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="n">tts_endpoint_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seavoice_ws_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/tts/ws&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;establishing ws connection...&quot;</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tts_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;established ws connection&quot;</span><span class="p">)</span>
         <span class="n">is_begin</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="n">is_sythesized</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
             <span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">),</span>
             <span class="n">_send_commands</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tts finished&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;tts finished&quot;</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_commands</span><span class="p">(</span>
@@ -790,12 +823,15 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
     <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
 <span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending authentication command...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
     <span class="c1"># wait until received the begin event from server</span>
     <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending synthesis commands...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 
     <span class="c1"># wait for audio synthsized</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting is_sythesized event...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">is_sythesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
@@ -813,20 +849,20 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
             <span class="n">event_payload</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;payload&quot;</span><span class="p">,</span> <span class="p">{})</span>
             <span class="k">if</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;begin&quot;</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">is_begin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
                 <span class="k">elif</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;audio_data&quot;</span><span class="p">:</span>
                 <span class="n">synthesis_status</span> <span class="o">=</span> <span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an audio_data event, staus:</span><span class="si">{</span><span class="n">synthesis_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an audio_data event, staus:</span><span class="si">{</span><span class="n">synthesis_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="c1"># warning: it&#39;s a IO blocking operation.</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">writeframes</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="n">synthesis_status</span> <span class="o">==</span> <span class="s2">&quot;synthesized&quot;</span><span class="p">:</span>
                     <span class="n">is_sythesized</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
@@ -895,16 +931,16 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seaauth-url&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_url&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_url&quot;</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://seaauth.seasalt.ai&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaAuth.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seavoice-ws-url&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seavoice_ws_url&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seavoice_ws_url&quot;</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wss://seavoice.seasalt.ai&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaVoice.&quot;</span><span class="p">,</span>
@@ -924,6 +960,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--sample-rate&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, set the sample rate of synthesized speech, default 22050.&quot;</span><span class="p">,</span>
