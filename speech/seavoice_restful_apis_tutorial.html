@@ -129,6 +129,39 @@
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
+<li><p>Refresh access token if it is expired</p></li>
+</ol>
+<blockquote>
+<div><p>3.1 check token lifetime</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jwt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;eyJ0eXAiOiJKV1.....&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verify_signature&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;exp&quot;</span><span class="p">]))</span>
+<span class="c1"># 2022-12-06 12:42:54</span>
+</pre></div>
+</div>
+<p>3.2 refresh token with <code class="docutils literal notranslate"><span class="pre">https://seaauth.seasalt.ai/api/v1/users/rotate_token</span></code></p>
+<p>input payload</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;eyJ0eXAiOi*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="s2">&quot;71bbffd5368*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;seavoice&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;eyJ0esr3hifi*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="s2">&quot;fd27g1bfdg53g*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;seavoice&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
 <li><p>Connect to SeaVoice STT websocket server: <code class="docutils literal notranslate"><span class="pre">wss://seavoice.seasalt.ai/api/v1/stt/ws</span></code></p></li>
 </ol>
 <p>If successfully connected, Client sends json packages to stt server, for example:</p>
@@ -169,7 +202,7 @@
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="4">
+<ol class="arabic simple" start="5">
 <li><p>STT server receives audio data, performs recognition, and sends recognizing/recognized events to Client</p></li>
 </ol>
 <ul class="simple">
@@ -243,6 +276,7 @@ python3 -m venv venv/seavoice
 pip install --upgrade pip
 pip install <span class="nv">websockets</span><span class="o">==</span><span class="m">10</span>.3
 pip install <span class="nv">aiohttp</span><span class="o">==</span><span class="m">3</span>.8.1
+pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m">2</span>.5.0
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
@@ -260,6 +294,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">python package:</span>
 <span class="sd">- aiohttp==3.8.1</span>
 <span class="sd">- websockets==10.3</span>
+<span class="sd">- PyJWT==2.5.0</span>
 
 <span class="sd">Usage:</span>
 
@@ -271,11 +306,6 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">    --enable-punctuation false \</span>
 <span class="sd">    --audio-path test_audio.wav \</span>
 <span class="sd">    --sample-rate 8000</span>
-
-<span class="sd">`--lang`: supports `zh-tw`, `en-us`</span>
-<span class="sd">`--enable-itn`: true to enable inverse text normalisation</span>
-<span class="sd">`--enable-punctuation`: true to enable punctuation</span>
-<span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -283,11 +313,13 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">jwt</span>
 <span class="kn">import</span> <span class="nn">websockets</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
@@ -297,7 +329,9 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="p">)</span>
 
 <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
+<span class="n">TOKEN_TYPE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Bearer&quot;</span>
 <span class="n">CHUNK_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 
 
 <span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
@@ -306,10 +340,28 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loggin in...&quot;</span><span class="p">)</span>
-    <span class="n">auth_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;logged in, auth_result: </span><span class="si">{</span><span class="n">auth_result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Start to get access token.&quot;</span><span class="p">)</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_access_token</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_get_access_token</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">credential</span> <span class="o">=</span> <span class="n">_get_credential_from_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">credential</span> <span class="ow">and</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;account&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">:</span>
+        <span class="n">access_token</span><span class="p">,</span> <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">_is_access_token_expired</span><span class="p">(</span><span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]):</span>
+            <span class="n">credential</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_refresh_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">refresh_token</span><span class="p">)</span>
+            <span class="n">_save_credential</span><span class="p">(</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">],</span> <span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got access token from </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">credential</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">_save_credential</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">],</span> <span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">account</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -322,6 +374,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">            &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
 <span class="sd">        }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;logging in to SeaAuth...&quot;</span><span class="p">)</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
     <span class="n">data</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span><span class="o">*</span><span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
@@ -330,10 +383,29 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
             <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">data</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;logged in to SeaAuth.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_refresh_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">refresh_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;refreshing token...&quot;</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span>
+        <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="n">refresh_token</span><span class="p">,</span>
+        <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="n">TOKEN_TYPE</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/rotate_token&quot;</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Token is refreshed&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">stt_endpoint_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seavoice_ws_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/stt/ws&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;establishing ws connection...&quot;</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">stt_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
@@ -342,7 +414,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
             <span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_end</span><span class="p">),</span>
-            <span class="n">_send_commands</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_end</span><span class="p">),</span>
+            <span class="n">_send_commands</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_end</span><span class="p">),</span>
         <span class="p">)</span>
 
         <span class="c1"># wait for audio synthesized</span>
@@ -352,13 +424,13 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_commands</span><span class="p">(</span>
     <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span>
-    <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">websocket</span><span class="p">,</span>
     <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
     <span class="n">is_end</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending authentication command...&quot;</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
 
     <span class="c1"># wait until received the begin event from server</span>
     <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
@@ -401,11 +473,11 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">command_str</span><span class="p">)</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">authentication_command</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;authentication&quot;</span><span class="p">,</span>
         <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">auth_result</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span>
             <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span>
                 <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
@@ -434,13 +506,56 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 <span class="k">def</span> <span class="nf">_check_file_path_exists</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No file exists at </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No audio file exists at </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
     <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
     <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
     <span class="k">return</span> <span class="n">args</span>
+
+
+<span class="k">def</span> <span class="nf">_is_access_token_expired</span><span class="p">(</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">life_time</span> <span class="o">=</span> <span class="n">_get_token_lifetime</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">life_time</span> <span class="o">&lt;</span> <span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span>
+
+
+<span class="k">def</span> <span class="nf">_get_token_lifetime</span><span class="p">(</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verify_signature&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;exp&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid access_token format error:</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_save_credential</span><span class="p">(</span>
+    <span class="n">account</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">refresh_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">seaauth_credential_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">)</span><span class="o">.</span><span class="n">touch</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;account&quot;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span> <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span> <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="n">refresh_token</span><span class="p">},</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The credential is saved to </span><span class="si">{</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_credential_from_file</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No credential file exists at </span><span class="si">{</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">credential</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot parse </span><span class="si">{</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2"> into json due to </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">error</span>
+
+    <span class="k">if</span> <span class="s2">&quot;access_token&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">credential</span> <span class="ow">or</span> <span class="s2">&quot;refresh_token&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">credential</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">credential</span><span class="si">}</span><span class="s2"> not includes both access_token and refresh_token.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">credential</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -475,6 +590,14 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://seaauth.seasalt.ai&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaAuth.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--seaauth-credential-path&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_credential_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;seavoice_credential.json&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Credential storage of access token and refresh token.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seavoice-ws-url&quot;</span><span class="p">,</span>
@@ -532,6 +655,39 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
+<li><p>Refresh access token if it is expired</p></li>
+</ol>
+<blockquote>
+<div><p>3.1 check token lifetime</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jwt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;eyJ0eXAiOiJKV1.....&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verify_signature&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;exp&quot;</span><span class="p">]))</span>
+<span class="c1"># 2022-12-06 12:42:54</span>
+</pre></div>
+</div>
+<p>3.2 refresh token with <code class="docutils literal notranslate"><span class="pre">https://seaauth.seasalt.ai/api/v1/users/rotate_token</span></code></p>
+<p>input payload</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;eyJ0eXAiOi*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="s2">&quot;71bbffd5368*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;seavoice&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;eyJ0esr3hifi*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="s2">&quot;fd27g1bfdg53g*****&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="s2">&quot;seavoice&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
 <li><p>Connect to SeaVoice TTS websocket server: <code class="docutils literal notranslate"><span class="pre">wss://seavoice.seasalt.ai/api/v1/tts/ws</span></code></p></li>
 </ol>
 <p>If successfully connected, Client sends json packages to TTS server, for example (settings and data are shown with default values),</p>
@@ -653,7 +809,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 </li>
 </ul>
 </div>
-<ol class="arabic simple" start="6">
+<ol class="arabic simple" start="5">
 <li><p>After sending the package, Client calls ws.recv() to wait for TTS server to send the streaming audio data.</p></li>
 <li><p>TTS server performs synthesis and keeps sending streaming audio data to Client. The audio package format is as follows:</p></li>
 </ol>
@@ -678,7 +834,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <li><p>&lt;STATUS&gt;: if status is 1 it means streaming synthesis is still in progress; if status is 2, it means synthesis is complete.</p></li>
 </ul>
 </div>
-<ol class="arabic simple" start="8">
+<ol class="arabic simple" start="7">
 <li><p>Client receives audio data frames.</p></li>
 <li><p>After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p></li>
 </ol>
@@ -693,6 +849,7 @@ python3 -m venv venv/seavoice
 pip install --upgrade pip
 pip install <span class="nv">websockets</span><span class="o">==</span><span class="m">10</span>.3
 pip install <span class="nv">aiohttp</span><span class="o">==</span><span class="m">3</span>.8.1
+pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m">2</span>.5.0
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
@@ -710,6 +867,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">python package:</span>
 <span class="sd">- aiohttp==3.8.1</span>
 <span class="sd">- websockets==10.3</span>
+<span class="sd">- PyJWT==2.5.0</span>
 
 <span class="sd">Usage:</span>
 
@@ -720,14 +878,6 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">--voice Tongtong \</span>
 <span class="sd">--text &quot;你好這裡是nxcloud，今天的日期是&lt;say-as interpret-as=&#39;date&#39; format=&#39;m/d/Y&#39;&gt;10/11/2022&lt;/say-as&gt;&quot; \</span>
 <span class="sd">--rules &quot;nxcloud | 牛信雲\n&quot;</span>
-
-<span class="sd">`--lang`: supports `zh-tw`, `en-us`, `en-gb`</span>
-<span class="sd">`--voice`:</span>
-<span class="sd">`--text`: input text to synthesize, supports SSML format</span>
-<span class="sd">`--rules`: optional, globally applied pronunciation rules in the format of `&lt;word&gt; | &lt;pronunciation&gt;\n`</span>
-<span class="sd">`--pitch`: optional, adjust pitch of synthesized speech, must be &gt; 0.01 or &lt; -0.01</span>
-<span class="sd">`--speed`: optional, adjust speed of synthesized speech, must be &gt; 1.01 or &lt; 0.99</span>
-<span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -735,11 +885,14 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">wave</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">jwt</span>
 <span class="kn">import</span> <span class="nn">websockets</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
@@ -749,9 +902,11 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="p">)</span>
 
 <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
+<span class="n">TOKEN_TYPE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Bearer&quot;</span>
 
 <span class="n">VOICE_CHANNELS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">VOICE_SAMPLE_WIDTH</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
 
 
 <span class="k">class</span> <span class="nc">Voices</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
@@ -777,10 +932,46 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loggin in...&quot;</span><span class="p">)</span>
-    <span class="n">auth_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;logged in, auth_result: </span><span class="si">{</span><span class="n">auth_result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Start to get access token.&quot;</span><span class="p">)</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_access_token</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_get_access_token</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">credential</span> <span class="o">=</span> <span class="n">_get_credential_from_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">credential</span> <span class="ow">and</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;account&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">:</span>
+        <span class="n">access_token</span><span class="p">,</span> <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">_is_access_token_expired</span><span class="p">(</span><span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]):</span>
+            <span class="n">credential</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_refresh_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">refresh_token</span><span class="p">)</span>
+            <span class="n">_save_credential</span><span class="p">(</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">],</span> <span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got access token from </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">credential</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">_save_credential</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">],</span> <span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_refresh_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">refresh_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span>
+        <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="n">refresh_token</span><span class="p">,</span>
+        <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="n">TOKEN_TYPE</span><span class="p">,</span>
+        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;refresh token...&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/rotate_token&quot;</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token is refreshed, auth_result: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -804,41 +995,41 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
             <span class="k">return</span> <span class="n">data</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_do_tts</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">tts_endpoint_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seavoice_ws_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/tts/ws&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;establishing ws connection...&quot;</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tts_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;established ws connection&quot;</span><span class="p">)</span>
         <span class="n">is_begin</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-        <span class="n">is_sythesized</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="n">is_synthesized</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
-            <span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">),</span>
-            <span class="n">_send_commands</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">),</span>
+            <span class="n">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_synthesized</span><span class="p">),</span>
+            <span class="n">_send_commands</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_synthesized</span><span class="p">),</span>
         <span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;tts finished&quot;</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_commands</span><span class="p">(</span>
     <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span>
-    <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">websocket</span><span class="p">,</span>
     <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
-    <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
+    <span class="n">is_synthesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending authentication command...&quot;</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
     <span class="c1"># wait until received the begin event from server</span>
     <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending synthesis commands...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 
-    <span class="c1"># wait for audio synthsized</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting is_sythesized event...&quot;</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">is_sythesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="c1"># wait for audio synthesized</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting is_synthesized event...&quot;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">is_synthesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">is_sythesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_receive_events</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">is_begin</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">is_synthesized</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 
         <span class="n">f</span><span class="o">.</span><span class="n">setnchannels</span><span class="p">(</span><span class="n">VOICE_CHANNELS</span><span class="p">)</span>
@@ -862,16 +1053,16 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
                 <span class="c1"># warning: it&#39;s a IO blocking operation.</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">writeframes</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="n">synthesis_status</span> <span class="o">==</span> <span class="s2">&quot;synthesized&quot;</span><span class="p">:</span>
-                    <span class="n">is_sythesized</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                    <span class="n">is_synthesized</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an unknown event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">auth_result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">authentication_command</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;authentication&quot;</span><span class="p">,</span>
         <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">auth_result</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span>
             <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span>
                 <span class="s2">&quot;voice&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">voice</span><span class="p">,</span>
@@ -907,6 +1098,54 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="p">)</span>
 
 
+<span class="k">def</span> <span class="nf">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">ssml</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">ssml</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
+    <span class="k">return</span> <span class="n">args</span>
+
+
+<span class="k">def</span> <span class="nf">_is_access_token_expired</span><span class="p">(</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">life_time</span> <span class="o">=</span> <span class="n">_get_token_lifetime</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">life_time</span> <span class="o">&lt;</span> <span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span>
+
+
+<span class="k">def</span> <span class="nf">_get_token_lifetime</span><span class="p">(</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verify_signature&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;exp&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid access_token format error:</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_save_credential</span><span class="p">(</span>
+    <span class="n">account</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">refresh_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">seaauth_credential_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">Path</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">)</span><span class="o">.</span><span class="n">touch</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;account&quot;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span> <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span> <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="n">refresh_token</span><span class="p">},</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The credential is saved to </span><span class="si">{</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_credential_from_file</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No credential file exists at </span><span class="si">{</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">seaauth_credential_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">credential</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot parse </span><span class="si">{</span><span class="n">seaauth_credential_path</span><span class="si">}</span><span class="s2"> into json due to </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">error</span>
+
+    <span class="k">if</span> <span class="s2">&quot;access_token&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">credential</span> <span class="ow">or</span> <span class="s2">&quot;refresh_token&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">credential</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">credential</span><span class="si">}</span><span class="s2"> not includes both access_token and refresh_token.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">credential</span>
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--account&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;account of a SeaAuth account.&quot;</span><span class="p">)</span>
@@ -932,17 +1171,20 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Text to synthesize. Supports SSML text.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--ssml&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set this to True if text is in SSML format.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seaauth-url&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_url&quot;</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://seaauth.seasalt.ai&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Url of SeaAuth.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--seaauth-credential-path&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_credential_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;seavoice_credential.json&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Credential storage of access token and refresh token.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seavoice-ws-url&quot;</span><span class="p">,</span>
@@ -990,9 +1232,15 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="n">default</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0, 100] default is 50.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--ssml&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set this to True if text is in SSML format.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">_check_voice</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 </pre></div>
 </div>
