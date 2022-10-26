@@ -456,7 +456,7 @@ If successfully connected, Client sends json packages to TTS server, for example
             "token": "{access_token}",
             "settings": {
                 "language": "en-US",
-                "voice": "LissaHenige",
+                "voice": "Mike",
             },
         }
     }
@@ -491,9 +491,9 @@ If successfully connected, Client sends json packages to TTS server, for example
           - Tongtong
           - Vivian
       - en-US
-          - MikeNorgaard
-          - MoxieLabouche
-          - LissaHenige
+          - Mike
+          - Moxie
+          - Lissa
       
   - <pitch>
       - default: 0.0
@@ -593,6 +593,7 @@ Sample Client Script
     --rules "nxcloud | 牛信雲\n"
 
     `--lang`: supports `zh-tw`, `en-us`, `en-gb`
+    `--voice`: 
     `--text`: input text to synthesize, supports SSML format
     `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
     `--pitch`: optional, adjust pitch of synthesized speech, must be > 0.01 or < -0.01
@@ -627,9 +628,9 @@ Sample Client Script
     class Voices(str, Enum):
         TONGTONG = "Tongtong"
         VIVIAN = "Vivian"
-        MIKE_NORGAARD = "MikeNorgaard"
-        MOXIE_LABOUCHE = "MoxieLabouche"
-        LISSA_HENIGE = "LissaHenige"
+        MIKE = "Mike"
+        MOXIE = "Moxie"
+        LISSA = "Lissa"
 
 
     class Language(str, Enum):
@@ -640,9 +641,9 @@ Sample Client Script
     VOICES_LANGUAGES_MAPPING = {
         Voices.TONGTONG: [Language.ZH_TW],
         Voices.VIVIAN: [Language.ZH_TW],
-        Voices.MIKE_NORGAARD: [Language.EN_US],
-        Voices.MOXIE_LABOUCHE: [Language.EN_US],
-        Voices.LISSA_HENIGE: [Language.EN_US],
+        Voices.MIKE: [Language.EN_US],
+        Voices.MOXIE: [Language.EN_US],
+        Voices.LISSA: [Language.EN_US],
     }
 
 
@@ -763,7 +764,7 @@ Sample Client Script
                     "rules": args.rules,
                     "sample_rate": args.sample_rate,
                 },
-                "data": {"text": args.text, "ssml": True},
+                "data": {"text": args.text, "ssml": args.ssml},
             },
         }
         command_str = json.dumps(synthesis_command)
@@ -800,6 +801,11 @@ Sample Client Script
             type=str,
             required=True,
             help="Text to synthesize. Supports SSML text.",
+        )
+        parser.add_argument(
+            "--ssml",
+            action="store_true,
+            help="Set this to True if text is in SSML format.",
         )
         parser.add_argument(
             "--seaauth-url",
@@ -903,3 +909,46 @@ Examples:
 - ``我的電話號碼是<say-as interpret-as='digits' format='mobile'>1234567890</say-as>``
 - ``訂位代碼為<say-as interpret-as='spell-out'>5VOPXT</say-as>``
 - ``訂位代碼為<say-as interpret-as='spell-out' time='600ms'=>5VOPXT</say-as>``
+
+
+Special Symbol Handling
+**********
+
+SeaVoice automatically handles and pronounces the following symbols:
+
+- en-US
+
+==========  =================
+  Symbol      Pronunciation  
+==========  =================
+#           hastag
+&           and
+==========  =================
+
+- zh-TW
+
+==========  =================
+  Symbol      Pronunciation  
+==========  =================
+%           趴
+％          趴
+>           大於
+＞          大於
+<           小於
+＜          小於
+=           等於
+＝          等於
+\+          加
+＋          加
+°C          度C
+℃           度C
+°F          度F
+℉           度F
+==========  =================
+
+
+.. NOTE::
+
+    - If you wish to interpret and pronounce these symbols differently, you should use the SSML tags as defined above.
+    - Some of the symbols might look alike when renderd on your browser but actually have different encodings.
+    - en-US symbol handling is also used in zh-TW due to common code-switching in zh-TW.
