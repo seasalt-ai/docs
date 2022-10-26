@@ -764,7 +764,7 @@ Sample Client Script
                     "rules": args.rules,
                     "sample_rate": args.sample_rate,
                 },
-                "data": {"text": args.text, "ssml": False},
+                "data": {"text": args.text, "ssml": args.ssml},
             },
         }
         command_str = json.dumps(synthesis_command)
@@ -801,6 +801,12 @@ Sample Client Script
             type=str,
             required=True,
             help="Text to synthesize. Supports SSML text.",
+        )
+        parser.add_argument(
+            "--ssml",
+            type=str,
+            required=False,
+            help="Set this to True if text is in SSML format.",
         )
         parser.add_argument(
             "--seaauth-url",
