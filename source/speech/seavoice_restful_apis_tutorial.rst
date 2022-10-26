@@ -28,7 +28,7 @@ STT protocols
 2. Obtain access token in the response
 
 .. code-block:: JSON
-    
+
     {
         "account": "test",
         "access_token": "eyJ0eXAiOi*****",
@@ -43,7 +43,7 @@ If successfully connected, Client sends json packages to stt server, for example
 - authentication command
 
 .. code-block:: JSON
-    
+
     {
         "command": "authentication",
         "payload": {
@@ -62,7 +62,7 @@ accept language: `zh-TW`, `en-US`
 - start recognition command: sending audio data for recognition
 
 .. code-block:: JSON
-    
+
     {
         "command": "audio_data",
         "payload": {
@@ -171,6 +171,7 @@ Sample Client Script
     python package:
     - aiohttp==3.8.1
     - websockets==10.3
+    - PyJWT==2.5.0
 
     Usage:
 
@@ -184,7 +185,7 @@ Sample Client Script
         --sample-rate 8000
 
     `--lang`: supports `zh-tw`, `en-us`
-    `--enable-itn`: true to enable inverse text normalisation
+    `--enable-itn`: true to enable inverse text normalization
     `--enable-punctuation`: true to enable punctuation
     `--sample-rate`: optional, set the sample rate of synthesized speech
     """
@@ -194,11 +195,13 @@ Sample Client Script
     import base64
     import json
     import logging
+    import time
     from enum import Enum
     from pathlib import Path
     from urllib.parse import urljoin
 
     import aiohttp
+    import jwt
     import websockets
 
     logging.basicConfig(
@@ -208,7 +211,9 @@ Sample Client Script
     )
 
     SEAAUTH_SCOPE_NAME: str = "seavoice"
+    TOKEN_TYPE: str = "Bearer"
     CHUNK_SIZE: int = 5000
+    ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND: int = 60
 
 
     class Language(str, Enum):
@@ -217,10 +222,28 @@ Sample Client Script
 
 
     async def main(args: argparse.Namespace):
-        logging.info("loggin in...")
-        auth_result = await _login_seaauth(args.account, args.password)
-        logging.info(f"logged in, auth_result: {auth_result}")
-        await _do_stt(args, auth_result)
+        logging.info("Start to get access token.")
+        access_token = await _get_access_token(args)
+        await _do_stt(args, access_token)
+
+
+    async def _get_access_token(args: argparse.Namespace) -> str:
+        credential = _get_credential_from_file(args.seaauth_credential_path)
+        if credential and credential["account"] == args.account:
+            access_token, refresh_token = credential["access_token"], credential["refresh_token"]
+            if _is_access_token_expired(credential["access_token"]):
+                credential = await _refresh_access_token(access_token, refresh_token)
+                _save_credential(
+                    args.account, credential["access_token"], credential["refresh_token"], args.seaauth_credential_path
+                )
+            else:
+                logging.info(f"Got access token from {args.seaauth_credential_path}.")
+
+        else:
+            credential = await _login_seaauth(args.account, args.password)
+            _save_credential(args.account, credential["access_token"], credential["refresh_token"], args.seaauth_credential_path)
+
+        return credential["access_token"]
 
 
     async def _login_seaauth(account: str, password: str) -> dict:
@@ -233,6 +256,7 @@ Sample Client Script
                 "refresh_token": "71bbffd5368*****"
             }
         """
+        logging.info("logging in to SeaAuth...")
         payload = {"username": account, "password": password, "scope": SEAAUTH_SCOPE_NAME}
         data = aiohttp.FormData()
         data.add_fields(*payload.items())
@@ -241,10 +265,29 @@ Sample Client Script
                 if response.status >= 400:
                     raise Exception(await response.text())
                 data = await response.json()
-                return data
+        logging.info("logged in to SeaAuth.")
+        return data
 
 
-    async def _do_stt(args: argparse.Namespace, auth_result: dict):
+    async def _refresh_access_token(access_token: str, refresh_token: str) -> dict:
+        logging.info("refreshing token...")
+        payload = {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": TOKEN_TYPE,
+            "service": SEAAUTH_SCOPE_NAME,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/rotate_token"), json=payload) as response:
+                if response.status >= 400:
+                    raise Exception(await response.text())
+                data = await response.json()
+
+        logging.info("Token is refreshed")
+        return data
+
+
+    async def _do_stt(args: argparse.Namespace, access_token: str):
         stt_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/stt/ws")
         logging.info("establishing ws connection...")
         async with websockets.connect(stt_endpoint_url) as websocket:
@@ -253,7 +296,7 @@ Sample Client Script
 
             await asyncio.gather(
                 _receive_events(websocket, is_begin, is_end),
-                _send_commands(args, auth_result, websocket, is_begin, is_end),
+                _send_commands(args, access_token, websocket, is_begin, is_end),
             )
 
             # wait for audio synthesized
@@ -263,13 +306,13 @@ Sample Client Script
 
     async def _send_commands(
         args: argparse.Namespace,
-        auth_result: dict,
+        access_token: str,
         websocket,
         is_begin: asyncio.Event,
         is_end: asyncio.Event,
     ):
         logging.info("sending authentication command...")
-        await _send_authentication_command(args, websocket, auth_result)
+        await _send_authentication_command(args, websocket, access_token)
 
         # wait until received the begin event from server
         await is_begin.wait()
@@ -312,11 +355,11 @@ Sample Client Script
         await websocket.send(command_str)
 
 
-    async def _send_authentication_command(args: argparse.Namespace, websocket, auth_result: dict):
+    async def _send_authentication_command(args: argparse.Namespace, websocket, access_token: str):
         authentication_command = {
             "command": "authentication",
             "payload": {
-                "token": auth_result["access_token"],
+                "token": access_token,
                 "settings": {
                     "language": args.lang,
                     "sample_rate": args.sample_rate,
@@ -345,13 +388,56 @@ Sample Client Script
 
     def _check_file_path_exists(audio_path: str):
         if not Path(audio_path).exists():
-            raise Exception(f"No file exists at {audio_path}.")
+            raise Exception(f"No audio file exists at {audio_path}.")
 
 
     def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
         args.enable_itn = args.enable_itn.lower() == "true"
         args.enable_punctuation = args.enable_punctuation.lower() == "true"
         return args
+
+
+    def _is_access_token_expired(access_token: str) -> bool:
+        life_time = _get_token_lifetime(access_token)
+        return life_time < ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND
+
+
+    def _get_token_lifetime(access_token: str) -> int:
+        try:
+            data = jwt.decode(access_token, options={"verify_signature": False})
+            return data["exp"] - int(time.time())
+        except Exception as error:
+            logging.info(f"Invalid access_token format error:{error}")
+
+
+    def _save_credential(
+        account: str,
+        access_token: str,
+        refresh_token: str,
+        seaauth_credential_path: str,
+    ):
+        Path(seaauth_credential_path).touch(exist_ok=True)
+        with open(seaauth_credential_path, "w") as f:
+            json.dump({"account": account, "access_token": access_token, "refresh_token": refresh_token}, f)
+        logging.info(f"The credential is saved to {seaauth_credential_path}.")
+
+
+    def _get_credential_from_file(seaauth_credential_path: str) -> dict:
+        if not Path(seaauth_credential_path).exists():
+            logging.info(f"No credential file exists at {seaauth_credential_path}.")
+            return {}
+
+        try:
+            with open(seaauth_credential_path, "r") as f:
+                credential = json.load(f)
+        except Exception as error:
+            logging.error(f"Cannot parse {seaauth_credential_path} into json due to {error}")
+            raise error
+
+        if "access_token" not in credential or "refresh_token" not in credential:
+            raise Exception(f"{credential} not includes both access_token and refresh_token.")
+
+        return credential
 
 
     if __name__ == "__main__":
@@ -386,6 +472,14 @@ Sample Client Script
             required=False,
             default="https://seaauth.seasalt.ai",
             help="Url of SeaAuth.",
+        )
+        parser.add_argument(
+            "--seaauth-credential-path",
+            dest="seaauth_credential_path",
+            type=str,
+            required=False,
+            default="seavoice_credential.json",
+            help="Credential storage of access token and refresh token.",
         )
         parser.add_argument(
             "--seavoice-ws-url",
@@ -434,7 +528,7 @@ TTS protocols
 2. Obtain access token in the response
 
 .. code-block:: JSON
-    
+
     {
         "account": "test",
         "access_token": "eyJ0eXAiOi*****",
@@ -449,7 +543,7 @@ If successfully connected, Client sends json packages to TTS server, for example
 - authentication command
 
 .. code-block:: JSON
-    
+
     {
         "command": "authentication",
         "payload": {
@@ -465,7 +559,7 @@ If successfully connected, Client sends json packages to TTS server, for example
 - synthesis command
 
 .. code-block:: JSON
-    
+
     {
         "command": "synthesis",
         "payload": {
@@ -494,10 +588,10 @@ If successfully connected, Client sends json packages to TTS server, for example
           - Mike
           - Moxie
           - Lissa
-      
+
   - <pitch>
       - default: 0.0
-      - range: [-5.0, 5.0] 
+      - range: [-5.0, 5.0]
       - description: adjust the pitch of the synthesized voice, where positive values raise the pitch and negative values lower the pitch.
   - <speed>
       - default = 1.0
@@ -581,6 +675,7 @@ Sample Client Script
     python package:
     - aiohttp==3.8.1
     - websockets==10.3
+    - PyJWT==2.5.0
 
     Usage:
 
@@ -590,14 +685,12 @@ Sample Client Script
     --lang zh-TW \
     --voice Tongtong \
     --text "你好這裡是nxcloud，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
-    --rules "nxcloud | 牛信雲\n"
 
     `--lang`: supports `zh-tw`, `en-us`, `en-gb`
-    `--voice`: 
     `--text`: input text to synthesize, supports SSML format
     `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
-    `--pitch`: optional, adjust pitch of synthesized speech, must be > 0.01 or < -0.01
-    `--speed`: optional, adjust speed of synthesized speech, must be > 1.01 or < 0.99
+    `--pitch`: optional, adjust pitch of synthesized speech, must be > -5 and < 5.
+    `--speed`: optional, adjust speed of synthesized speech, must be > 0 and < 2.
     `--sample-rate`: optional, set the sample rate of synthesized speech
     """
 
@@ -606,11 +699,14 @@ Sample Client Script
     import base64
     import json
     import logging
+    import time
     import wave
     from enum import Enum
+    from pathlib import Path
     from urllib.parse import urljoin
 
     import aiohttp
+    import jwt
     import websockets
 
     logging.basicConfig(
@@ -620,9 +716,11 @@ Sample Client Script
     )
 
     SEAAUTH_SCOPE_NAME: str = "seavoice"
+    TOKEN_TYPE: str = "Bearer"
 
     VOICE_CHANNELS: int = 1
     VOICE_SAMPLE_WIDTH: int = 2
+    ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND: int = 60
 
 
     class Voices(str, Enum):
@@ -648,10 +746,46 @@ Sample Client Script
 
 
     async def main(args: argparse.Namespace):
-        logging.info("loggin in...")
-        auth_result = await _login_seaauth(args)
-        logging.info(f"logged in, auth_result: {auth_result}")
-        await _do_tts(args, auth_result)
+        logging.info("Start to get access token.")
+        access_token = await _get_access_token(args)
+        await _do_tts(args, access_token)
+
+
+    async def _get_access_token(args: argparse.Namespace) -> str:
+        credential = _get_credential_from_file(args.seaauth_credential_path)
+        if credential and credential["account"] == args.account:
+            access_token, refresh_token = credential["access_token"], credential["refresh_token"]
+            if _is_access_token_expired(credential["access_token"]):
+                credential = await _refresh_access_token(access_token, refresh_token)
+                _save_credential(
+                    args.account, credential["access_token"], credential["refresh_token"], args.seaauth_credential_path
+                )
+            else:
+                logging.info(f"Got access token from {args.seaauth_credential_path}.")
+
+        else:
+            credential = await _login_seaauth(args.account, args.password)
+            _save_credential(args.account, credential["access_token"], credential["refresh_token"], args.seaauth_credential_path)
+
+        return credential["access_token"]
+
+
+    async def _refresh_access_token(access_token: str, refresh_token: str) -> dict:
+        payload = {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": TOKEN_TYPE,
+            "service": SEAAUTH_SCOPE_NAME,
+        }
+        logging.info("refresh token...")
+        async with aiohttp.ClientSession() as session:
+            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/rotate_token"), json=payload) as response:
+                if response.status >= 400:
+                    raise Exception(await response.text())
+                data = await response.json()
+
+        logging.info(f"Token is refreshed, auth_result: {data}")
+        return data
 
 
     async def _login_seaauth(args: argparse.Namespace) -> dict:
@@ -675,41 +809,41 @@ Sample Client Script
                 return data
 
 
-    async def _do_tts(args: argparse.Namespace, auth_result: dict):
+    async def _do_tts(args: argparse.Namespace, access_token: str):
         tts_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/tts/ws")
         logging.info("establishing ws connection...")
         async with websockets.connect(tts_endpoint_url) as websocket:
             logging.info("established ws connection")
             is_begin = asyncio.Event()
-            is_sythesized = asyncio.Event()
+            is_synthesized = asyncio.Event()
             await asyncio.gather(
-                _receive_events(websocket, is_begin, is_sythesized),
-                _send_commands(args, auth_result, websocket, is_begin, is_sythesized),
+                _receive_events(websocket, is_begin, is_synthesized),
+                _send_commands(args, access_token, websocket, is_begin, is_synthesized),
             )
         logging.info("tts finished")
 
 
     async def _send_commands(
         args: argparse.Namespace,
-        auth_result: dict,
+        access_token: str,
         websocket,
         is_begin: asyncio.Event,
-        is_sythesized: asyncio.Event,
+        is_synthesized: asyncio.Event,
     ):
         logging.info("sending authentication command...")
-        await _send_authentication_command(websocket, auth_result)
+        await _send_authentication_command(websocket, access_token)
         # wait until received the begin event from server
         await is_begin.wait()
         logging.info("sending synthesis commands...")
         await _send_synthesis_commands(websocket, args)
 
-        # wait for audio synthsized
-        logging.info("waiting is_sythesized event...")
-        await is_sythesized.wait()
+        # wait for audio synthesized
+        logging.info("waiting is_synthesized event...")
+        await is_synthesized.wait()
         await websocket.close()
 
 
-    async def _receive_events(websocket, is_begin: asyncio.Event, is_sythesized: asyncio.Event):
+    async def _receive_events(websocket, is_begin: asyncio.Event, is_synthesized: asyncio.Event):
         with wave.open(args.output, "w") as f:
 
             f.setnchannels(VOICE_CHANNELS)
@@ -733,16 +867,16 @@ Sample Client Script
                     # warning: it's a IO blocking operation.
                     f.writeframes(base64.b64decode(event_payload["audio"]))
                     if synthesis_status == "synthesized":
-                        is_sythesized.set()
+                        is_synthesized.set()
                 else:
                     logging.info(f"received an unknown event: {event}")
 
 
-    async def _send_authentication_command(websocket, auth_result: dict):
+    async def _send_authentication_command(websocket, access_token: str):
         authentication_command = {
             "command": "authentication",
             "payload": {
-                "token": auth_result["access_token"],
+                "token": access_token,
                 "settings": {
                     "language": args.lang,
                     "voice": args.voice,
@@ -778,6 +912,54 @@ Sample Client Script
             )
 
 
+    def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
+        args.ssml = args.ssml.lower() == "true"
+        return args
+
+
+    def _is_access_token_expired(access_token: str) -> bool:
+        life_time = _get_token_lifetime(access_token)
+        return life_time < ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND
+
+
+    def _get_token_lifetime(access_token: str) -> int:
+        try:
+            data = jwt.decode(access_token, options={"verify_signature": False})
+            return data["exp"] - int(time.time())
+        except Exception as error:
+            logging.info(f"Invalid access_token format error:{error}")
+
+
+    def _save_credential(
+        account: str,
+        access_token: str,
+        refresh_token: str,
+        seaauth_credential_path: str,
+    ):
+        Path(seaauth_credential_path).touch(exist_ok=True)
+        with open(seaauth_credential_path, "w") as f:
+            json.dump({"account": account, "access_token": access_token, "refresh_token": refresh_token}, f)
+        logging.info(f"The credential is saved to {seaauth_credential_path}.")
+
+
+    def _get_credential_from_file(seaauth_credential_path: str) -> dict:
+        if not Path(seaauth_credential_path).exists():
+            logging.info(f"No credential file exists at {seaauth_credential_path}.")
+            return {}
+
+        try:
+            with open(seaauth_credential_path, "r") as f:
+                credential = json.load(f)
+        except Exception as error:
+            logging.error(f"Cannot parse {seaauth_credential_path} into json due to {error}")
+            raise error
+
+        if "access_token" not in credential or "refresh_token" not in credential:
+            raise Exception(f"{credential} not includes both access_token and refresh_token.")
+
+        return credential
+
+
     if __name__ == "__main__":
         parser = argparse.ArgumentParser()
         parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
@@ -803,17 +985,20 @@ Sample Client Script
             help="Text to synthesize. Supports SSML text.",
         )
         parser.add_argument(
-            "--ssml",
-            action="store_true,
-            help="Set this to True if text is in SSML format.",
-        )
-        parser.add_argument(
             "--seaauth-url",
             type=str,
             dest="seaauth_url",
             required=False,
             default="https://seaauth.seasalt.ai",
             help="Url of SeaAuth.",
+        )
+        parser.add_argument(
+            "--seaauth-credential-path",
+            dest="seaauth_credential_path",
+            type=str,
+            required=False,
+            default="seavoice_credential.json",
+            help="Credential storage of access token and refresh token.",
         )
         parser.add_argument(
             "--seavoice-ws-url",
@@ -861,11 +1046,16 @@ Sample Client Script
             default=50.0,
             help="Optional, adjust volume of synthesize speech, [0, 100] default is 50.",
         )
-
+        parser.add_argument(
+            "--ssml",
+            type=str,
+            required=False,
+            help="Set this to True if text is in SSML format.",
+        )
         args = parser.parse_args()
         _check_voice(args)
+        args = _convert_argument_str_to_bool(args)
         asyncio.run(main(args))
-
 
 Supported SSML Tags
 **********
@@ -919,7 +1109,7 @@ SeaVoice automatically handles and pronounces the following symbols:
 - en-US
 
 ==========  =================
-  Symbol      Pronunciation  
+  Symbol      Pronunciation
 ==========  =================
 #           hastag
 &           and
@@ -928,7 +1118,7 @@ SeaVoice automatically handles and pronounces the following symbols:
 - zh-TW
 
 ==========  =================
-  Symbol      Pronunciation  
+  Symbol      Pronunciation
 ==========  =================
 %           趴
 ％          趴
