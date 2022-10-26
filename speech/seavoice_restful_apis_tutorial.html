@@ -100,6 +100,7 @@
 <ul>
 <li><p><a class="reference internal" href="#id1" id="id5">Sample Client Script</a></p></li>
 <li><p><a class="reference internal" href="#supported-ssml-tags" id="id6">Supported SSML Tags</a></p></li>
+<li><p><a class="reference internal" href="#special-symbol-handling" id="id7">Special Symbol Handling</a></p></li>
 </ul>
 </li>
 </ul>
@@ -543,7 +544,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="w">        </span><span class="nt">&quot;token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{access_token}&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">        </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">            </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en-US&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LissaHenige&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;voice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Mike&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">        </span><span class="p">},</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -585,9 +586,9 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 </li>
 <li><dl class="simple">
 <dt>en-US</dt><dd><ul>
-<li><p>MikeNorgaard</p></li>
-<li><p>MoxieLabouche</p></li>
-<li><p>LissaHenige</p></li>
+<li><p>Mike</p></li>
+<li><p>Moxie</p></li>
+<li><p>Lissa</p></li>
 </ul>
 </dd>
 </dl>
@@ -721,6 +722,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="sd">--rules &quot;nxcloud | 牛信雲\n&quot;</span>
 
 <span class="sd">`--lang`: supports `zh-tw`, `en-us`, `en-gb`</span>
+<span class="sd">`--voice`:</span>
 <span class="sd">`--text`: input text to synthesize, supports SSML format</span>
 <span class="sd">`--rules`: optional, globally applied pronunciation rules in the format of `&lt;word&gt; | &lt;pronunciation&gt;\n`</span>
 <span class="sd">`--pitch`: optional, adjust pitch of synthesized speech, must be &gt; 0.01 or &lt; -0.01</span>
@@ -755,9 +757,9 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="k">class</span> <span class="nc">Voices</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">TONGTONG</span> <span class="o">=</span> <span class="s2">&quot;Tongtong&quot;</span>
     <span class="n">VIVIAN</span> <span class="o">=</span> <span class="s2">&quot;Vivian&quot;</span>
-    <span class="n">MIKE_NORGAARD</span> <span class="o">=</span> <span class="s2">&quot;MikeNorgaard&quot;</span>
-    <span class="n">MOXIE_LABOUCHE</span> <span class="o">=</span> <span class="s2">&quot;MoxieLabouche&quot;</span>
-    <span class="n">LISSA_HENIGE</span> <span class="o">=</span> <span class="s2">&quot;LissaHenige&quot;</span>
+    <span class="n">MIKE</span> <span class="o">=</span> <span class="s2">&quot;Mike&quot;</span>
+    <span class="n">MOXIE</span> <span class="o">=</span> <span class="s2">&quot;Moxie&quot;</span>
+    <span class="n">LISSA</span> <span class="o">=</span> <span class="s2">&quot;Lissa&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
@@ -768,9 +770,9 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
 <span class="n">VOICES_LANGUAGES_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">Voices</span><span class="o">.</span><span class="n">TONGTONG</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">ZH_TW</span><span class="p">],</span>
     <span class="n">Voices</span><span class="o">.</span><span class="n">VIVIAN</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">ZH_TW</span><span class="p">],</span>
-    <span class="n">Voices</span><span class="o">.</span><span class="n">MIKE_NORGAARD</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
-    <span class="n">Voices</span><span class="o">.</span><span class="n">MOXIE_LABOUCHE</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
-    <span class="n">Voices</span><span class="o">.</span><span class="n">LISSA_HENIGE</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">MIKE</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">MOXIE</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
+    <span class="n">Voices</span><span class="o">.</span><span class="n">LISSA</span><span class="p">:</span> <span class="p">[</span><span class="n">Language</span><span class="o">.</span><span class="n">EN_US</span><span class="p">],</span>
 <span class="p">}</span>
 
 
@@ -891,7 +893,7 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
                 <span class="s2">&quot;rules&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">rules</span><span class="p">,</span>
                 <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
             <span class="p">},</span>
-            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;ssml&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;ssml&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">ssml</span><span class="p">},</span>
         <span class="p">},</span>
     <span class="p">}</span>
     <span class="n">command_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">synthesis_command</span><span class="p">)</span>
@@ -928,6 +930,11 @@ pip install <span class="nv">aiohttp</span><span class="o">==</span><span class=
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Text to synthesize. Supports SSML text.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--ssml&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set this to True if text is in SSML format.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seaauth-url&quot;</span><span class="p">,</span>
@@ -1028,6 +1035,98 @@ Description: Specify pronunciation.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">訂位代碼為&lt;say-as</span> <span class="pre">interpret-as='spell-out'&gt;5VOPXT&lt;/say-as&gt;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">訂位代碼為&lt;say-as</span> <span class="pre">interpret-as='spell-out'</span> <span class="pre">time='600ms'=&gt;5VOPXT&lt;/say-as&gt;</span></code></p></li>
 </ul>
+</section>
+<section id="special-symbol-handling">
+<h3><a class="toc-backref" href="#id7">Special Symbol Handling</a><a class="headerlink" href="#special-symbol-handling" title="Permalink to this heading"></a></h3>
+<p>SeaVoice automatically handles and pronounces the following symbols:</p>
+<ul class="simple">
+<li><p>en-US</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Pronunciation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>#</p></td>
+<td><p>hastag</p></td>
+</tr>
+<tr class="row-odd"><td><p>&amp;</p></td>
+<td><p>and</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>zh-TW</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Pronunciation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>%</p></td>
+<td><p>趴</p></td>
+</tr>
+<tr class="row-odd"><td><p>％</p></td>
+<td><p>趴</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt;</p></td>
+<td><p>大於</p></td>
+</tr>
+<tr class="row-odd"><td><p>＞</p></td>
+<td><p>大於</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;</p></td>
+<td><p>小於</p></td>
+</tr>
+<tr class="row-odd"><td><p>＜</p></td>
+<td><p>小於</p></td>
+</tr>
+<tr class="row-even"><td><p>=</p></td>
+<td><p>等於</p></td>
+</tr>
+<tr class="row-odd"><td><p>＝</p></td>
+<td><p>等於</p></td>
+</tr>
+<tr class="row-even"><td><p>+</p></td>
+<td><p>加</p></td>
+</tr>
+<tr class="row-odd"><td><p>＋</p></td>
+<td><p>加</p></td>
+</tr>
+<tr class="row-even"><td><p>°C</p></td>
+<td><p>度C</p></td>
+</tr>
+<tr class="row-odd"><td><p>℃</p></td>
+<td><p>度C</p></td>
+</tr>
+<tr class="row-even"><td><p>°F</p></td>
+<td><p>度F</p></td>
+</tr>
+<tr class="row-odd"><td><p>℉</p></td>
+<td><p>度F</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>If you wish to interpret and pronounce these symbols differently, you should use the SSML tags as defined above.</p></li>
+<li><p>Some of the symbols might look alike when renderd on your browser but actually have different encodings.</p></li>
+<li><p>en-US symbol handling is also used in zh-TW due to common code-switching in zh-TW.</p></li>
+</ul>
+</div>
 </section>
 </section>
 </section>
