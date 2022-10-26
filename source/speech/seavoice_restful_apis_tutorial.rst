@@ -804,8 +804,7 @@ Sample Client Script
         )
         parser.add_argument(
             "--ssml",
-            type=str,
-            required=False,
+            action="store_true,
             help="Set this to True if text is in SSML format.",
         )
         parser.add_argument(
