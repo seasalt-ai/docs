@@ -195,6 +195,7 @@ Sample Client Script
     pip install --upgrade pip
     pip install websockets==10.3
     pip install aiohttp==3.8.1
+    pip install PyJWT==2.5.0
 
 2. Run client script
 
@@ -734,6 +735,7 @@ Sample Client Script
     pip install --upgrade pip
     pip install websockets==10.3
     pip install aiohttp==3.8.1
+    pip install PyJWT==2.5.0
 
 2. Run client script
 
