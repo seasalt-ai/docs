@@ -36,7 +36,48 @@ STT protocols
         "refresh_token": "71bbffd5368*****"
     }
 
-3. Connect to SeaVoice STT websocket server: ``wss://seavoice.seasalt.ai/api/v1/stt/ws``
+3. Refresh access token if it is expired
+
+  3.1 check token lifetime
+
+  .. code-block:: python3
+
+      import jwt
+      from datetime import datetime
+      token = "eyJ0eXAiOiJKV1....."
+      data = jwt.decode(token, options={"verify_signature": False})
+      print(datetime.fromtimestamp(data["exp"]))
+      # 2022-12-06 12:42:54
+  ..
+
+  3.2 refresh token with ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
+
+  input payload
+
+  .. code-block:: python3
+
+    {
+       "access_token": "eyJ0eXAiOi*****",
+       "refresh_token": "71bbffd5368*****",
+       "token_type": "Bearer",
+       "service": "seavoice",
+    }
+  ..
+
+  Output
+
+  .. code-block:: python3
+
+    {
+       "access_token": "eyJ0esr3hifi*****",
+       "refresh_token": "fd27g1bfdg53g*****",
+       "token_type": "Bearer",
+       "service": "seavoice",
+    }
+  ..
+
+
+4. Connect to SeaVoice STT websocket server: ``wss://seavoice.seasalt.ai/api/v1/stt/ws``
 
 If successfully connected, Client sends json packages to stt server, for example:
 
@@ -79,7 +120,7 @@ accept language: `zh-TW`, `en-US`
         "command": "stop"
     }
 
-4. STT server receives audio data, performs recognition, and sends recognizing/recognized events to Client
+5. STT server receives audio data, performs recognition, and sends recognizing/recognized events to Client
 
 - info event (begin)
 
@@ -531,7 +572,47 @@ TTS protocols
         "refresh_token": "71bbffd5368*****"
     }
 
-3. Connect to SeaVoice TTS websocket server: ``wss://seavoice.seasalt.ai/api/v1/tts/ws``
+3. Refresh access token if it is expired
+
+  3.1 check token lifetime
+
+  .. code-block:: python3
+
+      import jwt
+      from datetime import datetime
+      token = "eyJ0eXAiOiJKV1....."
+      data = jwt.decode(token, options={"verify_signature": False})
+      print(datetime.fromtimestamp(data["exp"]))
+      # 2022-12-06 12:42:54
+  ..
+
+  3.2 refresh token with ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
+
+  input payload
+
+  .. code-block:: python3
+
+    {
+       "access_token": "eyJ0eXAiOi*****",
+       "refresh_token": "71bbffd5368*****",
+       "token_type": "Bearer",
+       "service": "seavoice",
+    }
+  ..
+
+  Output
+
+  .. code-block:: python3
+
+    {
+       "access_token": "eyJ0esr3hifi*****",
+       "refresh_token": "fd27g1bfdg53g*****",
+       "token_type": "Bearer",
+       "service": "seavoice",
+    }
+  ..
+
+4. Connect to SeaVoice TTS websocket server: ``wss://seavoice.seasalt.ai/api/v1/tts/ws``
 
 If successfully connected, Client sends json packages to TTS server, for example (settings and data are shown with default values),
 
@@ -610,9 +691,9 @@ If successfully connected, Client sends json packages to TTS server, for example
       - description: should be True if <text> is an SSML string, i.e. using SSML tags. See :ref:`Supported SSML Tags` for more info.
 
 
-6. After sending the package, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
+5. After sending the package, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
 
-7. TTS server performs synthesis and keeps sending streaming audio data to Client. The audio package format is as follows:
+6. TTS server performs synthesis and keeps sending streaming audio data to Client. The audio package format is as follows:
 
 .. code-block:: JSON
 
@@ -635,9 +716,9 @@ If successfully connected, Client sends json packages to TTS server, for example
     - <STATUS>: if status is 1 it means streaming synthesis is still in progress; if status is 2, it means synthesis is complete.
 
 
-8. Client receives audio data frames.
+7. Client receives audio data frames.
 
-9. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
+8. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
 
 
 Sample Client Script
