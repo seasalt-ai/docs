@@ -764,7 +764,7 @@ Sample Client Script
                     "rules": args.rules,
                     "sample_rate": args.sample_rate,
                 },
-                "data": {"text": args.text, "ssml": True},
+                "data": {"text": args.text, "ssml": False},
             },
         }
         command_str = json.dumps(synthesis_command)
