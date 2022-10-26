@@ -183,11 +183,6 @@ Sample Client Script
         --enable-punctuation false \
         --audio-path test_audio.wav \
         --sample-rate 8000
-
-    `--lang`: supports `zh-tw`, `en-us`
-    `--enable-itn`: true to enable inverse text normalization
-    `--enable-punctuation`: true to enable punctuation
-    `--sample-rate`: optional, set the sample rate of synthesized speech
     """
 
     import argparse
@@ -685,13 +680,7 @@ Sample Client Script
     --lang zh-TW \
     --voice Tongtong \
     --text "你好這裡是nxcloud，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
-
-    `--lang`: supports `zh-tw`, `en-us`, `en-gb`
-    `--text`: input text to synthesize, supports SSML format
-    `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
-    `--pitch`: optional, adjust pitch of synthesized speech, must be > -5 and < 5.
-    `--speed`: optional, adjust speed of synthesized speech, must be > 0 and < 2.
-    `--sample-rate`: optional, set the sample rate of synthesized speech
+    --rules "nxcloud | 牛信雲\n"
     """
 
     import argparse
