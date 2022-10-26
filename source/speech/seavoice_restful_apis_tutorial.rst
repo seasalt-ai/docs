@@ -456,7 +456,7 @@ If successfully connected, Client sends json packages to TTS server, for example
             "token": "{access_token}",
             "settings": {
                 "language": "en-US",
-                "voice": "LissaHenige",
+                "voice": "Mike",
             },
         }
     }
@@ -491,9 +491,9 @@ If successfully connected, Client sends json packages to TTS server, for example
           - Tongtong
           - Vivian
       - en-US
-          - MikeNorgaard
-          - MoxieLabouche
-          - LissaHenige
+          - Mike
+          - Moxie
+          - Lissa
       
   - <pitch>
       - default: 0.0
@@ -593,6 +593,7 @@ Sample Client Script
     --rules "nxcloud | 牛信雲\n"
 
     `--lang`: supports `zh-tw`, `en-us`, `en-gb`
+    `--voice`: 
     `--text`: input text to synthesize, supports SSML format
     `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
     `--pitch`: optional, adjust pitch of synthesized speech, must be > 0.01 or < -0.01
@@ -627,9 +628,9 @@ Sample Client Script
     class Voices(str, Enum):
         TONGTONG = "Tongtong"
         VIVIAN = "Vivian"
-        MIKE_NORGAARD = "MikeNorgaard"
-        MOXIE_LABOUCHE = "MoxieLabouche"
-        LISSA_HENIGE = "LissaHenige"
+        MIKE = "Mike"
+        MOXIE = "Moxie"
+        LISSA = "Lissa"
 
 
     class Language(str, Enum):
@@ -640,9 +641,9 @@ Sample Client Script
     VOICES_LANGUAGES_MAPPING = {
         Voices.TONGTONG: [Language.ZH_TW],
         Voices.VIVIAN: [Language.ZH_TW],
-        Voices.MIKE_NORGAARD: [Language.EN_US],
-        Voices.MOXIE_LABOUCHE: [Language.EN_US],
-        Voices.LISSA_HENIGE: [Language.EN_US],
+        Voices.MIKE: [Language.EN_US],
+        Voices.MOXIE: [Language.EN_US],
+        Voices.LISSA: [Language.EN_US],
     }
 
 
