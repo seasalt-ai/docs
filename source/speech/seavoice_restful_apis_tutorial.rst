@@ -904,3 +904,50 @@ Examples:
 - ``我的電話號碼是<say-as interpret-as='digits' format='mobile'>1234567890</say-as>``
 - ``訂位代碼為<say-as interpret-as='spell-out'>5VOPXT</say-as>``
 - ``訂位代碼為<say-as interpret-as='spell-out' time='600ms'=>5VOPXT</say-as>``
+
+
+Special Symbol Handling
+**********
+
+SeaVoice automatically handles and pronounces the following symbols:
+
+- en-US
+
+==========  =================
+  Symbol      Pronunciation  
+==========  =================
+#           hastag
+&           and
+°C          degrees celsius
+℃           degrees celsius
+°F          degrees fahrenheit
+℉           degrees fahrenheit
+==========  =================
+
+- zh-TW
+
+==========  =================
+  Symbol      Pronunciation  
+==========  =================
+%           趴
+％          趴
+>           大於
+＞          大於
+<           小於
+＜          小於
+=           等於
+＝          等於
+\+          加
+＋          加
+°C          度C
+℃           度C
+°F          度F
+℉           度F
+==========  =================
+
+
+.. NOTE::
+
+    - If you wish to interpret and pronounce these symbols differently, you should use the SSML tags as defined above.
+    - Some of the symbols might look alike when renderd on your browser but actually have different encodings.
+    - en-US symbol handling is also used in zh-TW due to common code-switching in zh-TW.
