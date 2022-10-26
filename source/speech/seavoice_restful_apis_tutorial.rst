@@ -918,10 +918,6 @@ SeaVoice automatically handles and pronounces the following symbols:
 ==========  =================
 #           hastag
 &           and
-°C          degrees celsius
-℃           degrees celsius
-°F          degrees fahrenheit
-℉           degrees fahrenheit
 ==========  =================
 
 - zh-TW
