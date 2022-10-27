@@ -895,10 +895,10 @@ Sample Client Script
         async with websockets.connect(tts_endpoint_url) as websocket:
             logging.info("established ws connection")
             is_begin = asyncio.Event()
-            is_sythesized = asyncio.Event()
+            is_synthesized = asyncio.Event()
             await asyncio.gather(
-                _receive_events(websocket, is_begin, is_sythesized),
-                _send_commands(args, access_token, websocket, is_begin, is_sythesized),
+                _receive_events(websocket, is_begin, is_synthesized),
+                _send_commands(args, access_token, websocket, is_begin, is_synthesized),
             )
         logging.info("tts finished")
 
@@ -908,7 +908,7 @@ Sample Client Script
         access_token: str,
         websocket,
         is_begin: asyncio.Event,
-        is_sythesized: asyncio.Event,
+        is_synthesized: asyncio.Event,
     ):
         logging.info("sending authentication command...")
         print(type(websocket))
@@ -919,12 +919,12 @@ Sample Client Script
         await _send_synthesis_commands(websocket, args)
 
         # wait for audio synthsized
-        logging.info("waiting is_sythesized event...")
-        await is_sythesized.wait()
+        logging.info("waiting is_synthesized event...")
+        await is_synthesized.wait()
         await websocket.close()
 
 
-    async def _receive_events(websocket, is_begin: asyncio.Event, is_sythesized: asyncio.Event):
+    async def _receive_events(websocket, is_begin: asyncio.Event, is_synthesized: asyncio.Event):
         with wave.open(args.output, "w") as f:
 
             f.setnchannels(VOICE_CHANNELS)
@@ -948,7 +948,7 @@ Sample Client Script
                     # warning: it's a IO blocking operation.
                     f.writeframes(base64.b64decode(event_payload["audio"]))
                     if synthesis_status == "synthesized":
-                        is_sythesized.set()
+                        is_synthesized.set()
                 else:
                     logging.info(f"received an unknown event: {event}")
 
