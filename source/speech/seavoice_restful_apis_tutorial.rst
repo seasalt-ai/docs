@@ -1083,7 +1083,7 @@ Sample Client Script
             dest="seaauth_credential_path",
             type=str,
             required=False,
-            default="local/seavoice_credential.json",
+            default="seavoice_credential.json",
             help="Credential storage of access token and refresh token.",
         )
         parser.add_argument(
