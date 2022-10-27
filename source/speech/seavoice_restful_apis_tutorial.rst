@@ -911,7 +911,6 @@ Sample Client Script
         is_synthesized: asyncio.Event,
     ):
         logging.info("sending authentication command...")
-        print(type(websocket))
         await _send_authentication_command(websocket, access_token)
         # wait until received the begin event from server
         await is_begin.wait()
