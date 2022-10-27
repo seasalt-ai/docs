@@ -762,8 +762,16 @@ Sample Client Script
     --password test \
     --lang zh-TW \
     --voice Tongtong \
-    --text "你好這裡是nxcloud，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
-    --rules "nxcloud | 牛信雲\n"
+    --text "你好這裡是Seasalt，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
+    --rules "Seasalt | 海研科技\n"
+
+    `--lang`: supports `zh-tw`, `en-us`, `en-gb`
+    `--text`: input text to synthesize, supports SSML format
+    `--ssml`: set this to 'true' if the text is in SSML format
+    `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
+    `--pitch`: optional, adjust pitch of synthesized speech, must be > 0.01 or < -0.01
+    `--speed`: optional, adjust speed of synthesized speech, must be > 1.01 or < 0.99
+    `--sample-rate`: optional, set the sample rate of synthesized speech
     """
 
     import argparse
@@ -771,11 +779,11 @@ Sample Client Script
     import base64
     import json
     import logging
-    import time
     import wave
     from enum import Enum
     from pathlib import Path
     from urllib.parse import urljoin
+    import time
 
     import aiohttp
     import jwt
@@ -860,7 +868,7 @@ Sample Client Script
         return data
 
 
-    async def _login_seaauth(args: argparse.Namespace) -> dict:
+    async def _login_seaauth(account: str,  password: str) -> dict:
         """Login with SeaAuth.
         Example of response:
             {
@@ -870,7 +878,7 @@ Sample Client Script
             "refresh_token": "71bbffd5368*****"
             }
         """
-        payload = {"username": args.account, "password": args.password, "scope": SEAAUTH_SCOPE_NAME}
+        payload = {"username": account, "password": password, "scope": SEAAUTH_SCOPE_NAME}
         data = aiohttp.FormData()
         data.add_fields(*payload.items())
         async with aiohttp.ClientSession() as session:
@@ -909,7 +917,7 @@ Sample Client Script
         logging.info("sending synthesis commands...")
         await _send_synthesis_commands(websocket, args)
 
-        # wait for audio synthesized
+        # wait for audio synthsized
         logging.info("waiting is_synthesized event...")
         await is_synthesized.wait()
         await websocket.close()
@@ -931,7 +939,7 @@ Sample Client Script
                         logging.info(f"received an info event: {event_payload}")
                         is_begin.set()
                     elif event_payload.get("status") == "error":
-                        logging.info(f"received an error event: {event_payload}")
+                        logging.error(f"received an error event: {event_payload}")
                         raise Exception(f"received an error event: {event_payload}")
                 elif event_name == "audio_data":
                     synthesis_status = event_payload["status"]
@@ -982,8 +990,8 @@ Sample Client Script
             raise Exception(
                 f"{args.voice} only support {','.join(VOICES_LANGUAGES_MAPPING[args.voice])}, the input is {args.lang}."
             )
-
-
+            
+            
     def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
         args.ssml = args.ssml.lower() == "true"
         return args
@@ -1000,7 +1008,7 @@ Sample Client Script
             return data["exp"] - int(time.time())
         except Exception as error:
             logging.info(f"Invalid access_token format error:{error}")
-
+            
 
     def _save_credential(
         account: str,
@@ -1055,6 +1063,13 @@ Sample Client Script
             type=str,
             required=True,
             help="Text to synthesize. Supports SSML text.",
+        )
+        parser.add_argument(
+            "--ssml",
+            type=str,
+            required=False,
+            default="false",
+            help="Set this to true if text is in SSML format.",
         )
         parser.add_argument(
             "--seaauth-url",
@@ -1118,16 +1133,12 @@ Sample Client Script
             default=50.0,
             help="Optional, adjust volume of synthesize speech, [0, 100] default is 50.",
         )
-        parser.add_argument(
-            "--ssml",
-            type=str,
-            required=False,
-            help="Set this to True if text is in SSML format.",
-        )
+
         args = parser.parse_args()
         _check_voice(args)
         args = _convert_argument_str_to_bool(args)
         asyncio.run(main(args))
+
 
 Supported SSML Tags
 **********
