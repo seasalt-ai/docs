@@ -876,8 +876,16 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
 <span class="sd">--password test \</span>
 <span class="sd">--lang zh-TW \</span>
 <span class="sd">--voice Tongtong \</span>
-<span class="sd">--text &quot;你好這裡是nxcloud，今天的日期是&lt;say-as interpret-as=&#39;date&#39; format=&#39;m/d/Y&#39;&gt;10/11/2022&lt;/say-as&gt;&quot; \</span>
-<span class="sd">--rules &quot;nxcloud | 牛信雲\n&quot;</span>
+<span class="sd">--text &quot;你好這裡是Seasalt，今天的日期是&lt;say-as interpret-as=&#39;date&#39; format=&#39;m/d/Y&#39;&gt;10/11/2022&lt;/say-as&gt;&quot; \</span>
+<span class="sd">--rules &quot;Seasalt | 海研科技\n&quot;</span>
+
+<span class="sd">`--lang`: supports `zh-tw`, `en-us`, `en-gb`</span>
+<span class="sd">`--text`: input text to synthesize, supports SSML format</span>
+<span class="sd">`--ssml`: set this to &#39;true&#39; if the text is in SSML format</span>
+<span class="sd">`--rules`: optional, globally applied pronunciation rules in the format of `&lt;word&gt; | &lt;pronunciation&gt;\n`</span>
+<span class="sd">`--pitch`: optional, adjust pitch of synthesized speech, must be &gt; 0.01 or &lt; -0.01</span>
+<span class="sd">`--speed`: optional, adjust speed of synthesized speech, must be &gt; 1.01 or &lt; 0.99</span>
+<span class="sd">`--sample-rate`: optional, set the sample rate of synthesized speech</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -885,11 +893,11 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">wave</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
 <span class="kn">import</span> <span class="nn">jwt</span>
@@ -974,7 +982,7 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
     <span class="k">return</span> <span class="n">data</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_login_seaauth</span><span class="p">(</span><span class="n">account</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Login with SeaAuth.</span>
 <span class="sd">    Example of response:</span>
 <span class="sd">        {</span>
@@ -984,7 +992,7 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
 <span class="sd">        &quot;refresh_token&quot;: &quot;71bbffd5368*****&quot;</span>
 <span class="sd">        }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">}</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
     <span class="n">data</span><span class="o">.</span><span class="n">add_fields</span><span class="p">(</span><span class="o">*</span><span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
@@ -1023,7 +1031,7 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending synthesis commands...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_synthesis_commands</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 
-    <span class="c1"># wait for audio synthesized</span>
+    <span class="c1"># wait for audio synthsized</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting is_synthesized event...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">is_synthesized</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1045,7 +1053,7 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
                     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an info event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">is_begin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
                 <span class="k">elif</span> <span class="n">event_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received an error event: </span><span class="si">{</span><span class="n">event_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;audio_data&quot;</span><span class="p">:</span>
                 <span class="n">synthesis_status</span> <span class="o">=</span> <span class="n">event_payload</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
@@ -1171,6 +1179,13 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Text to synthesize. Supports SSML text.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--ssml&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set this to true if text is in SSML format.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--seaauth-url&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;seaauth_url&quot;</span><span class="p">,</span>
@@ -1232,12 +1247,7 @@ pip install <span class="nv">PyJWT</span><span class="o">==</span><span class="m
         <span class="n">default</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional, adjust volume of synthesize speech, [0, 100] default is 50.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--ssml&quot;</span><span class="p">,</span>
-        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set this to True if text is in SSML format.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">_check_voice</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
