@@ -50,7 +50,7 @@ STT protocols
       # 2022-12-06 12:42:54
   ..
 
-  3.2 rotate access token with refresh token ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
+  3.2 rotate access token and refresh token ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
 
   input payload
 
@@ -588,7 +588,7 @@ TTS protocols
       # 2022-12-06 12:42:54
   ..
 
-  3.2 rotate access token with refresh token ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
+  3.2 rotate access token and refresh token ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
 
   input payload
 
