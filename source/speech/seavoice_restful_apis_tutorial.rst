@@ -38,7 +38,7 @@ STT protocols
 
 3. Refresh access token if it is expired
 
-  3.1 check token lifetime
+  3.1 check access token lifetime
 
   .. code-block:: python3
 
@@ -50,7 +50,7 @@ STT protocols
       # 2022-12-06 12:42:54
   ..
 
-  3.2 refresh token with ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
+  3.2 rotate access token with refresh token ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
 
   input payload
 
@@ -76,6 +76,7 @@ STT protocols
     }
   ..
 
+  3.3 After rotation, the new refresh token and access token is generated. If someoneelse rotate with old refresh token, all refresh token will be revoked(removed) and enforce the legitimate user have to login again. This behavior is to prevent malicious user from using your own refresh token.
 
 4. Connect to SeaVoice STT websocket server: ``wss://seavoice.seasalt.ai/api/v1/stt/ws``
 
@@ -575,7 +576,7 @@ TTS protocols
 
 3. Refresh access token if it is expired
 
-  3.1 check token lifetime
+  3.1 check access token lifetime
 
   .. code-block:: python3
 
@@ -587,7 +588,7 @@ TTS protocols
       # 2022-12-06 12:42:54
   ..
 
-  3.2 refresh token with ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
+  3.2 rotate access token with refresh token ``https://seaauth.seasalt.ai/api/v1/users/rotate_token``
 
   input payload
 
@@ -612,6 +613,8 @@ TTS protocols
        "service": "seavoice",
     }
   ..
+
+  3.3 After rotation, the new refresh token and access token is generated. If someoneelse rotate with old refresh token, all refresh token will be revoked(removed) and enforce the legitimate user have to login again. This behavior is to prevent malicious user from using your own refresh token.
 
 4. Connect to SeaVoice TTS websocket server: ``wss://seavoice.seasalt.ai/api/v1/tts/ws``
 
