@@ -748,7 +748,7 @@ Sample Client Script
 
     """Client script for tts endpoint
 
-    prerequisite:
+    Prerequisite:
     python 3.8
     python package:
     - aiohttp==3.8.1
@@ -756,7 +756,6 @@ Sample Client Script
     - PyJWT==2.5.0
 
     Usage:
-
     python tts_client.py \
     --account test \
     --password test \
@@ -765,13 +764,8 @@ Sample Client Script
     --text "你好這裡是Seasalt，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
     --rules "Seasalt | 海研科技\n"
 
-    `--lang`: supports `zh-tw`, `en-us`, `en-gb`
-    `--text`: input text to synthesize, supports SSML format
-    `--ssml`: set this to 'true' if the text is in SSML format
-    `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
-    `--pitch`: optional, adjust pitch of synthesized speech, must be > 0.01 or < -0.01
-    `--speed`: optional, adjust speed of synthesized speech, must be > 1.01 or < 0.99
-    `--sample-rate`: optional, set the sample rate of synthesized speech
+    Get help:
+    python tts_client.py --help
     """
 
     import argparse
