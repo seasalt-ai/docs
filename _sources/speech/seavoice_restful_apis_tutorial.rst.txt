@@ -106,9 +106,7 @@ accept language: `zh-TW`, `en-US`
 
     {
         "command": "audio_data",
-        "payload": {
-            "audio": "<BASE64_ENCODED_AUDIO_DATA>"
-        }
+        "payload": "<BASE64_ENCODED_AUDIO_DATA>"
     }
 
 
