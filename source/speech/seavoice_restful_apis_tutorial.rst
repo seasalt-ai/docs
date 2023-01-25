@@ -180,8 +180,9 @@ accept language: `zh-TW`, `en-US`
     - ``"duration"``: duration of that segment.
 
 
-Sample Client Script
-**********
+Sample Client Script (STT)
+**************************
+
 
 1. Setup
 
@@ -697,15 +698,15 @@ If successfully connected, Client sends json packages to TTS server, for example
 .. code-block:: JSON
 
     {
-        "status": <SEQ_STATUS>,
-        "message": <MESSAGE>,
-        "sid": <SEQ_ID>,
-        "data":
-        {
-            "audio": <AUDIO_DATA>,
-            "status": <STATUS>
+        "status": "SEQ_STATUS",
+        "message": "MESSAGE",
+        "sid": "SEQ_ID",
+        "data": {
+            "audio": "AUDIO_DATA",
+            "status": "STATUS"
         }
     }
+
 
 .. NOTE::
 
@@ -720,8 +721,8 @@ If successfully connected, Client sends json packages to TTS server, for example
 8. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
 
 
-Sample Client Script
-**********
+Sample Client Script (TTS)
+**************************
 
 1. Setup
 
@@ -1148,7 +1149,7 @@ Sample Client Script
 
 
 Supported SSML Tags
-**********
+*******************
 
 1. Break
 
@@ -1192,7 +1193,7 @@ Examples:
 
 
 Special Symbol Handling
-**********
+***********************
 
 SeaVoice automatically handles and pronounces the following symbols:
 
