@@ -180,8 +180,9 @@ accept language: `zh-TW`, `en-US`
     - ``"duration"``: duration of that segment.
 
 
-Sample Client Script
-**********
+Sample Client Script (STT)
+**************************
+
 
 1. Setup
 
@@ -697,15 +698,15 @@ If successfully connected, Client sends json packages to TTS server, for example
 .. code-block:: JSON
 
     {
-        "status": <SEQ_STATUS>,
-        "message": <MESSAGE>,
-        "sid": <SEQ_ID>,
-        "data":
-        {
-            "audio": <AUDIO_DATA>,
-            "status": <STATUS>
+        "status": "SEQ_STATUS",
+        "message": "MESSAGE",
+        "sid": "SEQ_ID",
+        "data": {
+            "audio": "AUDIO_DATA",
+            "status": "STATUS"
         }
     }
+
 
 .. NOTE::
 
@@ -720,8 +721,8 @@ If successfully connected, Client sends json packages to TTS server, for example
 8. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
 
 
-Sample Client Script
-**********
+Sample Client Script (TTS)
+**************************
 
 1. Setup
 
@@ -842,7 +843,7 @@ Sample Client Script
                 logging.info(f"Got access token from {args.seaauth_credential_path}.")
 
         else:
-            credential = await _login_seaauth(args.account, args.password)
+            credential = await _login_seaauth(args.account, args.password, args.seaauth_url)
             _save_credential(args.account, credential["access_token"], credential["refresh_token"], args.seaauth_credential_path)
 
         return credential["access_token"]
@@ -866,7 +867,7 @@ Sample Client Script
         return data
 
 
-    async def _login_seaauth(account: str,  password: str) -> dict:
+    async def _login_seaauth(account: str,  password: str, seaauth_url: str) -> dict:
         """Login with SeaAuth.
         Example of response:
             {
@@ -880,7 +881,7 @@ Sample Client Script
         data = aiohttp.FormData()
         data.add_fields(*payload.items())
         async with aiohttp.ClientSession() as session:
-            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
+            async with session.post(urljoin(seaauth_url, "/api/v1/users/login"), data=data) as response:
                 if response.status >= 400:
                     raise Exception(await response.text())
                 data = await response.json()
@@ -895,21 +896,21 @@ Sample Client Script
             is_begin = asyncio.Event()
             is_synthesized = asyncio.Event()
             await asyncio.gather(
-                _receive_events(websocket, is_begin, is_synthesized),
-                _send_commands(args, access_token, websocket, is_begin, is_synthesized),
+                _receive_events(websocket, is_begin, is_synthesized, args),
+                _send_commands(websocket, access_token, is_begin, is_synthesized, args),
             )
         logging.info("tts finished")
 
 
     async def _send_commands(
-        args: argparse.Namespace,
-        access_token: str,
         websocket,
+        access_token: str,
         is_begin: asyncio.Event,
         is_synthesized: asyncio.Event,
+        args: argparse.Namespace,
     ):
         logging.info("sending authentication command...")
-        await _send_authentication_command(websocket, access_token)
+        await _send_authentication_command(websocket, access_token, args)
         # wait until received the begin event from server
         await is_begin.wait()
         logging.info("sending synthesis commands...")
@@ -921,7 +922,12 @@ Sample Client Script
         await websocket.close()
 
 
-    async def _receive_events(websocket, is_begin: asyncio.Event, is_synthesized: asyncio.Event):
+    async def _receive_events(
+        websocket,
+        is_begin: asyncio.Event,
+        is_synthesized: asyncio.Event,
+        args: argparse.Namespace
+    ):
         with wave.open(args.output, "w") as f:
 
             f.setnchannels(VOICE_CHANNELS)
@@ -950,7 +956,11 @@ Sample Client Script
                     logging.info(f"received an unknown event: {event}")
 
 
-    async def _send_authentication_command(websocket, access_token: str):
+    async def _send_authentication_command(
+        websocket,
+        access_token: str,
+        args: argparse.Namespace
+    ):
         authentication_command = {
             "command": "authentication",
             "payload": {
@@ -988,8 +998,8 @@ Sample Client Script
             raise Exception(
                 f"{args.voice} only support {','.join(VOICES_LANGUAGES_MAPPING[args.voice])}, the input is {args.lang}."
             )
-            
-            
+
+
     def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
         args.ssml = args.ssml.lower() == "true"
         return args
@@ -1006,7 +1016,7 @@ Sample Client Script
             return data["exp"] - int(time.time())
         except Exception as error:
             logging.info(f"Invalid access_token format error:{error}")
-            
+
 
     def _save_credential(
         account: str,
@@ -1139,7 +1149,7 @@ Sample Client Script
 
 
 Supported SSML Tags
-**********
+*******************
 
 1. Break
 
@@ -1183,7 +1193,7 @@ Examples:
 
 
 Special Symbol Handling
-**********
+***********************
 
 SeaVoice automatically handles and pronounces the following symbols:
 
