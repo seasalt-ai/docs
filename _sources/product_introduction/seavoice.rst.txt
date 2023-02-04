@@ -4,6 +4,12 @@
 SeaVoice Product Introduction
 =============================
 
+.. meta::
+    :keywords: text to speech, speech to text, python, sdk, documentation, tutorial, customization
+    :description lang=en: python sdk tutorial for seavoice cutting edge text to speech and speech to text services
+    :description lang=zh: seavoice最先進的語音轉文字以及文字轉語音服務的影片介紹
+
+
 .. contents:: Table of Contents
     :local:
     :depth: 3
