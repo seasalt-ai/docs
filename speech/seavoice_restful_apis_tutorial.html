@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <meta content="text to speech, speech to text, api, rest, python, documentation, tutorial, customization" name="keywords" />
 <meta content="restful api documentation and tutorial for seavoice cutting edge text to speech and speech to text services" lang="en" name="description" xml:lang="en" />
 <meta content="seavoice最先進的語音轉文字以及文字轉語音服務的RESTful API接口教學文檔" lang="zh" name="description" xml:lang="zh" />
@@ -32,12 +32,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #2980B9" >
-            <a href="../index.html" class="icon icon-home"> Seasalt.ai Documentation
-            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Seasalt.ai Documentation
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -47,14 +51,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../product_introduction/seavoice.html">SeaVoice</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">SeaWord API</span></p>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/readme.html">SeaWord API Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/sum_tutorial.html">Summarization API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/topic_tutorial.html">Topic Extraction API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/action_tutorial.html">Action Extraction API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/xlingualNER_tutorial.html">Cross Lingual NER API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nlp/mr_tutorial.html">Machine Reading API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/v1/index.html">SeaWord v1 APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nlp/v2/index.html">SeaWord v2 APIs</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
 <ul class="current">
@@ -76,7 +76,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">SeaVoice RESTful APIs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/speech/seavoice_restful_apis_tutorial.rst.txt" rel="nofollow"> View page source</a>
@@ -91,7 +91,7 @@
 <span id="seavoice-restful-apis-tutorial"></span><h1>SeaVoice RESTful APIs<a class="headerlink" href="#seavoice-restful-apis" title="Permalink to this heading"></a></h1>
 <p>This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.</p>
 <p>Please contact <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> if you have any questions.</p>
-<div class="contents local topic" id="table-of-contents">
+<nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#stt-protocols" id="id1">STT protocols</a></p>
@@ -107,9 +107,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="stt-protocols">
-<h2><a class="toc-backref" href="#id1">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">STT protocols</a><a class="headerlink" href="#stt-protocols" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Log into SeaAuth: <code class="docutils literal notranslate"><span class="pre">https://seaauth.seasalt.ai/api/v1/users/login</span></code></p></li>
 </ol>
@@ -267,7 +267,7 @@
 </ul>
 </div>
 <section id="sample-client-script-stt">
-<h3><a class="toc-backref" href="#id2">Sample Client Script (STT)</a><a class="headerlink" href="#sample-client-script-stt" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Sample Client Script (STT)</a><a class="headerlink" href="#sample-client-script-stt" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Setup</p></li>
 </ol>
@@ -633,7 +633,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 </section>
 </section>
 <section id="tts-protocols">
-<h2><a class="toc-backref" href="#id3">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">TTS protocols</a><a class="headerlink" href="#tts-protocols" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Log into SeaAuth: <code class="docutils literal notranslate"><span class="pre">https://seaauth.seasalt.ai/api/v1/users/login</span></code></p></li>
 </ol>
@@ -839,7 +839,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 <li><p>After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.</p></li>
 </ol>
 <section id="sample-client-script-tts">
-<h3><a class="toc-backref" href="#id4">Sample Client Script (TTS)</a><a class="headerlink" href="#sample-client-script-tts" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Sample Client Script (TTS)</a><a class="headerlink" href="#sample-client-script-tts" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Setup</p></li>
 </ol>
@@ -1265,7 +1265,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 </div>
 </section>
 <section id="supported-ssml-tags">
-<h3><a class="toc-backref" href="#id5">Supported SSML Tags</a><a class="headerlink" href="#supported-ssml-tags" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Supported SSML Tags</a><a class="headerlink" href="#supported-ssml-tags" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Break</p></li>
 </ol>
@@ -1304,16 +1304,12 @@ Description: Specify pronunciation.</p>
 </ul>
 </section>
 <section id="special-symbol-handling">
-<h3><a class="toc-backref" href="#id6">Special Symbol Handling</a><a class="headerlink" href="#special-symbol-handling" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Special Symbol Handling</a><a class="headerlink" href="#special-symbol-handling" title="Permalink to this heading"></a></h3>
 <p>SeaVoice automatically handles and pronounces the following symbols:</p>
 <ul class="simple">
 <li><p>en-US</p></li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 37%" />
-<col style="width: 63%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Symbol</p></th>
 <th class="head"><p>Pronunciation</p></th>
@@ -1332,10 +1328,6 @@ Description: Specify pronunciation.</p>
 <li><p>zh-TW</p></li>
 </ul>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 37%" />
-<col style="width: 63%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Symbol</p></th>
 <th class="head"><p>Pronunciation</p></th>

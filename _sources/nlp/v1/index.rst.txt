@@ -1,12 +1,22 @@
 .. _nlp_readme:
 
-====================
-SeaWord NLP Overview
-====================
+=======================
+SeaWord NLP V1 Overview
+=======================
 
-.. contents:: Table of Contents
-    :local:
-    :depth: 3
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :titlesonly:
+   :caption: SeaWord v1
+
+   mr_tutorial
+   xlingualNER_tutorial
+
+.. meta::
+    :keywords: tutorial, documentation, NLP, Natural Language Processing
+    :description lang=en: Overview of Seasalt.ai's V1 Natural Language Processing APIs.
+    :description lang=zh: Seasalt.ai 自然語言處理 API v1 文檔
 
 The purpose of this tutorial is to demonstrate how the SeaWord APIs can be used to extract information from text. In this tutorial we will walk-through:
     - How to use the Summarization API to generate short and long summaries from a meeting transcript
@@ -18,26 +28,12 @@ The purpose of this tutorial is to demonstrate how the SeaWord APIs can be used 
 | These APIs are protected by an access token. Please send an email to info@seasalt.ai to get yours!
 | For these endpoints, please use ``access_token={token}`` either in the request webhook or the request header.
 
-Summarization API
-=================
+Summarization / Topic Prediction / Action Extraction APIs
+==========================================================
 
-The Summarization API uses mBART-50 based summarization models to generate summaries of single turn utterances and full transcripts in multiple languages.
+These APIs have had a big overhaul! Check out the v2 documentation.
 
-:ref:`Summarization Tutorial ---> <sum_tutorial>`
-
-Topic Prediction API
-====================
-
-The Topic Prediction API uses a combination of abstractive and extractive techniques to return a list of relevant topics and keywords from a document.
-
-:ref:`Topic Prediction Tutorial ---> <topic_tutorial>`
-
-Action Extraction API
-=====================
-
-The Action Extraction API extracts and summarizes action items from a document. 
-
-:ref:`Action Extraction Tutorial ---> <action_tutorial>`
+:ref:`NLP V2 Documentation ---> <nlp_readme_v2>`
 
 Cross Lingual NER API
 =====================

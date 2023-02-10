@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta content="tutorial, documentation, NLP, Natural Language Processing, API" name="keywords" />
+<meta content="Overview of Seasalt.ai's V2 Natural Language Processing APIs." lang="en" name="description" xml:lang="en" />
+<meta content="Seasalt.ai 自然語言處理 API v2 文檔" lang="zh" name="description" xml:lang="zh" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeaWord NLP v2 Overview &mdash; Seasalt.ai Documentation 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="SeaWord NLP v2 API Tutorial" href="api.html" />
+    <link rel="prev" title="xlingualNER API Tutorial" href="../v1/xlingualNER_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Seasalt.ai Documentation
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Product Introductions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product_introduction/seavoice.html">SeaVoice</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaWord</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../v1/index.html">SeaWord v1 APIs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SeaWord v2 APIs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html">SeaWord NLP v2 API Tutorial</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">SeaVoice (Seasalt speech)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/readme.html">SeaVoice README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/seavoice_sdk_python_tutorial.html">SeaVoice SDK (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../speech/seavoice_restful_apis_tutorial.html">SeaVoice RESTful APIs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Seasalt.ai Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SeaWord NLP v2 Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nlp/v2/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="seaword-nlp-v2-overview">
+<span id="nlp-readme-v2"></span><h1>SeaWord NLP v2 Overview<a class="headerlink" href="#seaword-nlp-v2-overview" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">SeaWord v2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">SeaWord NLP v2 API Tutorial</a></li>
+</ul>
+</div>
+<dl class="simple">
+<dt>The purpose of this tutorial is to demonstrate how the SeaWord APIs can be used to extract information from text. In this tutorial we will walk-through the use of the unified NLP API to generate the following insights from a meeting transcript:</dt><dd><ul class="simple">
+<li><p>Summarization of individual utterances and entire meetings</p></li>
+<li><p>Salient topic</p></li>
+<li><p>Action items</p></li>
+<li><p>Emotion and sentiment</p></li>
+</ul>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">These APIs are protected by an access token. Please send an email to <a class="reference external" href="mailto:info&#37;&#52;&#48;seasalt&#46;ai">info<span>&#64;</span>seasalt<span>&#46;</span>ai</a> to get yours!</div>
+<div class="line">For these endpoints, please use <code class="docutils literal notranslate"><span class="pre">access_token={token}</span></code> either in the request webhook or the request header.</div>
+</div>
+<section id="unified-nlp-api">
+<h2>Unified NLP API<a class="headerlink" href="#unified-nlp-api" title="Permalink to this heading"></a></h2>
+<p>We have unified all of our meeting analytic services into a single API.
+With one query you can get the following insights:</p>
+<ul class="simple">
+<li><p>Action items</p></li>
+<li><p>Salient topics</p></li>
+<li><p>Summary</p></li>
+<li><p>Emotion / Sentiment</p></li>
+</ul>
+<p><a class="reference internal" href="api.html#nlp-api-v2"><span class="std std-ref">NLP API Tutorial —&gt;</span></a></p>
+</section>
+<section id="cross-lingual-ner-api">
+<h2>Cross Lingual NER API<a class="headerlink" href="#cross-lingual-ner-api" title="Permalink to this heading"></a></h2>
+<p>The Cross Lingual NER API uses one model to extract 30+ common entities from over 100 languages.</p>
+<p>Nothing changed - see v1 docs.</p>
+<p><a class="reference internal" href="../v1/xlingualNER_tutorial.html#xlingualner-tutorial"><span class="std std-ref">Cross Lingual NER Tutorial —&gt;</span></a></p>
+</section>
+<section id="machine-reading-api">
+<h2>Machine Reading API<a class="headerlink" href="#machine-reading-api" title="Permalink to this heading"></a></h2>
+<p>The Machine Reading API performs extractive machine reading to answer questions given a context text.</p>
+<p>Nothing changed - see v1 docs.</p>
+<p><a class="reference internal" href="../v1/mr_tutorial.html#mr-tutorial"><span class="std std-ref">Machine Reading Tutorial —&gt;</span></a></p>
+</section>
+<section id="redaction-service">
+<h2>Redaction Service<a class="headerlink" href="#redaction-service" title="Permalink to this heading"></a></h2>
+<p>The Redaction Service performs personally identifiable and sensitive information classification and redaction given a context text.</p>
+<p>Nothing changed - see v1 docs.</p>
+<p><span class="xref std std-ref">Redaction Tutorial —&gt;</span></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../v1/xlingualNER_tutorial.html" class="btn btn-neutral float-left" title="xlingualNER API Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="SeaWord NLP v2 API Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020-Today, Seasalt.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10405841-8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-10405841-8', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
