@@ -4,6 +4,11 @@
 Machine Reading API Tutorial
 ==================================
 
+.. meta::
+    :keywords: machine reading, question answering, tutorial, documentation, NLP, Natural Language Processing
+    :description lang=en: Documentation on how to use Seasalt.ai's machine reading API.
+    :description lang=zh: Seasalt.ai 機器閱讀 API 文檔
+
 This tutorial will walk through how to use the Machine Reading API for question answering.
 
 .. contents:: Table of Contents
