@@ -17,14 +17,10 @@ Welcome to Seasalt.ai's Master Documentation!
    :maxdepth: 3
    :glob:
    :titlesonly:
-   :caption: SeaWord API
+   :caption: SeaWord
 
-   SeaWord API Overview <nlp/readme>
-   Summarization API <nlp/sum_tutorial>
-   Topic Extraction API <nlp/topic_tutorial>
-   Action Extraction API <nlp/action_tutorial>
-   Cross Lingual NER API <nlp/xlingualNER_tutorial>
-   Machine Reading API <nlp/mr_tutorial>
+   SeaWord v1 APIs <nlp/v1/index>
+   SeaWord v2 APIs <nlp/v2/index>
 
 .. toctree::
    :maxdepth: 3
