@@ -4,6 +4,11 @@
 xlingualNER API Tutorial
 =====================================
 
+.. meta::
+    :keywords: named entity recognition, NER, tutorial, documentation, NLP 
+    :description lang=en: Documentation on how to use Seasalt.ai's cross-lingual named entity recognition API.
+    :description lang=zh: Seasalt.ai 跨語言命名實體識別 API 文檔
+
 This tutorial will walk through the usage of the xlingualNER API.
 
 .. contents:: Table of Contents

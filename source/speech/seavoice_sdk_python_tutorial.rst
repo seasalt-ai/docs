@@ -3,6 +3,12 @@
 SeaVoice Python SDK
 ===================
 
+.. meta::
+    :keywords: text to speech, speech to text, python, sdk, documentation, tutorial, customization
+    :description lang=en: python sdk tutorial for seavoice cutting edge text to speech and speech to text services
+    :description lang=zh: seavoice最先進的語音轉文字以及文字轉語音服務的python軟件開發套件的教學文檔
+
+
 This is the tutorial about how to use SeaVoice Python SDK to try Seasalt.ai Speech-To-Text (STT) and Text-To-Speech (TTS) services.
 
 Please contact info@seasalt.ai if you have any questions.

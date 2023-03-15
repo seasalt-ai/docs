@@ -3,6 +3,12 @@
 SeaVoice RESTful APIs
 =====================
 
+.. meta::
+    :keywords: text to speech, speech to text, api, rest, python, documentation, tutorial, customization
+    :description lang=en: restful api documentation and tutorial for seavoice cutting edge text to speech and speech to text services
+    :description lang=zh: seavoice最先進的語音轉文字以及文字轉語音服務的RESTful API接口教學文檔
+
+
 This is the tutorial about how to use SeaVoice RESTful APIs to try Seasalt Speech-To-Text (STT) and Text-To-Speech (TTS) services.
 
 Please contact info@seasalt.ai if you have any questions.
@@ -106,9 +112,7 @@ accept language: `zh-TW`, `en-US`
 
     {
         "command": "audio_data",
-        "payload": {
-            "audio": "<BASE64_ENCODED_AUDIO_DATA>"
-        }
+        "payload": "<BASE64_ENCODED_AUDIO_DATA>"
     }
 
 
@@ -182,8 +186,9 @@ accept language: `zh-TW`, `en-US`
     - ``"duration"``: duration of that segment.
 
 
-Sample Client Script
-**********
+Sample Client Script (STT)
+**************************
+
 
 1. Setup
 
@@ -699,15 +704,15 @@ If successfully connected, Client sends json packages to TTS server, for example
 .. code-block:: JSON
 
     {
-        "status": <SEQ_STATUS>,
-        "message": <MESSAGE>,
-        "sid": <SEQ_ID>,
-        "data":
-        {
-            "audio": <AUDIO_DATA>,
-            "status": <STATUS>
+        "status": "SEQ_STATUS",
+        "message": "MESSAGE",
+        "sid": "SEQ_ID",
+        "data": {
+            "audio": "AUDIO_DATA",
+            "status": "STATUS"
         }
     }
+
 
 .. NOTE::
 
@@ -722,8 +727,8 @@ If successfully connected, Client sends json packages to TTS server, for example
 8. After finishing processing all TEXT or SSML string, TTS server closes the websocket connection.
 
 
-Sample Client Script
-**********
+Sample Client Script (TTS)
+**************************
 
 1. Setup
 
@@ -762,8 +767,16 @@ Sample Client Script
     --password test \
     --lang zh-TW \
     --voice Tongtong \
-    --text "你好這裡是nxcloud，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
-    --rules "nxcloud | 牛信雲\n"
+    --text "你好這裡是Seasalt，今天的日期是<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>" \
+    --rules "Seasalt | 海研科技\n"
+
+    `--lang`: supports `zh-tw`, `en-us`, `en-gb`
+    `--text`: input text to synthesize, supports SSML format
+    `--ssml`: set this to 'true' if the text is in SSML format
+    `--rules`: optional, globally applied pronunciation rules in the format of `<word> | <pronunciation>\n`
+    `--pitch`: optional, adjust pitch of synthesized speech, must be > 0.01 or < -0.01
+    `--speed`: optional, adjust speed of synthesized speech, must be > 1.01 or < 0.99
+    `--sample-rate`: optional, set the sample rate of synthesized speech
     """
 
     import argparse
@@ -771,11 +784,11 @@ Sample Client Script
     import base64
     import json
     import logging
-    import time
     import wave
     from enum import Enum
     from pathlib import Path
     from urllib.parse import urljoin
+    import time
 
     import aiohttp
     import jwt
@@ -836,7 +849,7 @@ Sample Client Script
                 logging.info(f"Got access token from {args.seaauth_credential_path}.")
 
         else:
-            credential = await _login_seaauth(args.account, args.password)
+            credential = await _login_seaauth(args.account, args.password, args.seaauth_url)
             _save_credential(args.account, credential["access_token"], credential["refresh_token"], args.seaauth_credential_path)
 
         return credential["access_token"]
@@ -860,7 +873,7 @@ Sample Client Script
         return data
 
 
-    async def _login_seaauth(args: argparse.Namespace) -> dict:
+    async def _login_seaauth(account: str,  password: str, seaauth_url: str) -> dict:
         """Login with SeaAuth.
         Example of response:
             {
@@ -870,11 +883,11 @@ Sample Client Script
             "refresh_token": "71bbffd5368*****"
             }
         """
-        payload = {"username": args.account, "password": args.password, "scope": SEAAUTH_SCOPE_NAME}
+        payload = {"username": account, "password": password, "scope": SEAAUTH_SCOPE_NAME}
         data = aiohttp.FormData()
         data.add_fields(*payload.items())
         async with aiohttp.ClientSession() as session:
-            async with session.post(urljoin(args.seaauth_url, "/api/v1/users/login"), data=data) as response:
+            async with session.post(urljoin(seaauth_url, "/api/v1/users/login"), data=data) as response:
                 if response.status >= 400:
                     raise Exception(await response.text())
                 data = await response.json()
@@ -889,33 +902,38 @@ Sample Client Script
             is_begin = asyncio.Event()
             is_synthesized = asyncio.Event()
             await asyncio.gather(
-                _receive_events(websocket, is_begin, is_synthesized),
-                _send_commands(args, access_token, websocket, is_begin, is_synthesized),
+                _receive_events(websocket, is_begin, is_synthesized, args),
+                _send_commands(websocket, access_token, is_begin, is_synthesized, args),
             )
         logging.info("tts finished")
 
 
     async def _send_commands(
-        args: argparse.Namespace,
-        access_token: str,
         websocket,
+        access_token: str,
         is_begin: asyncio.Event,
         is_synthesized: asyncio.Event,
+        args: argparse.Namespace,
     ):
         logging.info("sending authentication command...")
-        await _send_authentication_command(websocket, access_token)
+        await _send_authentication_command(websocket, access_token, args)
         # wait until received the begin event from server
         await is_begin.wait()
         logging.info("sending synthesis commands...")
         await _send_synthesis_commands(websocket, args)
 
-        # wait for audio synthesized
+        # wait for audio synthsized
         logging.info("waiting is_synthesized event...")
         await is_synthesized.wait()
         await websocket.close()
 
 
-    async def _receive_events(websocket, is_begin: asyncio.Event, is_synthesized: asyncio.Event):
+    async def _receive_events(
+        websocket,
+        is_begin: asyncio.Event,
+        is_synthesized: asyncio.Event,
+        args: argparse.Namespace
+    ):
         with wave.open(args.output, "w") as f:
 
             f.setnchannels(VOICE_CHANNELS)
@@ -931,7 +949,7 @@ Sample Client Script
                         logging.info(f"received an info event: {event_payload}")
                         is_begin.set()
                     elif event_payload.get("status") == "error":
-                        logging.info(f"received an error event: {event_payload}")
+                        logging.error(f"received an error event: {event_payload}")
                         raise Exception(f"received an error event: {event_payload}")
                 elif event_name == "audio_data":
                     synthesis_status = event_payload["status"]
@@ -944,7 +962,11 @@ Sample Client Script
                     logging.info(f"received an unknown event: {event}")
 
 
-    async def _send_authentication_command(websocket, access_token: str):
+    async def _send_authentication_command(
+        websocket,
+        access_token: str,
+        args: argparse.Namespace
+    ):
         authentication_command = {
             "command": "authentication",
             "payload": {
@@ -1057,6 +1079,13 @@ Sample Client Script
             help="Text to synthesize. Supports SSML text.",
         )
         parser.add_argument(
+            "--ssml",
+            type=str,
+            required=False,
+            default="false",
+            help="Set this to true if text is in SSML format.",
+        )
+        parser.add_argument(
             "--seaauth-url",
             type=str,
             dest="seaauth_url",
@@ -1118,19 +1147,15 @@ Sample Client Script
             default=50.0,
             help="Optional, adjust volume of synthesize speech, [0, 100] default is 50.",
         )
-        parser.add_argument(
-            "--ssml",
-            type=str,
-            required=False,
-            help="Set this to True if text is in SSML format.",
-        )
+
         args = parser.parse_args()
         _check_voice(args)
         args = _convert_argument_str_to_bool(args)
         asyncio.run(main(args))
 
+
 Supported SSML Tags
-**********
+*******************
 
 1. Break
 
@@ -1174,7 +1199,7 @@ Examples:
 
 
 Special Symbol Handling
-**********
+***********************
 
 SeaVoice automatically handles and pronounces the following symbols:
 

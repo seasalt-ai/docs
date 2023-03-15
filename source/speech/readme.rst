@@ -4,6 +4,12 @@
 SeaVoice Overview
 =================
 
+.. meta::
+    :keywords: text to speech, speech to text, api, restful, python, sdk, documentation, tutorial, customization
+    :description lang=en: documentation and tutorial for seavoice cutting edge text to speech and speech to text services
+    :description lang=zh: seavoice最先進的語音轉文字以及文字轉語音服務的文檔包含客製化教學
+
+
 .. contents:: Table of Contents
     :local:
     :depth: 3
