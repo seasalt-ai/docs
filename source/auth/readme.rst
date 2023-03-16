@@ -15,4 +15,4 @@ SeaAuth RESTful APIs
 
 This tutorial introduces how to use SeaAuth RESTful to get API key and user token.
 
-`SeaAuth RESTful API Document <https://seax.seasalt.ai/bulk-sms/redoc>`_
+`SeaAuth RESTful API Document <https://seaauth.seasalt.ai/redoc>`_
