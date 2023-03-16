@@ -12,6 +12,8 @@ Welcome to Seasalt.ai's Master Documentation!
    :caption: Product Introductions
 
    SeaVoice <product_introduction/seavoice>
+   SeaAuth <product_introduction/seaauth>
+   SeaX <product_introduction/seax>
 
 .. toctree::
    :maxdepth: 3
@@ -32,6 +34,22 @@ Welcome to Seasalt.ai's Master Documentation!
    SeaVoice SDK (Python) <speech/seavoice_sdk_python_tutorial>
    SeaVoice RESTful APIs <speech/seavoice_restful_apis_tutorial>
 
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaAuth
+
+   SeaAuth Overview <auth/readme>
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+   :titlesonly:
+   :caption: SeaX
+
+   SeaX Overview <contact_center/readme>
 
 
 Indices and tables
