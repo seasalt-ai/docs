@@ -254,9 +254,9 @@ Sample Client Script (STT)
 
     SEAAUTH_SCOPE_NAME: str = "seavoice"
     TOKEN_TYPE: str = "Bearer"
-    CHUNK_SIZE: int = 5000
+    CHUNK_SIZE: int = 4096
+    AUDIO_CHUNK_INTERVAL: float = 0.1
     ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND: int = 60
-
 
     class Language(str, Enum):
         EN_US = "en-US"
@@ -421,7 +421,7 @@ Sample Client Script (STT)
                 if audio == b"":
                     break
                 await _send_one_audio_data_command(websocket, audio)
-
+                await asyncio.sleep(AUDIO_CHUNK_INTERVAL)
 
     async def _send_one_audio_data_command(websocket, audio: bytes):
         audio_data_command = {"command": "audio_data", "payload": base64.b64encode(audio).decode()}
