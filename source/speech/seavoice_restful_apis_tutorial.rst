@@ -254,7 +254,6 @@ Sample Client Script (STT)
 
     SEAAUTH_SCOPE_NAME: str = "seavoice"
     TOKEN_TYPE: str = "Bearer"
-    CHUNK_SIZE: int = 4096
     AUDIO_CHUNK_INTERVAL: float = 0.1
     ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND: int = 60
 
@@ -355,11 +354,12 @@ Sample Client Script (STT)
     ):
         logging.info("sending authentication command...")
         await _send_authentication_command(args, websocket, access_token)
+        chunk_size = int(int(args.sample_rate) * 2 * AUDIO_CHUNK_INTERVAL)
 
         # wait until received the begin event from server
         await is_begin.wait()
         logging.info("sending audio_data commands...")
-        await _send_audio_data_chunkily(websocket, args.audio_path)
+        await _send_audio_data_chunkily(websocket, args.audio_path, chunk_size)
         logging.info("sending stop commands...")
         await _send_stop_command(websocket)
         logging.info("waiting for end event...")
@@ -414,10 +414,10 @@ Sample Client Script (STT)
         await websocket.send(command_str)
 
 
-    async def _send_audio_data_chunkily(websocket, audio_path: str):
+    async def _send_audio_data_chunkily(websocket, audio_path: str, chunk_size: int):
         with open(audio_path, "rb") as f:
             while True:
-                audio = f.read(CHUNK_SIZE)
+                audio = f.read(chunk_size)
                 if audio == b"":
                     break
                 await _send_one_audio_data_command(websocket, audio)
