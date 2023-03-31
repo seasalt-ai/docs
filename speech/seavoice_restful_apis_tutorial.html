@@ -342,9 +342,8 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
 <span class="n">TOKEN_TYPE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Bearer&quot;</span>
-<span class="n">CHUNK_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">AUDIO_CHUNK_INTERVAL</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
-
 
 <span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">EN_US</span> <span class="o">=</span> <span class="s2">&quot;en-US&quot;</span>
@@ -443,11 +442,12 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 <span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending authentication command...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">AUDIO_CHUNK_INTERVAL</span><span class="p">)</span>
 
     <span class="c1"># wait until received the begin event from server</span>
     <span class="k">await</span> <span class="n">is_begin</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending audio_data commands...&quot;</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">_send_audio_data_chunkily</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">_send_audio_data_chunkily</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sending stop commands...&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_send_stop_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;waiting for end event...&quot;</span><span class="p">)</span>
@@ -502,14 +502,14 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">command_str</span><span class="p">)</span>
 
 
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_audio_data_chunkily</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">audio_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_send_audio_data_chunkily</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">audio_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">audio</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CHUNK_SIZE</span><span class="p">)</span>
+            <span class="n">audio</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">audio</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="k">await</span> <span class="n">_send_one_audio_data_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">audio</span><span class="p">)</span>
-
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">AUDIO_CHUNK_INTERVAL</span><span class="p">)</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_one_audio_data_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">audio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
     <span class="n">audio_data_command</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;audio_data&quot;</span><span class="p">,</span> <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()}</span>
