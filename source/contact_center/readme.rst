@@ -17,4 +17,4 @@ SeaX Bulk SMS RESTful APIs
 =====================
 This tutorial introduces how to use SeaX Bulk SMS RESTful.
 
-`SeaX Bulk SMS RESTful API Document <https://seax.seasalt.ai/bulk-sms/redoc>`_
+`SeaX Bulk SMS RESTful API Document <https://seax.seasalt.ai/bulk-sms-api/redoc>`_
