@@ -99,12 +99,25 @@ If successfully connected, Client sends json packages to stt server, for example
                 "language": "zh-TW",
                 "sample_rate": 16000,
                 "itn": false,
-                "punctuation": false,
+                "contexts": {
+                    "Seasalt": {
+                        "rewrite": ["sea salt", "c salt"]
+                    },
+                    "SeaVoice": {
+                        "rewrite": ["c voice"]
+                    }
+                }
             },
         }
     }
 
-accept language: `zh-TW`, `en-US`
+.. NOTE::
+
+    - ``"language"``: Currently supported languages: `zh-TW`, `en-US`
+    - ``"sample_rate"``: sample rate of the audio, e.g. 16000, 44100. Make sure this matches your audio.
+    - ``"itn"``: whether to run inverse text normalisation and punctuation to recognition result, e.g. "mister" becomes "mr."
+    - ``"contexts"``: boost certain hotwords and/or phrases for recognition, and also rewrite certain spoken forms to a specific written form. Note that the rewrite will be applied to all occurences of that spoken form. Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Hello World"
+
 
 - start recognition command: sending audio data for recognition
 
@@ -406,7 +419,8 @@ Sample Client Script (STT)
                     "language": args.lang,
                     "sample_rate": args.sample_rate,
                     "itn": args.enable_itn,
-                    "punctuation": args.enable_punctuation,
+                    "contexts": args.contexts_json,
+                    "context_score": args.context_score
                 },
             },
         }
@@ -435,7 +449,6 @@ Sample Client Script (STT)
 
     def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
         args.enable_itn = args.enable_itn.lower() == "true"
-        args.enable_punctuation = args.enable_punctuation.lower() == "true"
         return args
 
 
@@ -540,13 +553,14 @@ Sample Client Script (STT)
             help="Enable the ITN feature(true or false), default is true.",
         )
         parser.add_argument(
-            "--enable-punctuation",
-            dest="enable_punctuation",
+            "--context-file",
+            dest="context_file",
             type=str,
             required=False,
-            default="true",
-            help="Enable the punctuation feature(true or false), default is true.",
+            default="",
+            help="Path to a json file containing contexts for boosting and rewrite rules.",
         )
+
         args = parser.parse_args()
         _check_file_path_exists(args.audio_path)
         args = _convert_argument_str_to_bool(args)
