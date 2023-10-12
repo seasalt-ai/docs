@@ -83,7 +83,7 @@ SpeechRecognizer can be initialzed as follows:
 .. NOTE::
     The SpeechRecognizer can initialzed with context biasing to boost the probability of certain key words or phrases.
 
-    - ``"contexts"``: A dictionary to boost certain hotwords and/or phrases for recognition, and also rewrite certain spoken forms to a specific written form. Note that the rewrite will be applied to all occurences of that spoken form. Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Hello World"
+    - ``"contexts"``: a json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key 'rewrite' which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word "seasalt" will be boosted and all occurences of "sea salt" and "c salt" will be rewritten to the capitalised "Seasalt". Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Seasalt is an AI company"
 
 ::
         contexts =  {
