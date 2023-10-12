@@ -240,7 +240,7 @@ Sample Client Script (STT)
         --password test \
         --lang zh-TW \
         --enable-itn false \
-        --enable-punctuation false \
+        --contexts-file
         --audio-path test_audio.wav \
         --sample-rate 8000
     """
@@ -411,6 +411,13 @@ Sample Client Script (STT)
 
 
     async def _send_authentication_command(args: argparse.Namespace, websocket, access_token: str):
+        try:
+            with open(args.contexts_file, "r") as f:
+                contexts_json = json.load(f)
+            logging.info(f"Loaded contexts json file from {args.contexts_file}")
+        except Exception as e:
+            logging.warning(f"Not loading contexts json file from: {args.contexts_file} due to exception {e}")
+            contexts_json = {}
         authentication_command = {
             "command": "authentication",
             "payload": {
@@ -419,8 +426,7 @@ Sample Client Script (STT)
                     "language": args.lang,
                     "sample_rate": args.sample_rate,
                     "itn": args.enable_itn,
-                    "contexts": args.contexts_json,
-                    "context_score": args.context_score
+                    "contexts": contexts_json
                 },
             },
         }
@@ -553,8 +559,8 @@ Sample Client Script (STT)
             help="Enable the ITN feature(true or false), default is true.",
         )
         parser.add_argument(
-            "--context-file",
-            dest="context_file",
+            "--contexts-file",
+            dest="contexts_file",
             type=str,
             required=False,
             default="",
