@@ -190,13 +190,28 @@
 <span class="w">            </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;zh-TW&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;sample_rate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16000</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;itn&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;punctuation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;contexts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;Seasalt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;rewrite&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;sea salt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;c salt&quot;</span><span class="p">]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;SeaVoice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;rewrite&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;c voice&quot;</span><span class="p">]</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>accept language: <cite>zh-TW</cite>, <cite>en-US</cite></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;language&quot;</span></code>: Currently supported languages: <cite>zh-TW</cite>, <cite>en-US</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;sample_rate&quot;</span></code>: sample rate of the audio, e.g. 16000, 44100. Make sure this matches your audio.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;itn&quot;</span></code>: whether to run inverse text normalisation and punctuation to recognition result, e.g. “mister” becomes “mr.”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;contexts&quot;</span></code>: a json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key ‘rewrite’ which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word “seasalt” will be boosted and all occurences of “sea salt” and “c salt” will be rewritten to the capitalised “Seasalt”. Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. “Seasalt is an AI company”</p></li>
+</ul>
+</div>
 <ul class="simple">
 <li><p>start recognition command: sending audio data for recognition</p></li>
 </ul>
@@ -315,7 +330,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 <span class="sd">    --password test \</span>
 <span class="sd">    --lang zh-TW \</span>
 <span class="sd">    --enable-itn false \</span>
-<span class="sd">    --enable-punctuation false \</span>
+<span class="sd">    --contexts-file</span>
 <span class="sd">    --audio-path test_audio.wav \</span>
 <span class="sd">    --sample-rate 8000</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -486,6 +501,13 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_authentication_command</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">websocket</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">contexts_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">contexts_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded contexts json file from </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">contexts_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not loading contexts json file from: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">contexts_file</span><span class="si">}</span><span class="s2"> due to exception </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">contexts_json</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">authentication_command</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;authentication&quot;</span><span class="p">,</span>
         <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -494,7 +516,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
                 <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span>
                 <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
                 <span class="s2">&quot;itn&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="p">,</span>
-                <span class="s2">&quot;punctuation&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span><span class="p">,</span>
+                <span class="s2">&quot;contexts&quot;</span><span class="p">:</span> <span class="n">contexts_json</span>
             <span class="p">},</span>
         <span class="p">},</span>
     <span class="p">}</span>
@@ -523,7 +545,6 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 <span class="k">def</span> <span class="nf">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
     <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
-    <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_punctuation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
     <span class="k">return</span> <span class="n">args</span>
 
 
@@ -628,13 +649,14 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the ITN feature(true or false), default is true.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--enable-punctuation&quot;</span><span class="p">,</span>
-        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_punctuation&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--contexts-file&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;contexts_file&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable the punctuation feature(true or false), default is true.&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a json file containing contexts for boosting and rewrite rules.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">_check_file_path_exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>

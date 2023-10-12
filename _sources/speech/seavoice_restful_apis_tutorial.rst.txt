@@ -99,12 +99,25 @@ If successfully connected, Client sends json packages to stt server, for example
                 "language": "zh-TW",
                 "sample_rate": 16000,
                 "itn": false,
-                "punctuation": false,
+                "contexts": {
+                    "Seasalt": {
+                        "rewrite": ["sea salt", "c salt"]
+                    },
+                    "SeaVoice": {
+                        "rewrite": ["c voice"]
+                    }
+                }
             },
         }
     }
 
-accept language: `zh-TW`, `en-US`
+.. NOTE::
+
+    - ``"language"``: Currently supported languages: `zh-TW`, `en-US`
+    - ``"sample_rate"``: sample rate of the audio, e.g. 16000, 44100. Make sure this matches your audio.
+    - ``"itn"``: whether to run inverse text normalisation and punctuation to recognition result, e.g. "mister" becomes "mr."
+    - ``"contexts"``: a json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key 'rewrite' which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word "seasalt" will be boosted and all occurences of "sea salt" and "c salt" will be rewritten to the capitalised "Seasalt". Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Seasalt is an AI company"
+
 
 - start recognition command: sending audio data for recognition
 
@@ -227,7 +240,7 @@ Sample Client Script (STT)
         --password test \
         --lang zh-TW \
         --enable-itn false \
-        --enable-punctuation false \
+        --contexts-file
         --audio-path test_audio.wav \
         --sample-rate 8000
     """
@@ -398,6 +411,13 @@ Sample Client Script (STT)
 
 
     async def _send_authentication_command(args: argparse.Namespace, websocket, access_token: str):
+        try:
+            with open(args.contexts_file, "r") as f:
+                contexts_json = json.load(f)
+            logging.info(f"Loaded contexts json file from {args.contexts_file}")
+        except Exception as e:
+            logging.warning(f"Not loading contexts json file from: {args.contexts_file} due to exception {e}")
+            contexts_json = {}
         authentication_command = {
             "command": "authentication",
             "payload": {
@@ -406,7 +426,7 @@ Sample Client Script (STT)
                     "language": args.lang,
                     "sample_rate": args.sample_rate,
                     "itn": args.enable_itn,
-                    "punctuation": args.enable_punctuation,
+                    "contexts": contexts_json
                 },
             },
         }
@@ -435,7 +455,6 @@ Sample Client Script (STT)
 
     def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
         args.enable_itn = args.enable_itn.lower() == "true"
-        args.enable_punctuation = args.enable_punctuation.lower() == "true"
         return args
 
 
@@ -540,13 +559,14 @@ Sample Client Script (STT)
             help="Enable the ITN feature(true or false), default is true.",
         )
         parser.add_argument(
-            "--enable-punctuation",
-            dest="enable_punctuation",
+            "--contexts-file",
+            dest="contexts_file",
             type=str,
             required=False,
-            default="true",
-            help="Enable the punctuation feature(true or false), default is true.",
+            default="",
+            help="Path to a json file containing contexts for boosting and rewrite rules.",
         )
+
         args = parser.parse_args()
         _check_file_path_exists(args.audio_path)
         args = _convert_argument_str_to_bool(args)
