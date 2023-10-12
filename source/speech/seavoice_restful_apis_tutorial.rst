@@ -116,7 +116,7 @@ If successfully connected, Client sends json packages to stt server, for example
     - ``"language"``: Currently supported languages: `zh-TW`, `en-US`
     - ``"sample_rate"``: sample rate of the audio, e.g. 16000, 44100. Make sure this matches your audio.
     - ``"itn"``: whether to run inverse text normalisation and punctuation to recognition result, e.g. "mister" becomes "mr."
-    - ``"contexts"``: boost certain hotwords and/or phrases for recognition, and also rewrite certain spoken forms to a specific written form. Note that the rewrite will be applied to all occurences of that spoken form. Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Hello World"
+    - ``"contexts"``: a json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key 'rewrite' which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word "seasalt" will be boosted and all occurences of "sea salt" and "c salt" will be rewritten to the capitalised "Seasalt". Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Seasalt is an AI company"
 
 
 - start recognition command: sending audio data for recognition
