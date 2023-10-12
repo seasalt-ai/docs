@@ -75,10 +75,30 @@ Recognizer initialization
 SpeechRecognizer can be initialzed as follows:
 
 ::
+        speech_recognizer = speechsdk.SpeechRecognizer(
+            speech_config=speech_config,
+            audio_config=audio_config
+        )
+
+.. NOTE::
+    The SpeechRecognizer can initialzed with context biasing to boost the probability of certain key words or phrases.
+
+    - ``"contexts"``: A dictionary to boost certain hotwords and/or phrases for recognition, and also rewrite certain spoken forms to a specific written form. Note that the rewrite will be applied to all occurences of that spoken form. Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Hello World"
+
+::
+        contexts =  {
+            "Seasalt": {
+                "rewrite": ["sea salt", "c salt"]
+            },
+            "SeaVoice": {
+                "rewrite": ["c voice"]
+            }
+        }
 
         speech_recognizer = speechsdk.SpeechRecognizer(
             speech_config=speech_config,
             audio_config=audio_config
+            contexts=contexts
         )
 
 Callbacks connection
