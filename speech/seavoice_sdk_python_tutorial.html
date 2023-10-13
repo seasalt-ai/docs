@@ -182,12 +182,46 @@
 <section id="recognizer-initialization">
 <h4><a class="toc-backref" href="#id13" role="doc-backlink">Recognizer initialization</a><a class="headerlink" href="#recognizer-initialization" title="Permalink to this heading"></a></h4>
 <p>SpeechRecognizer can be initialzed as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">speech_recognizer</span> <span class="o">=</span> <span class="n">speechsdk</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span>
-    <span class="n">speech_config</span><span class="o">=</span><span class="n">speech_config</span><span class="p">,</span>
-    <span class="n">audio_config</span><span class="o">=</span><span class="n">audio_config</span>
-<span class="p">)</span>
-</pre></div>
+<dl>
+<dt>::</dt><dd><dl class="simple">
+<dt>speech_recognizer = speechsdk.SpeechRecognizer(</dt><dd><p>speech_config=speech_config,
+audio_config=audio_config</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SpeechRecognizer can initialzed with context biasing to boost the probability of certain key words or phrases.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;contexts&quot;</span></code>: a json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key ‘rewrite’ which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word “seasalt” will be boosted and all occurences of “sea salt” and “c salt” will be rewritten to the capitalised “Seasalt”. Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. “Seasalt is an AI company”</p></li>
+</ul>
 </div>
+<dl>
+<dt>::</dt><dd><dl>
+<dt>contexts =  {</dt><dd><dl class="simple">
+<dt>“Seasalt”: {</dt><dd><p>“rewrite”: [“sea salt”, “c salt”]</p>
+</dd>
+</dl>
+<p>},
+“SeaVoice”: {</p>
+<blockquote>
+<div><p>“rewrite”: [“c voice”]</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="simple">
+<dt>speech_recognizer = speechsdk.SpeechRecognizer(</dt><dd><p>speech_config=speech_config,
+audio_config=audio_config
+contexts=contexts</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
 </section>
 <section id="callbacks-connection">
 <h4><a class="toc-backref" href="#id14" role="doc-backlink">Callbacks connection</a><a class="headerlink" href="#callbacks-connection" title="Permalink to this heading"></a></h4>
