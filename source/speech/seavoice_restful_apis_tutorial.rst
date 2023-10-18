@@ -426,7 +426,7 @@ Sample Client Script (STT)
                     "language": args.lang,
                     "sample_rate": args.sample_rate,
                     "itn": args.enable_itn,
-                    "contexts": contexts_json
+                    "contexts": json.dumps(contexts_json)
                 },
             },
         }
