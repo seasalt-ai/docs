@@ -585,14 +585,6 @@ Sample Client Script (STT)
             help="Enable the ITN feature(true or false), default is true.",
         )
         parser.add_argument(
-            "--enable-punctuation",
-            dest="enable_punctuation",
-            type=str,
-            required=False,
-            default="true",
-            help="Enable the punctuation feature(true or false), default is true.",
-        )
-        parser.add_argument(
             "--contexts-file",
             dest="contexts_file",
             type=str,
