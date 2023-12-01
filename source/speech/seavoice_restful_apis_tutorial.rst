@@ -226,7 +226,7 @@ Sample Client Script (STT)
 
     """Client script for stt endpoint
 
-    prerequisite:
+    Prerequisite:
     python 3.8
     python package:
     - aiohttp==3.8.1
@@ -234,15 +234,18 @@ Sample Client Script (STT)
     - PyJWT==2.5.0
 
     Usage:
-
     python stt_client.py \
         --account test \
         --password test \
         --lang zh-TW \
         --enable-itn false \
-        --contexts-file
+        --contexts "{}" \
+        --context_score 0 \
         --audio-path test_audio.wav \
         --sample-rate 8000
+
+    Get help:
+    python stt_client.py --help
     """
 
     import argparse
@@ -268,7 +271,8 @@ Sample Client Script (STT)
     SEAAUTH_SCOPE_NAME: str = "seavoice"
     TOKEN_TYPE: str = "Bearer"
     AUDIO_CHUNK_INTERVAL: float = 0.1
-    ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND: int = 60
+    ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND: int = 300
+
 
     class Language(str, Enum):
         EN_US = "en-US"
@@ -276,12 +280,20 @@ Sample Client Script (STT)
 
 
     async def main(args: argparse.Namespace):
+        if args.enable_log_file:
+            file_handler = logging.FileHandler("stt_client.log")
+            file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+            logging.getLogger().addHandler(file_handler)
         logging.info("Start to get access token.")
         access_token = await _get_access_token(args)
         await _do_stt(args, access_token)
 
 
     async def _get_access_token(args: argparse.Namespace) -> str:
+        if args.service_token:
+            logging.info("Using service token...")
+            return args.service_token
+
         credential = _get_credential_from_file(args.seaauth_credential_path)
         if credential and credential["account"] == args.account:
             access_token, refresh_token = credential["access_token"], credential["refresh_token"]
@@ -329,7 +341,7 @@ Sample Client Script (STT)
             "access_token": access_token,
             "refresh_token": refresh_token,
             "token_type": TOKEN_TYPE,
-            "service": SEAAUTH_SCOPE_NAME,
+            "scope": SEAAUTH_SCOPE_NAME,
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(urljoin(args.seaauth_url, "/api/v1/users/rotate_token"), json=payload) as response:
@@ -342,10 +354,12 @@ Sample Client Script (STT)
 
 
     async def _do_stt(args: argparse.Namespace, access_token: str):
+        start_time = time.time()
         stt_endpoint_url = urljoin(args.seavoice_ws_url, "/api/v1/stt/ws")
         logging.info("establishing ws connection...")
-        async with websockets.connect(stt_endpoint_url) as websocket:
+        async with websockets.connect(stt_endpoint_url, open_timeout=20) as websocket:
             logging.info("established ws connection")
+            stt_start_time = time.time()
             is_begin, is_end = asyncio.Event(), asyncio.Event()
 
             await asyncio.gather(
@@ -355,7 +369,9 @@ Sample Client Script (STT)
 
             # wait for audio synthesized
             logging.info("stt finished")
-        logging.info("disconnected ws connection...")
+        logging.info(
+            f"_do_stt finished, time elapsed: total: {time.time()-start_time: .3f}s, stt:{time.time()-stt_start_time: .3f}s"
+        )
 
 
     async def _send_commands(
@@ -426,7 +442,8 @@ Sample Client Script (STT)
                     "language": args.lang,
                     "sample_rate": args.sample_rate,
                     "itn": args.enable_itn,
-                    "contexts": json.dumps(contexts_json)
+                    "contexts": json.dumps(contexts_json),
+                    "context_score": args.context_score,
                 },
             },
         }
@@ -443,6 +460,7 @@ Sample Client Script (STT)
                 await _send_one_audio_data_command(websocket, audio)
                 await asyncio.sleep(AUDIO_CHUNK_INTERVAL)
 
+
     async def _send_one_audio_data_command(websocket, audio: bytes):
         audio_data_command = {"command": "audio_data", "payload": base64.b64encode(audio).decode()}
         await websocket.send(json.dumps(audio_data_command))
@@ -455,6 +473,7 @@ Sample Client Script (STT)
 
     def _convert_argument_str_to_bool(args: argparse.Namespace) -> argparse.Namespace:
         args.enable_itn = args.enable_itn.lower() == "true"
+        args.enable_log_file = args.enable_log_file.lower() == "true"
         return args
 
 
@@ -503,8 +522,15 @@ Sample Client Script (STT)
 
     if __name__ == "__main__":
         parser = argparse.ArgumentParser()
-        parser.add_argument("--account", type=str, required=True, help="account of a SeaAuth account.")
-        parser.add_argument("--password", type=str, required=True, help="password of a SeaAuth account.")
+        parser.add_argument("--account", type=str, required=False, help="account of a SeaAuth account.")
+        parser.add_argument("--password", type=str, required=False, help="password of a SeaAuth account.")
+        parser.add_argument(
+            "--service-token",
+            dest="service_token",
+            type=str,
+            required=False,
+            help="If you provide the service token, we could use this token direclty without login by password",
+        )
         parser.add_argument(
             "--lang",
             type=str,
@@ -559,6 +585,14 @@ Sample Client Script (STT)
             help="Enable the ITN feature(true or false), default is true.",
         )
         parser.add_argument(
+            "--enable-punctuation",
+            dest="enable_punctuation",
+            type=str,
+            required=False,
+            default="true",
+            help="Enable the punctuation feature(true or false), default is true.",
+        )
+        parser.add_argument(
             "--contexts-file",
             dest="contexts_file",
             type=str,
@@ -566,7 +600,22 @@ Sample Client Script (STT)
             default="",
             help="Path to a json file containing contexts for boosting and rewrite rules.",
         )
-
+        parser.add_argument(
+            "--context-score",
+            dest="context_score",
+            type=float,
+            required=False,
+            default=2.0,
+            help="Set the default context score of stt server.",
+        )
+        parser.add_argument(
+            "--enable-log-file",
+            dest="enable_log_file",
+            type=str,
+            required=False,
+            default="false",
+            help="Save the log to the file(true or false), default is false.",
+        )
         args = parser.parse_args()
         _check_file_path_exists(args.audio_path)
         args = _convert_argument_str_to_bool(args)
