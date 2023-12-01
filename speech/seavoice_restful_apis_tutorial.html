@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <meta content="text to speech, speech to text, api, rest, python, documentation, tutorial, customization" name="keywords" />
 <meta content="restful api documentation and tutorial for seavoice cutting edge text to speech and speech to text services" lang="en" name="description" xml:lang="en" />
 <meta content="seavoice最先進的語音轉文字以及文字轉語音服務的RESTful API接口教學文檔" lang="zh" name="description" xml:lang="zh" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SeaVoice RESTful APIs &mdash; Seasalt.ai Documentation 0.0.1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -316,7 +318,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 <span class="sd">&quot;&quot;&quot;Client script for stt endpoint</span>
 
-<span class="sd">prerequisite:</span>
+<span class="sd">Prerequisite:</span>
 <span class="sd">python 3.8</span>
 <span class="sd">python package:</span>
 <span class="sd">- aiohttp==3.8.1</span>
@@ -324,15 +326,18 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 <span class="sd">- PyJWT==2.5.0</span>
 
 <span class="sd">Usage:</span>
-
 <span class="sd">python stt_client.py \</span>
 <span class="sd">    --account test \</span>
 <span class="sd">    --password test \</span>
 <span class="sd">    --lang zh-TW \</span>
 <span class="sd">    --enable-itn false \</span>
-<span class="sd">    --contexts-file</span>
+<span class="sd">    --contexts &quot;{}&quot; \</span>
+<span class="sd">    --context_score 0 \</span>
 <span class="sd">    --audio-path test_audio.wav \</span>
 <span class="sd">    --sample-rate 8000</span>
+
+<span class="sd">Get help:</span>
+<span class="sd">python stt_client.py --help</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -358,7 +363,8 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seavoice&quot;</span>
 <span class="n">TOKEN_TYPE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Bearer&quot;</span>
 <span class="n">AUDIO_CHUNK_INTERVAL</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">ACCESS_TOKEN_LIFE_TIME_MINIMUM_IN_SECOND</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span>
+
 
 <span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
     <span class="n">EN_US</span> <span class="o">=</span> <span class="s2">&quot;en-US&quot;</span>
@@ -366,12 +372,20 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_log_file</span><span class="p">:</span>
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s2">&quot;stt_client.log&quot;</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Start to get access token.&quot;</span><span class="p">)</span>
     <span class="n">access_token</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_get_access_token</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_get_access_token</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">service_token</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using service token...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span><span class="o">.</span><span class="n">service_token</span>
+
     <span class="n">credential</span> <span class="o">=</span> <span class="n">_get_credential_from_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_credential_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">credential</span> <span class="ow">and</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;account&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">args</span><span class="o">.</span><span class="n">account</span><span class="p">:</span>
         <span class="n">access_token</span><span class="p">,</span> <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">],</span> <span class="n">credential</span><span class="p">[</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">]</span>
@@ -419,7 +433,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
         <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span>
         <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="n">refresh_token</span><span class="p">,</span>
         <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="n">TOKEN_TYPE</span><span class="p">,</span>
-        <span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">,</span>
+        <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="n">SEAAUTH_SCOPE_NAME</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
         <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seaauth_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/users/rotate_token&quot;</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
@@ -432,10 +446,12 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_do_stt</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">stt_endpoint_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seavoice_ws_url</span><span class="p">,</span> <span class="s2">&quot;/api/v1/stt/ws&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;establishing ws connection...&quot;</span><span class="p">)</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">stt_endpoint_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">stt_endpoint_url</span><span class="p">,</span> <span class="n">open_timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;established ws connection&quot;</span><span class="p">)</span>
+        <span class="n">stt_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="n">is_begin</span><span class="p">,</span> <span class="n">is_end</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">(),</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
 
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
@@ -445,7 +461,9 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
         <span class="c1"># wait for audio synthesized</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;stt finished&quot;</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;disconnected ws connection...&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;_do_stt finished, time elapsed: total: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="si">:</span><span class="s2"> .3f</span><span class="si">}</span><span class="s2">s, stt:</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">stt_start_time</span><span class="si">:</span><span class="s2"> .3f</span><span class="si">}</span><span class="s2">s&quot;</span>
+    <span class="p">)</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_commands</span><span class="p">(</span>
@@ -516,7 +534,8 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
                 <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span>
                 <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
                 <span class="s2">&quot;itn&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="p">,</span>
-                <span class="s2">&quot;contexts&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">contexts_json</span><span class="p">)</span>
+                <span class="s2">&quot;contexts&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">contexts_json</span><span class="p">),</span>
+                <span class="s2">&quot;context_score&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">context_score</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
     <span class="p">}</span>
@@ -533,6 +552,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
             <span class="k">await</span> <span class="n">_send_one_audio_data_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">audio</span><span class="p">)</span>
             <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">AUDIO_CHUNK_INTERVAL</span><span class="p">)</span>
 
+
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_send_one_audio_data_command</span><span class="p">(</span><span class="n">websocket</span><span class="p">,</span> <span class="n">audio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
     <span class="n">audio_data_command</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;audio_data&quot;</span><span class="p">,</span> <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()}</span>
     <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">audio_data_command</span><span class="p">))</span>
@@ -545,6 +565,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 <span class="k">def</span> <span class="nf">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
     <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_itn</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">enable_log_file</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_log_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
     <span class="k">return</span> <span class="n">args</span>
 
 
@@ -593,8 +614,15 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--account&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;account of a SeaAuth account.&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--password&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;password of a SeaAuth account.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--account&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;account of a SeaAuth account.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--password&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;password of a SeaAuth account.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--service-token&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;service_token&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If you provide the service token, we could use this token direclty without login by password&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--lang&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
@@ -656,7 +684,22 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="nv">PyJWT
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a json file containing contexts for boosting and rewrite rules.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--context-score&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;context_score&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set the default context score of stt server.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--enable-log-file&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;enable_log_file&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save the log to the file(true or false), default is false.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">_check_file_path_exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">_convert_argument_str_to_bool</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
