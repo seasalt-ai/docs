@@ -40,7 +40,8 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autosummary',
     'sphinx.ext.todo', # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
-    'sphinx.ext.githubpages'
+    'sphinx.ext.githubpages',
+    'sphinx.ext.autosectionlabel',
 ]
 
 todo_include_todos = True
