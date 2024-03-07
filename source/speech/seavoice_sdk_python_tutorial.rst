@@ -262,7 +262,7 @@ Use the following code to create ``SpeechSynthesizer`` and ``SynthesisSettings``
 Text Configuration
 ^^^^^^^^^^^^^^^^^^^
 
-Use the following code to create ``SynthesisData``.
+Use the following code to create ``SynthesisData`` :
 
 ::
 
@@ -281,7 +281,7 @@ Use the following code to create ``SynthesisData``.
 Output File Configuration
 ^^^^^^^^^^^^^^^^^^^
 
-Synthesized audio 
+Use the following code to initialise the synthesized output audio:
 
 ::
 
@@ -297,7 +297,7 @@ Synthesized audio
 Synthesis Command
 ^^^^^^^^^^^^^^^^^^^
 
-Use the following code to create ``SynthesisCommand`` using the ``SynthesisData`` and ``SynthesisSettings`` from previous steps.
+Use the following code to create ``SynthesisCommand`` using the ``SynthesisData`` and ``SynthesisSettings`` from previous steps:
 
 ::
 
