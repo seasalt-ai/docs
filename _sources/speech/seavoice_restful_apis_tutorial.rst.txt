@@ -750,12 +750,12 @@ If successfully connected, Client sends json packages to TTS server, for example
       - description: set the output audio sample rate
   - <rules>
       - default: (empty string)
-      - description: pronunciation rules as a string in the following format "<WORD1> | <PRONUNCIATION1>\n<WORD2> | <PRONUNCIATION2>"
-      - for "zh-TW", pronunciation can be specified in zhuyin, pinyin, or Chinese characters, e.g. "TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5"
+      - description: pronunciation rules as a string in the following format ``<WORD1> | <PRONUNCIATION1>\n<WORD2> | <PRONUNCIATION2>``
+      - for "zh-TW", pronunciation can be specified in zhuyin, pinyin, or Chinese characters, e.g. ``TSMC | 台積電\n你好 | ㄋㄧˇ ㄏㄠˇ\n為了 | wei4 le5``
       - for "en-US", pronunciation can be specified with English words, e.g. "XÆA12 | ex ash ay twelve\nSideræl|psydeereal"
   - <ssml>
       - default: false
-      - description: should be True if <text> is an SSML string, i.e. using SSML tags. See :ref:`Supported SSML Tags` for more info.
+      - description: should be True if ``<text>`` is an SSML string, i.e. using SSML tags. See :ref:`Supported SSML Tags` for more info.
 
 
 5. After sending the package, Client calls ws.recv() to wait for TTS server to send the streaming audio data.
@@ -1216,7 +1216,7 @@ Sample Client Script (TTS)
 
 
 Supported SSML Tags
-*******************
+=================
 
 1. Break
 
