@@ -17,24 +17,26 @@ Please contact info@seasalt.ai if you have any questions.
     :local:
     :depth: 3
 
-Speech-to-Text Example:
------------------------
 
 Prerequisites
-~~~~~~~~~~~~~
+-------------
 
-You will need a SeaVoice speech service account to run this example. Please contact info@seasalt.ai and apply for it.
+You will need a SeaVoice speech service account to run the following examples. Please contact info@seasalt.ai to apply for the SEAVOICE_TOKEN.
+
+
+Speech-to-Text Example:
+-----------------------
 
 Install and import
 ~~~~~~~~~~~~~~~~~~
 
 To install SeaVoice SDK:
 
-``pip install seavoice-sdk``
+``pip install seavoice-sdk-test``
 
 To import SeaVoice SDK:
 
-``import seavoice_sdk.speech as speechsdk``
+``import seavoice_sdk_beta.speech as speechsdk``
 
 Recognition
 ~~~~~~~~~~~
@@ -44,108 +46,81 @@ In the example below, we show how to recognize speech from an audio file. You ca
 Speech Configuration
 ^^^^^^^^^^^^^^^^^^^^
 
-Use the following code to create ``SpeechConfig`` (contact info@seasalt.ai for the speech service APIKEY):
+Use the following code to create ``SpeechConfig``:
 
 ::
 
-        speech_config = speechsdk.SpeechConfig(
-            apikey=SEASALT_APIKEY,
-            speech_recognition_language="zh-TW",
-            speech_recognition_punctuation=True
+        recognizer = SpeechRecognizer(
+            token=SEAVOICE_TOKEN,
+            language=LanguageCode.EN_US,
+            sample_rate=16000,
+            sample_width=2,
+            enable_itn=True,
+            contexts={},
+            context_score=0
         )
 
-``speech_recognition_language`` could be ``zh-TW`` or ``en-US``.
-
-``speech_recognition_punctuation`` is used to set whether recognition results will have punctuations.
-
-Audio Configuration
-^^^^^^^^^^^^^^^^^^^
-
-Use the following code to create ``AudioConfig``.
-
-::
-
-        audio_format = speechsdk.audio.AudioStreamFormat(samples_per_second=16000, bits_per_sample=16, channels=1)
-        audio_stream = speechsdk.audio.PushAudioInputStream(audio_format)
-        audio_config = speechsdk.audio.AudioConfig(stream=audio_stream)
-
-Recognizer initialization
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-SpeechRecognizer can be initialzed as follows:
-
-::
-        speech_recognizer = speechsdk.SpeechRecognizer(
-            speech_config=speech_config,
-            audio_config=audio_config
-        )
 
 .. NOTE::
-    The SpeechRecognizer can initialzed with context biasing to boost the probability of certain key words or phrases.
+    - ``language``: Input audio language, choose from ``LanguageCode.ZH_TW``, ``LanguageCode.EN_US``
+    - ``enable_itn``: Whether to run Inverse Text Normalisation (ITN) to add punctuation and output written form instead of spoken form, i.e. output words like ``Mr.`` instead of ``mister``
+    - ``contexts``: A json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key 'rewrite' which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word "seasalt" will be boosted and all occurences of "sea salt" and "c salt" will be rewritten to the capitalised "Seasalt". Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Seasalt is an AI company"
 
-    - ``"contexts"``: a json dict to boost certain hotwords and/or phrases for recognition, and optionally rewrite certain spoken forms to a specific written form. Each key is a word/phrase for context biasing; each corresponding value is an optional dict containing a key 'rewrite' which maps to a list of possible spoken forms that will be rewritten to the written form (the key). In the above example, the word "seasalt" will be boosted and all occurences of "sea salt" and "c salt" will be rewritten to the capitalised "Seasalt". Also, if a certain sentence is expected, you can also boost the whole sentence, e.g. "Seasalt is an AI company"
+        ::
 
-::
-        contexts =  {
-            "Seasalt": {
-                "rewrite": ["sea salt", "c salt"]
-            },
-            "SeaVoice": {
-                "rewrite": ["c voice"]
-            }
-        }
-
-        speech_recognizer = speechsdk.SpeechRecognizer(
-            speech_config=speech_config,
-            audio_config=audio_config
-            contexts=contexts
-        )
-
-Callbacks connection
-^^^^^^^^^^^^^^^^^^^^
-
-SpeechRecognizer has 5 kinds of callbacks:
-
--  Recognizing - called when recognition is in progress.
--  Recognized - called when a single utterance is recognized.
--  Canceled - called when a continuous recognition is interrupted.
--  Session\_started - called when a recognition session is started.
--  Session\_stopped - called when a recognition session is stopped.
-
-To connect the callbacks:
-
-::
-
-        speech_recognizer.recognizing.connect(
-            lambda evt: print(f"Recognizing: {evt.result.text}"))
-        speech_recognizer.recognized.connect(
-            lambda evt: print(f'Recognized: {evt.result.text}'))
-        speech_recognizer.canceled.connect(
-            lambda evt: print(f'Canceled: {evt}'))
-        speech_recognizer.session_started.connect(
-            lambda evt: print(f'Session_started: {evt}'))
-        speech_recognizer.session_stopped.connect(
-            lambda evt: print(f'Session_stopped: {evt}'))
+                contexts =  {
+                    "Seasalt": {
+                        "rewrite": ["sea salt", "c salt"]
+                    },
+                    "SeaVoice": {
+                        "rewrite": ["c voice"]
+                    }
+                }
+                
+    - ``context_score``: The strength of the above provided ``contexts``. We recommend starting with a score of 2.0 and try it out.
 
 Recognizing speech
 ^^^^^^^^^^^^^^^^^^
 
-Now it is ready to run SpeechRecognizer. SpeechRecognizer has two ways
-for speech recognition:
-
--  Single-shot recognition - Performs recognition once. This is to
-   recognize a single audio file. It stops recognition after a single
-   utterance is recognized.
--  Continuous recognition (async) - Asynchronously initiates continuous
-   recognition on an audio stream. Recognition results are available
-   through callback functions. To stop the continuous recognition, call
-   ``stop_continuous_recognition_async()``.
+Now we use the recognizer to send audio at ``audio_path`` for recognition. 
 
 ::
 
-        speech_recognizer.start_continuous_recognition_async()
-        # Code commented out is for Single-shot recognition.
-        # speech_recognizer.recognize_once()
+            async with recognizer:
+                async def _send():
+                    with wave.open(audio_path, mode="rb") as audio_file:
+                        frames = audio_file.readframes(frames_sent_per_command)
+                        while frames:
+                            await recognizer.send(frames)
+                            frames = audio_file.readframes(frames_sent_per_command)
+                    await recognizer.finish()
+
+                asyncio.create_task(_send())
+                async for event in recognizer.stream():
+                    print(event)
+
+.. Note::
+    ``frames_sent_per_command``: you can add ``asyncio.sleep()`` depending on the number of frames sent for each chunk to mimic a streaming setting with local audio file testing.
+
+    There are three types of events from the recognizer:
+
+    - ``InfoEvent`` : contains the recognition status of one of the following ``SpeechStatus.BEGIN``, ``SpeechStatus.END``, ``SpeechStatus.ERROR``
+    - ``RecognizingEvent`` : contains the following information
+
+        - ``text``: this is the partial transcription that might change in the ``RecognizedEvent``
+        - ``segment_id``: 0-based index of this recognizing segment.
+        - ``voice_start_time``: timestamp in seconds of the start of this segment relative to the start of the audio.
+        - ``word_alignments``: a list of ``WordAlignment`` objects containing the start timestamp of each word relative to the start of the audio.
+    - ``RecognizedEvent`` : similar to the ``RecognizingEvent`` with an additional ``duration`` in seconds for this recognized segment.
+
+    Here are some examples of the events:
+    ::
+        
+            InfoEvent(payload=InfoEventPayload(status='begin'))
+            RecognizingEvent(payload=RecognizingEventPayload(segment_id=4, text=' how much', voice_start_time=29.17, word_alignments=[WordAlignment(word='how', start=29.169998919963838, length=1), WordAlignment(word='much', start=29.32999891638756, length=1)]))
+            RecognizedEvent(payload=RecognizedEventPayload(segment_id=4, text=' How much it was? ', voice_start_time=29.17, word_alignments=[WordAlignment(word='How', start=29.169998919963838, length=1), WordAlignment(word='much', start=29.32999891638756, length=1), WordAlignment(word='it', start=29.609998917579652, length=1), WordAlignment(word='was?', start=29.68999890089035, length=1)], duration=0.67))
+
+
 
 Putting everything together
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -154,68 +129,85 @@ Now, put everything together and run the example:
 
 ::
 
-    import seavoice_sdk.speech as speechsdk
-    import time
+        #!/usr/bin/env python3
+        # -*- coding: utf-8 -*-
 
-    SEASALT_APIKEY = "xxxxxxxxx"
-    speech_config = speechsdk.SpeechConfig(
-        apikey=SEASALT_APIKEY,
-        speech_recognition_language="zh-TW",
-        speech_recognition_punctuation=True
-    )
-    audio_format = speechsdk.audio.AudioStreamFormat(samples_per_second=16000, bits_per_sample=16, channels=1)
-    audio_stream = speechsdk.audio.PushAudioInputStream(audio_format)
-    audio_config = speechsdk.audio.AudioConfig(stream=audio_stream)
+        import os
+        import asyncio
+        import wave
+        import argparse
 
-    speech_recognizer = speechsdk.SpeechRecognizer(
-        speech_config=speech_config,
-        audio_config=audio_config
-    )
+        from seavoice_sdk_beta import LanguageCode, SpeechRecognizer
+        from seavoice_sdk_beta.events import InfoEvent
 
-    done = False
-    def stopped_handler(evt):
-        global done
-        print(f'Session_stopped: {evt}')
-        done = True
+        async def recognize(
+            audio_path: str,
+            language: LanguageCode,
+            sample_rate: int,
+            sample_width: int = 2,
+            frames_sent_per_command: int = 150,
+        ):
+            seavoice_token = os.getenv("SEAVOICE_TOKEN", None)
+            assert seavoice_token, "SEAVOICE_TOKEN is not set."
+            recognizer = SpeechRecognizer(
+                token=seavoice_token,
+                language=language,
+                sample_rate=sample_rate,
+                sample_width=sample_width,
+                enable_itn=True,
+                contexts={},
+                context_score=0
+            )
 
-    speech_recognizer.recognizing.connect(
-        lambda evt: print(f"Recognizing: {evt.result.text}"))
-    speech_recognizer.recognized.connect(
-        lambda evt: print(f'Recognized: {evt.result.text}'))
-    speech_recognizer.canceled.connect(
-        lambda evt: print(f'Canceled: {evt}'))
-    speech_recognizer.session_started.connect(
-        lambda evt: print(f'Session_started: {evt}'))
-    speech_recognizer.session_stopped.connect(stopped_handler)
+            async with recognizer:
+                async def _send():
+                    with wave.open(audio_path, mode="rb") as audio_file:
+                        frames = audio_file.readframes(frames_sent_per_command)
+                        while frames:
+                            await recognizer.send(frames)
+                            frames = audio_file.readframes(frames_sent_per_command)
 
-    speech_recognizer.start_continuous_recognition_async()
-    with open("test.wav", "rb") as audio_bytes:
-        audio_stream.write(audio_bytes.read())
-        audio_stream.write("EOS".encode('utf-8'))
-    while not done:
-        time.sleep(3)
-    speech_recognizer.stop_continuous_recognition()
-    print("Finished recognizing")
+                    await recognizer.finish()
+
+                asyncio.create_task(_send())
+                async for event in recognizer.stream():
+                    if type(event) is InfoEvent:
+                        print(f"{type(event).__name__}: status {event.payload.status}")
+                    else:
+                        print(f"{type(event).__name__}: {event.payload.text}")
+
+        if __name__ == "__main__":
+            parser = argparse.ArgumentParser()
+            parser.add_argument("--audio", type=str, required=True,
+                                help="path to the audio file to be recognized")
+            parser.add_argument("--sample-rate", type=int, required=True,
+                                help="sample rate of the audio")
+            parser.add_argument("--language", type=str, required=True,
+                                help="language of the provided audio, choose from 'en' and 'zh'")
+            args = parser.parse_args()
+            if args.language == "en":
+                lang = LanguageCode.EN_US
+            elif args.language == "zh":
+                lang = LanguageCode.ZH_TW
+            else:
+                raise Exception("for 'language', choose from 'en', 'zh'")
+            
+            asyncio.run(recognize(args.audio, language=lang, sample_rate=args.sample_rate))
 
 
 Text-to-Speech Example:
 -----------------------
-
-Prerequisites
-~~~~~~~~~~~~~
-
-You will need a SeaVoice speech service account to run this example. Please contact info@seasalt.ai and apply for it.
 
 Install and import
 ~~~~~~~~~~~~~~~~~~
 
 To install SeaVoice SDK:
 
-``pip install seavoice-sdk``
+``pip install seavoice-sdk-test``
 
 To import SeaVoice SDK:
 
-``import seavoice_sdk.speech as speechsdk``
+``import seavoice_sdk_beta as speechsdk``
 
 Synthesis
 ~~~~~~~~~
@@ -223,114 +215,101 @@ Synthesis
 In the example below, we show how to synthesize text to generate an
 audio file. You can also receive synthesis results from an audio stream.
 
-Speech Configuration
+Voice Configuration
 ^^^^^^^^^^^^^^^^^^^^
 
-Use the following code to create ``SpeechConfig`` (contact info@seasalt.ai for the speech service account):
+Use the following code to create ``SpeechSynthesizer`` and ``SynthesisSettings`` (contact info@seasalt.ai for the SEAVOICE_TOKEN):
 
 ::
 
-        speech_config = speechsdk.SpeechConfig(
-            account_id=SEASALT_ACCOUNT,
-            password=PASSWORD,
-            speech_synthesis_language="en-US",
-            speech_synthesis_voice_name="TomHanks",
-            speech_synthesis_output_format_id="riff-22khz-16bit-mono-pcm",
-            speech_synthesis_output_pitch=0.0,
-            speech_synthesis_output_speed=1.0
+        from seavoice_sdk_beta import SpeechSynthesizer, LanguageCode, Voice
+        from seavoice_sdk_beta.commands import SynthesisSettings
+
+        synthesizer = SpeechSynthesizer(
+            token=SEAVOICE_TOKEN,
+            language=LanguageCode.EN_US,
+            sample_rate=22050,
+            voice=Voice.TOMHANKS,
         )
 
-Options for ``speech_synthesis_language`` could be ``zh-TW``, ``en-US`` or ``en-GB``.
+        settings = SynthesisSettings(
+            pitch=0.0,
+            speed=1.0,
+            volume=50.0,
+            rules="Elon | eelon\nX Æ A12 | x ash ay twelve",
+            sample_rate=22050,
+        )
 
-For ``zh-TW``, ``speech_synthesis_voice_name`` could be ``Tongtong`` or ``Vivian``.
+.. NOTE::
+    - ``language``: choose from ``LanguageCode.ZH_TW``, ``LanguageCode.EN_US``, ``LanguageCode.EN_GB``
+    - ``voice``: voice options of the synthesized audio
 
-For ``en-US``, ``speech_synthesis_voice_name`` could be ``TomHanks``, ``ReeseWitherspoon`` or ``AnneHathaway``.
-For ``en-GB``, ``speech_synthesis_voice_name`` could be ``DavidAttenborough``.
+        - ``ZH_TW`` : choose from ``Voice.TONGTONG``, ``Voice.VIVIAN``
+        - ``EN_US`` : choose from ``Voice.ROBERT``, ``Voice.TOM``, ``Voice.MIKE``, ``Voice.ANNE``, ``Voice.LISSA``, ``Voice.MOXIE``, ``Voice.REESE``
+        - ``EN_GB`` : choose from ``Voice.DAVID``
+    
+    - ``pitch`` : to adjust the pitch of the synthesized voice, choose a value between ``-12.0`` and ``12.0``, where ``0.0`` is the default/normal value, where positive values raise the pitch and negative values lower the pitch.
+    - ``speed`` : to adjust the speed of the synthesized voice, choose a value between ``0.5`` and ``2.0``, where ``1.0`` is the default/normal value, where values > 1.0 speed up the speech and values < 1.0 slows down the speech.
+    - ``volume`` : to adjust the volume of the synthesized voice, choose a value between ``0.0`` and ``100.0``, where ``50.0`` is the default/normal value, where values > 50.0 increases the volume and values < 50.0 decreases the volume.
+    - ``rules`` : to specify pronunciation rules for special word representations, input string in the following format ``<WORD1> | <PRONUNCIATION1>\n<WORD2> | <PRONUNCIATION2>`` where ``\n`` is the delimiter. 
+        
+        - ``ZH_TW`` : pronunciation can be specified in zhuyin, pinyin, or Chinese characters, e.g. “TSMC | 台積電n你好 | ㄋㄧˇ ㄏㄠˇn為了 | wei4 le5”
+        - ``EN_US`` and ``EN_GB`` : pronunciation can be specified with English words, e.g. “XÆA12 | ex ash ay twelvenSideræl|psydeereal”
 
-Options for ``speech_synthesis_output_format_id`` could be ``riff-22khz-16bit-mono-pcm``, ``riff-16khz-16bit-mono-pcm`` or ``riff-8khz-16bit-mono-pcm``.
+    - ``sample_rate``: make sure the sample rate matches the sample rate setting for the output audio file.
 
-``speech_synthesis_output_pitch`` could be a value between ``-12.0`` and ``12.0``, where ``0.0`` is the default/normal value.
 
-``speech_synthesis_output_speed`` could be a value between ``0.5`` and ``2.0``, where ``1.0`` is the default/normal value.
-
-Audio Configuration
+Text Configuration
 ^^^^^^^^^^^^^^^^^^^
 
-Use the following code to create ``AudioOutputConfig``.
+Use the following code to create ``SynthesisData`` :
 
 ::
 
-        import seavoice_sdk.audio as audio
-        # Code commented out is an example for receiving synthesis results from an audio stream.
-        # audio_stream = audio.AudioOutputStream()
-        # audio_config = audio.AudioOutputConfig(stream=audio_stream)
-        audio_config = audio.AudioOutputConfig(filename="output.wav")
-
-Synthesizer initialization
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Synthesizer can be initialzed as follows:
-
-::
-
-        speech_synthesizer = speechsdk.SpeechSynthesizer(
-            speech_config=speech_config,
-            audio_config=audio_config
+        from seavoice_sdk_beta.commands import SynthesisData
+        
+        data = SynthesisData(
+            text="Good morning, today's date is<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>",
+            ssml=True,
         )
 
-Callbacks connection
-^^^^^^^^^^^^^^^^^^^^
+.. NOTE::
+    ``text`` is the text to be synthesized. 
+    ``ssml`` should be True if ``text`` is an SSML string, i.e. using SSML tags. See :ref:`Supported SSML Tags` Tags for more info.
 
-SpeechSynthesizer has 4 kinds of callbacks:
 
--  Synthesis\_started - called when synthesis is started.
--  Synthesizing - called when each time part of synthesis result is given.
--  Synthesis\_completed - called when all text was synthesized.
--  Synthesis\_canceled - called when synthesis is interrupted.
+Output File Configuration
+^^^^^^^^^^^^^^^^^^^
 
-To connect the callbacks:
+Use the following code to initialise the synthesized output audio:
 
 ::
 
-        speech_synthesizer.synthesis_started.connect(
-            lambda : print("synthesis started"))
-        speech_synthesizer.synthesizing.connect(
-            lambda audio_data: print("synthesizing"))
-        speech_synthesizer.synthesis_completed.connect(
-            lambda audio_data: print("synthesis completed"))
-        speech_synthesizer.synthesis_canceled.connect(
-            lambda : print("synthesis canceled"))
+    import wave
 
-Synthesizing text
-^^^^^^^^^^^^^^^^^
+    f = wave.open("output.wav", "w")
+    f.setnchannels(1)
+    f.setsampwidth(2)
+    f.setframerate(22050)
 
-Now it is ready to run SpeechSynthesizer. There are two ways to run
-SpeechSynthesizer:
 
--  Synchronized - Perform synthesis until got all result.
--  Asynchronized - Start synthesis and return a
-   ``speechsdk.ResultFuture``, which you could call its ``get()``
-   function to wait and get synthesis result.
 
-   ::
+Synthesis Command
+^^^^^^^^^^^^^^^^^^^
 
-           # Code commented out is for synchronized synthesis
-           # result = speech_synthesizer.speak_text("Input your text to synthesize here.")
-           result = speech_synthesizer.speak_text_async("Input your text to synthesize here.").get()
-           # Code commented out is an example for reading synthesis result from an audio stream.
-           # audio_data = audio_stream.read()
-
-Judge result reason --> Check result
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Both the synchronized and asynchronized methods return a
-``speechsdk.SpeechSynthesisResult`` object, which indicates if synthesis
-was completed successfully:
+Use the following code to create ``SynthesisCommand`` using the ``SynthesisData`` and ``SynthesisSettings`` from previous steps:
 
 ::
 
-        if result.reason == speechsdk.ResultReason.ResultReason_SynthesizingAudioCompleted:
-            print("finished speech synthesizing")
+    from seavoice_sdk_beta.commands import SynthesisCommand
+
+    command = SynthesisCommand(
+        payload=SynthesisPayload(
+            data=data,
+            settings=settings,
+        )
+    )
+
 
 Putting everything together
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -339,43 +318,77 @@ Now, put everything together and run the example:
 
 ::
 
-    from seavoice_sdk import speech as speechsdk
-    from seavoice_sdk import audio as audio
+        #!/usr/bin/env python3
+        # -*- coding: utf-8 -*-
 
-    if __name__ == "__main__":
-        SEASALT_ACCOUNT = "xxxxxxxxx"
-        PASSWORD = "xxxxxxxx"
-        speech_config = speechsdk.SpeechConfig(
-            account_id=SEASALT_ACCOUNT,
-            password=PASSWORD,
-            speech_synthesis_language="en-US",
-            speech_synthesis_voice_name="TomHanks",
-            speech_synthesis_output_format_id="riff-22khz-16bit-mono-pcm",
-            speech_synthesis_output_pitch=0.0,
-            speech_synthesis_output_speed=1.0
-        )
-        audio_config = audio.AudioOutputConfig(filename="output.wav")
-        speech_synthesizer = speechsdk.SpeechSynthesizer(
-            speech_config=speech_config,
-            audio_config=audio_config
-        )
-        speech_synthesizer.synthesis_started.connect(
-            lambda : print("synthesis started"))
-        speech_synthesizer.synthesizing.connect(
-            lambda audio_data: print("synthesizing"))
-        speech_synthesizer.synthesis_completed.connect(
-            lambda audio_data: print("synthesis completed"))
-        speech_synthesizer.synthesis_canceled.connect(
-            lambda : print("synthesis canceled"))
+        import os
+        import asyncio
+        import wave
 
-        # result = speech_synthesizer.speak_text("Seasalt.ai is a service company focusing on multi-modal AI solutions.")
-        result = speech_synthesizer.speak_text_async("Seasalt.ai is a service company focusing on multi-modal AI solutions.").get()
+        from seavoice_sdk_beta import LanguageCode, SpeechSynthesizer, Voice
+        from seavoice_sdk_beta.commands import SynthesisCommand, SynthesisData, SynthesisPayload, SynthesisSettings
+        from seavoice_sdk_beta.events import AudioDataEvent
 
-        if result.reason == speechsdk.ResultReason.ResultReason_SynthesizingAudioCompleted:
-            print("finished speech synthesizing")
+        SAMPLE_RATE: int = 8000
+
+        async def synthesize():
+            seavoice_token = os.getenv("SEAVOICE_TOKEN", None)
+            assert seavoice_token, "SEAVOICE_TOKEN is not set."
+            synthesizer = SpeechSynthesizer(
+                token=seavoice_token,
+                language=LanguageCode.ZH_TW,
+                sample_rate=SAMPLE_RATE,
+                voice=Voice.TONGTONG,
+            )
+            
+            data = SynthesisData(
+                text="Good morning, today's date is<say-as interpret-as='date' format='m/d/Y'>10/11/2022</say-as>",
+                ssml=True,
+            )
+            
+            settings = SynthesisSettings(
+                pitch=0.0,
+                speed=0.9,
+                volume=100.0,
+                rules="SeaX | sea x",
+                sample_rate=SAMPLE_RATE,
+            )
+            
+            command = SynthesisCommand(
+                payload=SynthesisPayload(
+                    data=data,
+                    settings=settings,
+                )
+            )
+
+            f = wave.open("output.wav", "w")
+            f.setnchannels(1)
+            f.setsampwidth(2)
+            f.setframerate(SAMPLE_RATE)
+            
+            async with synthesizer:
+                async def _send():
+                    await synthesizer.send(command)
+
+                asyncio.create_task(_send())
+                async for message in synthesizer.stream():
+                    print(message)
+                    if isinstance(message, AudioDataEvent):
+                        f.writeframes(message.payload.audio)
+
+
+        if __name__ == "__main__":
+            asyncio.run(synthesize())
+
 
 Change Log
 ----------
+
+[0.2.3] - 2022-9-23
+
+``Improvements``
+
+- Add reconnection mechanism
 
 [0.2.2] - 2021-8-16
 
@@ -389,13 +402,13 @@ Change Log
 
 [0.1.14] - 2021-4-9
 
-``Improments``
+``Improvements``
 
 -  Added output of post-processing result
 
 [0.1.13] - 2021-4-1
 
-``Improments``
+``Improvements``
 
 -  Added output of segment and word alignment information
 
